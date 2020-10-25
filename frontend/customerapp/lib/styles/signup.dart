@@ -1,3 +1,5 @@
+import 'dart:html';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 
 final signUpButtonStyleEnabled = ButtonStyle(
@@ -34,10 +36,26 @@ final signUpTextLinksBold = TextStyle(
 );
 
 final signUpTextLinksHover = TextStyle(
-  color: Color(0xFF104A3E),
+  color: Color(0xFF528A84),
 );
 
 final signUpTextLinksHoverBold = TextStyle(
   fontWeight: FontWeight.bold,
-  color: Color(0xFF104A3E),
+  color: Color(0xFF528A84),
+);
+
+final registerToGlovoTextStyle = GoogleFonts.raleway(
+    color: Colors.black,
+    fontSize: 21,
+    fontWeight: FontWeight.w700,
+    letterSpacing: 1);
+
+final signUpFocusedInputTextBorder = UnderlineInputBorder(
+    borderSide: BorderSide(width: 2, color: Color(0xFF6E6E6E)));
+
+final signUpInputTextBorder =
+    UnderlineInputBorder(borderSide: BorderSide(color: Color(0xFF9B9B9B)));
+
+final labelTextInputStyle = TextStyle(
+  color: Color(0xFF69B9B9B),
 );
