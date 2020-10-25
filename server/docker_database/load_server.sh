@@ -24,6 +24,7 @@ sudo docker run -d --name glovo_server \
     -e POSTGRES_PASSWORD=password \
     -e POSTGRES_USER=glovodev \
     -e POSTGRES_DB=glovodb \
+    -p 5432:5432 \
     postgres:latest
 
 until sudo docker exec glovo_server psql -U glovodev -d glovodb &> /dev/null; do
