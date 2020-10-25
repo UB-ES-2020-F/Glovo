@@ -42,8 +42,8 @@ class SignUp extends StatelessWidget {
                     Container(
                         child: Text('Have an account? ',
                             style: Theme.of(context).textTheme.bodyText1)),
-                    TextLink(
-                        'Login', () {}, signUpTextLinks, signUpTextLinksHover),
+                    TextLink('Login', () {}, signUpTextLinksBold,
+                        signUpTextLinksHoverBold),
                   ],
                 ),
               ),
@@ -80,35 +80,50 @@ class SignUpForm extends StatelessWidget {
   Widget build(BuildContext context) {
     var signUpModel = context.watch<SignUpModel>();
     return Form(
+      onChanged: () =>
+          signUpModel.formValid = signUpModel.formKey.currentState.validate(),
       key: signUpModel.formKey,
       child: Column(
         children: [
           Container(
               child: TextFormField(
             onSaved: (value) => signUpModel.firstName = value,
+            validator: (firstName) {
+              bool validFirstName = firstName.isNotEmpty;
+              return validFirstName ? null : "Name is required";
+            },
             decoration: const InputDecoration(
-                icon: Icon(Icons.perm_identity), hintText: 'First name'),
+                icon: Icon(Icons.perm_identity), labelText: 'First name'),
           )),
           Container(
               child: TextFormField(
             onSaved: (value) => signUpModel.email = value,
-            validator: (email) =>
-                EmailValidator.validate(email) ? null : "Invalid email address",
+            validator: (email) {
+              bool validEmail = EmailValidator.validate(email);
+              return validEmail ? null : "Invalid email address";
+            },
             decoration: const InputDecoration(
-                icon: Icon(Icons.mail_outline_outlined), hintText: 'Email'),
+              icon: Icon(Icons.mail_outline_outlined),
+              labelText: 'Email',
+            ),
           )),
           Container(
               child: TextFormField(
             onSaved: (value) => signUpModel.password = value,
             obscureText: signUpModel.passwordObfuscated,
+            validator: (password) {
+              bool passwordValid = password.isNotEmpty;
+              return passwordValid ? null : "Password is required";
+            },
             decoration: InputDecoration(
-                suffixIcon: IconButton(
-                    onPressed: signUpModel.switchPasswordObfuscation,
-                    icon: signUpModel.passwordObfuscated
-                        ? Icon(Icons.visibility_off_outlined)
-                        : Icon(Icons.visibility)),
-                icon: Icon(Icons.lock_outlined),
-                hintText: 'Password'),
+              suffixIcon: IconButton(
+                  onPressed: signUpModel.switchPasswordObfuscation,
+                  icon: signUpModel.passwordObfuscated
+                      ? Icon(Icons.visibility_off_outlined)
+                      : Icon(Icons.visibility)),
+              icon: Icon(Icons.lock_outlined),
+              labelText: 'Password',
+            ),
           )),
           SignUpButton(),
         ],
@@ -130,21 +145,25 @@ class SignUpButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ElevatedButton(
-            onPressed: () {
-              if (signUpModel.formKey.currentState.validate()) {
-                Fluttertoast.showToast(
-                    msg: "This is Center Short Toast",
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.CENTER,
-                    timeInSecForIosWeb: 1,
-                    backgroundColor: Colors.red,
-                    textColor: Colors.white,
-                    fontSize: 16.0);
-                signUpModel.formKey.currentState.save();
-              }
-            },
+            onPressed: signUpModel.formValid
+                ? () {
+                    if (signUpModel.formKey.currentState.validate()) {
+                      Fluttertoast.showToast(
+                          msg: "Hola",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          fontSize: 16.0);
+                      signUpModel.formKey.currentState.save();
+                    }
+                  }
+                : null,
             child: Text('Sign up with email'),
-            style: signUpButtonStyle,
+            style: signUpModel.formValid
+                ? signUpButtonStyleEnabled
+                : signUpButtonStyleDisabled,
           )
         ],
       ),
