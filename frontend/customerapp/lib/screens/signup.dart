@@ -85,11 +85,13 @@ class SignUpForm extends StatelessWidget {
         children: [
           Container(
               child: TextFormField(
+            onSaved: (value) => signUpModel.firstName = value,
             decoration: const InputDecoration(
                 icon: Icon(Icons.perm_identity), hintText: 'First name'),
           )),
           Container(
               child: TextFormField(
+            onSaved: (value) => signUpModel.email = value,
             validator: (email) =>
                 EmailValidator.validate(email) ? null : "Invalid email address",
             decoration: const InputDecoration(
@@ -97,6 +99,7 @@ class SignUpForm extends StatelessWidget {
           )),
           Container(
               child: TextFormField(
+            onSaved: (value) => signUpModel.password = value,
             obscureText: signUpModel.passwordObfuscated,
             decoration: InputDecoration(
                 suffixIcon: IconButton(
@@ -137,6 +140,7 @@ class SignUpButton extends StatelessWidget {
                     backgroundColor: Colors.red,
                     textColor: Colors.white,
                     fontSize: 16.0);
+                signUpModel.formKey.currentState.save();
               }
             },
             child: Text('Sign up with email'),
