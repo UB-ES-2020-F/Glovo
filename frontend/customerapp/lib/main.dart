@@ -1,4 +1,6 @@
+import 'package:customerapp/models/initial_logged.dart';
 import 'package:customerapp/models/signup.dart';
+import 'package:customerapp/screens/initial_logged.dart';
 import 'package:customerapp/screens/signup.dart';
 import 'package:customerapp/styles/Glovo.dart';
 import 'package:flutter/material.dart';
@@ -15,12 +17,17 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => SignUpModel()),
+        ChangeNotifierProvider(create: (context) => InitialLoggedModel()),
       ],
       child: MaterialApp(
           theme: appTheme,
           title: 'Komet',
-          initialRoute: '/sign-up',
-          routes: {'/sign-up': (context) => SignUp()}),
+          initialRoute: '/initial-logged-in',
+          debugShowCheckedModeBanner: false,
+          routes: {
+            '/initial-logged-in': (context) => InitialLogged(),
+            '/sign-up': (context) => SignUp()
+          }),
     );
   }
 }
