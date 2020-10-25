@@ -81,7 +81,9 @@ class UserActions extends StatelessWidget {
             iconSize: 35.0,
             color: Colors.white,
             icon: Icon(Icons.account_circle_outlined),
-            onPressed: () {},
+            onPressed: () {
+              _openProfileSettings(context);
+            },
           ),
           IconButton(
             iconSize: 35.0,
@@ -109,4 +111,29 @@ class SearchBox extends StatelessWidget {
           searchBarTextLinksHover)
     ]);
   }
+}
+
+class ProfileSettings extends StatelessWidget {
+  ProfileSettings(BuildContext context);
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+        content: Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [Text('Not implemented'), Text('(yet)')],
+    ));
+  }
+}
+
+Widget _openProfileSettings(BuildContext context) {
+  Navigator.of(context).push(
+    PageRouteBuilder(
+        pageBuilder: (context, _, __) => ProfileSettings(context),
+        opaque: false,
+        barrierDismissible: true,
+        reverseTransitionDuration: Duration(milliseconds: 0)),
+  );
+  //Navigator.of(context).pop();
 }
