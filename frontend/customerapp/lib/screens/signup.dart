@@ -141,8 +141,7 @@ class SignUpButton extends StatelessWidget {
     var signUpModel = context.watch<SignUpModel>();
     return Container(
       padding: EdgeInsets.all(30),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: Wrap(
         children: [
           ElevatedButton(
             onPressed: signUpModel.formValid
