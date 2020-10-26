@@ -2,6 +2,18 @@ import 'dart:html';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 
+final registerButtonStyle = ButtonStyle(
+    padding: MaterialStateProperty.resolveWith((states) =>
+        const EdgeInsets.symmetric(vertical: 10.0, horizontal: 26.0)),
+    foregroundColor: MaterialStateColor.resolveWith((states) => Colors.white),
+    textStyle: MaterialStateProperty.resolveWith((states) => TextStyle(
+        color: Colors.white, fontSize: 14, fontWeight: FontWeight.w700)),
+    shape: MaterialStateProperty.resolveWith((states) => RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+        side: BorderSide(color: Color(0xFF2ABB9B)))),
+    backgroundColor:
+        MaterialStateColor.resolveWith((states) => Color(0xFF2ABB9B)));
+
 final signUpButtonStyleEnabled = ButtonStyle(
     padding: MaterialStateProperty.resolveWith((states) =>
         const EdgeInsets.symmetric(vertical: 16.0, horizontal: 40.0)),
