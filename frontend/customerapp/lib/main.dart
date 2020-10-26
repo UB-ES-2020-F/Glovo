@@ -1,5 +1,6 @@
 import 'package:customerapp/models/signup.dart';
-import 'package:customerapp/screens/signup.dart';
+import 'package:customerapp/screens/anon_root.dart';
+import 'package:customerapp/screens/signUp/signup_page.dart';
 import 'package:customerapp/styles/Glovo.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,8 +20,11 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
           theme: appTheme,
           title: 'Komet',
-          initialRoute: '/sign-up',
-          routes: {'/sign-up': (context) => SignUp()}),
+          initialRoute: '/',
+          routes: {
+            '/': (context) => AnonRoute(),
+            '/sign-up': (context) => SignUpPage()
+          }),
     );
   }
 }

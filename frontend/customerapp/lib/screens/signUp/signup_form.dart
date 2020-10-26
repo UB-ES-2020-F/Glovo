@@ -7,30 +7,13 @@ import 'package:provider/provider.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class SignUp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            icon: Icon(Icons.clear),
-            onPressed: () {},
-          )
-        ],
-      ),
-      body: SignUpDialog(),
-    );
-  }
-}
-
-class SignUpDialog extends StatelessWidget {
+class SignUpFormPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Container(
           child: ListView(
-        padding: const EdgeInsets.all(20.0),
+        shrinkWrap: true,
         children: [
           Center(
               child: Container(
@@ -107,6 +90,7 @@ class SignUpForm extends StatelessWidget {
       child: Column(
         children: [
           Container(
+              padding: EdgeInsets.symmetric(vertical: 15),
               constraints: BoxConstraints(maxWidth: 600),
               child: TextFormField(
                 onSaved: (value) => signUpModel.firstName = value,
@@ -127,6 +111,7 @@ class SignUpForm extends StatelessWidget {
                 ),
               )),
           Container(
+              padding: EdgeInsets.symmetric(vertical: 15),
               constraints: BoxConstraints(maxWidth: 600),
               child: TextFormField(
                 onSaved: (value) => signUpModel.email = value,
@@ -147,6 +132,7 @@ class SignUpForm extends StatelessWidget {
                 ),
               )),
           Container(
+              padding: EdgeInsets.symmetric(vertical: 15),
               constraints: BoxConstraints(maxWidth: 600),
               child: TextFormField(
                 onSaved: (value) => signUpModel.password = value,
@@ -193,7 +179,7 @@ class SignUpButton extends StatelessWidget {
   Widget build(BuildContext context) {
     var signUpModel = context.watch<SignUpModel>();
     return Container(
-      padding: EdgeInsets.all(30),
+      padding: EdgeInsets.symmetric(vertical: 30),
       child: Wrap(
         children: [
           ElevatedButton(
