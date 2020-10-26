@@ -13,11 +13,22 @@ class AnonRoute extends StatelessWidget {
             actions: [
               Padding(
                   padding: EdgeInsets.symmetric(vertical: 9),
-                  child: SignUpButton())
+                  child: SignUpButton()),
+              Padding(
+                  padding: EdgeInsets.only(top: 9, bottom: 9, left: 10),
+                  child: LogInButton())
             ],
           )),
       body: Text('Prueba'),
     );
+  }
+}
+
+class LogInButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+        onPressed: () {}, child: Text('Login'), style: loginButtonStyle);
   }
 }
 

@@ -14,6 +14,18 @@ final registerButtonStyle = ButtonStyle(
     backgroundColor:
         MaterialStateColor.resolveWith((states) => Color(0xFF2ABB9B)));
 
+final loginButtonStyle = ButtonStyle(
+    padding: MaterialStateProperty.resolveWith((states) =>
+        const EdgeInsets.symmetric(vertical: 10.0, horizontal: 26.0)),
+    foregroundColor:
+        MaterialStateColor.resolveWith((states) => Color(0xFF4A4A4A)),
+    textStyle: MaterialStateProperty.resolveWith((states) => TextStyle(
+        color: Color(0xFF4A4A4A), fontSize: 14, fontWeight: FontWeight.w700)),
+    shape: MaterialStateProperty.resolveWith((states) => RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+        side: BorderSide(color: Colors.white))),
+    backgroundColor: MaterialStateColor.resolveWith((states) => Colors.white));
+
 final signUpButtonStyleEnabled = ButtonStyle(
     padding: MaterialStateProperty.resolveWith((states) =>
         const EdgeInsets.symmetric(vertical: 16.0, horizontal: 40.0)),
