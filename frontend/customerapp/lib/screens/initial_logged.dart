@@ -3,9 +3,6 @@ import 'package:customerapp/models/initial_logged.dart';
 import 'package:customerapp/styles/initial_logged.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
-import 'package:email_validator/email_validator.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class InitialLogged extends StatelessWidget {
   @override
@@ -17,7 +14,7 @@ class InitialLogged extends StatelessWidget {
             child: Container(
                 child: Center(
           child: Text(
-            'Glovo',
+            'Komet',
             style: TextStyle(
                 fontSize: 50,
                 fontWeight: FontWeight.bold,
@@ -40,10 +37,12 @@ class InitialLoggedBar extends StatelessWidget with PreferredSizeWidget {
           AppBar(
               elevation: 0,
               backgroundColor: Theme.of(context).backgroundColor,
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [SearchBox(), UserActions()],
-              ))
+              title: Padding(
+                  padding: EdgeInsets.all(40),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [SearchBox(), UserActions()],
+                  )))
         ],
       ),
       color: Theme.of(context).backgroundColor,
@@ -54,45 +53,44 @@ class InitialLoggedBar extends StatelessWidget with PreferredSizeWidget {
 class UserActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Row(
-        children: [
-          Row(
-            children: [
-              IconButton(
-                alignment: Alignment.topRight,
-                iconSize: 22.0,
-                color: Colors.white,
-                icon: Icon(Icons.location_on_outlined),
-                onPressed: () {},
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextLink('Carrer de Diputació, 234', () {},
-                      streetNameTextLinks, streetNameTextLinksHover),
-                  TextLink('2n 1a', () {}, indicationsTextLinks,
-                      indicationsTextLinksHover)
-                ],
-              )
-            ],
-          ),
-          IconButton(
-            iconSize: 35.0,
-            color: Colors.white,
-            icon: Icon(Icons.account_circle_outlined),
-            onPressed: () {
-              _openProfileSettings(context);
-            },
-          ),
-          IconButton(
-            iconSize: 35.0,
-            color: Colors.white,
-            icon: Icon(Icons.format_list_bulleted_outlined),
-            onPressed: () {},
-          )
-        ],
-      ),
+    var initialLoggedModel = InitialLoggedModel();
+    return Row(
+      children: [
+        Row(
+          children: [
+            IconButton(
+              alignment: Alignment.topRight,
+              iconSize: 22.0,
+              color: Colors.white,
+              icon: Icon(Icons.location_on_outlined),
+              onPressed: () {},
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextLink(initialLoggedModel.direction, () {},
+                    streetNameTextLinks, streetNameTextLinksHover),
+                TextLink(initialLoggedModel.indicationsDirection, () {},
+                    indicationsTextLinks, indicationsTextLinksHover)
+              ],
+            )
+          ],
+        ),
+        IconButton(
+          iconSize: 35.0,
+          color: Colors.white,
+          icon: Icon(Icons.account_circle_outlined),
+          onPressed: () {
+            _openProfileSettings(context);
+          },
+        ),
+        IconButton(
+          iconSize: 35.0,
+          color: Colors.white,
+          icon: Icon(Icons.format_list_bulleted_outlined),
+          onPressed: () {},
+        )
+      ],
     );
   }
 }
@@ -114,20 +112,105 @@ class SearchBox extends StatelessWidget {
 }
 
 class ProfileSettings extends StatelessWidget {
+  final double verticalPadding = 5;
+  final double radiusDialog = 13.0;
   ProfileSettings(BuildContext context);
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-        content: Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [Text('Not implemented'), Text('(yet)')],
-    ));
+    var initialLoggedModel = InitialLoggedModel();
+    return Padding(
+      padding: EdgeInsets.fromLTRB(10, 80, 60, 10),
+      child: Align(
+        alignment: Alignment(1, -1),
+        child: Material(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(radiusDialog),
+          ),
+          elevation: 0,
+          color: Colors.white,
+          child: SizedBox(
+              width: 300.0,
+              //height: 600.0,
+              child: Padding(
+                padding: EdgeInsets.all(20.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'PERFIL',
+                      style: labelsProfileText,
+                    ),
+                    Divider(
+                      color: Colors.black,
+                      thickness: 0.3,
+                    ),
+                    Container(
+                        width: 400.0,
+                        child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 2 * verticalPadding),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: verticalPadding),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          'Nombre',
+                                          style: labelsProfileText,
+                                        ),
+                                        TextLink(
+                                            'Editar',
+                                            () {},
+                                            editTextLinksBold,
+                                            editTextLinksHoverBold)
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: verticalPadding),
+                                    child: Text(
+                                      initialLoggedModel.firstName,
+                                      style: fieldsProfileText,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: verticalPadding),
+                                    child: Text(
+                                      'E-mail',
+                                      style: labelsProfileText,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: verticalPadding),
+                                    child: Text(
+                                      initialLoggedModel.email,
+                                      style: fieldsProfileText,
+                                    ),
+                                  ),
+                                ]))),
+                    Divider(
+                      color: Colors.black,
+                      thickness: 0.3,
+                    ),
+                  ],
+                ),
+              )),
+        ),
+      ),
+    );
   }
 }
 
-Widget _openProfileSettings(BuildContext context) {
+void _openProfileSettings(BuildContext context) {
   Navigator.of(context).push(
     PageRouteBuilder(
         pageBuilder: (context, _, __) => ProfileSettings(context),
@@ -135,5 +218,4 @@ Widget _openProfileSettings(BuildContext context) {
         barrierDismissible: true,
         reverseTransitionDuration: Duration(milliseconds: 0)),
   );
-  //Navigator.of(context).pop();
 }
