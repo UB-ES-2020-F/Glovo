@@ -1,10 +1,11 @@
 using glovo_webapi.Models;
 using Microsoft.EntityFrameworkCore;
+
 namespace glovo_webapi.Data
 {
-    public class RestaurantContext : DbContext
+    public class GloboDBContext : DbContext
     {
-        public RestaurantContext(DbContextOptions<RestaurantContext> opt) : base(opt)
+        public GloboDBContext(DbContextOptions<GloboDBContext> opt) : base(opt)
         {
             
         }
