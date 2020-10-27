@@ -9,21 +9,24 @@ class SignInDialog extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
       child: Wrap(children: [
         Container(
-            constraints: BoxConstraints(maxWidth: 100),
-            padding: EdgeInsets.all(10),
-            alignment: Alignment(1, 1),
-            child: IconButton(
-              color: Color(0xFF6E6E6E),
-              icon: Icon(Icons.clear),
-              iconSize: 40,
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            )),
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 70),
           constraints: BoxConstraints(maxWidth: 600),
-          child: Column(children: [SignInFormPage()]),
+          child: Column(children: [
+            Container(
+                constraints: BoxConstraints(maxWidth: 600),
+                padding: EdgeInsets.all(10),
+                alignment: Alignment(1, 1),
+                child: IconButton(
+                  color: Color(0xFF6E6E6E),
+                  icon: Icon(Icons.clear),
+                  iconSize: 40,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                )),
+            Container(
+                padding: EdgeInsets.symmetric(horizontal: 70),
+                child: SignInFormPage())
+          ]),
         )
       ]),
     );

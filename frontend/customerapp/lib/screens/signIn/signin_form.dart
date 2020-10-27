@@ -1,6 +1,5 @@
 import 'package:customerapp/components/text_link.dart';
 import 'package:customerapp/models/signin.dart';
-import 'package:customerapp/models/signup.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -17,7 +16,7 @@ class SignInFormPage extends StatelessWidget {
       Center(
           child: Container(
         child: Text(
-          'LogIn to Glovo',
+          'Login to Glovo',
           style: registerToGlovoTextStyle,
         ),
       )),
@@ -28,11 +27,18 @@ class SignInFormPage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Eres nuevo? "),
-                  TextLink('Registrate', (context) {
+                  Text(
+                    "New to Glovo? ",
+                    style: TextStyle(color: Color(0xFF9B9B9B)),
+                  ),
+                  TextLink('Sign up', (context) {
                     Navigator.pushNamed(context, '/sign-up');
-                  }, signUpTextLinks.copyWith(fontSize: 13),
-                      signUpTextLinksHover.copyWith(fontSize: 13), context)
+                  },
+                      signUpTextLinks.copyWith(
+                          fontSize: 13, fontWeight: FontWeight.bold),
+                      signUpTextLinksHover.copyWith(
+                          fontSize: 13, fontWeight: FontWeight.bold),
+                      context)
                 ],
               )),
           alignment: Alignment.bottomRight)
@@ -107,10 +113,15 @@ class SignInForm extends StatelessWidget {
           Align(
             child: Container(
                 margin: EdgeInsets.all(20.0),
-                child: TextLink('Has olvidado la contraseña?', (context) {
+                alignment: Alignment.centerRight,
+                child: TextLink('Forgot your password?', (context) {
                   Navigator.pushNamed(context, '/sign-in');
-                }, signUpTextLinks.copyWith(fontSize: 13),
-                    signUpTextLinksHover.copyWith(fontSize: 13), context)),
+                },
+                    signUpTextLinks.copyWith(
+                        fontSize: 13, fontWeight: FontWeight.bold),
+                    signUpTextLinksHover.copyWith(
+                        fontSize: 13, fontWeight: FontWeight.bold),
+                    context)),
             alignment: Alignment.bottomCenter,
           ),
           SignUpButton(),
@@ -147,7 +158,7 @@ class SignUpButton extends StatelessWidget {
                     }
                   }
                 : null,
-            child: Text('Log In'),
+            child: Text('Log in with email'),
             style: signUpModel.formValid
                 ? signUpButtonStyleEnabled
                 : signUpButtonStyleDisabled,
