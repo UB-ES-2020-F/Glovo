@@ -4,113 +4,6 @@ import 'package:customerapp/styles/initial_logged.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class InitialLogged extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Theme.of(context).backgroundColor,
-        appBar: InitialLoggedBar(),
-        body: Center(
-            child: Container(
-                child: Center(
-          child: Text(
-            'Komet',
-            style: TextStyle(
-                fontSize: 50,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).accentColor),
-          ),
-        ))));
-  }
-}
-
-class InitialLoggedBar extends StatelessWidget with PreferredSizeWidget {
-  final double appBarHeight = 115.0;
-  @override
-  get preferredSize => Size.fromHeight(appBarHeight);
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          AppBar(
-              elevation: 0,
-              backgroundColor: Theme.of(context).backgroundColor,
-              title: Padding(
-                  padding: EdgeInsets.all(40),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [SearchBox(), UserActions()],
-                  )))
-        ],
-      ),
-      color: Theme.of(context).backgroundColor,
-    );
-  }
-}
-
-class UserActions extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    var initialLoggedModel = InitialLoggedModel();
-    return Row(
-      children: [
-        Row(
-          children: [
-            IconButton(
-              alignment: Alignment.topRight,
-              iconSize: 22.0,
-              color: Colors.white,
-              icon: Icon(Icons.location_on_outlined),
-              onPressed: () {},
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextLink(initialLoggedModel.direction, () {},
-                    streetNameTextLinks, streetNameTextLinksHover),
-                TextLink(initialLoggedModel.indicationsDirection, () {},
-                    indicationsTextLinks, indicationsTextLinksHover)
-              ],
-            )
-          ],
-        ),
-        IconButton(
-          iconSize: 35.0,
-          color: Colors.white,
-          icon: Icon(Icons.account_circle_outlined),
-          onPressed: () {
-            _openProfileSettings(context);
-          },
-        ),
-        IconButton(
-          iconSize: 35.0,
-          color: Colors.white,
-          icon: Icon(Icons.format_list_bulleted_outlined),
-          onPressed: () {},
-        )
-      ],
-    );
-  }
-}
-
-class SearchBox extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Row(mainAxisSize: MainAxisSize.min, children: [
-      IconButton(
-        iconSize: 50.0,
-        color: Colors.white,
-        icon: Icon(Icons.search_rounded),
-        onPressed: () {},
-      ),
-      TextLink('What do you need?', () {}, searchBarTextLinks,
-          searchBarTextLinksHover)
-    ]);
-  }
-}
-
 class ProfileSettings extends StatelessWidget {
   final double verticalPadding = 5;
   final double radiusDialog = 13.0;
@@ -166,9 +59,10 @@ class ProfileSettings extends StatelessWidget {
                                         ),
                                         TextLink(
                                             'Editar',
-                                            () {},
+                                            (context) {},
                                             editTextLinksBold,
-                                            editTextLinksHoverBold)
+                                            editTextLinksHoverBold,
+                                            context)
                                       ],
                                     ),
                                   ),
@@ -208,14 +102,4 @@ class ProfileSettings extends StatelessWidget {
       ),
     );
   }
-}
-
-void _openProfileSettings(BuildContext context) {
-  Navigator.of(context).push(
-    PageRouteBuilder(
-        pageBuilder: (context, _, __) => ProfileSettings(context),
-        opaque: false,
-        barrierDismissible: true,
-        reverseTransitionDuration: Duration(milliseconds: 0)),
-  );
 }
