@@ -18,8 +18,8 @@ class SignUpFormPage extends StatelessWidget {
           Center(
               child: Container(
             child: Text(
-              'Register to Glovo',
-              style: registerToGlovoTextStyle,
+              'Register to Komet',
+              style: registerToKometTextStyle,
             ),
           )),
           Center(

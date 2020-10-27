@@ -68,7 +68,7 @@ final signUpTextLinksHoverBold = TextStyle(
   color: Color(0xFF528A84),
 );
 
-final registerToGlovoTextStyle = GoogleFonts.raleway(
+final registerToKometTextStyle = GoogleFonts.raleway(
     color: Colors.black,
     fontSize: 21,
     fontWeight: FontWeight.w700,

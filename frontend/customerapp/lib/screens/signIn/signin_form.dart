@@ -16,8 +16,8 @@ class SignInFormPage extends StatelessWidget {
       Center(
           child: Container(
         child: Text(
-          'Login to Glovo',
-          style: registerToGlovoTextStyle,
+          'Login to Komet',
+          style: registerToKometTextStyle,
         ),
       )),
       SignInForm(),
@@ -28,7 +28,7 @@ class SignInFormPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "New to Glovo? ",
+                    "New to Komet? ",
                     style: TextStyle(color: Color(0xFF9B9B9B)),
                   ),
                   TextLink('Sign up', (context) {

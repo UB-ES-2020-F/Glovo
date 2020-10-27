@@ -4,7 +4,7 @@ import 'package:customerapp/screens/loggedPage/initial_logged_page.dart';
 import 'package:customerapp/screens/anon_root.dart';
 import 'package:customerapp/screens/signIn/signin_page.dart';
 import 'package:customerapp/screens/signUp/signup_page.dart';
-import 'package:customerapp/styles/Glovo.dart';
+import 'package:customerapp/styles/Komet.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
