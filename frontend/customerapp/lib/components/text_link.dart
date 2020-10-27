@@ -4,32 +4,39 @@ import 'package:flutter/widgets.dart';
 
 class TextLink extends StatefulWidget {
   String _text;
-  Function _onTap;
+  //Function _onTap;
+  void Function(BuildContext) _onTap;
   TextStyle _linkStyle;
   TextStyle _hoverStyle;
+  BuildContext _context;
 
   @override
-  TextLink(this._text, this._onTap, this._linkStyle, this._hoverStyle);
+  TextLink(this._text, this._onTap, this._linkStyle, this._hoverStyle,
+      this._context);
 
   _TextLinkState createState() =>
-      _TextLinkState(_text, _onTap, _linkStyle, _hoverStyle);
+      _TextLinkState(_text, _onTap, _linkStyle, _hoverStyle, _context);
 }
 
 class _TextLinkState extends State<TextLink> {
   String _text;
-  Function _onTap;
+  void Function(BuildContext) _onTap;
+
   TextStyle _linkStyle;
   TextStyle _hoverStyle;
   bool _hover = false;
+  BuildContext _context;
 
-  _TextLinkState(this._text, this._onTap, this._linkStyle, this._hoverStyle);
+  _TextLinkState(this._text, this._onTap, this._linkStyle, this._hoverStyle,
+      this._context);
 
   @override
   Widget build(BuildContext context) {
     var textSpan = TextSpan(
         text: this._text,
         style: this._hover ? this._hoverStyle : this._linkStyle,
-        recognizer: TapGestureRecognizer()..onTap = this._onTap);
+        recognizer: TapGestureRecognizer()
+          ..onTap = () => this._onTap(_context));
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: Container(child: Text.rich(textSpan)),
