@@ -12,7 +12,6 @@ class SignInDialog extends StatelessWidget {
           constraints: BoxConstraints(maxWidth: 600),
           child: Column(children: [
             Container(
-                constraints: BoxConstraints(maxWidth: 600),
                 padding: EdgeInsets.all(10),
                 alignment: Alignment(1, 1),
                 child: IconButton(
