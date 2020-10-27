@@ -34,8 +34,9 @@ class SignUpFormPage extends StatelessWidget {
                   Container(
                       child: Text('Have an account? ',
                           style: Theme.of(context).textTheme.bodyText1)),
-                  TextLink('Login', () {}, signUpTextLinksBold,
-                      signUpTextLinksHoverBold),
+                  TextLink('Login', (context) {
+                    Navigator.pushNamed(context, '/sign-in');
+                  }, signUpTextLinksBold, signUpTextLinksHoverBold, context),
                 ],
               ),
             ),
@@ -53,22 +54,20 @@ class SignUpFormPage extends StatelessWidget {
                                 .bodyText1
                                 .copyWith(fontSize: 10))),
                   ),
-                  TextLink(
-                      'Terms of Service',
-                      () {},
-                      signUpTextLinks.copyWith(fontSize: 10),
-                      signUpTextLinksHover.copyWith(fontSize: 10)),
+                  TextLink('Terms of Service', (context) {
+                    Navigator.pushNamed(context, '/sign-in');
+                  }, signUpTextLinks.copyWith(fontSize: 10),
+                      signUpTextLinksHover.copyWith(fontSize: 10), context),
                   Container(
                       child: Text(' and ',
                           style: Theme.of(context)
                               .textTheme
                               .bodyText1
                               .copyWith(fontSize: 10))),
-                  TextLink(
-                      'Privacy Policy',
-                      () {},
-                      signUpTextLinks.copyWith(fontSize: 10),
-                      signUpTextLinksHover.copyWith(fontSize: 10)),
+                  TextLink('Privacy Policy', (context) {
+                    Navigator.pushNamed(context, '/sign-in');
+                  }, signUpTextLinks.copyWith(fontSize: 10),
+                      signUpTextLinksHover.copyWith(fontSize: 10), context)
                 ],
               ),
             ),

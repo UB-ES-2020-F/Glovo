@@ -1,15 +1,15 @@
-import 'package:customerapp/screens/signUp/signup_form.dart';
+import 'package:customerapp/screens/signIn/signin_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class SignUpDialog extends StatelessWidget {
+class SignInDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
       child: Wrap(children: [
         Container(
-            constraints: BoxConstraints(maxWidth: 50),
+            constraints: BoxConstraints(maxWidth: 100),
             padding: EdgeInsets.all(10),
             alignment: Alignment(1, 1),
             child: IconButton(
@@ -23,7 +23,7 @@ class SignUpDialog extends StatelessWidget {
         Container(
           padding: EdgeInsets.symmetric(horizontal: 70),
           constraints: BoxConstraints(maxWidth: 600),
-          child: Column(children: [SignUpFormPage()]),
+          child: Column(children: [SignInFormPage()]),
         )
       ]),
     );

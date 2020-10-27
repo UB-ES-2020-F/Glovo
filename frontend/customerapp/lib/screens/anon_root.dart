@@ -1,4 +1,6 @@
 import 'package:customerapp/screens/signUp/signup_dialog.dart';
+import 'package:customerapp/screens/signIn/signin_dialog.dart';
+import 'package:customerapp/screens/signIn/signin_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:customerapp/styles/signup.dart';
@@ -28,7 +30,23 @@ class LogInButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-        onPressed: () {}, child: Text('Login'), style: loginButtonStyle);
+        onPressed: MediaQuery.of(context).size.width > 600
+            ? () {
+                _showDialog(context);
+              }
+            : () {
+                _showPage(context);
+              },
+        child: Text('Login'),
+        style: loginButtonStyle);
+  }
+
+  void _showDialog(context) {
+    showDialog(context: context, builder: (_) => SignInDialog());
+  }
+
+  void _showPage(context) {
+    Navigator.pushNamed(context, '/sign-in');
   }
 }
 
