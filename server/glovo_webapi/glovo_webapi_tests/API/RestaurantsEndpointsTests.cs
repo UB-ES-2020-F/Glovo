@@ -18,11 +18,11 @@ namespace glovo_webapi_tests.API
             
             _client = new HttpClient(new HttpClientHandler()
             {
-                Credentials = new NetworkCredential("glovodev", "password")
+                //Credentials = new NetworkCredential("glovodev", "password")
             });
         }
         
-        [Fact]
+        //[Fact]
         public void GetAllRestaurantsTest()
         {
             Task<HttpResponseMessage> response = _client.GetAsync("https://localhost:5001/api/restaurants");
