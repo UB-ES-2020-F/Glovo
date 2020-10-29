@@ -7,4 +7,9 @@
     &lt;TestId&gt;xUnit::C0E5D32E-F03B-40E5-89F7-37ACC2FE90BA::.NETCoreApp,Version=v3.1::glovo_webapi_test.Endpoints.RestaurantsEndpointsTests&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=ff1786da_002D2cc1_002D44b3_002D9472_002D8ab442550847/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="RestaurantsEndpointsTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::C0E5D32E-F03B-40E5-89F7-37ACC2FE90BA::.NETCoreApp,Version=v3.1::glovo_webapi_test.Endpoints.RestaurantsEndpointsTests&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String>
 	</wpf:ResourceDictionary>

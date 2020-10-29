@@ -8,7 +8,7 @@ using glovo_webapi.Data;
 
 namespace glovo_webapi.Migrations
 {
-    [DbContext(typeof(GloboDBContext))]
+    [DbContext(typeof(GlovoDbContext))]
     [Migration("20201027003800_InitialMigration")]
     partial class InitialMigration
     {

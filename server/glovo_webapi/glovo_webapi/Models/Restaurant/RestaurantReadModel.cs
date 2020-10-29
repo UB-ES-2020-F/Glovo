@@ -1,8 +1,6 @@
-using System.ComponentModel.DataAnnotations;
-
-namespace glovo_webapi.Dtos.Restaurant
+namespace glovo_webapi.Models.Restaurant
 {
-        public class RestaurantReadDto
+        public class RestaurantReadModel
         {
                 public int Id { get; set; }
                 
@@ -10,7 +8,7 @@ namespace glovo_webapi.Dtos.Restaurant
                 
                 public string ImgPath { get; set; }
 
-                public RestaurantReadDto(int Id, string Name, string ImgPath)
+                public RestaurantReadModel(int Id, string Name, string ImgPath)
                 {
                         this.Id = Id;
                         this.Name = Name;

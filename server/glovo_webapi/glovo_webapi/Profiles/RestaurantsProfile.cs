@@ -1,6 +1,5 @@
 using AutoMapper;
-using glovo_webapi.Dtos.Restaurant;
-using glovo_webapi.Models;
+using glovo_webapi.Models.Restaurant;
 
 namespace glovo_webapi.Profiles
 {
@@ -8,7 +7,7 @@ namespace glovo_webapi.Profiles
     {
         public RestaurantsProfile()
         {
-            CreateMap<Restaurant, RestaurantReadDto>();
+            CreateMap<Restaurant, RestaurantReadModel>();
         }
     }
 }

@@ -7,7 +7,7 @@ using glovo_webapi.Data;
 
 namespace glovo_webapi.Migrations
 {
-    [DbContext(typeof(GloboDBContext))]
+    [DbContext(typeof(GlovoDbContext))]
     partial class GloboDBContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

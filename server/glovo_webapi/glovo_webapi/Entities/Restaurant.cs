@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace glovo_webapi.Models
+namespace glovo_webapi.Models.Restaurant
 {
         public class Restaurant
         {

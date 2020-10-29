@@ -2,10 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
-using glovo_webapi.Dtos.Restaurant;
+using glovo_webapi.Models.Restaurant;
 using Newtonsoft.Json;
 using Xunit;
 using Xunit.Abstractions;
@@ -18,7 +16,7 @@ namespace glovo_webapi_test.Endpoints
         private HttpClient _client;
         private JsonSerializer _serializer;
 
-        private List<RestaurantReadDto> mockRestaurants;
+        private List<RestaurantReadModel> mockRestaurants;
         
         public RestaurantsEndpointsTests(ITestOutputHelper output)
         {
@@ -26,12 +24,12 @@ namespace glovo_webapi_test.Endpoints
             _client = new HttpClient();
             _serializer = new JsonSerializer();
             
-            mockRestaurants = new List<RestaurantReadDto>
+            mockRestaurants = new List<RestaurantReadModel>
                 {
-                    new RestaurantReadDto(1, "Kentucky Fried Chicken", "img/KFC_main.jpg"),
-                    new RestaurantReadDto(2, "McDonalds", "img/MD_main.jpg"),
-                    new RestaurantReadDto(3, "Burger King", "img/BK_main.jpg"),
-                    new RestaurantReadDto(4, "Krusty Krab", "img/KK_main.jpg"),
+                    new RestaurantReadModel(1, "Kentucky Fried Chicken", "img/KFC_main.jpg"),
+                    new RestaurantReadModel(2, "McDonalds", "img/MD_main.jpg"),
+                    new RestaurantReadModel(3, "Burger King", "img/BK_main.jpg"),
+                    new RestaurantReadModel(4, "Krusty Krab", "img/KK_main.jpg"),
                 }
                 ;
         }
@@ -42,7 +40,7 @@ namespace glovo_webapi_test.Endpoints
             //Query mock restaurants from DB
             HttpResponseMessage response = _client.GetAsync("https://localhost:5001/api/restaurants").Result;
             string responseBodyStr = response.Content.ReadAsStringAsync().Result;
-            List<RestaurantReadDto> queriedRestaurants = (List<RestaurantReadDto>) _serializer.Deserialize<IEnumerable<RestaurantReadDto>>(new JsonTextReader(new StringReader(responseBodyStr)));
+            List<RestaurantReadModel> queriedRestaurants = (List<RestaurantReadModel>) _serializer.Deserialize<IEnumerable<RestaurantReadModel>>(new JsonTextReader(new StringReader(responseBodyStr)));
 
             //Check if queried and expected restaurants are the same
             queriedRestaurants.Sort((r1, r2) => r1.Id - r2.Id);
@@ -59,13 +57,13 @@ namespace glovo_webapi_test.Endpoints
         public void GetRestaurantByIdTest()
         {
             //Query mock restaurants by Id from DB
-            List<RestaurantReadDto> queriedRestaurants = new List<RestaurantReadDto>();
-            for (int Id = 1; Id <= 4; Id++)
+            List<RestaurantReadModel> queriedRestaurants = new List<RestaurantReadModel>();
+            for (int id = 1; id <= 4; id++)
             {
-                string endpoint_url = "https://localhost:5001/api/restaurants/" + Id.ToString();
-                HttpResponseMessage response = _client.GetAsync(endpoint_url).Result;
+                string endpointUrl = "https://localhost:5001/api/restaurants/" + id.ToString();
+                HttpResponseMessage response = _client.GetAsync(endpointUrl).Result;
                 string responseBodyStr = response.Content.ReadAsStringAsync().Result;
-                RestaurantReadDto queriedRestaurant = (RestaurantReadDto) _serializer.Deserialize<RestaurantReadDto>(new JsonTextReader(new StringReader(responseBodyStr)));
+                RestaurantReadModel queriedRestaurant = (RestaurantReadModel) _serializer.Deserialize<RestaurantReadModel>(new JsonTextReader(new StringReader(responseBodyStr)));
                 queriedRestaurants.Add(queriedRestaurant);
             }
             
