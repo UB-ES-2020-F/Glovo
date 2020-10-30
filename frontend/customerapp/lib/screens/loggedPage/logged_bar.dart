@@ -1,9 +1,8 @@
+import 'package:customerapp/components/appBar/user_actions_bar.dart';
 import 'package:customerapp/components/text_link.dart';
-import 'package:customerapp/models/initial_logged.dart';
 import 'package:customerapp/styles/initial_logged.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:customerapp/screens/loggedPage/profile_settings.dart';
 
 class InitialLoggedBar extends StatelessWidget with PreferredSizeWidget {
   final double appBarHeight = 115.0;
@@ -22,56 +21,11 @@ class InitialLoggedBar extends StatelessWidget with PreferredSizeWidget {
                   padding: EdgeInsets.all(40),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [SearchBox(), UserActions()],
+                    children: [SearchBox(), UserActionsBar(BarType.initial)],
                   )))
         ],
       ),
       color: Theme.of(context).backgroundColor,
-    );
-  }
-}
-
-class UserActions extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    var initialLoggedModel = InitialLoggedModel();
-    return Row(
-      children: [
-        Row(
-          children: [
-            IconButton(
-              alignment: Alignment.topRight,
-              iconSize: 22.0,
-              color: Colors.white,
-              icon: Icon(Icons.location_on_outlined),
-              onPressed: () {},
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextLink(initialLoggedModel.direction, (context) {},
-                    streetNameTextLinks, streetNameTextLinksHover, context),
-                TextLink(initialLoggedModel.indicationsDirection, (context) {},
-                    indicationsTextLinks, indicationsTextLinksHover, context)
-              ],
-            )
-          ],
-        ),
-        IconButton(
-          iconSize: 35.0,
-          color: Colors.white,
-          icon: Icon(Icons.account_circle_outlined),
-          onPressed: () {
-            _openProfileSettings(context);
-          },
-        ),
-        IconButton(
-          iconSize: 35.0,
-          color: Colors.white,
-          icon: Icon(Icons.format_list_bulleted_outlined),
-          onPressed: () {},
-        )
-      ],
     );
   }
 }
@@ -90,14 +44,4 @@ class SearchBox extends StatelessWidget {
           searchBarTextLinksHover, context)
     ]);
   }
-}
-
-void _openProfileSettings(BuildContext context) {
-  Navigator.of(context).push(
-    PageRouteBuilder(
-        pageBuilder: (context, _, __) => ProfileSettings(context),
-        opaque: false,
-        barrierDismissible: true,
-        reverseTransitionDuration: Duration(milliseconds: 0)),
-  );
 }

@@ -1,5 +1,5 @@
 import 'package:customerapp/components/text_link.dart';
-import 'package:customerapp/models/initial_logged.dart';
+import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/styles/initial_logged.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';

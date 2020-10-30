@@ -14,14 +14,18 @@ class AnonRoute extends StatelessWidget {
       body: Center(
           child: Container(
               child: Center(
-        child: Text(
-          'Komet ',
-          style: TextStyle(
-              fontSize: 50,
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).accentColor),
-        ),
-      ))),
+                  child: Column(
+        children: [
+          Text(
+            'Komet ',
+            style: TextStyle(
+                fontSize: 50,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).accentColor),
+          ),
+          //FoodButton() <-- TODO Add when prepared to handle session
+        ],
+      )))),
     );
   }
 }

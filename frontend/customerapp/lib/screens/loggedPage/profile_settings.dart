@@ -1,5 +1,5 @@
 import 'package:customerapp/components/text_link.dart';
-import 'package:customerapp/models/initial_logged.dart';
+import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/styles/initial_logged.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -10,7 +10,7 @@ class ProfileSettings extends StatelessWidget {
   ProfileSettings(BuildContext context);
   @override
   Widget build(BuildContext context) {
-    var initialLoggedModel = InitialLoggedModel();
+    var initialLoggedModel = LoggedModel();
     return Padding(
       padding: EdgeInsets.fromLTRB(10, 80, 60, 10),
       child: Align(

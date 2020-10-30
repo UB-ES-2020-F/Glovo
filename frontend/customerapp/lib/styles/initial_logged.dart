@@ -53,3 +53,7 @@ final editTextLinksHoverBold = TextStyle(
   fontWeight: FontWeight.bold,
   color: Color(0xFF104A3E),
 );
+
+final locationInitialColor = Colors.white;
+
+final buttonMainColor = Colors.white;
