@@ -1,64 +1,32 @@
 import 'package:customerapp/screens/signUp/signup_dialog.dart';
 import 'package:customerapp/screens/signIn/signin_dialog.dart';
-import 'package:customerapp/styles/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:customerapp/styles/signup.dart';
+import 'package:customerapp/screens/anon_bar.dart';
 
 class AnonRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-          preferredSize: Size.fromHeight(90.0), // here the desired height
-          child: AppBar(
-            actions: [
-              Padding(
-                  padding: EdgeInsets.symmetric(vertical: 9),
-                  child: SignUpButton()),
-              Padding(
-                  padding: EdgeInsets.only(top: 9, bottom: 9, left: 10),
-                  child: LogInButton())
-            ],
-          )),
-      body: Container(
-          decoration: BoxDecoration(color: Color(0xFFffc244)),
-          child: FoodButton()), //To delete
-    );
-  }
-}
-
-class FoodButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        padding: EdgeInsets.all(20),
-        child: RaisedButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/restaurant-list');
-          },
-          color: Colors.white,
-          textColor: Colors.white,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Image(
-                image: AssetImage('resources/images/food_logo.png'),
-                height: 50,
-                width: 50,
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 8),
-                child: Text(
-                  'Food',
-                  style: categoryButtonLabel,
-                ),
-              )
-            ],
+      backgroundColor: Theme.of(context).backgroundColor,
+      appBar: AnonBar(),
+      body: Center(
+          child: Container(
+              child: Center(
+                  child: Column(
+        children: [
+          Text(
+            'Komet ',
+            style: TextStyle(
+                fontSize: 50,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).accentColor),
           ),
-          padding: EdgeInsets.all(30),
-          shape: CircleBorder(),
-        ));
+          //FoodButton() <-- TODO Add when prepared to handle session
+        ],
+      )))),
+    );
   }
 }
 

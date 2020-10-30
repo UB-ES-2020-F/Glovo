@@ -1,9 +1,11 @@
+import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/signup.dart';
+import 'package:customerapp/screens/loggedPage/initial_logged_page.dart';
 import 'package:customerapp/screens/anon_root.dart';
 import 'package:customerapp/screens/restaurantList/restaurant_list.dart';
 import 'package:customerapp/screens/signIn/signin_page.dart';
 import 'package:customerapp/screens/signUp/signup_page.dart';
-import 'package:customerapp/styles/Glovo.dart';
+import 'package:customerapp/styles/Komet.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,6 +23,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => SignUpModel()),
+        ChangeNotifierProvider(create: (context) => LoggedModel()),
         ChangeNotifierProvider(create: (context) => SignInModel()),
         ChangeNotifierProvider(create: (context) => RestaurantsListModel()),
       ],
@@ -33,6 +36,7 @@ class MyApp extends StatelessWidget {
             '/sign-up': (context) => SignUpPage(),
             '/sign-in': (context) => SignInPage(),
             '/restaurant-list': (context) => RestaurantsList(),
+            '/initial-logged-in': (context) => InitialLogged(),
           }),
     );
   }

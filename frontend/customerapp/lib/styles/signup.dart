@@ -1,4 +1,4 @@
-import 'dart:html';
+//import 'dart:html';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 
@@ -68,7 +68,7 @@ final signUpTextLinksHoverBold = TextStyle(
   color: Color(0xFF528A84),
 );
 
-final registerToGlovoTextStyle = GoogleFonts.raleway(
+final registerToKometTextStyle = GoogleFonts.raleway(
     color: Colors.black,
     fontSize: 21,
     fontWeight: FontWeight.w700,

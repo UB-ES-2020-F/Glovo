@@ -4,7 +4,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:customerapp/styles/signup.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+//import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 class SignInFormPage extends StatelessWidget {
@@ -16,8 +16,8 @@ class SignInFormPage extends StatelessWidget {
       Center(
           child: Container(
         child: Text(
-          'Login to Glovo',
-          style: registerToGlovoTextStyle,
+          'Login to Komet',
+          style: registerToKometTextStyle,
         ),
       )),
       SignInForm(),
@@ -28,7 +28,7 @@ class SignInFormPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "New to Glovo? ",
+                    "New to Komet? ",
                     style: TextStyle(color: Color(0xFF9B9B9B)),
                   ),
                   TextLink('Sign up', (context) {
@@ -146,15 +146,8 @@ class SignUpButton extends StatelessWidget {
             onPressed: signUpModel.formValid
                 ? () {
                     if (signUpModel.formKey.currentState.validate()) {
-                      Fluttertoast.showToast(
-                          msg: "Hola",
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.CENTER,
-                          timeInSecForIosWeb: 1,
-                          backgroundColor: Colors.red,
-                          textColor: Colors.white,
-                          fontSize: 16.0);
-                      signUpModel.formKey.currentState.save();
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                          '/initial-logged-in', (route) => false);
                     }
                   }
                 : null,
