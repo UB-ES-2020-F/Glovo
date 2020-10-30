@@ -24,7 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-
+  hover_effect: ^0.6.0
   provider: ^4.3.2+2
   email_validator: ^1.0.5
   fluttertoast: ^7.1.1

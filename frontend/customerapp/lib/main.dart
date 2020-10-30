@@ -40,11 +40,12 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
           theme: appTheme,
           title: 'Komet',
-          initialRoute: '/',
+          initialRoute: '/restaurant-list',
           routes: {
             '/': (context) => Products_sample(),
             '/sign-up': (context) => SignUpPage(),
             '/sign-in': (context) => SignInPage(),
+            '/products': (context) => Products_sample(),
             '/restaurant-list': (context) => RestaurantsList(),
             '/initial-logged-in': (context) => InitialLogged(),
           }),
