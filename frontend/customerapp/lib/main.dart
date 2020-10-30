@@ -1,7 +1,11 @@
 import 'package:customerapp/models/initial_logged.dart';
+import 'package:customerapp/models/product/product_overview.dart';
 import 'package:customerapp/models/signup.dart';
 import 'package:customerapp/screens/loggedPage/initial_logged_page.dart';
 import 'package:customerapp/screens/anon_root.dart';
+import 'package:customerapp/screens/products/concrete_product.dart';
+import 'package:customerapp/screens/products/products_sample.dart';
+import 'package:customerapp/screens/products/prueba.dart';
 import 'package:customerapp/screens/signIn/signin_page.dart';
 import 'package:customerapp/screens/signUp/signup_page.dart';
 import 'package:customerapp/styles/Komet.dart';
@@ -29,7 +33,7 @@ class MyApp extends StatelessWidget {
           title: 'Komet',
           initialRoute: '/',
           routes: {
-            '/': (context) => AnonRoute(),
+            '/': (context) => Products_sample(),
             '/sign-up': (context) => SignUpPage(),
             '/sign-in': (context) => SignInPage(),
             '/initial-logged-in': (context) => InitialLogged(),

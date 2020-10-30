@@ -8,7 +8,28 @@ class Concrete_Product extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return Center(
+        child: Container(
+      child: Card(
+        child: Column(mainAxisSize: MainAxisSize.max, children: [
+          ListTile(
+              title: Text(_product_overview.name),
+              subtitle: Text(_product_overview.prod_description)),
+          Expanded(
+              child: Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("3 euros"),
+                        IconButton(
+                          icon: Icon(Icons.add),
+                          iconSize: 30,
+                        )
+                      ])))
+        ]),
+      ),
+    ));
   }
 }
