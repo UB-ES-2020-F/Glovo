@@ -35,12 +35,16 @@ class DefaultLoggedBar extends StatelessWidget with PreferredSizeWidget {
 class Logo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Text(
-      'Komet ',
-      style: TextStyle(
-          fontSize: 30,
-          fontWeight: FontWeight.bold,
-          color: Theme.of(context).accentColor),
-    );
+    return InkWell(
+        onTap: () {
+          return Navigator.pushNamed(context, '/restaurant-list');
+        },
+        child: Text(
+          'Komet ',
+          style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).accentColor),
+        ));
   }
 }
