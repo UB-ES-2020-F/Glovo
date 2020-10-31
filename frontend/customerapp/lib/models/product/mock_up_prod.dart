@@ -25,6 +25,11 @@ class Mock_up_prod {
         "a la italiana",
         13,
         'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/homemade-spaghetti-sauce-horizontal-1530890913.jpg')));
+    _prods.add(Concrete_Product_Card(Product_overview(
+        "Tiramisu",
+        "estilo clasico",
+        5,
+        'https://www.gimmesomeoven.com/wp-content/uploads/2020/07/Tiramisu-Recipe-Cover.jpg')));
   }
 
   List get prod {
