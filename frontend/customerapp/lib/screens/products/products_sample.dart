@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:customerapp/models/product/product_overview.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-import 'concrete_product.dart';
+import 'concrete_product_card.dart';
 
 class Products_sample extends StatelessWidget {
   List prods = List();
@@ -66,12 +66,6 @@ class Product_grid extends StatelessWidget {
       itemCount: prods.length,
       crossAxisCount: MediaQuery.of(context).size.width > 600 ? 4 : 2,
       itemBuilder: (context, index) {
-        /*return RestaurantsListCard(Restaurant(
-            1,
-            'Tagliatella',
-            TimeInterval(10, 20),
-            2.5,
-            'https://dam.cocinafacil.com.mx/wp-content/uploads/2020/04/dumplings.jpg'));*/
         return prods.asMap()[index];
       },
       staggeredTileBuilder: (int index) => StaggeredTile.fit(1),

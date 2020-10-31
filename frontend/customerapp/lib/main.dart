@@ -3,7 +3,7 @@ import 'package:customerapp/models/product/product_overview.dart';
 import 'package:customerapp/models/signup.dart';
 import 'package:customerapp/screens/loggedPage/initial_logged_page.dart';
 import 'package:customerapp/screens/anon_root.dart';
-import 'package:customerapp/screens/products/concrete_product.dart';
+import 'package:customerapp/screens/products/concrete_product_card.dart';
 import 'package:customerapp/screens/products/products_sample.dart';
 import 'package:customerapp/screens/products/prueba.dart';
 
@@ -11,6 +11,7 @@ import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/signup.dart';
 import 'package:customerapp/screens/loggedPage/initial_logged_page.dart';
 import 'package:customerapp/screens/anon_root.dart';
+import 'package:customerapp/screens/products/screen_product.dart';
 import 'package:customerapp/screens/restaurantList/restaurant_list.dart';
 
 import 'package:customerapp/screens/signIn/signin_page.dart';
@@ -40,13 +41,14 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
           theme: appTheme,
           title: 'Komet',
-          initialRoute: '/restaurant-list',
+          initialRoute: '/',
           routes: {
-            '/': (context) => Products_sample(),
+            '/': (context) => RestaurantsList(),
             '/sign-up': (context) => SignUpPage(),
             '/sign-in': (context) => SignInPage(),
             '/products': (context) => Products_sample(),
             '/restaurant-list': (context) => RestaurantsList(),
+            '/concrete_product': (context) => Screen_product(),
             '/initial-logged-in': (context) => InitialLogged(),
           }),
     );

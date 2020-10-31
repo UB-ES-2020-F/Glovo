@@ -6,10 +6,10 @@ import 'package:customerapp/styles/restaurant_list.dart';
 import 'package:flutter/material.dart';
 import 'package:icon_shadow/icon_shadow.dart';
 
-class Concrete_Product extends StatelessWidget {
+class Concrete_Product_Card extends StatelessWidget {
   Product_overview _product_overview;
 
-  Concrete_Product(this._product_overview);
+  Concrete_Product_Card(this._product_overview);
 
   @override
   Widget build(BuildContext context) {
@@ -39,10 +39,23 @@ class Concrete_Product extends StatelessWidget {
                     IconButton(
                       icon: Icon(Icons.add),
                       iconSize: 30,
-                      onPressed: () => showDialog(
+                      onPressed: MediaQuery.of(context).size.width > 600
+                          ? () {
+                              return showDialog(
+                                  context: context,
+                                  builder: (context) =>
+                                      Dialog_product(_product_overview));
+                            }
+                          : () {
+                              return Navigator.pushNamed(
+                                  context, '/concrete_product',
+                                  arguments: _product_overview);
+                            }
+                      /*() => showDialog(
                           context: context,
                           builder: (context) =>
-                              Dialog_product(_product_overview)),
+                              Dialog_product(_product_overview))*/
+                      ,
                     )
                   ]))
         ]),
