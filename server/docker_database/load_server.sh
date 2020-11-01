@@ -31,6 +31,7 @@ until sudo docker exec glovo_server psql -U glovodev -d glovodb &> /dev/null; do
     echo -e "${Yellow}Waiting for postgres server...${Color_off}"
     sleep 1
 done
+dotnet ef database update --project ../glovo_webapi/glovo_webapi
 sudo docker cp db_script.sql glovo_server:/db_script.sql
 sudo docker exec glovo_server psql -U glovodev -d glovodb -a -f /db_script.sql
 

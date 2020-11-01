@@ -1,5 +1,4 @@
-using glovo_webapi.Models;
-using glovo_webapi.Models.Restaurant;
+using glovo_webapi.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace glovo_webapi.Data
@@ -12,5 +11,6 @@ namespace glovo_webapi.Data
         }
         
         public DbSet<Restaurant> Restaurants { get; set; }
+        public DbSet<Product> Products { get; set; }
     }
 }

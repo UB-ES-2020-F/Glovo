@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using AutoMapper;
+using glovo_webapi.Entities;
 using glovo_webapi.Models.Restaurant;
 using glovo_webapi.Services.Restaurants;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +21,7 @@ namespace glovo_webapi.Controllers
         }
         
         [HttpGet]
-        public ActionResult<IEnumerable<Restaurant>> GetAllRestaurants()
+        public ActionResult<IEnumerable<RestaurantReadModel>> GetAllRestaurants()
         {
             IEnumerable<Restaurant> restaurants = _service.GetAllRestaurants();
             return Ok(_mapper.Map<IEnumerable<RestaurantReadModel>>(restaurants));

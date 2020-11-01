@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using glovo_webapi.Data;
 using glovo_webapi.Services;
+using glovo_webapi.Services.Products;
 using glovo_webapi.Services.Restaurants;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -38,6 +39,7 @@ namespace glovo_webapi
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             
             services.AddScoped<IRestaurantsService, NpgsqlRestaurantsService>();
+            services.AddScoped<IProductsService, NpgsqlProductsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

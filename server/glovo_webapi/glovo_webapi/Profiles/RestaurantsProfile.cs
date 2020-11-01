@@ -1,4 +1,5 @@
 using AutoMapper;
+using glovo_webapi.Entities;
 using glovo_webapi.Models.Restaurant;
 
 namespace glovo_webapi.Profiles

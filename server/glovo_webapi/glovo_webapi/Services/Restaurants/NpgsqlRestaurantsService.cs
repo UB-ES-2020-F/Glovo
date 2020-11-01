@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using glovo_webapi.Data;
-using glovo_webapi.Models;
-using glovo_webapi.Models.Restaurant;
+using glovo_webapi.Entities;
 
 namespace  glovo_webapi.Services.Restaurants
 {
@@ -22,7 +21,7 @@ namespace  glovo_webapi.Services.Restaurants
 
         public Restaurant GetRestaurantById(int id)
         {
-            return _context.Restaurants.FirstOrDefault(p => p.Id == id);
+            return _context.Restaurants.FirstOrDefault(r => r.Id == id);
         }
     }
 }

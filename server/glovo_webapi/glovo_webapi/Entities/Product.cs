@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace glovo_webapi.Entities
 {
-        public class Restaurant
+        public class Product
         {
                 [Key]
                 public int Id { get; set; }
@@ -11,12 +11,19 @@ namespace glovo_webapi.Entities
                 public string Name { get; set; }
                 
                 public string ImgPath { get; set; }
+                
+                public string Description { get; set; }
+                
+                [Required]
+                public float Price { get; set; }
 
-                public Restaurant(int Id, string Name, string ImgPath)
+                public Product(int Id, string Name, string ImgPath, string Description, float Price)
                 {
                         this.Id = Id;
                         this.Name = Name;
                         this.ImgPath = ImgPath;
+                        this.Description = Description;
+                        this.Price = Price;
                 }
                 
         }

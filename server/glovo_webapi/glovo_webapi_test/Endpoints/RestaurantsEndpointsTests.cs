@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using glovo_webapi.Models.Restaurant;
 using Newtonsoft.Json;
@@ -76,6 +77,15 @@ namespace glovo_webapi_test.Endpoints
                 Assert.Equal(restaurantPair.Expected.Name, restaurantPair.Queried.Name);
                 Assert.Equal(restaurantPair.Expected.ImgPath, restaurantPair.Queried.ImgPath);
             }
+        }
+        
+        [Fact]
+        public void GetRestaurantByIdNotFoundTest()
+        {
+            //Query inexistent products from DB
+            string endpointUrl = "https://localhost:5001/api/restaurants/9999";
+            HttpResponseMessage response = _client.GetAsync(endpointUrl).Result;
+            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
     }
 }
