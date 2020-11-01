@@ -19,9 +19,9 @@ namespace glovo_webapi.Services.UserService
     
     public class UserService : IUserService
     {
-        private GloboDBContext _context;
+        private GlovoDbContext _context;
 
-        public UserService(GloboDBContext context)
+        public UserService(GlovoDbContext context)
         {
             _context = context;
         }
@@ -74,7 +74,7 @@ namespace glovo_webapi.Services.UserService
 
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
-
+            Console.Write("USER ID="+user.Id);
             _context.Users.Add(user);
             _context.SaveChanges();
 

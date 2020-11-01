@@ -1,5 +1,10 @@
 DELETE FROM "Restaurants";
 DELETE FROM "Products";
+DELETE FROM "Users";
+
+INSERT INTO "Users" ("Id", "Name", "Email", "PasswordHash", "PasswordSalt")
+VALUES
+    (1, 'Test 1', 'test1@glovo.net', null, null);
 
 INSERT INTO "Restaurants" ("Id", "Name", "ImgPath")
 VALUES

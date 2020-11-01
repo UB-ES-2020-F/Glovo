@@ -16,9 +16,9 @@ using Microsoft.Extensions.FileProviders;
 
 namespace glovo_webapi.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
         private IUserService _userService;
