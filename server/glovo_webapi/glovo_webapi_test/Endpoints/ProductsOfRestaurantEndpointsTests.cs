@@ -91,7 +91,7 @@ namespace glovo_webapi_test.Endpoints
             for (int idProd = 1; idProd <= 12; idProd++)
             {
                 int idRest = (idProd-1) / 3 + 1;
-                string endpointUrl = "https://localhost:5001/api/productsofrestaurant/" + idRest.ToString() +
+                string endpointUrl = "https://localhost:5001/api/productsofrestaurant/" + idRest.ToString() + "/" +
                                      idProd.ToString();
                 HttpResponseMessage response = _client.GetAsync(endpointUrl).Result;
                 string responseBodyStr = response.Content.ReadAsStringAsync().Result;
