@@ -1,11 +1,11 @@
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/product/product_overview.dart';
 import 'package:customerapp/models/signup.dart';
+import 'package:customerapp/screens/anon_bar.dart';
 import 'package:customerapp/screens/loggedPage/initial_logged_page.dart';
 import 'package:customerapp/screens/anon_root.dart';
 import 'package:customerapp/screens/products/concrete_product_card.dart';
 import 'package:customerapp/screens/products/products_sample.dart';
-import 'package:customerapp/screens/products/prueba.dart';
 
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/signup.dart';
@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
           title: 'Komet',
           initialRoute: '/',
           routes: {
-            '/': (context) => RestaurantsList(),
+            '/': (context) => AnonRoute(),
             '/sign-up': (context) => SignUpPage(),
             '/sign-in': (context) => SignInPage(),
             '/products': (context) => Products_sample(),
