@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using glovo_webapi.Entities;
 using glovo_webapi.Models.Product;
@@ -24,6 +25,10 @@ namespace glovo_webapi.Controllers
         public ActionResult<ProductReadModel> GetAllProductsOfRestaurant(int idRest)
         {
             IEnumerable<Product> products = _service.GetAllProductsOfRestaurant(idRest);
+            if (products == null || !products.Any())
+            {
+                return NotFound();
+            }
             return Ok(_mapper.Map<IEnumerable<ProductReadModel>>(products));
         }
 

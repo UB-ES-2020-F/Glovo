@@ -38,8 +38,8 @@ namespace glovo_webapi
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             
-            services.AddScoped<IRestaurantsService, MockRestaurantsService>();
-            services.AddScoped<IProductsService, MockProductsService>();
+            services.AddScoped<IRestaurantsService, NpgsqlRestaurantsService>();
+            services.AddScoped<IProductsService, NpgsqlProductsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
