@@ -16,14 +16,18 @@ namespace glovo_webapi.Entities
                 
                 [Required]
                 public float Price { get; set; }
+                
+                [Required]
+                public int IdRest { get; set; }
 
-                public Product(int Id, string Name, string ImgPath, string Description, float Price)
+                public Product(int Id, string Name, string ImgPath, string Description, float Price, int IdRest)
                 {
                         this.Id = Id;
                         this.Name = Name;
                         this.ImgPath = ImgPath;
                         this.Description = Description;
                         this.Price = Price;
+                        this.IdRest = IdRest;
                 }
                 
         }

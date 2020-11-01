@@ -23,5 +23,15 @@ namespace  glovo_webapi.Services.Products
         {
             return _context.Products.FirstOrDefault(p => p.Id == id);
         }
+
+        public IEnumerable<Product> GetAllProductsOfRestaurant(int idRest)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Product GetProductOfRestaurantById(int idRest, int idProd)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

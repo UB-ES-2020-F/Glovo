@@ -11,14 +11,17 @@ namespace glovo_webapi.Models.Product
                 public string Description { get; set; }
                 
                 public float Price { get; set; }
+                
+                public int IdRest { get; set; }
 
-                public ProductReadModel(int Id, string Name, string ImgPath, string Description, float Price)
+                public ProductReadModel(int Id, string Name, string ImgPath, string Description, float Price, int IdRest)
                 {
                         this.Id = Id;
                         this.Name = Name;
                         this.ImgPath = ImgPath;
                         this.Description = Description;
                         this.Price = Price;
+                        this.IdRest = IdRest;
                 }
                 
         }

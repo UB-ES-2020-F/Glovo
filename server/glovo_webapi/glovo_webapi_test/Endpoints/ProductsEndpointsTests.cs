@@ -29,18 +29,18 @@ namespace glovo_webapi_test.Endpoints
             
             mockProducts = new List<ProductReadModel>
                 {
-                    new ProductReadModel(1, "Chicken bucket", "img/chicken_bucket.jpg", "Delicioso cubo de pollo, contiene 16 piezas", 14.00f),
-                    new ProductReadModel(2, "Chicken bucket XXL", "img/chicken_bucket_2.jpg", "Deliciosisimo cubo de pollo, contiene 40 piezas", 30.00f),
-                    new ProductReadModel(3, "Chicken bucket XXXXL", "img/chicken_bucket_3.jpg", "Delissssssssiooooosssssso cubo de pollo, contiene 99 piezas", 65.00f),
-                    new ProductReadModel(4, "Patatas S", "img/french_fries_1.jpg", "2 patatas fritas rancias", 2.99f),
-                    new ProductReadModel(5, "Patatas M", "img/french_fries_2.jpg", "3 patatas fritas rancias", 3.99f),
-                    new ProductReadModel(6, "Patatas L", "img/french_fries_3.jpg", "3 patatas fritas no rancias", 4.99f),
-                    new ProductReadModel(7, "Hambur Guesa", "img/burger1.jpg", "This hamburger will prevent you from starving", 7.95f),
-                    new ProductReadModel(8, "Hambur Guesa Guesa", "img/burger2.jpg", "This hamburger will prevent you from starving for two days", 7.96f),
-                    new ProductReadModel(9, "Hambur Goza", "img/burger3.jpg", "This hamburger will prevent you from starving for one week", 8.95f),
-                    new ProductReadModel(10, "Kangreburger", "img/kkburger.jpg", "Delicious krab burger", 1.00f),
-                    new ProductReadModel(11, "Kangrefries", "img/kkfries.jpg", "Delicious krab fries", 1.00f),
-                    new ProductReadModel(12, "Kangrecola", "img/kkcola.jpg", "Delicious krab cola", 1.00f)
+                    new ProductReadModel(1, "Chicken bucket", "img/chicken_bucket.jpg", "Delicioso cubo de pollo, contiene 16 piezas", 14.00f, 1),
+                    new ProductReadModel(2, "Chicken bucket XXL", "img/chicken_bucket_2.jpg", "Deliciosisimo cubo de pollo, contiene 40 piezas", 30.00f, 1),
+                    new ProductReadModel(3, "Chicken bucket XXXXL", "img/chicken_bucket_3.jpg", "Delissssssssiooooosssssso cubo de pollo, contiene 99 piezas", 65.00f, 1),
+                    new ProductReadModel(4, "Patatas S", "img/french_fries_1.jpg", "2 patatas fritas rancias", 2.99f, 2),
+                    new ProductReadModel(5, "Patatas M", "img/french_fries_2.jpg", "3 patatas fritas rancias", 3.99f, 2),
+                    new ProductReadModel(6, "Patatas L", "img/french_fries_3.jpg", "3 patatas fritas no rancias", 4.99f, 2),
+                    new ProductReadModel(7, "Hambur Guesa", "img/burger1.jpg", "This hamburger will prevent you from starving", 7.95f, 3),
+                    new ProductReadModel(8, "Hambur Guesa Guesa", "img/burger2.jpg", "This hamburger will prevent you from starving for two days", 7.96f, 3),
+                    new ProductReadModel(9, "Hambur Goza", "img/burger3.jpg", "This hamburger will prevent you from starving for one week", 8.95f, 3),
+                    new ProductReadModel(10, "Kangreburger", "img/kkburger.jpg", "Delicious krab burger", 1.00f, 4),
+                    new ProductReadModel(11, "Kangrefries", "img/kkfries.jpg", "Delicious krab fries", 1.00f, 4),
+                    new ProductReadModel(12, "Kangrecola", "img/kkcola.jpg", "Delicious krab cola", 1.00f, 4)
                 }
                 ;
         }

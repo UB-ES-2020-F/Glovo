@@ -17,7 +17,7 @@ namespace glovo_webapi.Services.Restaurants
 
         public Restaurant GetRestaurantById(int id)
         {
-            return new Restaurant(0, "Kentucky Friend Chicken", "img/stores/KFC_main.jpg");
+            return new Restaurant(id, "Kentucky Friend Chicken", "img/stores/KFC_main.jpg");
         }
     }
 }
