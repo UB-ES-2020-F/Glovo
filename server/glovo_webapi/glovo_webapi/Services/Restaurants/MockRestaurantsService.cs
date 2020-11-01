@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using glovo_webapi.Models;
+using glovo_webapi.Entities;
 
-namespace glovo_webapi.Services
+namespace glovo_webapi.Services.Restaurants
 {
     public class MockRestaurantsService : IRestaurantsService
     {
