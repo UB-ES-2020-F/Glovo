@@ -26,28 +26,18 @@ class Products_sample extends StatelessWidget {
         appBar: DefaultLoggedBar(),
         body: Container(
             padding: EdgeInsets.only(left: 20, right: 20),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    //alignment: Alignment.centerLeft,
-                    padding: EdgeInsets.only(top: 20),
-                    child: Text(
-                      'Products',
-                      style: Theme.of(context).textTheme.headline1,
-                    ),
-                  ),
-                  Expanded(
-                      child: Container(
-                          child: Center(
-                              child: Product_grid(
-                                  prods) /*GridView.count(
-                      padding: EdgeInsets.all(20.0),
-                      children: [for (var v in prods) v],
-                      crossAxisCount: 4,
-                      childAspectRatio: 0.8,*/
-                              ))),
-                ])));
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Container(
+                padding: EdgeInsets.only(top: 20),
+                child: Text(
+                  'Products',
+                  style: Theme.of(context).textTheme.headline1,
+                ),
+              ),
+              Expanded(
+                  child: Container(child: Center(child: Product_grid(prods)))),
+            ])));
   }
 }
 

@@ -2,6 +2,7 @@ import 'package:customerapp/models/product/product_overview.dart';
 import 'package:customerapp/models/restaurants.dart';
 import 'package:customerapp/screens/products/dialog_product.dart';
 import 'package:customerapp/screens/signIn/signin_dialog.dart';
+import 'package:customerapp/styles/product.dart';
 import 'package:customerapp/styles/restaurant_list.dart';
 import 'package:flutter/material.dart';
 import 'package:icon_shadow/icon_shadow.dart';
@@ -62,9 +63,14 @@ class Widget_stateful_card extends State<StatefulWidget> {
                             //'https://pngimg.com/uploads/pasta/pasta_PNG58.png',
                           ),
                           ListTile(
-                              title: Text(_product_overview.name),
-                              subtitle:
-                                  Text(_product_overview.prod_description)),
+                              title: Text(
+                                _product_overview.name,
+                                style: TitleStyleProduct,
+                              ),
+                              subtitle: Padding(
+                                child: Text(_product_overview.prod_description),
+                                padding: EdgeInsets.only(top: 7),
+                              )),
                           Padding(
                               padding: EdgeInsets.all(10.0),
                               child: Row(
@@ -72,9 +78,12 @@ class Widget_stateful_card extends State<StatefulWidget> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text("${_product_overview.price} Euros"),
+                                    Text("${_product_overview.price} €"),
                                     IconButton(
-                                      icon: Icon(Icons.add),
+                                      icon: Icon(
+                                        Icons.add,
+                                        color: Color(0xff43C1A4),
+                                      ),
                                       iconSize: 30,
                                       onPressed: () => change_product()
                                       /*() => showDialog(
