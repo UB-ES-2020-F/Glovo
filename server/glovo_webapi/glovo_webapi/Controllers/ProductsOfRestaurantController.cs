@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace glovo_webapi.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/restaurants")]
     public class ProductsOfRestaurantController : ControllerBase
     {
         private readonly IProductsService _service;
@@ -21,7 +21,7 @@ namespace glovo_webapi.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("{idRest}")]
+        [HttpGet("{idRest}/products")]
         public ActionResult<ProductReadModel> GetAllProductsOfRestaurant(int idRest)
         {
             IEnumerable<Product> products = _service.GetAllProductsOfRestaurant(idRest);
@@ -32,7 +32,7 @@ namespace glovo_webapi.Controllers
             return Ok(_mapper.Map<IEnumerable<ProductReadModel>>(products));
         }
 
-        [HttpGet("{idRest}/{idProd}")]
+        [HttpGet("{idRest}/products/{idProd}")]
         public ActionResult<ProductReadModel> GetProductOfRestaurantById(int idRest, int idProd)
         {
             Product foundProduct = _service.GetProductOfRestaurantById(idRest, idProd);
@@ -42,6 +42,5 @@ namespace glovo_webapi.Controllers
             }
             return Ok(_mapper.Map<ProductReadModel>(foundProduct));            
         }
-        
     }
 }

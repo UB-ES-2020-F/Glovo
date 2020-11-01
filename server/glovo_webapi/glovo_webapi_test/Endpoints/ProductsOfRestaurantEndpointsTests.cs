@@ -64,7 +64,7 @@ namespace glovo_webapi_test.Endpoints
             //Query mock products by Id of Restaurant from DB
             for (int idRest = 1; idRest <= 4; idRest++)
             {
-                string endpointUrl = "https://localhost:5001/api/productsofrestaurant/" + idRest.ToString();
+                string endpointUrl = "https://localhost:5001/api/restaurants/" + idRest.ToString() + "/products";
                 HttpResponseMessage response = _client.GetAsync(endpointUrl).Result;
                 string responseBodyStr = response.Content.ReadAsStringAsync().Result;
                 List<ProductReadModel> queriedProducts = (List<ProductReadModel>) _serializer.Deserialize<IEnumerable<ProductReadModel>>(new JsonTextReader(new StringReader(responseBodyStr)));
@@ -91,7 +91,7 @@ namespace glovo_webapi_test.Endpoints
             for (int idProd = 1; idProd <= 12; idProd++)
             {
                 int idRest = (idProd-1) / 3 + 1;
-                string endpointUrl = "https://localhost:5001/api/productsofrestaurant/" + idRest.ToString() + "/" +
+                string endpointUrl = "https://localhost:5001/api/restaurants/" + idRest.ToString() + "/products/" +
                                      idProd.ToString();
                 HttpResponseMessage response = _client.GetAsync(endpointUrl).Result;
                 string responseBodyStr = response.Content.ReadAsStringAsync().Result;
@@ -111,7 +111,7 @@ namespace glovo_webapi_test.Endpoints
         public void GetAllProductsOfRestaurantNotFoundTest()
         {
             //Query inexistent products from DB
-            string endpointUrl = "https://localhost:5001/api/productsofrestaurant/9999";
+            string endpointUrl = "https://localhost:5001/api/restaurants/9999/products";
             HttpResponseMessage response = _client.GetAsync(endpointUrl).Result;
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
@@ -120,7 +120,7 @@ namespace glovo_webapi_test.Endpoints
         public void GetProductOfRestaurantByIdNotFoundTest()
         {
             //Query inexistent products from DB
-            string endpointUrl = "https://localhost:5001/api/productsofrestaurant/9999/9999";
+            string endpointUrl = "https://localhost:5001/api/restaurants/9999/products/9999";
             HttpResponseMessage response = _client.GetAsync(endpointUrl).Result;
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
