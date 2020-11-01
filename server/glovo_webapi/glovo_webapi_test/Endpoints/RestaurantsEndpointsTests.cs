@@ -45,7 +45,7 @@ namespace glovo_webapi_test.Endpoints
 
             //Check if queried and expected restaurants are the same
             queriedRestaurants.Sort((r1, r2) => r1.Id - r2.Id);
-            var restaurants = mockRestaurants.Zip(mockRestaurants, (mockRestaurant, queriedRestaurant) => new { Expected = mockRestaurant, Queried = queriedRestaurant });
+            var restaurants = mockRestaurants.Zip(queriedRestaurants, (mockRestaurant, queriedRestaurant) => new { Expected = mockRestaurant, Queried = queriedRestaurant });
             foreach(var restaurantPair in restaurants)
             {
                 Assert.Equal(restaurantPair.Expected.Id, restaurantPair.Queried.Id);
@@ -70,7 +70,7 @@ namespace glovo_webapi_test.Endpoints
             
             //Check if queried and expected restaurants are the same
             queriedRestaurants.Sort((r1, r2) => r1.Id - r2.Id);
-            var restaurants = mockRestaurants.Zip(mockRestaurants, (mockRestaurant, queriedRestaurant) => new { Expected = mockRestaurant, Queried = queriedRestaurant });
+            var restaurants = mockRestaurants.Zip(queriedRestaurants, (mockRestaurant, queriedRestaurant) => new { Expected = mockRestaurant, Queried = queriedRestaurant });
             foreach(var restaurantPair in restaurants)
             {
                 Assert.Equal(restaurantPair.Expected.Id, restaurantPair.Queried.Id);

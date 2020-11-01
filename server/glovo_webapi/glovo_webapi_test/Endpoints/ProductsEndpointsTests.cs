@@ -55,7 +55,7 @@ namespace glovo_webapi_test.Endpoints
 
             //Check if queried and expected products are the same
             queriedProducts.Sort((r1, r2) => r1.Id - r2.Id);
-            var products = mockProducts.Zip(mockProducts, (mockProduct, queriedProduct) => new { Expected = mockProduct, Queried = queriedProduct });
+            var products = mockProducts.Zip(queriedProducts, (mockProduct, queriedProduct) => new { Expected = mockProduct, Queried = queriedProduct });
             foreach(var productPair in products)
             {
                 Assert.Equal(productPair.Expected.Id, productPair.Queried.Id);
@@ -63,6 +63,7 @@ namespace glovo_webapi_test.Endpoints
                 Assert.Equal(productPair.Expected.ImgPath, productPair.Queried.ImgPath);
                 Assert.Equal(productPair.Expected.Description, productPair.Queried.Description);
                 Assert.Equal(productPair.Expected.Price, productPair.Queried.Price);
+                Assert.Equal(productPair.Expected.IdRest, productPair.Queried.IdRest);
             }
         }
         
@@ -82,7 +83,7 @@ namespace glovo_webapi_test.Endpoints
             
             //Check if queried and expected products are the same
             queriedProducts.Sort((r1, r2) => r1.Id - r2.Id);
-            var products = mockProducts.Zip(mockProducts, (mockProduct, queriedProduct) => new { Expected = mockProduct, Queried = queriedProduct });
+            var products = mockProducts.Zip(queriedProducts, (mockProduct, queriedProduct) => new { Expected = mockProduct, Queried = queriedProduct });
             foreach(var productPair in products)
             {
                 Assert.Equal(productPair.Expected.Id, productPair.Queried.Id);
@@ -90,6 +91,7 @@ namespace glovo_webapi_test.Endpoints
                 Assert.Equal(productPair.Expected.ImgPath, productPair.Queried.ImgPath);
                 Assert.Equal(productPair.Expected.Description, productPair.Queried.Description);
                 Assert.Equal(productPair.Expected.Price, productPair.Queried.Price);
+                Assert.Equal(productPair.Expected.IdRest, productPair.Queried.IdRest);
             }
         }
         
