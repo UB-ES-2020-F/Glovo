@@ -54,7 +54,7 @@ class Product_grid extends StatelessWidget {
       crossAxisSpacing: 10,
       mainAxisSpacing: 10,
       itemCount: prods.length,
-      crossAxisCount: MediaQuery.of(context).size.width > 600 ? 4 : 2,
+      crossAxisCount: MediaQuery.of(context).size.width > 600 ? 2 : 1,
       itemBuilder: (context, index) {
         return prods.asMap()[index];
       },
