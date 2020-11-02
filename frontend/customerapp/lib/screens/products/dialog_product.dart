@@ -21,7 +21,7 @@ class Dialog_product extends StatelessWidget {
               Column(
                 children: [
                   Container(
-                      padding: EdgeInsets.all(11),
+                      padding: EdgeInsets.all(10),
                       alignment: Alignment(1, 1),
                       child: IconButton(
                         color: Color(0xFF6E6E6E),
