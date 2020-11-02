@@ -29,29 +29,5 @@ namespace glovo_webapi_test.Endpoints
         {
             
         }
-        
-        [Fact]
-        public void GetById()
-        {
-            
-        }
-        
-        [Fact]
-        public void GetAll()
-        {
-            
-        }
-
-        [Fact]
-        public void Update()
-        {
-            
-        }
-
-        [Fact]
-        public void Delete()
-        {
-            
-        }
     }
 }
