@@ -25,18 +25,30 @@ namespace glovo_webapi
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IWebHostEnvironment env, IConfiguration configuration)
         {
             Configuration = configuration;
+            Env = env;
         }
 
         public IConfiguration Configuration { get; }
+        public IWebHostEnvironment Env { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<GlovoDbContext>(opt => opt.UseNpgsql(
-                Configuration.GetConnectionString("LocalDBConnection")));
+            string connection = Configuration.GetConnectionString("LocalDBConnection");
+            string dbUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+            if (Env.IsProduction() && dbUrl != null)
+            {
+                Uri dbUri = new Uri(dbUrl);
+                string username = dbUri.UserInfo.Split(":")[0];
+                string password = dbUri.UserInfo.Split(":")[1];
+                connection = "User ID=" + username + ";Password=" + password +
+                             ";Host=" + dbUri.Host + ";Port=" + dbUri.Port + ";Database=" + dbUri.AbsolutePath.Substring(1)+";SSL=true;SslMode=Require;";
+            }
+            
+            services.AddDbContext<GlovoDbContext>(opt => opt.UseNpgsql(connection));
         
             services.AddControllers();
 
