@@ -65,7 +65,7 @@ class Dialog_product extends StatelessWidget {
                                 children: [
                                   Text(product.prod_description,
                                       style: DescriptionTextStyleProduct),
-                                  Text("${product.price} euros",
+                                  Text("${product.price} €",
                                       style: PriceTextStyleProduct)
                                 ]))
                       ],
