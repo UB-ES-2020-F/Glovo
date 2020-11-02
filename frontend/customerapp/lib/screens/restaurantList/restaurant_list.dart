@@ -45,7 +45,7 @@ class RestaurantsList extends StatelessWidget {
   }
 }
 
-create_restaurant_cards(List<Restaurant> restaurants) {
+create_restaurannt_cards(List<Restaurant> restaurants) {
   return restaurants
       .map((restaurant) => RestaurantsListCard(restaurant))
       .toList();
