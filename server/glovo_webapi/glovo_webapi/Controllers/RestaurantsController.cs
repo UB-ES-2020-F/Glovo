@@ -33,7 +33,7 @@ namespace glovo_webapi.Controllers
             Restaurant foundRestaurant = _service.GetRestaurantById(id);
             if (foundRestaurant == null)
             {
-                return NotFound();
+                return NotFound(new {message = "restaurant id not found"});
             }
             return Ok(_mapper.Map<RestaurantReadModel>(foundRestaurant));
         }

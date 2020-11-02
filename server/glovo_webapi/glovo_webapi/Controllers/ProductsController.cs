@@ -33,7 +33,7 @@ namespace glovo_webapi.Controllers
             Product foundProduct = _service.GetProductById(id);
             if (foundProduct == null)
             {
-                return NotFound();
+                return NotFound(new {message = "product id not found"});
             }
             return Ok(_mapper.Map<ProductReadModel>(foundProduct));
         }
