@@ -49,7 +49,7 @@ namespace glovo_webapi
                 string username = dbUri.UserInfo.Split(":")[0];
                 string password = dbUri.UserInfo.Split(":")[1];
                 connection = "User ID=" + username + ";Password=" + password +
-                             ";Host=" + dbUri.Host + ";Port=" + dbUri.Port + ";Database=" + dbUri.AbsolutePath.Substring(1)+";SSL=true;SslMode=Require;";
+                             ";Host=" + dbUri.Host + ";Port=" + dbUri.Port + ";Database=" + dbUri.AbsolutePath.Substring(1);
                 
             }
             Console.Write("Database connection string:"+connection);
