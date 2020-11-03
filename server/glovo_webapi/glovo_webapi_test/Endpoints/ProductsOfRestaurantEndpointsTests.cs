@@ -117,10 +117,19 @@ namespace glovo_webapi_test.Endpoints
         }
         
         [Fact]
-        public void GetProductOfRestaurantByIdNotFoundTest()
+        public void GetProductOfRestaurantByIdNotFoundTest1()
         {
             //Query inexistent products from DB
-            string endpointUrl = "https://localhost:5001/api/restaurants/9999/products/9999";
+            string endpointUrl = "https://localhost:5001/api/restaurants/9999/products/1";
+            HttpResponseMessage response = _client.GetAsync(endpointUrl).Result;
+            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+        }
+
+        [Fact]
+        public void GetProductOfRestaurantByIdNotFoundTest2()
+        {
+            //Query inexistent products from DB
+            string endpointUrl = "https://localhost:5001/api/restaurants/1/products/9999";
             HttpResponseMessage response = _client.GetAsync(endpointUrl).Result;
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
