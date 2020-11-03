@@ -27,7 +27,7 @@ namespace glovo_webapi.Controllers
             IEnumerable<Product> products = _service.GetAllProductsOfRestaurant(idRest);
             if (products == null || !products.Any())
             {
-                return NotFound();
+                return NotFound(new {message = "restaurant id not found"});
             }
             return Ok(_mapper.Map<IEnumerable<ProductReadModel>>(products));
         }
@@ -38,7 +38,7 @@ namespace glovo_webapi.Controllers
             Product foundProduct = _service.GetProductOfRestaurantById(idRest, idProd);
             if (foundProduct == null)
             {
-                return NotFound();
+                return NotFound(new {message = "product or restaurant id not found"});
             }
             return Ok(_mapper.Map<ProductReadModel>(foundProduct));            
         }
