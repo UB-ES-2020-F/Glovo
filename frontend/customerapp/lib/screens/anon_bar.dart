@@ -49,15 +49,17 @@ class AnonBar extends StatelessWidget with PreferredSizeWidget {
 class SearchBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Row(mainAxisSize: MainAxisSize.min, children: [
-      IconButton(
-        iconSize: 50.0,
-        color: Colors.white,
-        icon: Icon(Icons.search_rounded),
-        onPressed: () {},
-      ),
-      TextLink('What do you need?', (context) {}, searchBarTextLinks,
-          searchBarTextLinksHover, context)
-    ]);
+    return InkWell(
+        onTap: () {},
+        child: Row(mainAxisSize: MainAxisSize.min, children: [
+          IconButton(
+            iconSize: 50.0,
+            color: Colors.white,
+            icon: Icon(Icons.search_rounded),
+            onPressed: () {},
+          ),
+          TextLink('What do you need?', (context) {}, searchBarTextLinks,
+              searchBarTextLinksHover, context)
+        ]));
   }
 }
