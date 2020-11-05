@@ -58,7 +58,8 @@ class Widget_stateful_card extends State<StatefulWidget> {
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(16.0),
                                 image: DecorationImage(
-                                  image: NetworkImage(_product_overview.image),
+                                  image:
+                                      NetworkImage(_product_overview.imgPath),
                                 )),
                             //'https://pngimg.com/uploads/pasta/pasta_PNG58.png',
                           ),
@@ -68,7 +69,7 @@ class Widget_stateful_card extends State<StatefulWidget> {
                                 style: TitleStyleProduct,
                               ),
                               subtitle: Padding(
-                                child: Text(_product_overview.prod_description),
+                                child: Text(_product_overview.description),
                                 padding: EdgeInsets.only(top: 7),
                               )),
                           Padding(

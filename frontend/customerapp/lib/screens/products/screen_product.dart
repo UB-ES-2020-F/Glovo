@@ -52,7 +52,7 @@ class Screen_product extends StatelessWidget {
                         image: DecorationImage(
                             //fit: BoxFit.fitWidth,
                             image: NetworkImage(
-                          product.image,
+                          product.imgPath,
                         )))),
                 Padding(
                     padding: EdgeInsets.only(left: 20),
@@ -60,7 +60,7 @@ class Screen_product extends StatelessWidget {
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Text(product.prod_description,
+                          Text(product.description,
                               style: DescriptionTextStyleProduct),
                           Text("${product.price} euros",
                               style: PriceTextStyleProduct)

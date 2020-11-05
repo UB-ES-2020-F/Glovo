@@ -54,7 +54,7 @@ class Dialog_product extends StatelessWidget {
                                 image: DecorationImage(
                                     //fit: BoxFit.fitWidth,
                                     image: NetworkImage(
-                                  product.image,
+                                  product.imgPath,
                                 )))),
                         Padding(
                             padding: EdgeInsets.only(left: 20),
@@ -63,7 +63,7 @@ class Dialog_product extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Text(product.prod_description,
+                                  Text(product.description,
                                       style: DescriptionTextStyleProduct),
                                   Text("${product.price} €",
                                       style: PriceTextStyleProduct)

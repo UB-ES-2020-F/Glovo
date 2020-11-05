@@ -1,22 +1,24 @@
 class Product_overview {
   String _name;
-  String _prod_description;
+  String _description;
   double _price;
-  String _image;
+  String _imgPath;
+  int _idProd;
+  int _idRest;
 
-  Product_overview(
-      this._name, this._prod_description, this._price, this._image);
+  Product_overview(this._idProd, this._name, this._imgPath, this._description,
+      this._price, this._idRest);
 
   String get name {
     return _name;
   }
 
-  String get image {
-    return _image;
+  String get imgPath {
+    return _imgPath;
   }
 
-  String get prod_description {
-    return _prod_description;
+  String get description {
+    return _description;
   }
 
   double get price {
