@@ -1,3 +1,4 @@
+import 'package:customerapp/components/appBar/Mobile_default_bar.dart';
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/product/product_overview.dart';
 import 'package:customerapp/models/signup.dart';
@@ -20,6 +21,7 @@ import 'package:customerapp/styles/Komet.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'components/appBar/overview_logged_mobile.dart';
 import 'models/restaurants.dart';
 import 'models/signin.dart';
 
@@ -43,13 +45,14 @@ class MyApp extends StatelessWidget {
           title: 'Komet',
           initialRoute: '/',
           routes: {
-            '/': (context) => AnonRoute(),
+            '/': (context) => InitialLogged(),
             '/sign-up': (context) => SignUpPage(),
             '/sign-in': (context) => SignInPage(),
             '/products': (context) => Products_sample(),
             '/restaurant-list': (context) => RestaurantsList(),
             '/concrete_product': (context) => Screen_product(),
             '/initial-logged-in': (context) => InitialLogged(),
+            '/overview_mobile': (context) => TabBar_screen(),
           }),
     );
   }
