@@ -1,3 +1,4 @@
+import 'package:customerapp/components/appBar/searchBox.dart';
 import 'package:customerapp/components/text_link.dart';
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/styles/initial_logged.dart';
@@ -43,47 +44,5 @@ class AnonBar extends StatelessWidget with PreferredSizeWidget {
       ),
       color: Theme.of(context).backgroundColor,
     );
-  }
-}
-
-class SearchBox extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return SearchBox_Stateful();
-  }
-}
-
-class SearchBox_Stateful extends State<StatefulWidget> {
-  var isHoveredColor = Colors.white;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-        onTap: () {},
-        onHover: (value) {
-          if (value) {
-            setState(() {
-              isHoveredColor = hoverIconColor;
-            });
-          } else {
-            setState(() {
-              isHoveredColor = Colors.white;
-            });
-          }
-        },
-        hoverColor: Colors.transparent,
-        child: Row(mainAxisSize: MainAxisSize.min, children: [
-          IconButton(
-            iconSize: 50.0,
-            color: isHoveredColor,
-            hoverColor: Colors.transparent,
-            icon: Icon(Icons.search_rounded),
-            onPressed: () {},
-          ),
-          Text(
-            "What do you need?",
-            style: TextStyle(color: isHoveredColor, fontSize: 14),
-          )
-        ]));
   }
 }
