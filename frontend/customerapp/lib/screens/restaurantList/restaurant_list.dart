@@ -1,4 +1,5 @@
 import 'package:customerapp/components/appBar/default_logged_bar.dart';
+import 'package:customerapp/components/appBar/test_bar.dart';
 import 'package:customerapp/models/restaurants.dart';
 import 'package:customerapp/screens/restaurantList/restaurant_list_box.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,7 @@ class RestaurantsList extends StatelessWidget {
   Widget build(BuildContext context) {
     var restaurantsModel = context.watch<RestaurantsListModel>();
     return Scaffold(
-        appBar: DefaultLoggedBar(),
+        appBar: Test_bar(),
         body: Container(
           padding: const EdgeInsets.all(20),
           child: Column(

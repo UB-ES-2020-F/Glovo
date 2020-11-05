@@ -11,3 +11,5 @@ final appTheme = ThemeData(
           fontWeight: FontWeight.normal,
           letterSpacing: 1.0)),
 );
+
+final Kommet_distinctive_green = Color(0xFF2ABB9B);
