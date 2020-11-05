@@ -17,22 +17,22 @@ class RestaurantsListModel extends ChangeNotifier {
         1,
         'La Tagliatella',
         'https://cdn2.cocinadelirante.com/sites/default/files/images/2018/12/como-hacer-cremosa-pasta-hervida-en-leche.jpeg',
-        new Location(40, 2)));
+        new Location(40, 2.1)));
     availableRestaurants.add(Restaurant(
         2,
         'Burger King',
         'https://www.familycheck.es/wp-content/uploads/2019/11/Burger-King-1.jpg',
-        new Location(40, 2)));
+        new Location(40.1, 2)));
     availableRestaurants.add(Restaurant(
         3,
         "McDonald's",
         'https://cdn.ticbeat.com/src/uploads/2018/06/mcdonalds-burger-king-subway-europa-810x547.jpg',
-        new Location(40, 2)));
+        new Location(40.1, 2)));
     availableRestaurants.add(Restaurant(
         4,
         'Five Guys',
         'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/img-0056-1575287109.jpg',
-        new Location(40, 2)));
+        new Location(40, 2.1)));
   }
 
   /*
@@ -57,10 +57,14 @@ class Restaurant {
   String get image {
     return _image;
   }
+
+  Location get location {
+    return _location;
+  }
 }
 
 double getDeliveryFee(double distance) {
-  return distance * 1;
+  return ((distance * 5).toInt() / 10);
 }
 
 class TimeInterval {
@@ -74,7 +78,7 @@ class TimeInterval {
   }
 
   TimeInterval.distance(double distance) {
-    int time = 20;
+    double time = 10 + distance * 2;
     int uncertainty = 5;
     this.min = (time ~/ 5) * 5 - uncertainty;
     this.max = (time ~/ 5) * 5 + uncertainty;

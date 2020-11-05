@@ -8,8 +8,24 @@ class User {
   String _directionIndications;
   Location _location;
 
-  User(this._id, this._name, this._email, this._direction,
-      this._directionIndications, this._location);
+  static final User _user = User._internal();
+  User._internal();
+
+  factory User(
+      {int id,
+      String name,
+      String email,
+      String direction,
+      String directionIndications,
+      Location location}) {
+    _user._id = id;
+    _user._name = name;
+    _user._email = email;
+    _user._direction = direction;
+    _user._directionIndications = directionIndications;
+    _user._location = location;
+    return _user;
+  }
 
   int get id {
     return _id;

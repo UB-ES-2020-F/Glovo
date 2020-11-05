@@ -7,13 +7,13 @@ import 'package:customerapp/styles/initial_logged.dart';
 
 enum BarType { initial, defaultBar }
 
+// ignore: must_be_immutable
 class UserActionsBar extends StatelessWidget {
   BarType barType;
   UserActionsBar(this.barType);
 
   @override
   Widget build(BuildContext context) {
-    var initialLoggedModel = LoggedModel();
     return Row(
       children: [
         Row(
@@ -29,13 +29,13 @@ class UserActionsBar extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextLink(
-                    initialLoggedModel.direction,
+                    LoggedModel.direction,
                     (context) {},
                     _selectStreetNameTextLinksStyle(barType),
                     _selectStreetNameTextLinksHoverStyle(barType),
                     context),
                 TextLink(
-                    initialLoggedModel.indicationsDirection,
+                    LoggedModel.indicationsDirection,
                     (context) {},
                     _selectIndicationsTextLinksStyle(barType),
                     _selectIndicationsTextLinksHoverStyle(barType),
@@ -73,6 +73,7 @@ void _openProfileSettings(BuildContext context) {
   );
 }
 
+// ignore: missing_return
 Color _selectLocationIconColor(BarType barType) {
   switch (barType) {
     case BarType.initial:

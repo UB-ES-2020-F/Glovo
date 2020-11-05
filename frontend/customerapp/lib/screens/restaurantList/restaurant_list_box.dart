@@ -1,15 +1,22 @@
+import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/restaurants.dart';
+import 'package:customerapp/models/user.dart';
 import 'package:customerapp/styles/restaurant_list.dart';
 import 'package:flutter/material.dart';
 import 'package:icon_shadow/icon_shadow.dart';
 
 class RestaurantsListCard extends StatelessWidget {
   Restaurant restaurant;
-  TimeInterval timeInterval = new TimeInterval.distance(4.5);
-  double deliveryFee = getDeliveryFee(4.5);
+
   RestaurantsListCard(this.restaurant);
+
   @override
   Widget build(BuildContext context) {
+    var initialLoggedModel = new LoggedModel();
+    User user = LoggedModel.user;
+    double distance = restaurant.location.getDistanceKm(user.location);
+    double deliveryFee = getDeliveryFee(distance);
+    TimeInterval timeInterval = new TimeInterval.distance(distance);
     return Container(
         child: Card(
       child: Container(

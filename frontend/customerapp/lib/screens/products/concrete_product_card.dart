@@ -16,6 +16,10 @@ class Concrete_Product_Card extends StatefulWidget {
   State<StatefulWidget> createState() {
     return Widget_stateful_card(_product_overview);
   }
+
+  Product_overview get product {
+    return _product_overview;
+  }
 }
 
 class Widget_stateful_card extends State<StatefulWidget> {

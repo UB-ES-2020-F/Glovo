@@ -10,4 +10,9 @@ final TitleStyleProduct =
     TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 22);
 
 final RestaurantTitleStyle =
-    TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 40);
+    TextStyle(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 48);
+
+final CartTitleStyle =
+    TextStyle(fontWeight: FontWeight.w500, color: Colors.black, fontSize: 28);
+
+final CartTimeFeeStyle = TextStyle(color: Colors.black, fontSize: 16);
