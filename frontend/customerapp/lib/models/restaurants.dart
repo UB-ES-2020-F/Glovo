@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
+import 'location.dart';
+
 class RestaurantsListModel extends ChangeNotifier {
   List<Restaurant> availableRestaurants;
 
@@ -14,23 +16,23 @@ class RestaurantsListModel extends ChangeNotifier {
     availableRestaurants.add(Restaurant(
         1,
         'La Tagliatella',
-        TimeInterval(10, 20),
-        2.5,
-        'https://cdn2.cocinadelirante.com/sites/default/files/images/2018/12/como-hacer-cremosa-pasta-hervida-en-leche.jpeg'));
+        'https://cdn2.cocinadelirante.com/sites/default/files/images/2018/12/como-hacer-cremosa-pasta-hervida-en-leche.jpeg',
+        new Location(40, 2)));
     availableRestaurants.add(Restaurant(
-        1,
+        2,
         'Burger King',
-        TimeInterval(20, 30),
-        4,
-        'https://www.familycheck.es/wp-content/uploads/2019/11/Burger-King-1.jpg'));
+        'https://www.familycheck.es/wp-content/uploads/2019/11/Burger-King-1.jpg',
+        new Location(40, 2)));
     availableRestaurants.add(Restaurant(
-        1,
+        3,
         "McDonald's",
-        TimeInterval(20, 30),
+        'https://cdn.ticbeat.com/src/uploads/2018/06/mcdonalds-burger-king-subway-europa-810x547.jpg',
+        new Location(40, 2)));
+    availableRestaurants.add(Restaurant(
         4,
-        'https://cdn.ticbeat.com/src/uploads/2018/06/mcdonalds-burger-king-subway-europa-810x547.jpg'));
-    availableRestaurants.add(Restaurant(1, 'Five Guys', TimeInterval(20, 30), 4,
-        'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/img-0056-1575287109.jpg'));
+        'Five Guys',
+        'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/img-0056-1575287109.jpg',
+        new Location(40, 2)));
   }
 
   /*
@@ -44,11 +46,13 @@ class RestaurantsListModel extends ChangeNotifier {
 class Restaurant {
   int id;
   String name;
-  TimeInterval expectedDeliveryTime;
-  double deliveryFee;
   String image;
-  Restaurant(this.id, this.name, this.expectedDeliveryTime, this.deliveryFee,
-      this.image);
+  Location _location;
+  Restaurant(this.id, this.name, this.image, this._location);
+}
+
+double getDeliveryFee(double distance) {
+  return distance * 1;
 }
 
 class TimeInterval {
@@ -59,5 +63,12 @@ class TimeInterval {
     assert(min <= max);
     this.min = min;
     this.max = max;
+  }
+
+  TimeInterval.distance(double distance) {
+    int time = 20;
+    int uncertainty = 5;
+    this.min = (time ~/ 5) * 5 - uncertainty;
+    this.max = (time ~/ 5) * 5 + uncertainty;
   }
 }

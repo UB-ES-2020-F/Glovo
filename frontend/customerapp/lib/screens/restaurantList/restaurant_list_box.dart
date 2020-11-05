@@ -5,6 +5,8 @@ import 'package:icon_shadow/icon_shadow.dart';
 
 class RestaurantsListCard extends StatelessWidget {
   Restaurant restaurant;
+  TimeInterval timeInterval = new TimeInterval.distance(4.5);
+  double deliveryFee = getDeliveryFee(4.5);
   RestaurantsListCard(this.restaurant);
   @override
   Widget build(BuildContext context) {
@@ -41,7 +43,7 @@ class RestaurantsListCard extends StatelessWidget {
                           Container(
                               padding: EdgeInsets.symmetric(horizontal: 2.5),
                               child: Text(
-                                '${restaurant.expectedDeliveryTime.min} - ${restaurant.expectedDeliveryTime.max} min',
+                                '${timeInterval.min} - ${timeInterval.max} min',
                                 style: restaurantListCardInsideImageText,
                               ))
                         ],
@@ -62,7 +64,7 @@ class RestaurantsListCard extends StatelessWidget {
                           Container(
                               padding: EdgeInsets.only(left: 2.5, right: 15),
                               child: Text(
-                                '${restaurant.deliveryFee} €',
+                                '$deliveryFee €',
                                 style: restaurantListCardInsideImageText,
                               ))
                         ],
