@@ -34,14 +34,23 @@ class Products_sample extends StatelessWidget {
               image: DecorationImage(
                   image:
                       NetworkImage(restaurant == null ? '' : restaurant.image),
-                  fit: BoxFit.cover)),
+                  fit: BoxFit.fitWidth)),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Container(
-              padding: EdgeInsets.only(top: 20),
-              child: Text(
-                restaurant == null ? 'Products' : restaurant.name,
-                style: RestaurantTitleStyle,
+            Padding(
+              padding: EdgeInsets.fromLTRB(30, 30, 30, 30),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: 140,
+                padding: EdgeInsets.all(40.0),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30.0),
+                    color: Colors.white),
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  restaurant == null ? 'Products' : restaurant.name,
+                  style: RestaurantTitleStyle,
+                ),
               ),
             ),
             Expanded(
@@ -60,7 +69,7 @@ class Product_grid extends StatelessWidget {
     var restaurantsModel = context.watch<RestaurantsListModel>();
 
     return StaggeredGridView.countBuilder(
-      padding: EdgeInsets.only(top: 30),
+      padding: EdgeInsets.all(30),
       crossAxisSpacing: 10,
       mainAxisSpacing: 10,
       itemCount: prods.length,

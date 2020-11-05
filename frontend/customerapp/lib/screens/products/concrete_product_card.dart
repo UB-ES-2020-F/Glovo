@@ -27,6 +27,9 @@ class Widget_stateful_card extends State<StatefulWidget> {
   @override
   Widget build(BuildContext context) {
     return Material(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
         elevation: this.elevation,
         child: InkWell(
             onHover: (value) {
@@ -49,19 +52,20 @@ class Widget_stateful_card extends State<StatefulWidget> {
                       child: Card(
                         margin: EdgeInsets.zero,
                         //clipBehavior: Clip.antiAlias,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
                         child: Column(children: [
-                          Container(
-                            height: 200,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(16.0),
-                                image: DecorationImage(
-                                  image:
-                                      NetworkImage(_product_overview.imgPath),
-                                )),
-                            //'https://pngimg.com/uploads/pasta/pasta_PNG58.png',
+                          Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Container(
+                              height: 200,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  border: Border.all(color: Colors.black26),
+                                  image: DecorationImage(
+                                      image: NetworkImage(
+                                          _product_overview.imgPath),
+                                      fit: BoxFit.cover)),
+                              //'https://pngimg.com/uploads/pasta/pasta_PNG58.png',
+                            ),
                           ),
                           ListTile(
                               title: Text(
