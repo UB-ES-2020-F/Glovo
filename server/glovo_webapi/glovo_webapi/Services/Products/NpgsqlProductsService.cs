@@ -26,12 +26,12 @@ namespace  glovo_webapi.Services.Products
 
         public IEnumerable<Product> GetAllProductsOfRestaurant(int idRest)
         {
-            return _context.Products.Where(p => p.IdRest == idRest).ToList();
+            return _context.Products.Where(p => p.RestId == idRest).ToList();
         }
 
         public Product GetProductOfRestaurantById(int idRest, int idProd)
         {
-            return _context.Products.Where(p => p.IdRest == idRest).FirstOrDefault(p => p.Id == idProd);
+            return _context.Products.Where(p => p.RestId == idRest).FirstOrDefault(p => p.Id == idProd);
         }
     }
 }
