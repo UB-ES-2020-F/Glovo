@@ -16,7 +16,7 @@ class RestaurantsListCard extends StatelessWidget {
           child: Column(
         children: [
           InkWell(
-              onTap: () => load_product(context),
+              onTap: () => load_product(context, restaurant),
               child: Container(
                 alignment: Alignment.bottomCenter,
                 height: 150,
@@ -77,7 +77,7 @@ class RestaurantsListCard extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
             alignment: Alignment.centerLeft,
             child: InkWell(
-                onTap: () => load_product(context),
+                onTap: () => load_product(context, restaurant),
                 child: Text(
                   restaurant.name,
                   style: restaurantListCardName,
@@ -88,7 +88,7 @@ class RestaurantsListCard extends StatelessWidget {
     ));
   }
 
-  void load_product(BuildContext context) {
-    Navigator.pushNamed(context, '/products');
+  void load_product(BuildContext context, Restaurant restaurant) {
+    Navigator.pushNamed(context, '/products', arguments: restaurant);
   }
 }

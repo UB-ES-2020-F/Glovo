@@ -45,10 +45,18 @@ class RestaurantsListModel extends ChangeNotifier {
 
 class Restaurant {
   int id;
-  String name;
-  String image;
+  String _name;
+  String _image;
   Location _location;
-  Restaurant(this.id, this.name, this.image, this._location);
+  Restaurant(this.id, this._name, this._image, this._location);
+
+  String get name {
+    return _name;
+  }
+
+  String get image {
+    return _image;
+  }
 }
 
 double getDeliveryFee(double distance) {

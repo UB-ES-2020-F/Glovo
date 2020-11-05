@@ -1,9 +1,12 @@
+import 'dart:js';
+
 import 'package:customerapp/components/appBar/default_logged_bar.dart';
 import 'package:customerapp/models/product/mock_up_prod.dart';
 import 'package:customerapp/models/restaurants.dart';
 import 'package:customerapp/screens/loggedPage/initial_logged_page.dart';
 import 'package:customerapp/screens/loggedPage/logged_bar.dart';
 import 'package:customerapp/screens/restaurantList/restaurant_list_box.dart';
+import 'package:customerapp/styles/product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -21,23 +24,30 @@ class Products_sample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Restaurant restaurant = ModalRoute.of(context).settings.arguments;
     return Scaffold(
         //backgroundColor: Theme.of(context).backgroundColor,
         appBar: DefaultLoggedBar(),
         body: Container(
-            padding: EdgeInsets.only(left: 20, right: 20),
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Container(
-                padding: EdgeInsets.only(top: 20),
-                child: Text(
-                  'Products',
-                  style: Theme.of(context).textTheme.headline1,
-                ),
+          padding: EdgeInsets.only(left: 20, right: 20),
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image:
+                      NetworkImage(restaurant == null ? '' : restaurant.image),
+                  fit: BoxFit.cover)),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Container(
+              padding: EdgeInsets.only(top: 20),
+              child: Text(
+                restaurant == null ? 'Products' : restaurant.name,
+                style: RestaurantTitleStyle,
               ),
-              Expanded(
-                  child: Container(child: Center(child: Product_grid(prods)))),
-            ])));
+            ),
+            Expanded(
+                child: Container(child: Center(child: Product_grid(prods)))),
+          ]),
+        ));
   }
 }
 

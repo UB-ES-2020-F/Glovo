@@ -8,3 +8,6 @@ final DescriptionTextStyleProduct =
 
 final TitleStyleProduct =
     TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 22);
+
+final RestaurantTitleStyle =
+    TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 40);
