@@ -25,38 +25,52 @@ class Products_sample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Restaurant restaurant = ModalRoute.of(context).settings.arguments;
+    double cartWidth = 320;
     return Scaffold(
         //backgroundColor: Theme.of(context).backgroundColor,
         appBar: DefaultLoggedBar(),
         body: Container(
-          padding: EdgeInsets.only(left: 20, right: 20),
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image:
-                      NetworkImage(restaurant == null ? '' : restaurant.image),
-                  fit: BoxFit.fitWidth)),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Padding(
-              padding: EdgeInsets.fromLTRB(30, 30, 30, 30),
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: 140,
-                padding: EdgeInsets.all(40.0),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30.0),
-                    color: Colors.white),
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  restaurant == null ? 'Products' : restaurant.name,
-                  style: RestaurantTitleStyle,
-                ),
-              ),
-            ),
-            Expanded(
-                child: Container(child: Center(child: Product_grid(prods)))),
-          ]),
-        ));
+            padding: EdgeInsets.only(left: 20, right: 20),
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: NetworkImage(
+                        restaurant == null ? '' : restaurant.image),
+                    fit: BoxFit.fitWidth)),
+            child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(30, 30, 15, 30),
+                          child: Container(
+                            width: MediaQuery.of(context).size.width -
+                                cartWidth -
+                                130,
+                            height: 140,
+                            padding: EdgeInsets.all(40.0),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15.0),
+                                color: Colors.white),
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              restaurant == null ? 'Products' : restaurant.name,
+                              style: RestaurantTitleStyle,
+                            ),
+                          ),
+                        ),
+                        //Expanded(
+                        //  child: Container(
+                        //    child: Center(child: Product_grid(prods)))),
+                      ]),
+                  Column(
+                    children: [cartBox(restaurant, cartWidth)],
+                  )
+                ])));
   }
 }
 
@@ -78,6 +92,33 @@ class Product_grid extends StatelessWidget {
         return prods.asMap()[index];
       },
       staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
+    );
+  }
+}
+
+class cartBox extends StatelessWidget {
+  Restaurant restaurant;
+  double cartWidth;
+  cartBox(this.restaurant, this.cartWidth);
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(15, 30, 30, 30),
+      child: Container(
+        width: cartWidth,
+        height: 500,
+        padding: EdgeInsets.all(40.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15.0),
+          color: Colors.white,
+          border: Border.all(color: Colors.black12),
+        ),
+        alignment: Alignment.centerLeft,
+        child: Text(
+          restaurant == null ? 'Cart' : restaurant.name + ' cart',
+          style: RestaurantTitleStyle,
+        ),
+      ),
     );
   }
 }
