@@ -64,7 +64,7 @@ class Restaurant {
 }
 
 double getDeliveryFee(double distance) {
-  return ((distance * 5).toInt() / 10);
+  return distance == null ? -1 : ((distance * 5).toInt() / 10);
 }
 
 class TimeInterval {
@@ -78,9 +78,14 @@ class TimeInterval {
   }
 
   TimeInterval.distance(double distance) {
-    double time = 10 + distance * 2;
-    int uncertainty = 5;
-    this.min = (time ~/ 5) * 5 - uncertainty;
-    this.max = (time ~/ 5) * 5 + uncertainty;
+    if (distance == null) {
+      this.max = -1;
+      this.min = -1;
+    } else {
+      double time = 10 + distance * 2;
+      int uncertainty = 5;
+      this.min = (time ~/ 5) * 5 - uncertainty;
+      this.max = (time ~/ 5) * 5 + uncertainty;
+    }
   }
 }

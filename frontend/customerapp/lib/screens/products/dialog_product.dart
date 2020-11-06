@@ -7,8 +7,9 @@ import 'package:flutter/material.dart';
 
 class Dialog_product extends StatelessWidget {
   Product_overview product;
+  Function add;
 
-  Dialog_product(this.product);
+  Dialog_product(this.product, this.add);
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +75,10 @@ class Dialog_product extends StatelessWidget {
                   ),
                   Padding(
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        add(product);
+                        Navigator.pop(context);
+                      },
                       child: Text("Add to your order"),
                       style: greenButtonStyle,
                     ),

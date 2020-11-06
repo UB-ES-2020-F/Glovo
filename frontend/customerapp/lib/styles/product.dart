@@ -17,9 +17,15 @@ final CartTitleStyle =
 
 final CartTimeFeeStyle = TextStyle(color: Colors.black, fontSize: 16);
 
+final NumberItemsCartStyle =
+    TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500);
+
+final TotalPriceCartStyle = TextStyle(
+    color: Color(0xFF4A4A4A), fontSize: 18, fontWeight: FontWeight.w500);
+
 final makeOrderButtonStyle = ButtonStyle(
     padding: MaterialStateProperty.resolveWith((states) =>
-        const EdgeInsets.symmetric(vertical: 16.0, horizontal: 40.0)),
+        const EdgeInsets.symmetric(vertical: 20.0, horizontal: 40.0)),
     foregroundColor: MaterialStateColor.resolveWith((states) => Colors.white),
     textStyle: MaterialStateProperty.resolveWith((states) => TextStyle(
         color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),

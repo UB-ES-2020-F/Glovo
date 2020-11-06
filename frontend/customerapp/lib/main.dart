@@ -1,7 +1,9 @@
 import 'package:customerapp/models/logged.dart';
+import 'package:customerapp/models/cart.dart';
 import 'package:customerapp/models/signup.dart';
 import 'package:customerapp/screens/loggedPage/initial_logged_page.dart';
 import 'package:customerapp/screens/anon_root.dart';
+import 'package:customerapp/screens/products/cart_box.dart';
 import 'package:customerapp/screens/products/products_sample.dart';
 
 import 'package:customerapp/screens/products/screen_product.dart';
@@ -30,11 +32,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => LoggedModel()),
         ChangeNotifierProvider(create: (context) => SignInModel()),
         ChangeNotifierProvider(create: (context) => RestaurantsListModel()),
+        ChangeNotifierProvider(create: (context) => Cart()),
       ],
       child: MaterialApp(
           theme: appTheme,
           title: 'Komet',
-          initialRoute: '/restaurant-list',
+          initialRoute: '/',
           routes: {
             '/': (context) => AnonRoute(),
             '/sign-up': (context) => SignUpPage(),

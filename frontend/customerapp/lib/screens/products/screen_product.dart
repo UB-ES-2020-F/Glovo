@@ -1,4 +1,5 @@
 import 'package:customerapp/models/product/product_overview.dart';
+import 'package:customerapp/screens/products/concrete_product_card.dart';
 import 'package:customerapp/styles/product.dart';
 import 'package:customerapp/styles/signup.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,13 +7,16 @@ import 'package:flutter/material.dart';
 
 class Screen_product extends StatelessWidget {
   Product_overview product;
+  Function add;
 
   Screen_product();
 
   @override
   Widget build(BuildContext context) {
-    final Product_overview prod = ModalRoute.of(context).settings.arguments;
-    this.product = prod;
+    final ConcreteProductArguments args =
+        ModalRoute.of(context).settings.arguments;
+    this.product = args.prod;
+    this.add = args.add;
 
     return Scaffold(
         body: Container(
@@ -71,7 +75,7 @@ class Screen_product extends StatelessWidget {
           ),
           Padding(
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: add(product),
               child: Text("Add to your order"),
               style: greenButtonStyle,
             ),

@@ -3,13 +3,14 @@ import 'package:customerapp/models/restaurants.dart';
 import 'package:customerapp/models/user.dart';
 import 'package:flutter/widgets.dart';
 
-class Cart {
+class Cart extends ChangeNotifier {
   Map _order = new Map();
 
   Cart();
 
   void addItem(Product_overview product) {
     _order.containsKey(product) ? _order[product]++ : _order[product] = 1;
+    notifyListeners();
   }
 
   void substractItem(Product_overview product) {
@@ -21,6 +22,7 @@ class Cart {
     } else {
       throw new FormatException("No product to remove");
     }
+    notifyListeners();
   }
 
   double getTotalPrice() {
@@ -35,5 +37,6 @@ class Cart {
 
   void empty() {
     _order.clear();
+    notifyListeners();
   }
 }

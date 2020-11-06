@@ -15,26 +15,35 @@ import 'package:provider/provider.dart';
 import 'package:customerapp/models/product/product_overview.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
+import 'cart_box.dart';
 import 'concrete_product_card.dart';
 
 class Products_sample extends StatelessWidget {
   List prodCards = List();
   List prods = List();
+  Cart cart;
+  bool firstInstance;
 
   Products_sample() {
     prods = Mock_up_prod().prod;
     for (var i = 0; i < prods.length; i++) {
-      prodCards.add(Concrete_Product_Card(prods[i]));
+      prodCards.add(Concrete_Product_Card(prods[i], addToCart));
     }
+    firstInstance = true;
+  }
+
+  void addToCart(Product_overview prod) {
+    cart.addItem(prod);
   }
 
   @override
   Widget build(BuildContext context) {
     final Restaurant restaurant = ModalRoute.of(context).settings.arguments;
-    Cart cart = new Cart();
-    cart.addItem(prods[0]);
-    cart.addItem(prods[0]);
-    cart.addItem(prods[2]);
+    cart = context.watch<Cart>();
+    if (firstInstance) {
+      cart.empty();
+    }
+    firstInstance = false;
     double cartWidth = 350;
     return Scaffold(
         //backgroundColor: Theme.of(context).backgroundColor,
@@ -90,8 +99,8 @@ class Products_sample extends StatelessWidget {
 }
 
 class Product_grid extends StatelessWidget {
-  List prods;
-  Product_grid(this.prods);
+  List prodCards;
+  Product_grid(this.prodCards);
 
   @override
   Widget build(BuildContext context) {
@@ -101,10 +110,10 @@ class Product_grid extends StatelessWidget {
       //padding: EdgeInsets.all(30),
       crossAxisSpacing: 10,
       mainAxisSpacing: 10,
-      itemCount: prods.length,
+      itemCount: prodCards.length,
       crossAxisCount: MediaQuery.of(context).size.width > 900 ? 2 : 1,
       itemBuilder: (context, index) {
-        return prods.asMap()[index];
+        return prodCards.asMap()[index];
       },
       staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
     );

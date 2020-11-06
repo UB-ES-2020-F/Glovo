@@ -9,12 +9,13 @@ import 'package:icon_shadow/icon_shadow.dart';
 
 class Concrete_Product_Card extends StatefulWidget {
   Product_overview _product_overview;
+  Function add;
 
-  Concrete_Product_Card(this._product_overview);
+  Concrete_Product_Card(this._product_overview, this.add);
 
   @override
   State<StatefulWidget> createState() {
-    return Widget_stateful_card(_product_overview);
+    return Widget_stateful_card(_product_overview, add);
   }
 
   Product_overview get product {
@@ -24,9 +25,10 @@ class Concrete_Product_Card extends StatefulWidget {
 
 class Widget_stateful_card extends State<StatefulWidget> {
   Product_overview _product_overview;
+  Function add;
   double elevation = 2;
 
-  Widget_stateful_card(this._product_overview);
+  Widget_stateful_card(this._product_overview, this.add);
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +50,7 @@ class Widget_stateful_card extends State<StatefulWidget> {
                 });
               }
             },
-            onTap: () => change_product(),
+            onTap: () => change_product(add),
             child: Center(
                 child: Material(
                     elevation: this.elevation,
@@ -94,7 +96,7 @@ class Widget_stateful_card extends State<StatefulWidget> {
                                         color: Color(0xff43C1A4),
                                       ),
                                       iconSize: 30,
-                                      onPressed: () => change_product()
+                                      onPressed: () => add(_product_overview)
                                       /*() => showDialog(
                           context: context,
                           builder: (context) =>
@@ -107,14 +109,20 @@ class Widget_stateful_card extends State<StatefulWidget> {
                     )))));
   }
 
-  void change_product() {
+  void change_product(Function add) {
     if (MediaQuery.of(context).size.width > 600) {
       showDialog(
           context: context,
-          builder: (context) => Dialog_product(_product_overview));
+          builder: (context) => Dialog_product(_product_overview, add));
     } else {
       Navigator.pushNamed(context, '/concrete_product',
-          arguments: _product_overview);
+          arguments: ConcreteProductArguments(_product_overview, add));
     }
   }
+}
+
+class ConcreteProductArguments {
+  final Product_overview prod;
+  final Function add;
+  ConcreteProductArguments(this.prod, this.add);
 }
