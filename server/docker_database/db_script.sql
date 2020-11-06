@@ -13,7 +13,7 @@ VALUES
 	(3, 'Burger King', 'img/BK_main.jpg'),
 	(4, 'Krusty Krab', 'img/KK_main.jpg');
 
-INSERT INTO "Products" ("Id", "Name", "ImgPath", "Description", "Price", "IdRest")
+INSERT INTO "Products" ("Id", "Name", "ImgPath", "Description", "Price", "RestaurantId")
 VALUES
 	(1, 'Chicken bucket', 'img/chicken_bucket.jpg', 'Delicioso cubo de pollo, contiene 16 piezas', 14.00, 1),
 	(2, 'Chicken bucket XXL', 'img/chicken_bucket_2.jpg', 'Deliciosisimo cubo de pollo, contiene 40 piezas', 30.00, 1),

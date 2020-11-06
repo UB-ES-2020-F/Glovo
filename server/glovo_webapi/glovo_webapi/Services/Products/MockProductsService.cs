@@ -5,6 +5,16 @@ namespace glovo_webapi.Services.Products
 {
     public class MockProductsService : IProductsService
     {
+        private Restaurant rest1;
+        private Restaurant rest2;
+        private Restaurant rest3;
+
+        public MockProductsService()
+        {
+            rest1 = new Restaurant(0, "Restaurant 1", "");
+            rest2 = new Restaurant(1, "Restaurant 2", "");
+            rest3 = new Restaurant(2, "Restaurant 3", "");
+        }
         public IEnumerable<Product> GetAllProducts()
         {
             return new List<Product>
