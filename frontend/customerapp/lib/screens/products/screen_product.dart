@@ -59,15 +59,21 @@ class Screen_product extends StatelessWidget {
                           product.imgPath,
                         )))),
                 Padding(
-                    padding: EdgeInsets.only(left: 20),
+                    padding: EdgeInsets.only(left: 15),
                     child: Column(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(product.description,
-                              style: DescriptionTextStyleProduct),
-                          Text("${product.price} euros",
-                              style: PriceTextStyleProduct)
+                          Container(
+                            width: MediaQuery.of(context).size.width - 275,
+                            child: Text(product.description,
+                                style: DescriptionTextStyleProduct),
+                          ),
+                          Container(
+                              width: MediaQuery.of(context).size.width - 275,
+                              child: Text("${product.price} euros",
+                                  style: PriceTextStyleProduct)),
                         ]))
               ],
             )),
@@ -75,7 +81,10 @@ class Screen_product extends StatelessWidget {
           ),
           Padding(
             child: ElevatedButton(
-              onPressed: add(product),
+              onPressed: () {
+                add(product);
+                Navigator.pop(context);
+              },
               child: Text("Add to your order"),
               style: greenButtonStyle,
             ),
