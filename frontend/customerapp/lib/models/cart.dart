@@ -32,4 +32,8 @@ class Cart {
   Map get order {
     return _order;
   }
+
+  void empty() {
+    _order.clear();
+  }
 }

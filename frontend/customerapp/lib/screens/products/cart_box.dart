@@ -24,6 +24,10 @@ class _CartBoxState extends State<CartBox> {
   TimeInterval timeInterval;
   List<Widget> items;
 
+  void refresh() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     distance = widget.restaurant == null
@@ -33,18 +37,13 @@ class _CartBoxState extends State<CartBox> {
     timeInterval = new TimeInterval.distance(distance);
     items = new List<Widget>();
     widget.cart.order.forEach((key, value) {
-      items.add(new Text(value.toString() +
-          'x ' +
-          key.name +
-          ' ' +
-          key.price.toString() +
-          ' €'));
+      items.add(new ItemOnCart(key, value, widget.cart, refresh));
     });
     return Padding(
       padding: EdgeInsets.fromLTRB(15, 30, 30, 30),
       child: Container(
         width: widget.cartWidth,
-        constraints: BoxConstraints(maxHeight: 300),
+        constraints: BoxConstraints(minHeight: 300),
         padding: EdgeInsets.all(10.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15.0),
@@ -104,19 +103,88 @@ class _CartBoxState extends State<CartBox> {
             Text('Total price: ' +
                 widget.cart.getTotalPrice().toString() +
                 ' €'),
-            IconButton(
-              icon: Icon(
-                Icons.add,
-                color: Color(0xff43C1A4),
-              ),
-              onPressed: () {
-                setState(() {
-                  widget.cart.addItem(widget.prods[0]);
-                });
-              },
-            )
+            MakeOrderButton(widget.cart, refresh)
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ItemOnCart extends StatefulWidget {
+  Function refresh;
+  Cart cart;
+  Product_overview prod;
+  int quantity;
+  ItemOnCart(this.prod, this.quantity, this.cart, this.refresh);
+
+  @override
+  State<StatefulWidget> createState() => _ItemOnCartState();
+}
+
+class _ItemOnCartState extends State<ItemOnCart> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: [
+      Text(widget.quantity.toString() +
+          'x ' +
+          widget.prod.name +
+          ' ' +
+          widget.prod.price.toString() +
+          ' €'),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          IconButton(
+            icon: Icon(
+              Icons.add,
+              color: Color(0xff43C1A4),
+            ),
+            onPressed: () {
+              setState(() {
+                widget.cart.addItem(widget.prod);
+                widget.refresh();
+              });
+            },
+          ),
+          IconButton(
+            icon: Icon(
+              Icons.remove,
+              color: Color(0xff43C1A4),
+            ),
+            onPressed: () {
+              setState(() {
+                widget.cart.substractItem(widget.prod);
+                widget.refresh();
+              });
+            },
+          )
+        ],
+      )
+    ]);
+  }
+}
+
+class MakeOrderButton extends StatelessWidget {
+  Cart cart;
+  Function refresh;
+
+  MakeOrderButton(this.cart, this.refresh);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 30),
+      child: Wrap(
+        children: [
+          ElevatedButton(
+              onPressed: () {
+                cart.empty();
+                refresh();
+              },
+              child: Text('Make the order'),
+              style: makeOrderButtonStyle)
+        ],
       ),
     );
   }
