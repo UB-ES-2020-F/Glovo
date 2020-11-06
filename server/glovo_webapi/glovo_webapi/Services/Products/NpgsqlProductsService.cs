@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using glovo_webapi.Data;
@@ -41,7 +42,7 @@ namespace  glovo_webapi.Services.Products
             {
                 return null;
             }
-            return r.Product;
+            return _context.Products.Where(p => p.RestaurantId == idRest);
         }
 
         public IEnumerable<Product> GetAllProductsOfRestaurantByCategory(int idRest, ProductCategory c)
@@ -53,9 +54,9 @@ namespace  glovo_webapi.Services.Products
             }
             if (c == ProductCategory.Uncategorized)
             {
-                return r.Product.ToList();
+                return _context.Products.Where(p => p.RestaurantId == idRest);
             }
-            return r.Product.Where(p => p.Category == c);
+            return _context.Products.Where(p => p.RestaurantId == idRest && p.Category == c);
         }
 
         public Product GetProductOfRestaurantById(int idRest, int idProd)

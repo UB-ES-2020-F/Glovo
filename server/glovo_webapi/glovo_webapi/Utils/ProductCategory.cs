@@ -2,6 +2,7 @@ namespace glovo_webapi.Utils
 {
     public enum ProductCategory
     {
-        Uncategorized
+        Uncategorized, 
+        C1
     }
 }

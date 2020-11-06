@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using AutoMapper;
 using glovo_webapi.Entities;
@@ -22,15 +23,18 @@ namespace glovo_webapi.Controllers
         }
         
         [HttpGet]
-        public ActionResult<IEnumerable<ProductReadModel>> GetAllProducts(ProductCategory? category)
+        public ActionResult<IEnumerable<ProductReadModel>> GetAllProducts([FromQuery]ProductCategory? category)
         {
             IEnumerable<Product> products;
+            
             if (category.HasValue)
             {
+                Console.Write("Category: "+category.Value+"\n");
                 products = _service.GetProductsByCategory(category.Value);
             }
             else
             {
+                Console.Write("Category: null\n");
                 products = _service.GetAllProducts();
             }
             return Ok(_mapper.Map<IEnumerable<ProductReadModel>>(products));

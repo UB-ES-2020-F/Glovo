@@ -23,7 +23,7 @@ namespace glovo_webapi.Controllers
         }
 
         [HttpGet("{idRest}/products")]
-        public ActionResult<ProductReadModel> GetAllProductsOfRestaurant(int idRest, ProductCategory? category)
+        public ActionResult<ProductReadModel> GetAllProductsOfRestaurant(int idRest, [FromQuery]ProductCategory? category)
         {
             IEnumerable<Product> products;
             if (category.HasValue)
