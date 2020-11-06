@@ -1,16 +1,10 @@
+import 'package:customerapp/infrastructure/persistence/repository/user_credentials_repository.dart';
 import 'package:customerapp/models/logged.dart';
-import 'package:customerapp/models/product/product_overview.dart';
 import 'package:customerapp/models/signup.dart';
-import 'package:customerapp/screens/anon_bar.dart';
 import 'package:customerapp/screens/loggedPage/initial_logged_page.dart';
 import 'package:customerapp/screens/anon_root.dart';
-import 'package:customerapp/screens/products/concrete_product_card.dart';
 import 'package:customerapp/screens/products/products_sample.dart';
 
-import 'package:customerapp/models/logged.dart';
-import 'package:customerapp/models/signup.dart';
-import 'package:customerapp/screens/loggedPage/initial_logged_page.dart';
-import 'package:customerapp/screens/anon_root.dart';
 import 'package:customerapp/screens/products/screen_product.dart';
 import 'package:customerapp/screens/restaurantList/restaurant_list.dart';
 
@@ -20,11 +14,31 @@ import 'package:customerapp/styles/Komet.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'infrastructure/persistence/hive/hive_adapter.dart';
 import 'models/restaurants.dart';
 import 'models/signin.dart';
-
+import 'models/user_credentials/user_credentials.dart';
 void main() {
+  setUpPersistence();
+
+  /**
+   * Example of how to use repositories. They are async so keep that in mind
+   */
+  UserCredentialsRepository().update(UserCredentials("ruben", "zkkkasd"));
+  UserCredentialsRepository().getCredentials().then((value) => print(value.username));
+  UserCredentialsRepository().update(UserCredentials("pedro", "zkkkasd"));
+  UserCredentialsRepository().getCredentials().then((value) => print(value.username));
+
+  /**
+   * End example
+   */
+  
   runApp(MyApp());
+}
+
+void setUpPersistence() async {
+  initFlutter();
+  UserCredentialsRepository().setUp(UserCredentialsAdapter());
 }
 
 class MyApp extends StatelessWidget {
