@@ -63,7 +63,7 @@ namespace glovo_webapi_test.Endpoints
                 Assert.Equal(productPair.Expected.ImgPath, productPair.Queried.ImgPath);
                 Assert.Equal(productPair.Expected.Description, productPair.Queried.Description);
                 Assert.Equal(productPair.Expected.Price, productPair.Queried.Price);
-                Assert.Equal(productPair.Expected.IdRest, productPair.Queried.IdRest);
+                Assert.Equal(productPair.Expected.RestaurantId, productPair.Queried.RestaurantId);
             }
         }
         
@@ -91,7 +91,7 @@ namespace glovo_webapi_test.Endpoints
                 Assert.Equal(productPair.Expected.ImgPath, productPair.Queried.ImgPath);
                 Assert.Equal(productPair.Expected.Description, productPair.Queried.Description);
                 Assert.Equal(productPair.Expected.Price, productPair.Queried.Price);
-                Assert.Equal(productPair.Expected.IdRest, productPair.Queried.IdRest);
+                Assert.Equal(productPair.Expected.RestaurantId, productPair.Queried.RestaurantId);
             }
         }
         
