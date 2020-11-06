@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using glovo_webapi.Utils;
 
 namespace glovo_webapi.Entities
 {
@@ -22,6 +23,8 @@ namespace glovo_webapi.Entities
                 
                 [Required]
                 public Restaurant Restaurant { get; set; }
+                
+                public ProductCategory Category { get; set; }
 
                 public Product(int Id, string Name, string ImgPath, string Description, float Price, int RestaurantId)
                 {

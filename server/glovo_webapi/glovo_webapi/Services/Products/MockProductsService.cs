@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using glovo_webapi.Entities;
+using glovo_webapi.Utils;
 
 namespace glovo_webapi.Services.Products
 {
@@ -27,6 +28,11 @@ namespace glovo_webapi.Services.Products
             };
         }
 
+        public IEnumerable<Product> GetProductsByCategory(ProductCategory c)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public Product GetProductById(int id)
         {
             return new Product(id, "Hambur Guesa", "img/products/hambur.jpg", "This hamburger will prevent YOU to starve", 3.14f, 0);
@@ -42,6 +48,11 @@ namespace glovo_webapi.Services.Products
                 new Product(4, "Hambur Guesa Marisco", "img/products/hambur4.jpg", "This hamburger will prevent YOU to starve", 6.84f, idRest),
                 new Product(5, "Hambur Guesa Guesa", "img/products/hambur5.jpg", "This hamburger will prevent YOU to starve", 8.64f, idRest)
             };
+        }
+
+        public IEnumerable<Product> GetAllProductsOfRestaurantByCategory(int idRest, ProductCategory c)
+        {
+            throw new System.NotImplementedException();
         }
 
         public Product GetProductOfRestaurantById(int idRest, int idProd)

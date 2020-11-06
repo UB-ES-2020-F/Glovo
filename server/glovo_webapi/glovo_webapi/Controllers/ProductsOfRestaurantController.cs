@@ -4,6 +4,7 @@ using AutoMapper;
 using glovo_webapi.Entities;
 using glovo_webapi.Models.Product;
 using glovo_webapi.Services.Products;
+using glovo_webapi.Utils;
 using Microsoft.AspNetCore.Mvc;
 
 namespace glovo_webapi.Controllers
@@ -22,10 +23,19 @@ namespace glovo_webapi.Controllers
         }
 
         [HttpGet("{idRest}/products")]
-        public ActionResult<ProductReadModel> GetAllProductsOfRestaurant(int idRest)
+        public ActionResult<ProductReadModel> GetAllProductsOfRestaurant(int idRest, ProductCategory? category)
         {
-            IEnumerable<Product> products = _service.GetAllProductsOfRestaurant(idRest);
-            if (products == null || !products.Any())
+            IEnumerable<Product> products;
+            if (category.HasValue)
+            {
+                products = _service.GetAllProductsOfRestaurantByCategory(idRest, category.Value);
+            }
+            else
+            {
+                products = _service.GetAllProductsOfRestaurant(idRest);
+            }
+            
+            if (products == null)
             {
                 return NotFound(new {message = "restaurant id not found"});
             }
