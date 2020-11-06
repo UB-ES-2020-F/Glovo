@@ -1,3 +1,4 @@
+import 'dart:html';
 import 'dart:js';
 
 import 'package:customerapp/components/appBar/default_logged_bar.dart';
@@ -48,53 +49,72 @@ class Products_sample extends StatelessWidget {
     return Scaffold(
         //backgroundColor: Theme.of(context).backgroundColor,
         appBar: DefaultLoggedBar(),
-        body: Container(
-            padding: EdgeInsets.only(left: 20, right: 20),
-            decoration: BoxDecoration(
-                color: Colors.black38,
-                image: DecorationImage(
-                    image: NetworkImage(
-                        restaurant == null ? '' : restaurant.image),
-                    fit: BoxFit.fitWidth)),
-            child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    padding: EdgeInsets.fromLTRB(30, 30, 15, 0),
-                    width: MediaQuery.of(context).size.width - cartWidth - 90,
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                            child: Container(
-                              height: 140,
-                              padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                  color: Color(0xAAFFFFFF)),
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                restaurant == null
-                                    ? 'Products'
-                                    : restaurant.name,
-                                style: RestaurantTitleStyle,
+        body: Stack(children: [
+          Container(
+              padding: EdgeInsets.only(left: 20, right: 20),
+              decoration: BoxDecoration(
+                  color: Colors.black38,
+                  image: DecorationImage(
+                      image: NetworkImage(
+                          restaurant == null ? '' : restaurant.image),
+                      fit: BoxFit.fitWidth)),
+              child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      padding: MediaQuery.of(context).size.width < 600
+                          ? EdgeInsets.fromLTRB(10, 30, 10, 0)
+                          : EdgeInsets.fromLTRB(30, 30, 30, 0),
+                      width: MediaQuery.of(context).size.width < 900
+                          ? MediaQuery.of(context).size.width - 40
+                          : MediaQuery.of(context).size.width - cartWidth - 90,
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                              child: Container(
+                                height: 140,
+                                padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15.0),
+                                    color: Color(0xAAFFFFFF)),
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  restaurant == null
+                                      ? 'Products'
+                                      : restaurant.name,
+                                  style: RestaurantTitleStyle,
+                                ),
                               ),
                             ),
-                          ),
-                          Expanded(
-                              child: Container(
-                                  child:
-                                      Center(child: Product_grid(prodCards)))),
-                        ]),
-                  ),
-                  Column(
-                    children: [CartBox(restaurant, cartWidth, cart, prods)],
-                  )
-                ])));
+                            Expanded(
+                                child: Container(
+                                    child: Center(
+                                        child: Product_grid(prodCards)))),
+                          ]),
+                    ),
+                    if (MediaQuery.of(context).size.width > 900)
+                      Column(
+                        children: [CartBox(restaurant, cartWidth, cart, prods)],
+                      )
+                    else
+                      Container()
+                  ])),
+          if (MediaQuery.of(context).size.width <= 900 && cart.order.isNotEmpty)
+            Align(
+                alignment: Alignment.bottomCenter,
+                child: MakeOrderButton(
+                    cart,
+                    'Make order of ' +
+                        cart.countItems().toString() +
+                        ' items (' +
+                        cart.getTotalPrice().toString() +
+                        ' €)'))
+        ]));
   }
 }
 
@@ -111,7 +131,7 @@ class Product_grid extends StatelessWidget {
       crossAxisSpacing: 10,
       mainAxisSpacing: 10,
       itemCount: prodCards.length,
-      crossAxisCount: MediaQuery.of(context).size.width > 900 ? 2 : 1,
+      crossAxisCount: MediaQuery.of(context).size.width > 600 ? 2 : 1,
       itemBuilder: (context, index) {
         return prodCards.asMap()[index];
       },

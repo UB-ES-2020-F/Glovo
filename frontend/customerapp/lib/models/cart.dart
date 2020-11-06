@@ -39,4 +39,10 @@ class Cart extends ChangeNotifier {
     _order.clear();
     notifyListeners();
   }
+
+  int countItems() {
+    int numb = 0;
+    _order.forEach((k, v) => numb += v);
+    return numb;
+  }
 }

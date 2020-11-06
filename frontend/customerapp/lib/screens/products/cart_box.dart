@@ -33,7 +33,7 @@ class CartBox extends StatelessWidget {
       items.add(new ItemOnCart(key, value, cart));
     });
     return Padding(
-      padding: EdgeInsets.fromLTRB(15, 30, 30, 30),
+      padding: EdgeInsets.fromLTRB(0, 30, 30, 30),
       child: Container(
         width: cartWidth,
         constraints: BoxConstraints(minHeight: 300),
@@ -111,7 +111,7 @@ class CartBox extends StatelessWidget {
                     ],
                   ),
                 ),
-                MakeOrderButton(cart)
+                MakeOrderButton(cart, 'Make order')
               ])
             else
               Container(
@@ -197,8 +197,9 @@ class ItemOnCart extends StatelessWidget {
 
 class MakeOrderButton extends StatelessWidget {
   Cart cart;
+  String text;
 
-  MakeOrderButton(this.cart);
+  MakeOrderButton(this.cart, this.text);
 
   @override
   Widget build(BuildContext context) {
@@ -212,7 +213,7 @@ class MakeOrderButton extends StatelessWidget {
                 showDialog(
                     context: context, builder: (context) => OrderDoneDialog());
               },
-              child: Text('Make order'),
+              child: Text(text),
               style: makeOrderButtonStyle)
         ],
       ),
