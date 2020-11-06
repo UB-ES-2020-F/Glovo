@@ -12,7 +12,6 @@ class RestaurantsListCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var initialLoggedModel = new LoggedModel();
     User user = LoggedModel.user;
     double distance = restaurant.location.getDistanceKm(user.location);
     double deliveryFee = getDeliveryFee(distance);

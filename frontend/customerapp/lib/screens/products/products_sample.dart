@@ -6,7 +6,7 @@ import 'package:customerapp/models/product/mock_up_prod.dart';
 import 'package:customerapp/models/restaurants.dart';
 import 'package:customerapp/screens/loggedPage/initial_logged_page.dart';
 import 'package:customerapp/screens/loggedPage/logged_bar.dart';
-import 'package:customerapp/screens/products/cart_card.dart';
+import 'package:customerapp/screens/products/cart_box.dart';
 import 'package:customerapp/screens/restaurantList/restaurant_list_box.dart';
 import 'package:customerapp/styles/product.dart';
 import 'package:flutter/material.dart';
@@ -18,17 +18,23 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'concrete_product_card.dart';
 
 class Products_sample extends StatelessWidget {
+  List prodCards = List();
   List prods = List();
 
   Products_sample() {
     prods = Mock_up_prod().prod;
+    for (var i = 0; i < prods.length; i++) {
+      prodCards.add(Concrete_Product_Card(prods[i]));
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final Restaurant restaurant = ModalRoute.of(context).settings.arguments;
     Cart cart = new Cart();
-    cart.addItem(prods[0].product);
+    cart.addItem(prods[0]);
+    cart.addItem(prods[0]);
+    cart.addItem(prods[2]);
     double cartWidth = 350;
     return Scaffold(
         //backgroundColor: Theme.of(context).backgroundColor,
@@ -72,11 +78,12 @@ class Products_sample extends StatelessWidget {
                           ),
                           Expanded(
                               child: Container(
-                                  child: Center(child: Product_grid(prods)))),
+                                  child:
+                                      Center(child: Product_grid(prodCards)))),
                         ]),
                   ),
                   Column(
-                    children: [cartBox(restaurant, cartWidth, cart)],
+                    children: [CartBox(restaurant, cartWidth, cart, prods)],
                   )
                 ])));
   }

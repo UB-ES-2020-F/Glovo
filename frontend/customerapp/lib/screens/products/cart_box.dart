@@ -1,27 +1,49 @@
 import 'package:customerapp/models/cart.dart';
 import 'package:customerapp/models/logged.dart';
+import 'package:customerapp/models/product/product_overview.dart';
 import 'package:customerapp/models/restaurants.dart';
 import 'package:customerapp/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:customerapp/styles/product.dart';
 
-class cartBox extends StatelessWidget {
+class CartBox extends StatefulWidget {
   double cartWidth;
   Restaurant restaurant;
   Cart cart;
-  cartBox(this.restaurant, this.cartWidth, this.cart);
+  List prods;
+  CartBox(this.restaurant, this.cartWidth, this.cart, this.prods);
+
+  @override
+  State<StatefulWidget> createState() => _CartBoxState();
+}
+
+class _CartBoxState extends State<CartBox> {
+  double distance;
+  double deliveryFee;
+  TimeInterval timeInterval;
+  List<Widget> items;
+
   @override
   Widget build(BuildContext context) {
-    double distance = restaurant == null
+    distance = widget.restaurant == null
         ? 5.0
-        : restaurant.location.getDistanceKm(LoggedModel.user.location);
-    double deliveryFee = getDeliveryFee(distance);
-    TimeInterval timeInterval = new TimeInterval.distance(distance);
+        : widget.restaurant.location.getDistanceKm(LoggedModel.user.location);
+    deliveryFee = getDeliveryFee(distance);
+    timeInterval = new TimeInterval.distance(distance);
+    items = new List<Widget>();
+    widget.cart.order.forEach((key, value) {
+      items.add(new Text(value.toString() +
+          'x ' +
+          key.name +
+          ' ' +
+          key.price.toString() +
+          ' €'));
+    });
     return Padding(
       padding: EdgeInsets.fromLTRB(15, 30, 30, 30),
       child: Container(
-        width: cartWidth,
+        width: widget.cartWidth,
         constraints: BoxConstraints(maxHeight: 300),
         padding: EdgeInsets.all(10.0),
         decoration: BoxDecoration(
@@ -75,26 +97,27 @@ class cartBox extends StatelessWidget {
                 )),
             Padding(
               padding: EdgeInsets.all(5),
-              child: ProductsListCart(cart),
+              child: Column(
+                children: items,
+              ),
+            ),
+            Text('Total price: ' +
+                widget.cart.getTotalPrice().toString() +
+                ' €'),
+            IconButton(
+              icon: Icon(
+                Icons.add,
+                color: Color(0xff43C1A4),
+              ),
+              onPressed: () {
+                setState(() {
+                  widget.cart.addItem(widget.prods[0]);
+                });
+              },
             )
           ],
         ),
       ),
     );
-  }
-}
-
-class ProductsListCart extends StatelessWidget {
-  Cart _cart;
-  ProductsListCart(this._cart);
-  String items = '';
-  @override
-  Widget build(BuildContext context) {
-    _cart.order.forEach((key, value) {
-      items += value.toString();
-      items += 'x ' + key.name;
-    });
-
-    return Text(items);
   }
 }
