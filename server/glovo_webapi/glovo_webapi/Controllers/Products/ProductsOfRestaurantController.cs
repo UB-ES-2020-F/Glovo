@@ -21,10 +21,11 @@ namespace glovo_webapi.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("{idRest}/products")]
-        public ActionResult<ProductReadModel> GetAllProductsOfRestaurant(int idRest)
+        //GET api/restaurants/<restId>/products
+        [HttpGet("{restId}/products")]
+        public ActionResult<ProductReadModel> GetAllProductsOfRestaurant(int restId)
         {
-            IEnumerable<Product> products = _service.GetAllProductsOfRestaurant(idRest);
+            IEnumerable<Product> products = _service.GetAllProductsOfRestaurant(restId);
             if (products == null || !products.Any())
             {
                 return NotFound(new {message = "restaurant id not found"});
@@ -32,10 +33,11 @@ namespace glovo_webapi.Controllers
             return Ok(_mapper.Map<IEnumerable<ProductReadModel>>(products));
         }
 
-        [HttpGet("{idRest}/products/{idProd}")]
-        public ActionResult<ProductReadModel> GetProductOfRestaurantById(int idRest, int idProd)
+        //GET api/restaurants/<restId>/products/<prodId>
+        [HttpGet("{restId}/products/{prodId}")]
+        public ActionResult<ProductReadModel> GetProductOfRestaurantById(int restId, int prodId)
         {
-            Product foundProduct = _service.GetProductOfRestaurantById(idRest, idProd);
+            Product foundProduct = _service.GetProductOfRestaurantById(restId, prodId);
             if (foundProduct == null)
             {
                 return NotFound(new {message = "product or restaurant id not found"});
