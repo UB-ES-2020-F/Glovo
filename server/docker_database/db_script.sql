@@ -1,10 +1,17 @@
 DELETE FROM "Restaurants";
 DELETE FROM "Products";
+DELETE FROM "Orders";
 DELETE FROM "Users";
+DELETE FROM "OrdersProducts";
 
 INSERT INTO "Users" ("Id", "Name", "Email", "PasswordHash", "PasswordSalt")
 VALUES
-    (1, 'Test 1', 'test1@glovo.net', null, null);
+    (1, 'Test 1', 'test1@glovo.net', null, null),
+    (2, 'Test 2', 'test2@glovo.net', null, null),
+    (3, 'Test 3', 'test3@glovo.net', null, null),
+    (4, 'Test 4', 'test4@glovo.net', null, null),
+    (5, 'Test 5', 'test5@glovo.net', null, null),
+    (6, 'Test 6', 'test6@glovo.net', null, null);
 
 INSERT INTO "Restaurants" ("Id", "Name", "ImgPath")
 VALUES
@@ -27,3 +34,29 @@ VALUES
 	(10, 'Kangreburger', 'img/kkburger.jpg', 'Delicious krab burger', 1.00, 4),
 	(11, 'Kangrefries', 'img/kkfries.jpg', 'Delicious krab fries', 1.00, 4),
 	(12, 'Kangrecola', 'img/kkcola.jpg', 'Delicious krab cola', 1.00, 4);
+
+INSERT INTO "Orders" ("Id", "BuyDateTime", "UserId", "RestaurantId")
+VALUES
+	(1, TIMESTAMP '2020-10-01 22:23:37', 1, 1),
+	(2, TIMESTAMP '2020-10-04 14:20:28', 1, 4),
+	(3, TIMESTAMP '2020-10-07 15:15:19', 1, 3),
+	(4, TIMESTAMP '2020-10-11 21:55:10', 2, 1),
+	(5, TIMESTAMP '2020-10-15 12:11:51', 3, 1),
+	(6, TIMESTAMP '2020-10-19 14:34:42', 4, 1),
+	(7, TIMESTAMP '2020-10-23 21:14:33', 4, 4),
+	(8, TIMESTAMP' 2020-10-30 23:35:24', 5, 1);
+
+INSERT INTO "OrdersProducts" ("OrderId", "ProductId", "Quantity")
+VALUES
+	(1, 3, 1),
+	(2, 10, 1),
+	(2, 11, 1),
+	(2, 12, 1),
+	(3, 9, 4),
+	(4, 3, 10),
+	(5, 2, 1),
+	(6, 2, 1),
+	(7, 10, 3),
+	(7, 11, 3),
+	(7, 12, 3),
+	(8, 1, 1);

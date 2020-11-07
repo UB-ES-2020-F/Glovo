@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using glovo_webapi.Data;
@@ -9,9 +10,10 @@ using glovo_webapi.Data;
 namespace glovo_webapi.Migrations
 {
     [DbContext(typeof(GlovoDbContext))]
-    partial class GloboDBContextModelSnapshot : ModelSnapshot
+    [Migration("20201106001913_OrdersMigration")]
+    partial class OrdersMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,24 +46,6 @@ namespace glovo_webapi.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("glovo_webapi.Entities.OrderProduct", b =>
-                {
-                    b.Property<int>("OrderId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("integer");
-
-                    b.HasKey("OrderId", "ProductId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("OrdersProducts");
-                });
-
             modelBuilder.Entity("glovo_webapi.Entities.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -82,10 +66,15 @@ namespace glovo_webapi.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("integer");
+
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
 
                     b.ToTable("Products");
                 });
@@ -148,33 +137,16 @@ namespace glovo_webapi.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("glovo_webapi.Entities.OrderProduct", b =>
+            modelBuilder.Entity("glovo_webapi.Entities.Product", b =>
                 {
-                    b.HasOne("glovo_webapi.Entities.Order", "Order")
-                        .WithMany("OrdersProducts")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("glovo_webapi.Entities.Product", "Product")
-                        .WithMany("OrdersProducts")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-
-                    b.Navigation("Product");
+                    b.HasOne("glovo_webapi.Entities.Order", null)
+                        .WithMany("Products")
+                        .HasForeignKey("OrderId");
                 });
 
             modelBuilder.Entity("glovo_webapi.Entities.Order", b =>
                 {
-                    b.Navigation("OrdersProducts");
-                });
-
-            modelBuilder.Entity("glovo_webapi.Entities.Product", b =>
-                {
-                    b.Navigation("OrdersProducts");
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

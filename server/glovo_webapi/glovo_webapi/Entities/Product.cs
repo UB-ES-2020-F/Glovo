@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace glovo_webapi.Entities
@@ -20,6 +21,8 @@ namespace glovo_webapi.Entities
                 [Required]
                 public int IdRest { get; set; }
 
+                public IEnumerable<OrderProduct> OrdersProducts { get; set; }
+
                 public Product(int Id, string Name, string ImgPath, string Description, float Price, int IdRest)
                 {
                         this.Id = Id;
@@ -28,6 +31,7 @@ namespace glovo_webapi.Entities
                         this.Description = Description;
                         this.Price = Price;
                         this.IdRest = IdRest;
+                        this.OrdersProducts = new List<OrderProduct>();
                 }
                 
         }
