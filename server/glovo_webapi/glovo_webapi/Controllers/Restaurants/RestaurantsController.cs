@@ -28,11 +28,11 @@ namespace glovo_webapi.Controllers
             return Ok(_mapper.Map<IEnumerable<RestaurantReadModel>>(restaurants));
         }
         
-        //GET api/restaurants/<prodId>
-        [HttpGet("{prodId}")]
-        public ActionResult<RestaurantReadModel> GetRestaurantById(int prodId)
+        //GET api/restaurants/<restId>
+        [HttpGet("{restId}")]
+        public ActionResult<RestaurantReadModel> GetRestaurantById(int restId)
         {
-            Restaurant foundRestaurant = _service.GetRestaurantById(prodId);
+            Restaurant foundRestaurant = _service.GetRestaurantById(restId);
             if (foundRestaurant == null)
             {
                 return NotFound(new {message = "Restaurant id not found"});
