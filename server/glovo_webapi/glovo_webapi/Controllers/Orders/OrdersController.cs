@@ -66,6 +66,10 @@ namespace glovo_webapi.Controllers.Orders
                 {
                     return BadRequest(new { error="make_order-03",message = "bad orderProduct data" });
                 }
+                if (ex.Code == OrderExceptionCodes.BadOrderProduct)
+                {
+                    return BadRequest(new { error="make-order-03",message = "bad orderProduct data" });
+                }
                 return BadRequest(new {message = "unknown error"});
             }
             

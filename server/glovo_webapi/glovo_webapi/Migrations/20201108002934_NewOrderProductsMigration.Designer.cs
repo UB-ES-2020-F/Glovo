@@ -10,8 +10,8 @@ using glovo_webapi.Data;
 namespace glovo_webapi.Migrations
 {
     [DbContext(typeof(GlovoDbContext))]
-    [Migration("20201106102914_OrdersProductsMigration1")]
-    partial class OrdersProductsMigration1
+    [Migration("20201108002934_NewOrderProductsMigration")]
+    partial class NewOrderProductsMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
