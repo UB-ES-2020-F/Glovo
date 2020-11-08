@@ -9,7 +9,9 @@ namespace glovo_webapi.Entities
         [Key]
         public int Id { get; set; }
         public DateTime BuyDateTime { get; set; }
+        public int UserId { get; set; }
         public User User { get; set; }
+        public int RestaurantId { get; set; }
         public Restaurant Restaurant { get; set; }
         public IEnumerable<OrderProduct> OrdersProducts { get; set; }
     }

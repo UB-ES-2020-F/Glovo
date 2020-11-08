@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using glovo_webapi.Data;
@@ -39,22 +40,23 @@ namespace glovo_webapi.Services.Orders
 
         public Order AddOrder(Order order)
         {
-            //Add logged user to order
-            User loggedUser = (User) _httpContextAccessor.HttpContext.Items["User"];
-            order.User = loggedUser;
-            
-            //Check restaurant exists
-            if (order.Restaurant == null)
-            {
-                throw new RequestException(OrderExceptionCodes.RestaurantNotFound);
-            }
+            //Check restaurant 
+            Restaurant orderRestaurant = (Restaurant) _context.Restaurants.FirstOrDefault(r => r.Id == order.RestaurantId);
+            if (orderRestaurant == null) { throw new RequestException(OrderExceptionCodes.RestaurantNotFound); }
             
             //Check all products exist
-            if (order.OrdersProducts.Any(orderProduct => orderProduct.Product == null))
-            {
-                throw new RequestException(OrderExceptionCodes.ProductNotFound);
+            foreach (OrderProduct orderProduct in order.OrdersProducts) {
+                if(orderProduct == null) {throw new RequestException(OrderExceptionCodes.BadOrderProduct);}
+                Product product = _context.Products.FirstOrDefault(p => p.Id == orderProduct.ProductId);
+                if (product == null) {throw new RequestException(OrderExceptionCodes.ProductNotFound);}
             }
             
+            //Add logged user Id to order
+            User loggedUser = (User) _httpContextAccessor.HttpContext.Items["User"];
+            order.UserId = loggedUser.Id;
+            
+            //Add order to database
+            order.Id = 0;
             _context.Orders.Add(order);
             _context.SaveChanges();
 

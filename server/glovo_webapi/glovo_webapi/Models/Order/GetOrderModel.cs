@@ -17,6 +17,6 @@ namespace glovo_webapi.Models.Order
         
         public int RestaurantId { get; set; }
         
-        public IEnumerable<OrderProductModel> OrdersProducts { get; set; }
+        public IEnumerable<OrderProductModel> Products { get; set; }
     }
 }

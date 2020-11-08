@@ -43,7 +43,7 @@ namespace glovo_webapi.Controllers.Orders
         }
         
         //POST api/orders
-        //[Authorize]
+        [Authorize]
         [HttpPost]
         public ActionResult<GetOrderModel> PostOrder([FromBody] PostOrderModel postOrderModel)
         {
@@ -59,9 +59,13 @@ namespace glovo_webapi.Controllers.Orders
                 {
                     return BadRequest(new { error="make-order-01",message = "restaurant does not exist" });
                 }
-                else if (ex.Code == OrderExceptionCodes.ProductNotFound)
+                if (ex.Code == OrderExceptionCodes.ProductNotFound)
                 {
                     return BadRequest(new { error="make-order-02",message = "product does not exist" });
+                }
+                if (ex.Code == OrderExceptionCodes.BadOrderProduct)
+                {
+                    return BadRequest(new { error="make-order-03",message = "bad orderProduct data" });
                 }
                 return BadRequest(new {message = "unknown error"});
             }

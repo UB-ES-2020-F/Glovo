@@ -1,6 +1,4 @@
 using System;
-using System.Text;
-using System.Threading.Tasks;
 using AutoMapper;
 using glovo_webapi.Data;
 using glovo_webapi.Services.Orders;
@@ -13,8 +11,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using WebApi.Helpers;
 
 namespace glovo_webapi
@@ -56,6 +52,7 @@ namespace glovo_webapi
             Console.Write("Database connection string:"+connection);
             services.AddDbContext<GlovoDbContext>(opt => opt.UseNpgsql(connection));
         
+            services.AddCors();
             services.AddControllers();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -68,6 +65,7 @@ namespace glovo_webapi
             services.AddOptions();
             services.Configure<AppConfiguration>(Configuration.GetSection("AppSettings"));
             
+            /*
             byte[] key = Encoding.ASCII.GetBytes(Configuration.GetValue<string>("AppSettings:Secret"));
             services.AddAuthentication(x =>
                 {
@@ -101,6 +99,7 @@ namespace glovo_webapi
                         ValidateAudience = false
                     };
                 });
+            */
             
             services.AddHttpContextAccessor();
         }
@@ -117,6 +116,12 @@ namespace glovo_webapi
 
             app.UseRouting();
 
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseMiddleware<JwtMiddleware>();

@@ -49,14 +49,10 @@ namespace glovo_webapi.Controllers
             }
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            string tokenKey = _configuration.Value.Secret;
-            var key = Encoding.ASCII.GetBytes(tokenKey);
+            var key = Encoding.ASCII.GetBytes(_configuration.Value.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.Name, user.Id.ToString())
-                }),
+                Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };

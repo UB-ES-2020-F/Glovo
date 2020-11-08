@@ -9,8 +9,12 @@ namespace glovo_webapi.Profiles
     {
         public OrdersProfile()
         {
-            CreateMap<Order, GetOrderModel>();
-            CreateMap<PostOrderModel, Order>();
+            CreateMap<Order, GetOrderModel>()
+                .ForMember(getOrderModel => getOrderModel.Products,
+                    opts => opts.MapFrom(order => order.OrdersProducts));
+            CreateMap<PostOrderModel, Order>()
+                .ForMember(order => order.OrdersProducts, 
+                    opts => opts.MapFrom(postOrderModel => postOrderModel.Products));
         }
     }
 }

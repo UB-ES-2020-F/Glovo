@@ -74,7 +74,6 @@ namespace glovo_webapi.Services.UserService
 
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
-            Console.Write("USER ID="+user.Id);
             _context.Users.Add(user);
             _context.SaveChanges();
 
