@@ -7,7 +7,6 @@ using glovo_webapi.Models.Order;
 using glovo_webapi.Services;
 using glovo_webapi.Services.Orders;
 using glovo_webapi.Services.UserService;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace glovo_webapi.Controllers.Orders
@@ -57,15 +56,15 @@ namespace glovo_webapi.Controllers.Orders
             {
                 if (ex.Code == OrderExceptionCodes.RestaurantNotFound)
                 {
-                    return BadRequest(new { error="make-order-01",message = "restaurant does not exist" });
+                    return BadRequest(new { error="make_order-01",message = "restaurant does not exist" });
                 }
                 if (ex.Code == OrderExceptionCodes.ProductNotFound)
                 {
-                    return BadRequest(new { error="make-order-02",message = "product does not exist" });
+                    return BadRequest(new { error="make_order-02",message = "product does not exist" });
                 }
                 if (ex.Code == OrderExceptionCodes.BadOrderProduct)
                 {
-                    return BadRequest(new { error="make-order-03",message = "bad orderProduct data" });
+                    return BadRequest(new { error="make_order-03",message = "bad orderProduct data" });
                 }
                 return BadRequest(new {message = "unknown error"});
             }
