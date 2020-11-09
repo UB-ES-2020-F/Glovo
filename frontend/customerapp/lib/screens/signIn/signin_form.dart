@@ -76,6 +76,10 @@ class SignInForm extends StatelessWidget {
                   labelText: 'E-mail',
                   labelStyle: labelTextInputStyle,
                 ),
+                onFieldSubmitted: (value) {
+                  trySendSignInForm(context, signInModel);
+                },
+                autofocus: true,
               )),
           Container(
               padding: EdgeInsets.symmetric(vertical: 15),
@@ -109,6 +113,9 @@ class SignInForm extends StatelessWidget {
                   labelText: 'Password',
                   labelStyle: labelTextInputStyle,
                 ),
+                onFieldSubmitted: (value) {
+                  trySendSignInForm(context, signInModel);
+                },
               )),
           Align(
             child: Container(
@@ -137,27 +144,31 @@ class SignInForm extends StatelessWidget {
 class SignUpButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var signUpModel = context.watch<SignInModel>();
+    var signInModel = context.watch<SignInModel>();
     return Container(
       padding: EdgeInsets.symmetric(vertical: 30),
       child: Wrap(
         children: [
           ElevatedButton(
-            onPressed: signUpModel.formValid
-                ? () {
-                    if (signUpModel.formKey.currentState.validate()) {
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                          '/initial-logged-in', (route) => false);
-                    }
-                  }
-                : null,
+            onPressed: () {
+              trySendSignInForm(context, signInModel);
+            },
             child: Text('Log in with email'),
-            style: signUpModel.formValid
+            style: signInModel.formValid
                 ? signUpButtonStyleEnabled
                 : signUpButtonStyleDisabled,
           )
         ],
       ),
     );
+  }
+}
+
+void trySendSignInForm(BuildContext context, SignInModel signInModel) {
+  if (signInModel.formValid) {
+    if (signInModel.formKey.currentState.validate()) {
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil('/initial-logged-in', (route) => false);
+    }
   }
 }
