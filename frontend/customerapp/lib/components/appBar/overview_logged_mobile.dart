@@ -13,14 +13,14 @@ class TabBar_screen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (MediaQuery.of(context).size.width > 600) {
-      Navigator.pop(context);
+      Navigator.pop(context); //when resizing screen slowly, error occurs
     }
 
     return DefaultTabController(
       length: 2,
       child: new Scaffold(
         appBar: new PreferredSize(
-          preferredSize: Size.fromHeight(kToolbarHeight * 0.8),
+          preferredSize: Size.fromHeight(kToolbarHeight * 0.8 + 28),
           child: new Container(
             color: Colors.white,
             child: new SafeArea(
@@ -28,6 +28,19 @@ class TabBar_screen extends StatelessWidget {
               padding: EdgeInsets.only(right: 50, left: 50),
               child: Column(
                 children: <Widget>[
+                  Container(
+                      //height: 10,
+                      padding: EdgeInsets.all(0),
+                      alignment: Alignment(1, 1),
+                      child: IconButton(
+                        hoverColor: Colors.transparent,
+                        color: Color(0xFF6E6E6E),
+                        icon: Icon(Icons.clear),
+                        iconSize: 15,
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      )),
                   new Expanded(child: new Container()),
                   new TabBar(
                     labelStyle: NotSelectedStyle_bar,
