@@ -1,19 +1,28 @@
-matrix:
+jobs:
   include:
-    - language: csharp
-      mono: none
-      dotnet: 3.1
-      solution: server/glovo_webapi/glovo_webapi.sln
-      before_script:
-        - cd server/glovo_webapi
-      script:
-        - dotnet restore
-        - cd glovo_webapi
-        - dotnet publish -c Release
-      after_success:
-        #TODO
-      
-        
-      
-      
-        
+  - name: Backend
+    services:
+      - docker
+      - heroku
+    language: csharp
+    mono: none
+    dotnet: 3.1
+    solution: server/glovo_webapi/glovo_webapi.sln
+    before_script:
+      - cd $TRAVIS_BUILD_DIR/server/glovo_webapi
+    script:
+      - dotnet restore
+      - cd glovo_webapi
+      - dotnet publish -c Release
+    before_deploy:
+      - cd $TRAVIS_BUILD_DIR/backend_deployment
+      - dotnet ef migrations script --idempotent --project $TRAVIS_BUILD_DIR/server/glovo_webapi/glovo_webapi -o migration.sql
+      - cp $TRAVIS_BUILD_DIR/server/glovo_webapi/glovo_webapi/bin/Release/netcoreapp3.1/publish publish
+      - heroku pg:sql --app ub-es2020-glovo-webapi < migration.sql
+    deploy:
+      provider: heroku
+      api_key: fa31b783-012a-4fda-afbe-ade1b582bd28
+      app: ub-es2020-glovo-webapi
+      strategy: git
+  
+  - name: Frontend
