@@ -1,5 +1,5 @@
 import 'package:customerapp/components/appBar/default_logged_bar.dart';
-import 'package:customerapp/components/appBar/Mobile_default_bar.dart';
+import 'package:customerapp/components/appBar/mobile_default_bar.dart';
 import 'package:customerapp/models/restaurants.dart';
 import 'package:customerapp/screens/loggedPage/initial_logged_page.dart';
 import 'package:customerapp/screens/loggedPage/logged_bar.dart';

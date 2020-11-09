@@ -1,4 +1,4 @@
-import 'package:customerapp/components/appBar/Mobile_default_bar.dart';
+import 'package:customerapp/components/appBar/mobile_default_bar.dart';
 import 'package:customerapp/components/text_link.dart';
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/signin.dart';
