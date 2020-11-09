@@ -5,6 +5,12 @@ import 'package:flutter/widgets.dart';
 class SignUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    if (MediaQuery.of(context).size.width > 600) {
+      Navigator.pop(context);
+    } else {
+      print("2");
+    }
+
     return Scaffold(
       body: ListView(children: [
         Container(

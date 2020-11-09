@@ -12,6 +12,10 @@ import 'package:flutter/material.dart';
 class TabBar_screen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    if (MediaQuery.of(context).size.width > 600) {
+      Navigator.pop(context);
+    }
+
     return DefaultTabController(
       length: 2,
       child: new Scaffold(
