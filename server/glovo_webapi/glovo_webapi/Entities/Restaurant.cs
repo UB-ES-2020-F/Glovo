@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace glovo_webapi.Entities
@@ -11,6 +12,8 @@ namespace glovo_webapi.Entities
                 public string Name { get; set; }
                 
                 public string ImgPath { get; set; }
+                
+                public ICollection<Product> Product { get; set; }
 
                 public Restaurant(int Id, string Name, string ImgPath)
                 {

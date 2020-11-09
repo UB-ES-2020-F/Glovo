@@ -13,20 +13,24 @@ class RestaurantsListModel extends ChangeNotifier {
     availableRestaurants = List();
     availableRestaurants.add(Restaurant(
         1,
-        'Tagliatella',
+        'La Tagliatella',
         TimeInterval(10, 20),
         2.5,
-        'https://dam.cocinafacil.com.mx/wp-content/uploads/2020/04/dumplings.jpg'));
+        'https://cdn2.cocinadelirante.com/sites/default/files/images/2018/12/como-hacer-cremosa-pasta-hervida-en-leche.jpeg'));
     availableRestaurants.add(Restaurant(
         1,
         'Burger King',
         TimeInterval(20, 30),
         4,
-        'https://dam.cocinafacil.com.mx/wp-content/uploads/2020/04/Cerdo-agridulce.jpg'));
-    availableRestaurants.add(Restaurant(1, 'McDonalds', TimeInterval(20, 30), 4,
-        'https://dam.cocinafacil.com.mx/wp-content/uploads/2020/04/chow-mein.jpg'));
-    availableRestaurants.add(Restaurant(1, 'FiveGuys', TimeInterval(20, 30), 4,
-        'https://dam.cocinafacil.com.mx/wp-content/uploads/2020/04/wan-tan.jpg'));
+        'https://www.familycheck.es/wp-content/uploads/2019/11/Burger-King-1.jpg'));
+    availableRestaurants.add(Restaurant(
+        1,
+        "McDonald's",
+        TimeInterval(20, 30),
+        4,
+        'https://cdn.ticbeat.com/src/uploads/2018/06/mcdonalds-burger-king-subway-europa-810x547.jpg'));
+    availableRestaurants.add(Restaurant(1, 'Five Guys', TimeInterval(20, 30), 4,
+        'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/img-0056-1575287109.jpg'));
   }
 
   /*

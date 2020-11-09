@@ -41,7 +41,7 @@ namespace glovo_webapi.Controllers
             try {
                 user = _userService.Authenticate(model.Email, model.Password);
             } catch (RequestException) {
-                return BadRequest(new { error="login-01", message = "Username or password is incorrect" });
+                return BadRequest(new { error="login-01", message = "email or password is incorrect" });
             }
 
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -134,13 +134,13 @@ namespace glovo_webapi.Controllers
             {
                 if (ex.Code == UserExceptionCodes.BadPassword)
                 {
-                    return BadRequest(new { error="regis-02",message = "password doesn't meet requirements" });
+                    return BadRequest(new { error="update_usr-01",message = "password doesn't meet requirements" });
                 }
                 else if (ex.Code == UserExceptionCodes.UserAlreadyExists)
                 {
-                    return BadRequest(new { error="regis-01",message = "email already in use" });
+                    return BadRequest(new { error="update_usr-02",message = "email already in use" });
                 }
-                return BadRequest(new {message = "unknown error"});
+                return BadRequest(new { error="update_usr-03",message = "unknown error"});
             }
         }
 

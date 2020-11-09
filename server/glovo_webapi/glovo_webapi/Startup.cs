@@ -39,15 +39,20 @@ namespace glovo_webapi
         {
             string connection = Configuration.GetConnectionString("LocalDBConnection");
             string dbUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+            if (Env.IsProduction())
+            {
+                Console.Write("PRODUCTION!\n");
+            }
             if (Env.IsProduction() && dbUrl != null)
             {
                 Uri dbUri = new Uri(dbUrl);
                 string username = dbUri.UserInfo.Split(":")[0];
                 string password = dbUri.UserInfo.Split(":")[1];
                 connection = "User ID=" + username + ";Password=" + password +
-                             ";Host=" + dbUri.Host + ";Port=" + dbUri.Port + ";Database=" + dbUri.AbsolutePath.Substring(1)+";SSL=true;SslMode=Require;";
+                             ";Host=" + dbUri.Host + ";Port=" + dbUri.Port + ";Database=" + dbUri.AbsolutePath.Substring(1);
+                
             }
-            
+            Console.Write("Database connection string:"+connection);
             services.AddDbContext<GlovoDbContext>(opt => opt.UseNpgsql(connection));
         
             services.AddControllers();

@@ -7,27 +7,27 @@ class Mock_up_prod {
   Mock_up_prod() {
     _prods.add(Concrete_Product_Card(Product_overview(
         "Macarrons",
-        "a la italiana",
+        "a la bolonyesa",
         12,
-        "https://t1.rg.ltmcdn.com/es/images/9/1/0/macarrones_con_pollo_faciles_y_deliciosos_71019_orig.jpg")));
+        "https://www.elgourmetcatala.cat/wp-content/uploads/2016/11/macarrones-a-la-bolo%C3%B1esa.jpg")));
     _prods.add(Concrete_Product_Card(Product_overview(
         "Tortellini",
-        "a la italiana",
+        "als quatre formatges",
         11,
-        'https://www.culinaryhill.com/wp-content/uploads/2015/11/Cheese-Tortellini-in-Garlic-Butter-Sauce-Culinary-Hill-square-e1579200909823.jpg')));
+        'https://www.mujerdeelite.com/fotos/1073/1073_l.jpg')));
     _prods.add(Concrete_Product_Card(Product_overview(
-        "Ravioli",
-        "a la italiana",
+        "Raviolis",
+        "amb espinacs i salsa de formatge",
         12,
-        'https://bigoven-res.cloudinary.com/image/upload/d_recipe-no-image.jpg,t_recipe-480/cheeseravioliwithfreshtomatoan-96e38b.jpg')));
+        'https://sevilla.abc.es/gurme/wp-content/uploads/sites/24/2013/09/ravioli-espinaca-queso.jpg')));
     _prods.add(Concrete_Product_Card(Product_overview(
-        "Spaguetti",
-        "a la italiana",
+        "Espaguetis",
+        "a la carbonara",
         13,
-        'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/homemade-spaghetti-sauce-horizontal-1530890913.jpg')));
+        'https://superpola.com//site/assets/files/23425/402.jpg')));
     _prods.add(Concrete_Product_Card(Product_overview(
-        "Tiramisu",
-        "estilo clasico",
+        "Tiramisú",
+        "de la casa",
         5,
         'https://www.gimmesomeoven.com/wp-content/uploads/2020/07/Tiramisu-Recipe-Cover.jpg')));
   }

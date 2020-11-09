@@ -79,7 +79,7 @@ namespace glovo_webapi_test.Endpoints
                     Assert.Equal(productPair.Expected.ImgPath, productPair.Queried.ImgPath);
                     Assert.Equal(productPair.Expected.Description, productPair.Queried.Description);
                     Assert.Equal(productPair.Expected.Price, productPair.Queried.Price);
-                    Assert.Equal(productPair.Expected.IdRest, productPair.Queried.IdRest);
+                    Assert.Equal(productPair.Expected.RestaurantId, productPair.Queried.RestaurantId);
                 }
             }
         }
@@ -103,7 +103,7 @@ namespace glovo_webapi_test.Endpoints
                 Assert.Equal(mockProducts[idRest-1][(idProd-1)%3].ImgPath, queriedProduct.ImgPath);
                 Assert.Equal(mockProducts[idRest-1][(idProd-1)%3].Description, queriedProduct.Description);
                 Assert.Equal(mockProducts[idRest-1][(idProd-1)%3].Price, queriedProduct.Price);
-                Assert.Equal(mockProducts[idRest-1][(idProd-1)%3].IdRest, queriedProduct.IdRest);
+                Assert.Equal(mockProducts[idRest-1][(idProd-1)%3].RestaurantId, queriedProduct.RestaurantId);
             }
         }
         
@@ -117,10 +117,19 @@ namespace glovo_webapi_test.Endpoints
         }
         
         [Fact]
-        public void GetProductOfRestaurantByIdNotFoundTest()
+        public void GetProductOfRestaurantByIdNotFoundTest1()
         {
             //Query inexistent products from DB
-            string endpointUrl = "https://localhost:5001/api/restaurants/9999/products/9999";
+            string endpointUrl = "https://localhost:5001/api/restaurants/9999/products/1";
+            HttpResponseMessage response = _client.GetAsync(endpointUrl).Result;
+            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+        }
+
+        [Fact]
+        public void GetProductOfRestaurantByIdNotFoundTest2()
+        {
+            //Query inexistent products from DB
+            string endpointUrl = "https://localhost:5001/api/restaurants/1/products/9999";
             HttpResponseMessage response = _client.GetAsync(endpointUrl).Result;
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
