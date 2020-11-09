@@ -1,0 +1,1 @@
+const loginButton = 'login-button';

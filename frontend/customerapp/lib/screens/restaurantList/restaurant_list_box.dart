@@ -8,7 +8,7 @@ import 'package:icon_shadow/icon_shadow.dart';
 class RestaurantsListCard extends StatelessWidget {
   Restaurant restaurant;
 
-  RestaurantsListCard(this.restaurant);
+  RestaurantsListCard(Key key, this.restaurant) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

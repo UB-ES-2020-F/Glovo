@@ -60,6 +60,7 @@ class SignInForm extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 15),
               constraints: BoxConstraints(maxWidth: 600),
               child: TextFormField(
+                key: Key('login-email-text-field'),
                 onSaved: (value) => signInModel.email = value,
                 validator: (email) {
                   bool validEmail = EmailValidator.validate(email);
@@ -81,6 +82,7 @@ class SignInForm extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 15),
               constraints: BoxConstraints(maxWidth: 600),
               child: TextFormField(
+                key: Key('login-password-text-field'),
                 onSaved: (value) => signInModel.password = value,
                 obscureText: signInModel.passwordObfuscated,
                 validator: (password) {
@@ -124,7 +126,7 @@ class SignInForm extends StatelessWidget {
                     context)),
             alignment: Alignment.bottomCenter,
           ),
-          SignUpButton(),
+          SignInButton(),
         ],
       ),
     );
@@ -134,7 +136,7 @@ class SignInForm extends StatelessWidget {
 /*
   It may be better to pass only formKey as parameter (or the model)
 */
-class SignUpButton extends StatelessWidget {
+class SignInButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var signUpModel = context.watch<SignInModel>();
@@ -143,6 +145,7 @@ class SignUpButton extends StatelessWidget {
       child: Wrap(
         children: [
           ElevatedButton(
+            key: Key('submit-login-button'),
             onPressed: signUpModel.formValid
                 ? () {
                     if (signUpModel.formKey.currentState.validate()) {

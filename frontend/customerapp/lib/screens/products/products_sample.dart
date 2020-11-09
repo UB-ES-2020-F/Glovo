@@ -24,7 +24,8 @@ class Products_sample extends StatelessWidget {
   Products_sample() {
     prods = Mock_up_prod().prod;
     for (var i = 0; i < prods.length; i++) {
-      prodCards.add(Concrete_Product_Card(prods[i], addToCart));
+      prodCards.add(
+          Concrete_Product_Card(Key('product-card-$i'), prods[i], addToCart));
     }
     firstInstance = true;
   }
@@ -104,6 +105,7 @@ class Products_sample extends StatelessWidget {
             Align(
                 alignment: Alignment.bottomCenter,
                 child: MakeOrderButton(
+                    Key('cart-make-order-button'),
                     cart,
                     'Make order of ' +
                         cart.countItems().toString() +

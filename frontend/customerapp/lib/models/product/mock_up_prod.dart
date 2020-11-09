@@ -1,5 +1,4 @@
 import 'package:customerapp/models/product/product_overview.dart';
-import 'package:customerapp/screens/products/concrete_product_card.dart';
 
 class Mock_up_prod {
   List _prods = List();

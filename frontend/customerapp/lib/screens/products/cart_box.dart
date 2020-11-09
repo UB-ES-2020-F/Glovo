@@ -1,13 +1,12 @@
+import 'package:customerapp/actions/extract-key-value.dart';
 import 'package:customerapp/models/cart.dart';
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/product/product_overview.dart';
 import 'package:customerapp/models/restaurants.dart';
-import 'package:customerapp/models/user.dart';
 import 'package:customerapp/styles/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:customerapp/styles/product.dart';
-import 'package:provider/provider.dart';
 
 class CartBox extends StatelessWidget {
   double cartWidth;
@@ -29,8 +28,10 @@ class CartBox extends StatelessWidget {
     deliveryFee = getDeliveryFee(distance);
     timeInterval = new TimeInterval.distance(distance);
     items = new List<Widget>();
+    var idx = 0;
     cart.order.forEach((key, value) {
-      items.add(new ItemOnCart(key, value, cart));
+      items.add(new ItemOnCart(Key('item-on-cart-$idx'), key, value, cart));
+      idx++;
     });
     return Padding(
       padding: EdgeInsets.fromLTRB(0, 30, 30, 30),
@@ -92,6 +93,7 @@ class CartBox extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.all(5),
                   child: Column(
+                    key: Key('cart-items'),
                     children: items,
                   ),
                 ),
@@ -111,10 +113,12 @@ class CartBox extends StatelessWidget {
                     ],
                   ),
                 ),
-                MakeOrderButton(cart, 'Make order')
+                MakeOrderButton(
+                    Key('cart-make-order-button'), cart, 'Make order')
               ])
             else
               Container(
+                key: Key('cart-items'),
                 height: 0,
               )
           ],
@@ -128,7 +132,7 @@ class ItemOnCart extends StatelessWidget {
   Cart cart;
   Product_overview prod;
   int quantity;
-  ItemOnCart(this.prod, this.quantity, this.cart);
+  ItemOnCart(Key key, this.prod, this.quantity, this.cart) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -168,6 +172,7 @@ class ItemOnCart extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               IconButton(
+                key: Key('${extractKeyValue(key)}-remove-button'),
                 icon: Icon(
                   Icons.remove,
                   color: Color(0xff43C1A4),
@@ -199,7 +204,7 @@ class MakeOrderButton extends StatelessWidget {
   Cart cart;
   String text;
 
-  MakeOrderButton(this.cart, this.text);
+  MakeOrderButton(Key key, this.cart, this.text) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

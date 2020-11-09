@@ -1,21 +1,19 @@
+import 'package:customerapp/actions/extract-key-value.dart';
 import 'package:customerapp/models/product/product_overview.dart';
-import 'package:customerapp/models/restaurants.dart';
 import 'package:customerapp/screens/products/dialog_product.dart';
-import 'package:customerapp/screens/signIn/signin_dialog.dart';
 import 'package:customerapp/styles/product.dart';
-import 'package:customerapp/styles/restaurant_list.dart';
 import 'package:flutter/material.dart';
-import 'package:icon_shadow/icon_shadow.dart';
 
 class Concrete_Product_Card extends StatefulWidget {
   Product_overview _product_overview;
   Function add;
 
-  Concrete_Product_Card(this._product_overview, this.add);
+  Concrete_Product_Card(Key key, this._product_overview, this.add)
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return Widget_stateful_card(_product_overview, add);
+    return Widget_stateful_card(key, _product_overview, add);
   }
 
   Product_overview get product {
@@ -24,11 +22,12 @@ class Concrete_Product_Card extends StatefulWidget {
 }
 
 class Widget_stateful_card extends State<StatefulWidget> {
+  Key key;
   Product_overview _product_overview;
   Function add;
   double elevation = 2;
 
-  Widget_stateful_card(this._product_overview, this.add);
+  Widget_stateful_card(this.key, this._product_overview, this.add);
 
   @override
   Widget build(BuildContext context) {
@@ -91,6 +90,8 @@ class Widget_stateful_card extends State<StatefulWidget> {
                                   children: [
                                     Text("${_product_overview.price} €"),
                                     IconButton(
+                                      key: Key(
+                                          '${extractKeyValue(key)}-product-add-to-card'),
                                       icon: Icon(
                                         Icons.add,
                                         color: Color(0xff43C1A4),
