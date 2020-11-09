@@ -7,14 +7,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Mobile_default_bar extends StatelessWidget with PreferredSizeWidget {
-  final double appBarHeight = 115.0;
+  final double appBarHeight = 115.0 / 3;
 
   String route_togo;
+  String route_from;
   TabBar barra;
 
-  Mobile_default_bar(String route, {TabBar bottom_tab_bar = null}) {
+  Mobile_default_bar(String route, String route_from) {
     this.route_togo = route;
-    this.barra = bottom_tab_bar;
+    this.route_from = route_from;
   }
 
   @override
@@ -23,11 +24,11 @@ class Mobile_default_bar extends StatelessWidget with PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
         automaticallyImplyLeading: false,
-        elevation: 0,
+        elevation: 3,
         bottom: barra,
         backgroundColor: defaultAppBarBackgroundColor,
         title: Padding(
-            padding: EdgeInsets.all(40),
+            padding: EdgeInsets.only(bottom: 1),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -35,9 +36,9 @@ class Mobile_default_bar extends StatelessWidget with PreferredSizeWidget {
                   onPressed: () => Navigator.pushNamed(context, route_togo),
                   icon: Image.asset(
                     'resources/images/menu.png',
-                    scale: 0.6,
+                    scale: 0.9,
                   ),
-                  iconSize: 50.0,
+                  iconSize: 0,
                 ),
                 InkWell(
                     onTap: () {},
@@ -46,7 +47,9 @@ class Mobile_default_bar extends StatelessWidget with PreferredSizeWidget {
                         Text(
                           "Barcelona",
                           style: TextStyle(
-                              color: Kommet_distinctive_green, fontSize: 20),
+                              color: Kommet_distinctive_green,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold),
                         ),
                         IconButton(
                           icon: Image.asset(
@@ -62,9 +65,9 @@ class Mobile_default_bar extends StatelessWidget with PreferredSizeWidget {
                 IconButton(
                   icon: Image.asset(
                     'resources/images/search_mint.png',
-                    scale: 1,
+                    scale: 1.6,
                   ),
-                  iconSize: 50.0,
+                  iconSize: 10.0,
                 ), //UserActionsBar(BarType.defaultBar)
               ],
             )));

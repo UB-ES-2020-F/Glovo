@@ -4,10 +4,10 @@ import 'package:customerapp/styles/signup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Screen_product extends StatelessWidget {
+class Screen_products extends StatelessWidget {
   Product_overview product;
 
-  Screen_product();
+  Screen_products();
 
   @override
   Widget build(BuildContext context) {
