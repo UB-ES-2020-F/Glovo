@@ -41,7 +41,7 @@ class TabBar_screen extends StatelessWidget {
                           Navigator.pop(context);
                         },
                       )),
-                  new Expanded(child: new Container()),
+                  //new Expanded(child: new Container()),
                   new TabBar(
                     labelStyle: NotSelectedStyle_bar,
                     labelColor: Kommet_distinctive_yellow,
@@ -67,12 +67,8 @@ class TabBar_screen extends StatelessWidget {
         ),
         body: new TabBarView(
           children: <Widget>[
-            new Column(
-              children: <Widget>[Subpage_orders()],
-            ),
-            new Column(
-              children: <Widget>[Subpage_user_profile()],
-            )
+            Subpage_orders(),
+            Subpage_user_profile(),
           ],
         ),
       ),
@@ -83,29 +79,49 @@ class TabBar_screen extends StatelessWidget {
 class Subpage_orders extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: EdgeInsets.all(50),
-        child: Center(
-          child: Column(
-            children: [
-              Padding(
-                  padding: EdgeInsets.only(bottom: 8),
-                  child: Text(
-                    "¡Ups! Parece que todavía no has hecho ningún pedido",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Padding(
+              padding: EdgeInsets.only(top: 20, left: 50, right: 50),
+              child: Column(
+                children: [
+                  Padding(
+                      padding: EdgeInsets.only(bottom: 8),
+                      child: Text(
+                        "¡Ups! Parece que todavía no has hecho ningún pedido",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                      )),
+                  Text(
+                    "Conoce nuestras tiendas y encuentra todo lo que necesites",
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.normal,
+                    ),
                     textAlign: TextAlign.center,
-                  )),
-              Text(
-                "Conoce nuestras tiendas y encuentra todo lo que necesites",
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.normal,
-                ),
-                textAlign: TextAlign.center,
-              ),
+                  ),
+                ],
+              )),
+          Row(
+            children: [
+              Expanded(child: Container()),
+              IconButton(
+                iconSize: 40,
+                icon: Icon(Icons.close_fullscreen),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                alignment: Alignment(1, -1),
+              )
             ],
-          ),
-        ));
+          )
+        ],
+      ),
+    );
   }
 }
 
