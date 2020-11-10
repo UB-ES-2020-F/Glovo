@@ -6,6 +6,8 @@ import 'package:flutter/widgets.dart';
 
 class InitialLoggedBar extends StatelessWidget with PreferredSizeWidget {
   final double appBarHeight = 115.0;
+
+  InitialLoggedBar();
   @override
   get preferredSize => Size.fromHeight(appBarHeight);
   @override
@@ -15,14 +17,19 @@ class InitialLoggedBar extends StatelessWidget with PreferredSizeWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           AppBar(
+              automaticallyImplyLeading: false,
               elevation: 0,
               backgroundColor: Theme.of(context).backgroundColor,
-              title: Padding(
-                  padding: EdgeInsets.all(40),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [SearchBox(), UserActionsBar(BarType.initial)],
-                  )))
+              title: Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.all(40),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SearchBox(),
+                          UserActionsBar(BarType.initial)
+                        ],
+                      ))))
         ],
       ),
       color: Theme.of(context).backgroundColor,

@@ -7,9 +7,20 @@ import 'package:customerapp/styles/initial_logged.dart';
 
 enum BarType { initial, defaultBar }
 
-class UserActionsBar extends StatelessWidget {
+class UserActionsBar extends StatefulWidget {
   BarType barType;
+
   UserActionsBar(this.barType);
+  @override
+  State<StatefulWidget> createState() {
+    return UserActionsBar_state(barType);
+  }
+}
+
+class UserActionsBar_state extends State<StatefulWidget> {
+  BarType barType;
+
+  UserActionsBar_state(this.barType);
 
   @override
   Widget build(BuildContext context) {
@@ -17,44 +28,41 @@ class UserActionsBar extends StatelessWidget {
 
     return Row(
       children: [
-        Row(
-          children: [
-            IconButton(
-              alignment: Alignment.topRight,
-              iconSize: 22.0,
-              color: _selectLocationIconColor(barType),
-              icon: Icon(Icons.location_on_outlined),
-              onPressed: () {},
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                    width: 150,
-                    alignment: Alignment.centerLeft,
-                    child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: TextLink(
-                            initialLoggedModel.direction,
-                            (context) {},
-                            _selectStreetNameTextLinksStyle(barType),
-                            _selectStreetNameTextLinksHoverStyle(barType),
-                            context))),
-                Container(
-                    width: 150,
-                    alignment: Alignment.centerLeft,
-                    child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: TextLink(
-                            initialLoggedModel.indicationsDirection,
-                            (context) {},
-                            _selectIndicationsTextLinksStyle(barType),
-                            _selectIndicationsTextLinksHoverStyle(barType),
-                            context))),
-              ],
-            )
-          ],
+        IconButton(
+          alignment: Alignment.topRight,
+          iconSize: 22.0,
+          color: _selectLocationIconColor(barType),
+          icon: Icon(Icons.location_on_outlined),
+          onPressed: () {},
         ),
+        IntrinsicWidth(
+            child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+                width: 153,
+                alignment: Alignment.centerLeft,
+                child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: TextLink(
+                        initialLoggedModel.direction,
+                        (context) {},
+                        _selectStreetNameTextLinksStyle(barType),
+                        _selectStreetNameTextLinksHoverStyle(barType),
+                        context))),
+            Container(
+                width: 153,
+                alignment: Alignment.centerLeft,
+                child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: TextLink(
+                        initialLoggedModel.indicationsDirection,
+                        (context) {},
+                        _selectIndicationsTextLinksStyle(barType),
+                        _selectIndicationsTextLinksHoverStyle(barType),
+                        context))),
+          ],
+        )),
         IconButton(
           iconSize: 35.0,
           color: _selectMainButtonColor(barType),

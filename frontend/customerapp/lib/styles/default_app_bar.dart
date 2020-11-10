@@ -3,24 +3,24 @@ import 'package:flutter/material.dart';
 final locationDefaultColor = Color(0xFF2ABB9B);
 
 final defaultStreetNameTextLinks = TextStyle(
-  fontSize: 12,
+  fontSize: 15,
   fontWeight: FontWeight.bold,
   color: Color(0xFF2ABB9B),
 );
 
 final defaultStreetNameTextLinksHover = TextStyle(
-  fontSize: 12,
+  fontSize: 15,
   fontWeight: FontWeight.bold,
   color: Color(0xFF43B59C),
 );
 
 final defaultIndicationsTextLinks = TextStyle(
-  fontSize: 10,
+  fontSize: 12,
   color: Color(0xFFFFC244),
 );
 
 final defaultIndicationsTextLinksHover = TextStyle(
-  fontSize: 10,
+  fontSize: 12,
   color: Color(0xFFF8C458),
 );
 
