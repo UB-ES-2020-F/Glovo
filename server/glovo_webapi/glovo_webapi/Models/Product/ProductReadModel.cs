@@ -12,16 +12,16 @@ namespace glovo_webapi.Models.Product
                 
                 public float Price { get; set; }
                 
-                public int IdRest { get; set; }
+                public int RestaurantId { get; set; }
 
-                public ProductReadModel(int Id, string Name, string ImgPath, string Description, float Price, int IdRest)
+                public ProductReadModel(int Id, string Name, string ImgPath, string Description, float Price, int RestaurantId)
                 {
                         this.Id = Id;
                         this.Name = Name;
                         this.ImgPath = ImgPath;
                         this.Description = Description;
                         this.Price = Price;
-                        this.IdRest = IdRest;
+                        this.RestaurantId = RestaurantId;
                 }
                 
         }

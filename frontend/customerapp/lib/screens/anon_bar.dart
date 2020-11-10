@@ -1,3 +1,4 @@
+import 'package:customerapp/components/appBar/searchBox.dart';
 import 'package:customerapp/components/text_link.dart';
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/styles/initial_logged.dart';
@@ -43,21 +44,5 @@ class AnonBar extends StatelessWidget with PreferredSizeWidget {
       ),
       color: Theme.of(context).backgroundColor,
     );
-  }
-}
-
-class SearchBox extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Row(mainAxisSize: MainAxisSize.min, children: [
-      IconButton(
-        iconSize: 50.0,
-        color: Colors.white,
-        icon: Icon(Icons.search_rounded),
-        onPressed: () {},
-      ),
-      TextLink('What do you need?', (context) {}, searchBarTextLinks,
-          searchBarTextLinksHover, context)
-    ]);
   }
 }

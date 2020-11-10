@@ -38,7 +38,6 @@ class Widget_stateful_card extends State<StatefulWidget> {
         elevation: this.elevation,
         child: InkWell(
             onHover: (value) {
-              print(value);
               if (value) {
                 setState(() {
                   elevation = 8;
