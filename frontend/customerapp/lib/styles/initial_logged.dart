@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 
 final searchBarTextLinks = TextStyle(
-  fontSize: 14,
+  fontSize: 12,
   color: Colors.white,
 );
 
 final searchBarTextLinksHover = TextStyle(
-  fontSize: 14,
+  fontSize: 12,
   color: hoverIconColor,
 );
 
 final streetNameTextLinks = TextStyle(
-  fontSize: 14,
+  fontSize: 12,
   fontWeight: FontWeight.bold,
   color: Colors.white,
 );
 
 final streetNameTextLinksHover = TextStyle(
-  fontSize: 14,
+  fontSize: 12,
   fontWeight: FontWeight.bold,
   color: hoverIconColor,
 );
