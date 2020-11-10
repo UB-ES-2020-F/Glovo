@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 class TabBar_screen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    if (MediaQuery.of(context).size.width > 600) {
+    if (MediaQuery.of(context).size.width > 650) {
       Navigator.pop(context); //when resizing screen slowly, error occurs
     }
 
@@ -25,10 +25,10 @@ class TabBar_screen extends StatelessWidget {
             color: Colors.white,
             child: new SafeArea(
                 child: Padding(
-              padding: EdgeInsets.only(right: 50, left: 50),
+              padding: EdgeInsets.only(right: 50, left: 50, top: 20),
               child: Column(
                 children: <Widget>[
-                  Container(
+                  /*Container(
                       //height: 10,
                       padding: EdgeInsets.all(0),
                       alignment: Alignment(1, 1),
@@ -40,7 +40,7 @@ class TabBar_screen extends StatelessWidget {
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                      )),
+                      )),*/
                   //new Expanded(child: new Container()),
                   new TabBar(
                     labelStyle: NotSelectedStyle_bar,
@@ -111,7 +111,10 @@ class Subpage_orders extends StatelessWidget {
               Expanded(child: Container()),
               IconButton(
                 iconSize: 40,
-                icon: Icon(Icons.close_fullscreen),
+                icon: Image.asset(
+                  'resources/images/arrow_diag.png',
+                  scale: 0.9,
+                ),
                 onPressed: () {
                   Navigator.pop(context);
                 },
@@ -130,117 +133,151 @@ class Subpage_user_profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: EdgeInsets.only(left: 25, right: 25),
-        child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Divider(
-                color: Colors.black,
-                thickness: 0.3,
-              ),
-              Container(
-                  child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 2 * 10.0),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(vertical: 10.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+    return Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Padding(
+              padding: EdgeInsets.only(left: 25, right: 25),
+              child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Divider(
+                      color: Colors.black,
+                      thickness: 0.3,
+                    ),
+                    Container(
+                        child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 2 * 10.0),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    'Nombre',
-                                    style: labelsProfileText,
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 10.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          'Nombre',
+                                          style: labelsProfileText,
+                                        ),
+                                        TextLink(
+                                            'Editar',
+                                            (context) {},
+                                            editTextLinksBold,
+                                            editTextLinksHoverBold,
+                                            context)
+                                      ],
+                                    ),
                                   ),
-                                  TextLink(
-                                      'Editar',
-                                      (context) {},
-                                      editTextLinksBold,
-                                      editTextLinksHoverBold,
-                                      context)
-                                ],
-                              ),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 10),
+                                    child: Text(
+                                      model.firstName,
+                                      style: fieldsProfileText,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 10),
+                                    child: Text(
+                                      'E-mail',
+                                      style: labelsProfileText,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 10),
+                                    child: Text(
+                                      model.email,
+                                      style: fieldsProfileText,
+                                    ),
+                                  ),
+                                ]))),
+                    Divider(
+                      color: Colors.black,
+                      thickness: 0.3,
+                    ),
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(vertical: 10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Teléfono',
+                                  style: labelsProfileText,
+                                ),
+                                TextLink(
+                                    'Editar',
+                                    (context) {},
+                                    editTextLinksBold,
+                                    editTextLinksHoverBold,
+                                    context)
+                              ],
                             ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(vertical: 10),
-                              child: Text(
-                                model.firstName,
-                                style: fieldsProfileText,
-                              ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(vertical: 10),
+                            child: Text(
+                              "-",
+                              style: fieldsProfileText,
                             ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(vertical: 10),
-                              child: Text(
-                                'E-mail',
-                                style: labelsProfileText,
-                              ),
+                          ),
+                        ]),
+                    Divider(
+                      color: Colors.black,
+                      thickness: 0.3,
+                    ),
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(vertical: 10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Contraseña',
+                                  style: labelsProfileText,
+                                ),
+                                TextLink(
+                                    'Editar',
+                                    (context) {},
+                                    editTextLinksBold,
+                                    editTextLinksHoverBold,
+                                    context)
+                              ],
                             ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(vertical: 10),
-                              child: Text(
-                                model.email,
-                                style: fieldsProfileText,
-                              ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(vertical: 10),
+                            child: Text(
+                              "************",
+                              style: fieldsProfileText,
                             ),
-                          ]))),
-              Divider(
-                color: Colors.black,
-                thickness: 0.3,
-              ),
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Teléfono',
-                        style: labelsProfileText,
-                      ),
-                      TextLink('Editar', (context) {}, editTextLinksBold,
-                          editTextLinksHoverBold, context)
-                    ],
-                  ),
+                          ),
+                        ])
+                  ])),
+          Row(
+            children: [
+              Expanded(child: Container()),
+              IconButton(
+                iconSize: 40,
+                icon: Image.asset(
+                  'resources/images/arrow_diag.png',
+                  scale: 0.9,
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  child: Text(
-                    "-",
-                    style: fieldsProfileText,
-                  ),
-                ),
-              ]),
-              Divider(
-                color: Colors.black,
-                thickness: 0.3,
-              ),
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Contraseña',
-                        style: labelsProfileText,
-                      ),
-                      TextLink('Editar', (context) {}, editTextLinksBold,
-                          editTextLinksHoverBold, context)
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  child: Text(
-                    "************",
-                    style: fieldsProfileText,
-                  ),
-                ),
-              ])
-            ]));
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                alignment: Alignment(1, -1),
+              )
+            ],
+          )
+        ]);
   }
 }

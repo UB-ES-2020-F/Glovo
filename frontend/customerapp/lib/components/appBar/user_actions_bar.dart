@@ -14,6 +14,7 @@ class UserActionsBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var initialLoggedModel = LoggedModel();
+
     return Row(
       children: [
         Row(
@@ -29,7 +30,7 @@ class UserActionsBar extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                    width: 158,
+                    width: 150,
                     alignment: Alignment.centerLeft,
                     child: FittedBox(
                         fit: BoxFit.scaleDown,
@@ -40,7 +41,7 @@ class UserActionsBar extends StatelessWidget {
                             _selectStreetNameTextLinksHoverStyle(barType),
                             context))),
                 Container(
-                    width: 158,
+                    width: 150,
                     alignment: Alignment.centerLeft,
                     child: FittedBox(
                         fit: BoxFit.scaleDown,

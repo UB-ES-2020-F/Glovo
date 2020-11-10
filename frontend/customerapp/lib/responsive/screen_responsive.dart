@@ -10,7 +10,7 @@ class Bar_responsive {
   Bar_responsive(this.context, this.path, this.bar_big_screen);
 
   Widget get_responsive_bar() {
-    if (MediaQuery.of(context).size.width > 600) {
+    if (MediaQuery.of(context).size.width > 650) {
       return bar_big_screen;
     } else {
       return Mobile_default_bar(path);
