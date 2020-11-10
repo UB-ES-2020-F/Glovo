@@ -91,7 +91,11 @@ class Mobile_default_bar_state extends State<StatefulWidget> {
                               fontSize: 16,
                               fontWeight: FontWeight.bold),
                         ),
-                        IconButton(icon: icon_state_hover),
+                        IconButton(
+                          icon: icon_state_hover,
+                          hoverColor: Colors.transparent,
+                          onPressed: () {},
+                        ),
                       ],
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -103,6 +107,7 @@ class Mobile_default_bar_state extends State<StatefulWidget> {
                     scale: 1.6,
                   ),
                   iconSize: 10.0,
+                  onPressed: () {},
                 ), //UserActionsBar(BarType.defaultBar)
               ],
             )));

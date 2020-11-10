@@ -28,26 +28,28 @@ class UserActionsBar extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (MediaQuery.of(context).size.width > 800)
-                  TextLink(
-                      initialLoggedModel.direction,
-                      (context) {},
-                      _selectStreetNameTextLinksStyle(barType),
-                      _selectStreetNameTextLinksHoverStyle(barType),
-                      context),
-                if (MediaQuery.of(context).size.width <= 800)
-                  TextLink(
-                      initialLoggedModel.direction.substring(0, 9) + "...",
-                      (context) {},
-                      _selectStreetNameTextLinksStyle(barType),
-                      _selectStreetNameTextLinksHoverStyle(barType),
-                      context),
-                TextLink(
-                    initialLoggedModel.indicationsDirection,
-                    (context) {},
-                    _selectIndicationsTextLinksStyle(barType),
-                    _selectIndicationsTextLinksHoverStyle(barType),
-                    context)
+                Container(
+                    width: 158,
+                    alignment: Alignment.centerLeft,
+                    child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: TextLink(
+                            initialLoggedModel.direction,
+                            (context) {},
+                            _selectStreetNameTextLinksStyle(barType),
+                            _selectStreetNameTextLinksHoverStyle(barType),
+                            context))),
+                Container(
+                    width: 158,
+                    alignment: Alignment.centerLeft,
+                    child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: TextLink(
+                            initialLoggedModel.indicationsDirection,
+                            (context) {},
+                            _selectIndicationsTextLinksStyle(barType),
+                            _selectIndicationsTextLinksHoverStyle(barType),
+                            context))),
               ],
             )
           ],
