@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using glovo_webapi.Data;
@@ -9,9 +10,10 @@ using glovo_webapi.Data;
 namespace glovo_webapi.Migrations
 {
     [DbContext(typeof(GlovoDbContext))]
-    partial class GloboDBContextModelSnapshot : ModelSnapshot
+    [Migration("20201105183408_ProductsUpdate")]
+    partial class ProductsUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,12 +41,12 @@ namespace glovo_webapi.Migrations
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
-                    b.Property<int>("RestaurantId")
+                    b.Property<int>("RestId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RestaurantId");
+                    b.HasIndex("RestId");
 
                     b.ToTable("Products");
                 });
@@ -94,13 +96,13 @@ namespace glovo_webapi.Migrations
 
             modelBuilder.Entity("glovo_webapi.Entities.Product", b =>
                 {
-                    b.HasOne("glovo_webapi.Entities.Restaurant", "Restaurant")
+                    b.HasOne("glovo_webapi.Entities.Restaurant", "Rest")
                         .WithMany("Product")
-                        .HasForeignKey("RestaurantId")
+                        .HasForeignKey("RestId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Restaurant");
+                    b.Navigation("Rest");
                 });
 
             modelBuilder.Entity("glovo_webapi.Entities.Restaurant", b =>

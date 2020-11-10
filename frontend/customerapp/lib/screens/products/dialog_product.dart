@@ -58,7 +58,7 @@ class Dialog_product extends StatelessWidget {
                                   product.imgPath,
                                 )))),
                         Padding(
-                            padding: EdgeInsets.only(left: 20),
+                            padding: EdgeInsets.only(left: 10),
                             child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment:
