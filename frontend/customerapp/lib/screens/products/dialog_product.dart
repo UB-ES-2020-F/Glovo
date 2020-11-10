@@ -7,8 +7,9 @@ import 'package:flutter/material.dart';
 
 class Dialog_product extends StatelessWidget {
   Product_overview product;
+  Function add;
 
-  Dialog_product(this.product);
+  Dialog_product(this.product, this.add);
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +55,7 @@ class Dialog_product extends StatelessWidget {
                                 image: DecorationImage(
                                     //fit: BoxFit.fitWidth,
                                     image: NetworkImage(
-                                  product.image,
+                                  product.imgPath,
                                 )))),
                         Padding(
                             padding: EdgeInsets.only(left: 10),
@@ -63,7 +64,7 @@ class Dialog_product extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Text(product.prod_description,
+                                  Text(product.description,
                                       style: DescriptionTextStyleProduct),
                                   Text("${product.price} €",
                                       style: PriceTextStyleProduct)
@@ -74,7 +75,10 @@ class Dialog_product extends StatelessWidget {
                   ),
                   Padding(
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        add(product);
+                        Navigator.pop(context);
+                      },
                       child: Text("Add to your order"),
                       style: greenButtonStyle,
                     ),

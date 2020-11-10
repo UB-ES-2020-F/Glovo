@@ -32,7 +32,7 @@ class RestaurantsList extends StatelessWidget {
                     crossAxisCount:
                         MediaQuery.of(context).size.width > 600 ? 2 : 1,
                     itemBuilder: (context, index) {
-                      return RestaurantsListCard(
+                      return RestaurantsListCard(Key('restaurant-card-$index'),
                           restaurantsModel.availableRestaurants[index]);
                     },
                     staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
@@ -43,10 +43,4 @@ class RestaurantsList extends StatelessWidget {
           ),
         ));
   }
-}
-
-create_restaurannt_cards(List<Restaurant> restaurants) {
-  return restaurants
-      .map((restaurant) => RestaurantsListCard(restaurant))
-      .toList();
 }

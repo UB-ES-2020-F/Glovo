@@ -21,7 +21,7 @@ class InitialLogged extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 color: Theme.of(context).accentColor),
           ),
-          FoodButton()
+          FoodButton(Key('food-bubble-button'))
         ],
       )))),
     );

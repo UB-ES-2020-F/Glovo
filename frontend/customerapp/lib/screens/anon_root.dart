@@ -31,6 +31,7 @@ class AnonRoute extends StatelessWidget {
 }
 
 class LogInButton extends StatelessWidget {
+  LogInButton() : super(key: Key('login-button'));
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
