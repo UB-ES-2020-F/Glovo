@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:customerapp/components/text_link.dart';
 import 'package:customerapp/screens/loggedPage/profile_settings.dart';
 import 'package:customerapp/styles/default_app_bar.dart';
@@ -7,24 +9,23 @@ import 'package:customerapp/styles/initial_logged.dart';
 
 enum BarType { initial, defaultBar }
 
-class UserActionsBar extends StatefulWidget {
+class UserActions extends StatelessWidget {
   BarType barType;
+  String optional;
+  int type;
 
-  UserActionsBar(this.barType);
-  @override
-  State<StatefulWidget> createState() {
-    return UserActionsBar_state(barType);
-  }
-}
-
-class UserActionsBar_state extends State<StatefulWidget> {
-  BarType barType;
-
-  UserActionsBar_state(this.barType);
+  UserActions(this.barType, this.type);
 
   @override
   Widget build(BuildContext context) {
     var initialLoggedModel = LoggedModel();
+    String direction;
+
+    if (type == 1) {
+      direction = initialLoggedModel.direction;
+    } else {
+      direction = initialLoggedModel.direction.substring(0, 9) + "...";
+    }
 
     return Row(
       children: [
@@ -39,28 +40,18 @@ class UserActionsBar_state extends State<StatefulWidget> {
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-                width: 153,
-                alignment: Alignment.centerLeft,
-                child: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: TextLink(
-                        initialLoggedModel.direction,
-                        (context) {},
-                        _selectStreetNameTextLinksStyle(barType),
-                        _selectStreetNameTextLinksHoverStyle(barType),
-                        context))),
-            Container(
-                width: 153,
-                alignment: Alignment.centerLeft,
-                child: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: TextLink(
-                        initialLoggedModel.indicationsDirection,
-                        (context) {},
-                        _selectIndicationsTextLinksStyle(barType),
-                        _selectIndicationsTextLinksHoverStyle(barType),
-                        context))),
+            TextLink(
+                direction,
+                (context) {},
+                _selectStreetNameTextLinksStyle(barType),
+                _selectStreetNameTextLinksHoverStyle(barType),
+                context),
+            TextLink(
+                initialLoggedModel.indicationsDirection,
+                (context) {},
+                _selectIndicationsTextLinksStyle(barType),
+                _selectIndicationsTextLinksHoverStyle(barType),
+                context),
           ],
         )),
         IconButton(
@@ -79,6 +70,34 @@ class UserActionsBar_state extends State<StatefulWidget> {
         )
       ],
     );
+  }
+}
+
+class UserActionsBar extends StatelessWidget {
+  BarType barType;
+  String optional;
+
+  UserActionsBar(this.barType) {}
+
+  @override
+  Widget build(BuildContext context) {
+    var initialLoggedModel = LoggedModel();
+
+    return UserActions(barType, 1);
+  }
+}
+
+class UserActionsBar_aux extends StatelessWidget {
+  BarType barType;
+  String optional;
+
+  UserActionsBar_aux(this.barType) {}
+
+  @override
+  Widget build(BuildContext context) {
+    var initialLoggedModel = LoggedModel();
+
+    return UserActions(barType, 2);
   }
 }
 

@@ -11,13 +11,13 @@ final searchBarTextLinksHover = TextStyle(
 );
 
 final streetNameTextLinks = TextStyle(
-  fontSize: 20,
+  fontSize: 14,
   fontWeight: FontWeight.bold,
   color: Colors.white,
 );
 
 final streetNameTextLinksHover = TextStyle(
-  fontSize: 20,
+  fontSize: 14,
   fontWeight: FontWeight.bold,
   color: hoverIconColor,
 );

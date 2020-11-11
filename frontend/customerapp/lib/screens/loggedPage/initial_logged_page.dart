@@ -9,7 +9,8 @@ class InitialLogged extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget bar;
 
-    var s = Bar_responsive(context, '/overview_mobile', InitialLoggedBar());
+    var s = Bar_responsive(context, '/overview_mobile', InitialLoggedBar(),
+        medium_bar: InitialLoggedBar_short());
     bar = s.get_responsive_bar();
 
     return Scaffold(
