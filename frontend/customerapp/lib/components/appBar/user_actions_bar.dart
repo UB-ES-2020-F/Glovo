@@ -1,6 +1,7 @@
 import 'dart:html';
 
 import 'package:customerapp/components/text_link.dart';
+import 'package:customerapp/screens/loggedPage/initial_logged_page.dart';
 import 'package:customerapp/screens/loggedPage/profile_settings.dart';
 import 'package:customerapp/styles/default_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -19,12 +20,33 @@ class UserActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var initialLoggedModel = LoggedModel();
-    String direction;
+    String direction, ind;
+    List<Widget> direction_w, direction_indication_w;
 
     if (type == 1) {
-      direction = initialLoggedModel.direction;
+      if (initialLoggedModel.direction.length > 30) {
+        direction = initialLoggedModel.direction.substring(0, 30) + "...";
+      } else {
+        direction = initialLoggedModel.direction;
+      }
+
+      if (initialLoggedModel.indicationsDirection.length > 30) {
+        ind = initialLoggedModel.indicationsDirection.substring(0, 30) + "...";
+      } else {
+        ind = initialLoggedModel.indicationsDirection;
+      }
     } else {
-      direction = initialLoggedModel.direction.substring(0, 9) + "...";
+      if (initialLoggedModel.direction.length > 15) {
+        direction = initialLoggedModel.direction.substring(0, 15) + "...";
+      } else {
+        direction = initialLoggedModel.direction;
+      }
+
+      if (initialLoggedModel.indicationsDirection.length > 15) {
+        ind = initialLoggedModel.indicationsDirection.substring(0, 15) + "...";
+      } else {
+        ind = initialLoggedModel.indicationsDirection;
+      }
     }
 
     return Row(
@@ -47,7 +69,7 @@ class UserActions extends StatelessWidget {
                 _selectStreetNameTextLinksHoverStyle(barType),
                 context),
             TextLink(
-                initialLoggedModel.indicationsDirection,
+                ind,
                 (context) {},
                 _selectIndicationsTextLinksStyle(barType),
                 _selectIndicationsTextLinksHoverStyle(barType),
