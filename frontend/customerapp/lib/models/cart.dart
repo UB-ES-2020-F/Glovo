@@ -46,6 +46,6 @@ class Cart extends ChangeNotifier {
   }
 
   OrderDTO generateOrderDTO() {
-    //TODO
+    
   }
 }

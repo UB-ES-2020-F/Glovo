@@ -17,6 +17,7 @@ import 'models/restaurants.dart';
 import 'models/signin.dart';
 
 void main({String env}) async {
+  WidgetsFlutterBinding.ensureInitialized();
   await AppConfig.setEnvironment(env);
   runApp(KometApp());
 }
