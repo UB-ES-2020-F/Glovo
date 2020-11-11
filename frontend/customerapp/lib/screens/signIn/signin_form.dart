@@ -4,7 +4,6 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:customerapp/styles/signup.dart';
-//import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 class SignInFormPage extends StatelessWidget {
@@ -139,23 +138,23 @@ class SignInForm extends StatelessWidget {
 class SignInButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var signUpModel = context.watch<SignInModel>();
+    var signInModel = context.watch<SignInModel>();
     return Container(
       padding: EdgeInsets.symmetric(vertical: 30),
       child: Wrap(
         children: [
           ElevatedButton(
             key: Key('submit-login-button'),
-            onPressed: signUpModel.formValid
+            onPressed: signInModel.formValid
                 ? () {
-                    if (signUpModel.formKey.currentState.validate()) {
+                    if (signInModel.formKey.currentState.validate()) {
                       Navigator.of(context).pushNamedAndRemoveUntil(
                           '/initial-logged-in', (route) => false);
                     }
                   }
                 : null,
             child: Text('Log in with email'),
-            style: signUpModel.formValid
+            style: signInModel.formValid
                 ? signUpButtonStyleEnabled
                 : signUpButtonStyleDisabled,
           )

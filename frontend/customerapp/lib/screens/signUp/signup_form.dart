@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:email_validator/email_validator.dart';
-//import 'package:fluttertoast/fluttertoast.dart';
 
 class SignUpFormPage extends StatelessWidget {
   @override

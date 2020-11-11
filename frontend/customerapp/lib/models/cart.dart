@@ -1,3 +1,4 @@
+import 'package:customerapp/dto/order.dart';
 import 'package:customerapp/models/product/product_overview.dart';
 import 'package:flutter/widgets.dart';
 
@@ -42,5 +43,9 @@ class Cart extends ChangeNotifier {
     int numb = 0;
     _order.forEach((k, v) => numb += v);
     return numb;
+  }
+
+  OrderDTO generateOrderDTO() {
+    //TODO
   }
 }

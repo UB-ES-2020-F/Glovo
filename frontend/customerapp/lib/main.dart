@@ -12,15 +12,16 @@ import 'package:customerapp/styles/Komet.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'app_config.dart';
 import 'models/restaurants.dart';
 import 'models/signin.dart';
 
-void main() {
-  runApp(MyApp());
+void main({String env}) async {
+  await AppConfig.setEnvironment(env);
+  runApp(KometApp());
 }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class KometApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
