@@ -60,6 +60,7 @@ class SignInForm extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 15),
               constraints: BoxConstraints(maxWidth: 600),
               child: TextFormField(
+                key: Key('login-email-text-field'),
                 onSaved: (value) => signInModel.email = value,
                 validator: (email) {
                   bool validEmail = EmailValidator.validate(email);
@@ -76,11 +77,16 @@ class SignInForm extends StatelessWidget {
                   labelText: 'E-mail',
                   labelStyle: labelTextInputStyle,
                 ),
+                onFieldSubmitted: (value) {
+                  trySendSignInForm(context, signInModel);
+                },
+                autofocus: true,
               )),
           Container(
               padding: EdgeInsets.symmetric(vertical: 15),
               constraints: BoxConstraints(maxWidth: 600),
               child: TextFormField(
+                key: Key('login-password-text-field'),
                 onSaved: (value) => signInModel.password = value,
                 obscureText: signInModel.passwordObfuscated,
                 validator: (password) {
@@ -109,6 +115,9 @@ class SignInForm extends StatelessWidget {
                   labelText: 'Password',
                   labelStyle: labelTextInputStyle,
                 ),
+                onFieldSubmitted: (value) {
+                  trySendSignInForm(context, signInModel);
+                },
               )),
           Align(
             child: Container(
@@ -124,7 +133,7 @@ class SignInForm extends StatelessWidget {
                     context)),
             alignment: Alignment.bottomCenter,
           ),
-          SignUpButton(),
+          SignInButton(),
         ],
       ),
     );
@@ -134,30 +143,35 @@ class SignInForm extends StatelessWidget {
 /*
   It may be better to pass only formKey as parameter (or the model)
 */
-class SignUpButton extends StatelessWidget {
+class SignInButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var signUpModel = context.watch<SignInModel>();
+    var signInModel = context.watch<SignInModel>();
     return Container(
       padding: EdgeInsets.symmetric(vertical: 30),
       child: Wrap(
         children: [
           ElevatedButton(
-            onPressed: signUpModel.formValid
-                ? () {
-                    if (signUpModel.formKey.currentState.validate()) {
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                          '/initial-logged-in', (route) => false);
-                    }
-                  }
-                : null,
+            onPressed: () {
+              trySendSignInForm(context, signInModel);
+            },
+            key: Key('submit-login-button'),
             child: Text('Log in with email'),
-            style: signUpModel.formValid
+            style: signInModel.formValid
                 ? signUpButtonStyleEnabled
                 : signUpButtonStyleDisabled,
           )
         ],
       ),
     );
+  }
+}
+
+void trySendSignInForm(BuildContext context, SignInModel signInModel) {
+  if (signInModel.formValid) {
+    if (signInModel.formKey.currentState.validate()) {
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil('/initial-logged-in', (route) => false);
+    }
   }
 }

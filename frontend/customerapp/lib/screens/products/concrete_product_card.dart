@@ -1,32 +1,40 @@
+import 'package:customerapp/actions/extract-key-value.dart';
 import 'package:customerapp/models/product/product_overview.dart';
-import 'package:customerapp/models/restaurants.dart';
 import 'package:customerapp/screens/products/dialog_product.dart';
-import 'package:customerapp/screens/signIn/signin_dialog.dart';
 import 'package:customerapp/styles/product.dart';
-import 'package:customerapp/styles/restaurant_list.dart';
 import 'package:flutter/material.dart';
-import 'package:icon_shadow/icon_shadow.dart';
 
 class Concrete_Product_Card extends StatefulWidget {
   Product_overview _product_overview;
+  Function add;
 
-  Concrete_Product_Card(this._product_overview);
+  Concrete_Product_Card(Key key, this._product_overview, this.add)
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return Widget_stateful_card(_product_overview);
+    return Widget_stateful_card(key, _product_overview, add);
+  }
+
+  Product_overview get product {
+    return _product_overview;
   }
 }
 
 class Widget_stateful_card extends State<StatefulWidget> {
+  Key key;
   Product_overview _product_overview;
+  Function add;
   double elevation = 2;
 
-  Widget_stateful_card(this._product_overview);
+  Widget_stateful_card(this.key, this._product_overview, this.add);
 
   @override
   Widget build(BuildContext context) {
     return Material(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
         elevation: this.elevation,
         child: InkWell(
             onHover: (value) {
@@ -40,7 +48,7 @@ class Widget_stateful_card extends State<StatefulWidget> {
                 });
               }
             },
-            onTap: () => change_product(),
+            onTap: () => change_product(add),
             child: Center(
                 child: Material(
                     elevation: this.elevation,
@@ -48,18 +56,20 @@ class Widget_stateful_card extends State<StatefulWidget> {
                       child: Card(
                         margin: EdgeInsets.zero,
                         //clipBehavior: Clip.antiAlias,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
                         child: Column(children: [
-                          Container(
-                            height: 200,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(16.0),
-                                image: DecorationImage(
-                                  image: NetworkImage(_product_overview.image),
-                                )),
-                            //'https://pngimg.com/uploads/pasta/pasta_PNG58.png',
+                          Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Container(
+                              height: 200,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  border: Border.all(color: Colors.black26),
+                                  image: DecorationImage(
+                                      image: NetworkImage(
+                                          _product_overview.imgPath),
+                                      fit: BoxFit.cover)),
+                              //'https://pngimg.com/uploads/pasta/pasta_PNG58.png',
+                            ),
                           ),
                           ListTile(
                               title: Text(
@@ -67,7 +77,7 @@ class Widget_stateful_card extends State<StatefulWidget> {
                                 style: TitleStyleProduct,
                               ),
                               subtitle: Padding(
-                                child: Text(_product_overview.prod_description),
+                                child: Text(_product_overview.description),
                                 padding: EdgeInsets.only(top: 7),
                               )),
                           Padding(
@@ -79,12 +89,14 @@ class Widget_stateful_card extends State<StatefulWidget> {
                                   children: [
                                     Text("${_product_overview.price} €"),
                                     IconButton(
+                                      key: Key(
+                                          '${extractKeyValue(key)}-product-add-to-card'),
                                       icon: Icon(
                                         Icons.add,
                                         color: Color(0xff43C1A4),
                                       ),
                                       iconSize: 30,
-                                      onPressed: () => change_product()
+                                      onPressed: () => add(_product_overview)
                                       /*() => showDialog(
                           context: context,
                           builder: (context) =>
@@ -97,14 +109,20 @@ class Widget_stateful_card extends State<StatefulWidget> {
                     )))));
   }
 
-  void change_product() {
+  void change_product(Function add) {
     if (MediaQuery.of(context).size.width > 600) {
       showDialog(
           context: context,
-          builder: (context) => Dialog_product(_product_overview));
+          builder: (context) => Dialog_product(_product_overview, add));
     } else {
       Navigator.pushNamed(context, '/concrete_product',
-          arguments: _product_overview);
+          arguments: ConcreteProductArguments(_product_overview, add));
     }
   }
+}
+
+class ConcreteProductArguments {
+  final Product_overview prod;
+  final Function add;
+  ConcreteProductArguments(this.prod, this.add);
 }
