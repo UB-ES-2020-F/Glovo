@@ -17,9 +17,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'infrastructure/persistence/hive/hive_adapter.dart';
+import 'components/appBar/overview_logged_mobile.dart';
 import 'models/restaurants.dart';
 import 'models/signin.dart';
 import 'models/user_credentials/user_credentials.dart';
+
 void main() {
   setUpPersistence();
 
@@ -27,14 +29,18 @@ void main() {
    * Example of how to use repositories. They are async so keep that in mind
    */
   UserCredentialsRepository().update(UserCredentials("ruben", "zkkkasd"));
-  UserCredentialsRepository().getCredentials().then((value) => print(value.username));
+  UserCredentialsRepository()
+      .getCredentials()
+      .then((value) => print(value.username));
   UserCredentialsRepository().update(UserCredentials("pedro", "zkkkasd"));
-  UserCredentialsRepository().getCredentials().then((value) => print(value.username));
+  UserCredentialsRepository()
+      .getCredentials()
+      .then((value) => print(value.username));
 
   /**
    * End example
    */
-  
+
   runApp(MyApp());
 }
 
@@ -65,8 +71,9 @@ class MyApp extends StatelessWidget {
             '/sign-in': (context) => SignInPage(),
             '/products': (context) => Products_sample(),
             '/restaurant-list': (context) => RestaurantsList(),
-            '/concrete_product': (context) => Screen_product(),
+            '/concrete_product': (context) => Screen_products(),
             '/initial-logged-in': (context) => InitialLogged(),
+            '/overview_mobile': (context) => TabBar_screen(),
           }),
     );
   }

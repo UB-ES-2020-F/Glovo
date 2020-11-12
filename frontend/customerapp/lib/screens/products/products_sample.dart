@@ -6,6 +6,10 @@ import 'package:customerapp/models/product/mock_up_prod.dart';
 import 'package:customerapp/models/restaurants.dart';
 import 'package:customerapp/screens/products/cart_box.dart';
 import 'package:customerapp/styles/product.dart';
+import 'package:customerapp/responsive/screen_responsive.dart';
+import 'package:customerapp/screens/loggedPage/initial_logged_page.dart';
+import 'package:customerapp/screens/loggedPage/logged_bar.dart';
+import 'package:customerapp/screens/restaurantList/restaurant_list_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -43,9 +47,12 @@ class Products_sample extends StatelessWidget {
     }
     firstInstance = false;
     double cartWidth = 350;
+    var s = Bar_responsive(context, '/overview_mobile', DefaultLoggedBar());
+    var bar = s.get_responsive_bar();
+
     return Scaffold(
         //backgroundColor: Theme.of(context).backgroundColor,
-        appBar: DefaultLoggedBar(),
+        appBar: bar,
         body: Stack(children: [
           Container(
               padding: EdgeInsets.only(left: 20, right: 20),
