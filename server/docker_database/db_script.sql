@@ -20,6 +20,7 @@ VALUES
 	('Burger King', 'img/BK_main.jpg'),
 	('Krusty Krab', 'img/KK_main.jpg');
 
+
 INSERT INTO "Products" ("Name", "ImgPath", "Description", "Price", "RestaurantId")
 VALUES
 	('Chicken bucket', 'img/chicken_bucket.jpg', 'Delicioso cubo de pollo, contiene 16 piezas', 14.00, 1),

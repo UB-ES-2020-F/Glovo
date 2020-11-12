@@ -30,11 +30,11 @@ namespace glovo_webapi.Migrations
 
                     b.Property<DateTime>("BuyDateTime")
                         .HasColumnType("timestamp without time zone");
-
-                    b.Property<int>("RestaurantId")
+                    
+                    b.Property<int?>("RestaurantId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -139,15 +139,11 @@ namespace glovo_webapi.Migrations
                 {
                     b.HasOne("glovo_webapi.Entities.Restaurant", "Restaurant")
                         .WithMany()
-                        .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RestaurantId");
 
                     b.HasOne("glovo_webapi.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Restaurant");
 
