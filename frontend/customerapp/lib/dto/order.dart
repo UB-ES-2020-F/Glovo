@@ -22,10 +22,12 @@ class OrderDTO {
     var toReturn = {
       'buyDateTime': formatDateTimeToJsonString(buyDateTime),
       'restaurantId': restaurantId,
-      'products': products.map((productDTO) => {
-            'restaurantId': productDTO.productId,
-            'quantity': productDTO.quantity
-          })
+      'products': products
+          .map((productDTO) => {
+                'restaurantId': productDTO.productId,
+                'quantity': productDTO.quantity
+              })
+          .toList()
     };
     if (id != null) toReturn['id'] = id;
     if (userId != null) toReturn['userId'] = userId;

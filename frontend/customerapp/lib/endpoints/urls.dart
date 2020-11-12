@@ -2,7 +2,7 @@ import 'package:customerapp/app_config.dart';
 
 Future<String> makeUrl(EndpointDefinitions endpoint) async {
   final config = await AppConfig.getConfig();
-  return '${config.apiUrl}$endpoint';
+  return '${config.apiUrl}${endpoint.value}';
 }
 
 class EndpointDefinitions {

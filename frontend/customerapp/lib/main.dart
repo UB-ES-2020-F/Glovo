@@ -1,6 +1,9 @@
+import 'package:customerapp/infrastructure/persistence/hive/hive_adapter.dart';
+import 'package:customerapp/infrastructure/persistence/repository/user_credentials_repository.dart';
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/cart.dart';
 import 'package:customerapp/models/signup.dart';
+import 'package:customerapp/models/user_credentials/user_credentials.dart';
 import 'package:customerapp/screens/loggedPage/initial_logged_page.dart';
 import 'package:customerapp/screens/anon_root.dart';
 import 'package:customerapp/screens/products/products_sample.dart';
@@ -11,15 +14,24 @@ import 'package:customerapp/screens/signUp/signup_page.dart';
 import 'package:customerapp/styles/Komet.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'app_config.dart';
 import 'models/restaurants.dart';
 import 'models/signin.dart';
 
 void main({String env}) async {
   WidgetsFlutterBinding.ensureInitialized();
+  setUpPersistence();
   await AppConfig.setEnvironment(env);
+
+  // MockUP user credentials
+  UserCredentialsRepository().update(UserCredentials('admin', 'token', 0));
+  // End mockup
   runApp(KometApp());
+}
+
+void setUpPersistence() async {
+  initFlutter();
+  UserCredentialsRepository().setUp(UserCredentialsAdapter());
 }
 
 class KometApp extends StatelessWidget {

@@ -1,4 +1,5 @@
 import 'package:customerapp/dto/order.dart';
+import 'package:customerapp/infrastructure/persistence/repository/user_credentials_repository.dart';
 import 'package:customerapp/models/product/product_overview.dart';
 import 'package:flutter/widgets.dart';
 
@@ -45,7 +46,24 @@ class Cart extends ChangeNotifier {
     return numb;
   }
 
-  OrderDTO generateOrderDTO() {
-    
+  Future<OrderDTO> generateOrderDTO() async {
+    final userCredentials = await UserCredentialsRepository().getCredentials();
+    return OrderDTO(
+        userId: userCredentials.userId,
+        buyDateTime: DateTime.now(),
+        restaurantId: _getRestaurantId(),
+        products: _getProductsDTOs());
+  }
+
+  List<ProductDTO> _getProductsDTOs() {
+    return _order.entries
+        .map((product) =>
+            ProductDTO((product.key as Product_overview).idProd, product.value))
+        .toList();
+  }
+
+  int _getRestaurantId() {
+    return (order.entries.first.key as Product_overview)
+        .idRestaurant; // TODO it could be better having that as a parameter of the cart.
   }
 }

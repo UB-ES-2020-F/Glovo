@@ -107,6 +107,10 @@ class SignUpForm extends StatelessWidget {
                   labelText: 'First name',
                   labelStyle: labelTextInputStyle,
                 ),
+                onFieldSubmitted: (value) {
+                  trySendRegisterForm(context, signUpModel);
+                },
+                autofocus: true,
               )),
           Container(
               padding: EdgeInsets.symmetric(vertical: 15),
@@ -128,6 +132,9 @@ class SignUpForm extends StatelessWidget {
                   labelText: 'Email',
                   labelStyle: labelTextInputStyle,
                 ),
+                onFieldSubmitted: (value) {
+                  trySendRegisterForm(context, signUpModel);
+                },
               )),
           Container(
               padding: EdgeInsets.symmetric(vertical: 15),
@@ -161,6 +168,9 @@ class SignUpForm extends StatelessWidget {
                   labelText: 'Password',
                   labelStyle: labelTextInputStyle,
                 ),
+                onFieldSubmitted: (value) {
+                  trySendRegisterForm(context, signUpModel);
+                },
               )),
           SignUpButton(),
         ],
@@ -181,14 +191,9 @@ class SignUpButton extends StatelessWidget {
       child: Wrap(
         children: [
           ElevatedButton(
-            onPressed: signUpModel.formValid
-                ? () {
-                    if (signUpModel.formKey.currentState.validate()) {
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                          '/initial-logged-in', (route) => false);
-                    }
-                  }
-                : null,
+            onPressed: () {
+              trySendRegisterForm(context, signUpModel);
+            },
             child: Text('Sign up with email'),
             style: signUpModel.formValid
                 ? signUpButtonStyleEnabled
@@ -197,5 +202,14 @@ class SignUpButton extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+void trySendRegisterForm(BuildContext context, SignUpModel signUpModel) {
+  if (signUpModel.formValid) {
+    if (signUpModel.formKey.currentState.validate()) {
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil('/initial-logged-in', (route) => false);
+    }
   }
 }

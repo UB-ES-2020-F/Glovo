@@ -1,5 +1,4 @@
 import 'package:customerapp/actions/extract-key-value.dart';
-import 'package:customerapp/dto/order.dart';
 import 'package:customerapp/endpoints/cart.dart';
 import 'package:customerapp/models/cart.dart';
 import 'package:customerapp/models/logged.dart';
@@ -217,14 +216,15 @@ class MakeOrderButton extends StatelessWidget {
         children: [
           ElevatedButton(
               onPressed: () {
-                final orderDTO = cart.generateOrderDTO();
+                final orderGeneration = cart.generateOrderDTO();
                 try {
-                  //TODO hacer bonito. Callback hell
-                  makeOrder(orderDTO).then((value) {
-                    cart.empty();
-                    showDialog(
-                        context: context,
-                        builder: (context) => OrderDoneDialog());
+                  orderGeneration.then((orderDTO) {
+                    makeOrder(orderDTO).then((value) {
+                      showDialog(
+                          context: context,
+                          builder: (context) => OrderDoneDialog());
+                      cart.empty();
+                    });
                   });
                 } catch (OrderCallbackFailed) {
                   cart.empty();

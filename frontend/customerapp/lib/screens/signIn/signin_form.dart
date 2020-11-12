@@ -76,6 +76,10 @@ class SignInForm extends StatelessWidget {
                   labelText: 'E-mail',
                   labelStyle: labelTextInputStyle,
                 ),
+                onFieldSubmitted: (value) {
+                  trySendSignInForm(context, signInModel);
+                },
+                autofocus: true,
               )),
           Container(
               padding: EdgeInsets.symmetric(vertical: 15),
@@ -110,6 +114,9 @@ class SignInForm extends StatelessWidget {
                   labelText: 'Password',
                   labelStyle: labelTextInputStyle,
                 ),
+                onFieldSubmitted: (value) {
+                  trySendSignInForm(context, signInModel);
+                },
               )),
           Align(
             child: Container(
@@ -144,15 +151,10 @@ class SignInButton extends StatelessWidget {
       child: Wrap(
         children: [
           ElevatedButton(
+            onPressed: () {
+              trySendSignInForm(context, signInModel);
+            },
             key: Key('submit-login-button'),
-            onPressed: signInModel.formValid
-                ? () {
-                    if (signInModel.formKey.currentState.validate()) {
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                          '/initial-logged-in', (route) => false);
-                    }
-                  }
-                : null,
             child: Text('Log in with email'),
             style: signInModel.formValid
                 ? signUpButtonStyleEnabled
@@ -161,5 +163,14 @@ class SignInButton extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+void trySendSignInForm(BuildContext context, SignInModel signInModel) {
+  if (signInModel.formValid) {
+    if (signInModel.formKey.currentState.validate()) {
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil('/initial-logged-in', (route) => false);
+    }
   }
 }

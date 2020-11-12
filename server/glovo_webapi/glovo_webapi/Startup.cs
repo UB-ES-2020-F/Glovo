@@ -25,6 +25,7 @@ namespace glovo_webapi
 {
     public class Startup
     {
+        readonly string AllowedOrigins = "_AllowedOrigins";
         public Startup(IWebHostEnvironment env, IConfiguration configuration)
         {
             Configuration = configuration;
@@ -37,6 +38,18 @@ namespace glovo_webapi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: AllowedOrigins,
+                                builder =>
+                                {
+                                    builder.WithOrigins("http://localhost:35969",
+                                                        "https://localhost:35969",
+                                                        "http://komet.cat",
+                                                        "https://komet.cat"
+                                                        );
+                                });
+            });
             string connection = Configuration.GetConnectionString("LocalDBConnection");
             string dbUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
             if (Env.IsProduction())
@@ -105,9 +118,11 @@ namespace glovo_webapi
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(AllowedOrigins);
 
             app.UseAuthorization();
 
