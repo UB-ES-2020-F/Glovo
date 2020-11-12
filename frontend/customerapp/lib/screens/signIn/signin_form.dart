@@ -1,5 +1,6 @@
 import 'package:customerapp/components/text_link.dart';
 import 'package:customerapp/models/signin.dart';
+import 'package:customerapp/screens/anon_root.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -21,27 +22,27 @@ class SignInFormPage extends StatelessWidget {
         ),
       )),
       SignInForm(),
-      Align(
-          child: Container(
-              margin: EdgeInsets.all(20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "New to Komet? ",
-                    style: TextStyle(color: Color(0xFF9B9B9B)),
-                  ),
-                  TextLink('Sign up', (context) {
-                    Navigator.pushNamed(context, '/sign-up');
-                  },
-                      signUpTextLinks.copyWith(
-                          fontSize: 13, fontWeight: FontWeight.bold),
-                      signUpTextLinksHover.copyWith(
-                          fontSize: 13, fontWeight: FontWeight.bold),
-                      context)
-                ],
-              )),
-          alignment: Alignment.bottomRight)
+      Container(
+          margin: EdgeInsets.all(20.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                "New to Komet? ",
+                style: TextStyle(color: Color(0xFF9B9B9B)),
+              ),
+              TextLink('Sign up', (context) {
+                Navigator.pop(context);
+                showSignUp(context);
+              },
+                  signUpTextLinks.copyWith(
+                      fontSize: 13, fontWeight: FontWeight.bold),
+                  signUpTextLinksHover.copyWith(
+                      fontSize: 13, fontWeight: FontWeight.bold),
+                  context)
+            ],
+          )),
     ])));
   }
 }
@@ -123,9 +124,9 @@ class SignInForm extends StatelessWidget {
             child: Container(
                 margin: EdgeInsets.all(20.0),
                 alignment: Alignment.centerRight,
-                child: TextLink('Forgot your password?', (context) {
-                  Navigator.pushNamed(context, '/sign-in');
-                },
+                child: TextLink(
+                    'Forgot your password?',
+                    (context) {},
                     signUpTextLinks.copyWith(
                         fontSize: 13, fontWeight: FontWeight.bold),
                     signUpTextLinksHover.copyWith(

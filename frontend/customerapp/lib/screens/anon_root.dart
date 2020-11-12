@@ -43,22 +43,18 @@ class LogInButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-        onPressed: MediaQuery.of(context).size.width > 600
-            ? () {
-                _showDialog(context);
-              }
-            : () {
-                _showPage(context);
-              },
+        onPressed: () {
+          showSignIn(context);
+        },
         child: Text('Login'),
         style: loginButtonStyle);
   }
+}
 
-  void _showDialog(context) {
+void showSignIn(BuildContext context) {
+  if (MediaQuery.of(context).size.width > 600) {
     showDialog(context: context, builder: (_) => SignInDialog());
-  }
-
-  void _showPage(context) {
+  } else {
     Navigator.pushNamed(context, '/sign-in');
   }
 }
@@ -67,22 +63,18 @@ class SignUpButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-        onPressed: MediaQuery.of(context).size.width > 600
-            ? () {
-                _showDialog(context);
-              }
-            : () {
-                _showPage(context);
-              },
+        onPressed: () {
+          showSignUp(context);
+        },
         child: Text('Register'),
         style: registerButtonStyle);
   }
+}
 
-  void _showDialog(context) {
+void showSignUp(BuildContext context) {
+  if (MediaQuery.of(context).size.width > 600) {
     showDialog(context: context, builder: (_) => SignUpDialog());
-  }
-
-  void _showPage(context) {
+  } else {
     Navigator.pushNamed(context, '/sign-up');
   }
 }
