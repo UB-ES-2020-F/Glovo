@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class SignInDialog extends StatelessWidget {
+  SignInDialog() : super(key: Key('sign-in-dialog'));
   @override
   Widget build(BuildContext context) {
     return Dialog(

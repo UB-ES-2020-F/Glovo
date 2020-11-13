@@ -6,6 +6,7 @@ namespace glovo_webapi.Models.Users
         public string Email { get; set; }
         public string Name { get; set; }
 
+        
         public UserModel(int Id, string Email, string Name)
         {
             this.Id = Id;

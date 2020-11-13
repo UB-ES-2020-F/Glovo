@@ -1,20 +1,28 @@
+import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/restaurants.dart';
+import 'package:customerapp/models/user.dart';
 import 'package:customerapp/styles/restaurant_list.dart';
 import 'package:flutter/material.dart';
 import 'package:icon_shadow/icon_shadow.dart';
 
 class RestaurantsListCard extends StatelessWidget {
   Restaurant restaurant;
-  RestaurantsListCard(this.restaurant);
+
+  RestaurantsListCard(Key key, this.restaurant) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    User user = LoggedModel.user;
+    double distance = restaurant.location.getDistanceKm(user.location);
+    double deliveryFee = getDeliveryFee(distance);
+    TimeInterval timeInterval = new TimeInterval.distance(distance);
     return Container(
         child: Card(
       child: Container(
           child: Column(
         children: [
           InkWell(
-              onTap: () => load_product(context),
+              onTap: () => load_product(context, restaurant),
               child: Container(
                 alignment: Alignment.bottomCenter,
                 height: 150,
@@ -41,7 +49,7 @@ class RestaurantsListCard extends StatelessWidget {
                           Container(
                               padding: EdgeInsets.symmetric(horizontal: 2.5),
                               child: Text(
-                                '${restaurant.expectedDeliveryTime.min} - ${restaurant.expectedDeliveryTime.max} min',
+                                '${timeInterval.min} - ${timeInterval.max} min',
                                 style: restaurantListCardInsideImageText,
                               ))
                         ],
@@ -62,7 +70,7 @@ class RestaurantsListCard extends StatelessWidget {
                           Container(
                               padding: EdgeInsets.only(left: 2.5, right: 15),
                               child: Text(
-                                '${restaurant.deliveryFee} €',
+                                '$deliveryFee €',
                                 style: restaurantListCardInsideImageText,
                               ))
                         ],
@@ -75,7 +83,7 @@ class RestaurantsListCard extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
             alignment: Alignment.centerLeft,
             child: InkWell(
-                onTap: () => load_product(context),
+                onTap: () => load_product(context, restaurant),
                 child: Text(
                   restaurant.name,
                   style: restaurantListCardName,
@@ -86,7 +94,7 @@ class RestaurantsListCard extends StatelessWidget {
     ));
   }
 
-  void load_product(BuildContext context) {
-    Navigator.pushNamed(context, '/products');
+  void load_product(BuildContext context, Restaurant restaurant) {
+    Navigator.pushNamed(context, '/products', arguments: restaurant);
   }
 }

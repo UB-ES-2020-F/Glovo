@@ -1,3 +1,4 @@
+import 'package:customerapp/components/appBar/searchBox.dart';
 import 'package:customerapp/components/appBar/user_actions_bar.dart';
 import 'package:customerapp/components/text_link.dart';
 import 'package:customerapp/styles/initial_logged.dart';
@@ -6,6 +7,9 @@ import 'package:flutter/widgets.dart';
 
 class InitialLoggedBar extends StatelessWidget with PreferredSizeWidget {
   final double appBarHeight = 115.0;
+
+  InitialLoggedBar() {}
+
   @override
   get preferredSize => Size.fromHeight(appBarHeight);
   @override
@@ -15,13 +19,19 @@ class InitialLoggedBar extends StatelessWidget with PreferredSizeWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           AppBar(
+              automaticallyImplyLeading: false,
               elevation: 0,
               backgroundColor: Theme.of(context).backgroundColor,
               title: Padding(
                   padding: EdgeInsets.all(40),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [SearchBox(), UserActionsBar(BarType.initial)],
+                    children: [
+                      SearchBox(),
+                      UserActionsBar(
+                        BarType.initial,
+                      )
+                    ],
                   )))
         ],
       ),
@@ -30,18 +40,35 @@ class InitialLoggedBar extends StatelessWidget with PreferredSizeWidget {
   }
 }
 
-class SearchBox extends StatelessWidget {
+class InitialLoggedBar_short extends StatelessWidget with PreferredSizeWidget {
+  final double appBarHeight = 115.0;
+
+  @override
+  get preferredSize => Size.fromHeight(appBarHeight);
   @override
   Widget build(BuildContext context) {
-    return Row(mainAxisSize: MainAxisSize.min, children: [
-      IconButton(
-        iconSize: 50.0,
-        color: Colors.white,
-        icon: Icon(Icons.search_rounded),
-        onPressed: () {},
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          AppBar(
+              automaticallyImplyLeading: false,
+              elevation: 0,
+              backgroundColor: Theme.of(context).backgroundColor,
+              title: Padding(
+                  padding: EdgeInsets.all(40),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SearchBox(),
+                      UserActionsBar_aux(
+                        BarType.initial,
+                      )
+                    ],
+                  )))
+        ],
       ),
-      TextLink('What do you need?', (context) {}, searchBarTextLinks,
-          searchBarTextLinksHover, context)
-    ]);
+      color: Theme.of(context).backgroundColor,
+    );
   }
 }
