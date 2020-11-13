@@ -8,8 +8,9 @@ jobs:
     mono: none
     dotnet: 3.1
     solution: server/glovo_webapi/glovo_webapi.sln
-    before_script:
+    install:
       - dotnet tool install --global dotnet-ef
+    before_script:
       - dotnet-ef
       - cd $TRAVIS_BUILD_DIR/server/glovo_webapi
     script:
