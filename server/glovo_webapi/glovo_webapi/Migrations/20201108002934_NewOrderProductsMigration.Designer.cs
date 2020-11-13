@@ -10,8 +10,8 @@ using glovo_webapi.Data;
 namespace glovo_webapi.Migrations
 {
     [DbContext(typeof(GlovoDbContext))]
-    [Migration("20201105183408_ProductsUpdate")]
-    partial class ProductsUpdate
+    [Migration("20201108002934_NewOrderProductsMigration")]
+    partial class NewOrderProductsMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -74,6 +74,9 @@ namespace glovo_webapi.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
+                    b.Property<int>("IdRest")
+                        .HasColumnType("integer");
+
                     b.Property<string>("ImgPath")
                         .HasColumnType("text");
 
@@ -84,12 +87,7 @@ namespace glovo_webapi.Migrations
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
-                    b.Property<int>("RestId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("RestId");
 
                     b.ToTable("Products");
                 });
@@ -136,7 +134,7 @@ namespace glovo_webapi.Migrations
 
                     b.ToTable("Users");
                 });
-            
+
             modelBuilder.Entity("glovo_webapi.Entities.Order", b =>
                 {
                     b.HasOne("glovo_webapi.Entities.Restaurant", "Restaurant")

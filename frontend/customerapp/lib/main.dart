@@ -25,7 +25,8 @@ void main({String env}) async {
   await AppConfig.setEnvironment(env);
 
   // MockUP user credentials
-  UserCredentialsRepository().update(UserCredentials('admin', 'token', 0));
+  UserCredentialsRepository()
+      .update(UserCredentials('komet@komet.com', 'token', 0));
   // End mockup
   runApp(KometApp());
 }

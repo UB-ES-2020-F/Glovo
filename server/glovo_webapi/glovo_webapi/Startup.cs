@@ -1,40 +1,37 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AutoMapper;
 using glovo_webapi.Data;
-using glovo_webapi.Services;
+using glovo_webapi.Services.Orders;
 using glovo_webapi.Services.Products;
 using glovo_webapi.Services.Restaurants;
 using glovo_webapi.Services.UserService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
+using WebApi.Helpers;
 
 namespace glovo_webapi
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+        public IWebHostEnvironment Env { get; }
+        
         readonly string AllowedOrigins = "_AllowedOrigins";
         public Startup(IWebHostEnvironment env, IConfiguration configuration)
         {
-            Configuration = configuration;
             Env = env;
+            
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+            Configuration = builder.Build();
         }
-
-        public IConfiguration Configuration { get; }
-        public IWebHostEnvironment Env { get; }
-
+        
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -43,11 +40,17 @@ namespace glovo_webapi
                 options.AddPolicy(name: AllowedOrigins,
                                 builder =>
                                 {
-                                    builder.WithOrigins("http://localhost:35969",
+                                    if(Env.IsDevelopment()) {
+                                        builder.AllowAnyOrigin();
+                                    }
+                                    else {
+                                        builder.WithOrigins("http://localhost:35969",
+                                                        "http://localhost:*",
                                                         "https://localhost:35969",
                                                         "http://komet.cat",
                                                         "https://komet.cat"
                                                         );
+                                    }  
                                 });
             });
             string connection = Configuration.GetConnectionString("LocalDBConnection");
@@ -68,10 +71,21 @@ namespace glovo_webapi
             Console.Write("Database connection string:"+connection);
             services.AddDbContext<GlovoDbContext>(opt => opt.UseNpgsql(connection));
         
+            services.AddCors();
             services.AddControllers();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            byte[] key = Encoding.ASCII.GetBytes("my-secret-token-key");
+
+            services.AddScoped<IRestaurantsService, NpgsqlRestaurantsService>();
+            services.AddScoped<IProductsService, NpgsqlProductsService>();
+            services.AddScoped<IOrdersService, NpgsqlOrdersService>();
+            services.AddScoped<IUserService, UserService>();
+
+            services.AddOptions();
+            services.Configure<AppConfiguration>(Configuration.GetSection("AppSettings"));
+            
+            /*
+            byte[] key = Encoding.ASCII.GetBytes(Configuration.GetValue<string>("AppSettings:Secret"));
             services.AddAuthentication(x =>
                 {
                     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -104,10 +118,9 @@ namespace glovo_webapi
                         ValidateAudience = false
                     };
                 });
+            */
             
-            services.AddScoped<IRestaurantsService, NpgsqlRestaurantsService>();
-            services.AddScoped<IProductsService, NpgsqlProductsService>();
-            services.AddScoped<IUserService, UserService>();
+            services.AddHttpContextAccessor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -124,8 +137,16 @@ namespace glovo_webapi
 
             app.UseCors(AllowedOrigins);
 
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseMiddleware<JwtMiddleware>();
+            
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }

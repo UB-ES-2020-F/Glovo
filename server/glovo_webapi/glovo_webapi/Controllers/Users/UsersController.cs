@@ -7,6 +7,7 @@ using Microsoft.Extensions.Options;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
+using AutoMapper.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using glovo_webapi.Services;
 using glovo_webapi.Entities;
@@ -23,16 +24,19 @@ namespace glovo_webapi.Controllers
     {
         private IUserService _userService;
         private IMapper _mapper;
-        private string tokenKey = "my-secret-token-key";
+        private readonly IOptions<AppConfiguration> _configuration;
 
         public UsersController(
             IUserService userService,
-            IMapper mapper)
+            IMapper mapper,
+            IOptions<AppConfiguration> configuration)
         {
             _userService = userService;
             _mapper = mapper;
+            _configuration = configuration;
         }
 
+        //POST api/users/login
         [AllowAnonymous]
         [HttpPost("login")]
         public IActionResult Authenticate([FromBody]LoginModel model)
@@ -45,13 +49,10 @@ namespace glovo_webapi.Controllers
             }
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(tokenKey);
+            var key = Encoding.ASCII.GetBytes(_configuration.Value.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.Name, user.Id.ToString())
-                }),
+                Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
@@ -68,6 +69,7 @@ namespace glovo_webapi.Controllers
             });
         }
 
+        //POST api/users/register
         [AllowAnonymous]
         [HttpPost("register")]
         public IActionResult Register([FromBody]RegisterModel model)
@@ -93,6 +95,7 @@ namespace glovo_webapi.Controllers
             }
         }
 
+        //GET api/users
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -101,13 +104,14 @@ namespace glovo_webapi.Controllers
             return Ok(model);
         }
 
-        [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        //GET api/users/<userId>
+        [HttpGet("{userId}")]
+        public IActionResult GetById(int userId)
         {
             User user = null;
             try
             {
-                user = _userService.GetById(id);
+                user = _userService.GetById(userId);
             }
             catch (RequestException)
             {
@@ -117,12 +121,13 @@ namespace glovo_webapi.Controllers
             return Ok(model);
         }
 
-        [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody]UpdateUserModel model)
+        //PUT api/users/<userId>
+        [HttpPut("{userId}")]
+        public IActionResult Update(int userId, [FromBody]UpdateUserModel model)
         {
             // map model to entity and set id
             var user = _mapper.Map<User>(model);
-            user.Id = id;
+            user.Id = userId;
 
             try
             {
@@ -144,12 +149,13 @@ namespace glovo_webapi.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        //DELETE api/users/<userId>
+        [HttpDelete("{userId}")]
+        public IActionResult Delete(int userId)
         {
             try
             {
-                _userService.Delete(id);
+                _userService.Delete(userId);
             }
             catch (RequestException)
             {

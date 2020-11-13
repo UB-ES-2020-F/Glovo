@@ -28,7 +28,7 @@ class UserCredentialsAdapter extends TypeAdapter<UserCredentials> {
     writer
       ..writeByte(3)
       ..writeByte(0)
-      ..write(obj.username)
+      ..write(obj.email)
       ..writeByte(1)
       ..write(obj.token)
       ..writeByte(2)

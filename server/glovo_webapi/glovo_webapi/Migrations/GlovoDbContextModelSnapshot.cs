@@ -9,7 +9,7 @@ using glovo_webapi.Data;
 namespace glovo_webapi.Migrations
 {
     [DbContext(typeof(GlovoDbContext))]
-    partial class GloboDBContextModelSnapshot : ModelSnapshot
+    partial class GlovoDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -18,6 +18,49 @@ namespace glovo_webapi.Migrations
                 .UseIdentityByDefaultColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.0-rc.2.20475.6");
+
+            modelBuilder.Entity("glovo_webapi.Entities.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<DateTime>("BuyDateTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("RestaurantId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RestaurantId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("glovo_webapi.Entities.OrderProduct", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.HasKey("OrderId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrdersProducts");
+                });
 
             modelBuilder.Entity("glovo_webapi.Entities.Product", b =>
                 {
@@ -92,10 +135,48 @@ namespace glovo_webapi.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("glovo_webapi.Entities.Order", b =>
+                {
+                    b.HasOne("glovo_webapi.Entities.Restaurant", "Restaurant")
+                        .WithMany()
+                        .HasForeignKey("RestaurantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("glovo_webapi.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Restaurant");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("glovo_webapi.Entities.OrderProduct", b =>
+                {
+                    b.HasOne("glovo_webapi.Entities.Order", "Order")
+                        .WithMany("OrdersProducts")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("glovo_webapi.Entities.Product", "Product")
+                        .WithMany("OrdersProducts")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("glovo_webapi.Entities.Product", b =>
                 {
                     b.HasOne("glovo_webapi.Entities.Restaurant", "Restaurant")
-                        .WithMany("Product")
+                        .WithMany("Products")
                         .HasForeignKey("RestaurantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -103,9 +184,19 @@ namespace glovo_webapi.Migrations
                     b.Navigation("Restaurant");
                 });
 
+            modelBuilder.Entity("glovo_webapi.Entities.Order", b =>
+                {
+                    b.Navigation("OrdersProducts");
+                });
+
+            modelBuilder.Entity("glovo_webapi.Entities.Product", b =>
+                {
+                    b.Navigation("OrdersProducts");
+                });
+
             modelBuilder.Entity("glovo_webapi.Entities.Restaurant", b =>
                 {
-                    b.Navigation("Product");
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }
