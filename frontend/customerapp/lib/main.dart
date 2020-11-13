@@ -1,3 +1,4 @@
+import 'package:customerapp/components/appBar/overview_logged_mobile.dart';
 import 'package:customerapp/infrastructure/persistence/hive/hive_adapter.dart';
 import 'package:customerapp/infrastructure/persistence/repository/user_credentials_repository.dart';
 import 'package:customerapp/models/logged.dart';
@@ -55,8 +56,9 @@ class KometApp extends StatelessWidget {
             '/sign-in': (context) => SignInPage(),
             '/products': (context) => Products_sample(),
             '/restaurant-list': (context) => RestaurantsList(),
-            '/concrete_product': (context) => Screen_product(),
+            '/concrete_product': (context) => Screen_products(),
             '/initial-logged-in': (context) => InitialLogged(),
+            '/overview_mobile': (context) => TabBar_screen(),
           }),
     );
   }

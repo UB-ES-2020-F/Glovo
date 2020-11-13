@@ -1,5 +1,9 @@
 import 'package:customerapp/components/appBar/default_logged_bar.dart';
+import 'package:customerapp/components/appBar/mobile_default_bar.dart';
 import 'package:customerapp/models/restaurants.dart';
+import 'package:customerapp/responsive/screen_responsive.dart';
+import 'package:customerapp/screens/loggedPage/initial_logged_page.dart';
+import 'package:customerapp/screens/loggedPage/logged_bar.dart';
 import 'package:customerapp/screens/restaurantList/restaurant_list_box.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -9,8 +13,14 @@ class RestaurantsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var restaurantsModel = context.watch<RestaurantsListModel>();
+    Widget bar;
+
+    var s = Bar_responsive(context, '/overview_mobile', DefaultLoggedBar());
+    bar = s.get_responsive_bar();
+
     return Scaffold(
-        appBar: DefaultLoggedBar(),
+        //appBar: Test_bar('/overview_mobile'),
+        appBar: bar,
         body: Container(
           padding: const EdgeInsets.all(20),
           child: Column(
