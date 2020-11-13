@@ -57,7 +57,7 @@ class Products_sample extends StatelessWidget {
           Container(
               padding: EdgeInsets.only(left: 20, right: 20),
               decoration: BoxDecoration(
-                  color: Colors.black38,
+                  color: Color(0xFFE0E0E0),
                   image: DecorationImage(
                       image: NetworkImage(
                           restaurant == null ? '' : restaurant.image),
