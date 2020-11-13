@@ -10,8 +10,8 @@ using glovo_webapi.Data;
 namespace glovo_webapi.Migrations
 {
     [DbContext(typeof(GlovoDbContext))]
-    [Migration("20201105183408_ProductsUpdate")]
-    partial class ProductsUpdate
+    [Migration("20201112141446_RebaseMigration2")]
+    partial class RebaseMigration2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -84,12 +84,12 @@ namespace glovo_webapi.Migrations
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
-                    b.Property<int>("RestId")
+                    b.Property<int>("RestaurantId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RestId");
+                    b.HasIndex("RestaurantId");
 
                     b.ToTable("Products");
                 });
@@ -136,7 +136,7 @@ namespace glovo_webapi.Migrations
 
                     b.ToTable("Users");
                 });
-            
+
             modelBuilder.Entity("glovo_webapi.Entities.Order", b =>
                 {
                     b.HasOne("glovo_webapi.Entities.Restaurant", "Restaurant")
@@ -175,6 +175,17 @@ namespace glovo_webapi.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("glovo_webapi.Entities.Product", b =>
+                {
+                    b.HasOne("glovo_webapi.Entities.Restaurant", "Restaurant")
+                        .WithMany("Products")
+                        .HasForeignKey("RestaurantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Restaurant");
+                });
+
             modelBuilder.Entity("glovo_webapi.Entities.Order", b =>
                 {
                     b.Navigation("OrdersProducts");
@@ -183,6 +194,11 @@ namespace glovo_webapi.Migrations
             modelBuilder.Entity("glovo_webapi.Entities.Product", b =>
                 {
                     b.Navigation("OrdersProducts");
+                });
+
+            modelBuilder.Entity("glovo_webapi.Entities.Restaurant", b =>
+                {
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

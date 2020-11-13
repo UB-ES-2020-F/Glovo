@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using AutoMapper;
 using glovo_webapi.Entities;
@@ -8,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace glovo_webapi.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/products")]
     public class ProductsController : ControllerBase
     {
         private readonly IProductsService _service;
@@ -20,6 +21,7 @@ namespace glovo_webapi.Controllers
             _mapper = mapper;
         }
         
+        //GET api/products
         [HttpGet]
         public ActionResult<IEnumerable<ProductReadModel>> GetAllProducts()
         {
@@ -27,10 +29,11 @@ namespace glovo_webapi.Controllers
             return Ok(_mapper.Map<IEnumerable<ProductReadModel>>(products));
         }
         
-        [HttpGet("{id}")]
-        public ActionResult<ProductReadModel> GetProductById(int id)
+        //GET api/products/<prodId>
+        [HttpGet("{prodId}")]
+        public ActionResult<ProductReadModel> GetProductById(int prodId)
         {
-            Product foundProduct = _service.GetProductById(id);
+            Product foundProduct = _service.GetProductById(prodId);
             if (foundProduct == null)
             {
                 return NotFound(new {message = "product id not found"});

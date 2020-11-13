@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace glovo_webapi.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/restaurants")]
     public class RestaurantsController : ControllerBase
     {
         private readonly IRestaurantsService _service;
@@ -19,7 +19,8 @@ namespace glovo_webapi.Controllers
             _service = service;
             _mapper = mapper;
         }
-        
+       
+        //GET api/restaurants
         [HttpGet]
         public ActionResult<IEnumerable<RestaurantReadModel>> GetAllRestaurants()
         {
@@ -27,13 +28,14 @@ namespace glovo_webapi.Controllers
             return Ok(_mapper.Map<IEnumerable<RestaurantReadModel>>(restaurants));
         }
         
-        [HttpGet("{id}")]
-        public ActionResult<RestaurantReadModel> GetRestaurantById(int id)
+        //GET api/restaurants/<restId>
+        [HttpGet("{restId}")]
+        public ActionResult<RestaurantReadModel> GetRestaurantById(int restId)
         {
-            Restaurant foundRestaurant = _service.GetRestaurantById(id);
+            Restaurant foundRestaurant = _service.GetRestaurantById(restId);
             if (foundRestaurant == null)
             {
-                return NotFound(new {message = "restaurant id not found"});
+                return NotFound(new {message = "Restaurant id not found"});
             }
             return Ok(_mapper.Map<RestaurantReadModel>(foundRestaurant));
         }
