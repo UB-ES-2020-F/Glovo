@@ -24,5 +24,6 @@ jobs:
       api_key: fa31b783-012a-4fda-afbe-ade1b582bd28
       app: ub-es2020-glovo-webapi
       strategy: git
-  
-  - name: Frontend
+      on:
+        branch: devops-task-29
+
