@@ -10,6 +10,7 @@ jobs:
     solution: server/glovo_webapi/glovo_webapi.sln
     install:
       - dotnet tool install --global dotnet-ef
+      - export PATH="$HOME/.dotnet/tools":$PATH
     before_script:
       - dotnet-ef
       - cd $TRAVIS_BUILD_DIR/server/glovo_webapi
