@@ -20,6 +20,7 @@ jobs:
     deploy:
       provider: script
       script: bash $TRAVIS_BUILD_DIR/backend_deployment/deploy.sh
+      skip_cleanup: true
       on:
         branch: devops-task-29
 
