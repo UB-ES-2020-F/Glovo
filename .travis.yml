@@ -10,6 +10,7 @@ jobs:
     solution: server/glovo_webapi/glovo_webapi.sln
     before_script:
       - dotnet tool install --global dotnet-ef
+      - dotnet ef
       - cd $TRAVIS_BUILD_DIR/server/glovo_webapi
     script:
       - dotnet restore
