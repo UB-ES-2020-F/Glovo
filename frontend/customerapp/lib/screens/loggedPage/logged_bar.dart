@@ -22,38 +22,21 @@ class InitialLoggedBar extends StatelessWidget with PreferredSizeWidget {
               automaticallyImplyLeading: false,
               elevation: 0,
               backgroundColor: Theme.of(context).backgroundColor,
-              title: Expanded(
-                  child: Padding(
-                      padding: EdgeInsets.all(40),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SearchBox(),
-                          UserActionsBar(
-                            BarType.initial,
-                          )
-                        ],
-                      ))))
+              title: Padding(
+                  padding: EdgeInsets.all(40),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SearchBox(),
+                      UserActionsBar(
+                        BarType.initial,
+                      )
+                    ],
+                  )))
         ],
       ),
       color: Theme.of(context).backgroundColor,
     );
-  }
-}
-
-class SearchBox extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Row(mainAxisSize: MainAxisSize.min, children: [
-      IconButton(
-        iconSize: 50.0,
-        color: Colors.white,
-        icon: Icon(Icons.search_rounded),
-        onPressed: () {},
-      ),
-      TextLink('What do you need?', (context) {}, searchBarTextLinks,
-          searchBarTextLinksHover, context)
-    ]);
   }
 }
 
@@ -72,18 +55,17 @@ class InitialLoggedBar_short extends StatelessWidget with PreferredSizeWidget {
               automaticallyImplyLeading: false,
               elevation: 0,
               backgroundColor: Theme.of(context).backgroundColor,
-              title: Expanded(
-                  child: Padding(
-                      padding: EdgeInsets.all(40),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SearchBox(),
-                          UserActionsBar_aux(
-                            BarType.initial,
-                          )
-                        ],
-                      ))))
+              title: Padding(
+                  padding: EdgeInsets.all(40),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SearchBox(),
+                      UserActionsBar_aux(
+                        BarType.initial,
+                      )
+                    ],
+                  )))
         ],
       ),
       color: Theme.of(context).backgroundColor,

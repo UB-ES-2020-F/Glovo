@@ -37,7 +37,7 @@ class Logo extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
         onTap: () {
-          return Navigator.pushNamed(context, '/restaurant-list');
+          return Navigator.pushNamed(context, '/initial-logged-in');
         },
         child: Text(
           'Komet ',

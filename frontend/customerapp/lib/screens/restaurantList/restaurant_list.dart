@@ -19,7 +19,6 @@ class RestaurantsList extends StatelessWidget {
     bar = s.get_responsive_bar();
 
     return Scaffold(
-        //appBar: Test_bar('/overview_mobile'),
         appBar: bar,
         body: Container(
           padding: const EdgeInsets.all(20),
