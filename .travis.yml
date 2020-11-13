@@ -17,11 +17,10 @@ jobs:
     script:
       - dotnet restore
       - cd glovo_webapi
-      - dotnet publish -c Release
+      - dotnet publish -c Release -o $TRAVIS_BUILD_DIR/backend_deployment/publish
     before_deploy:
       - cd $TRAVIS_BUILD_DIR/backend_deployment
       - dotnet ef migrations script --idempotent --project $TRAVIS_BUILD_DIR/server/glovo_webapi/glovo_webapi -o migration.sql
-      - cp $TRAVIS_BUILD_DIR/server/glovo_webapi/glovo_webapi/bin/Release/netcoreapp3.1/publish publish
       - heroku pg:sql --app ub-es2020-glovo-webapi < migration.sql
     deploy:
       provider: heroku
