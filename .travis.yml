@@ -8,7 +8,7 @@ install:
   - dotnet tool install --global dotnet-ef
   - export PATH="$HOME/.dotnet/tools":$PATH
   - git clone https://github.com/flutter/flutter.git -b stable
-  - export PATH="$./flutter/bin":$PATH
+  - export PATH="./flutter/bin":$PATH
 
 stages:
   - build
