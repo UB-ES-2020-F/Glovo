@@ -1,4 +1,5 @@
 import 'package:customerapp/actions/extract-key-value.dart';
+import 'package:customerapp/endpoints/cart.dart';
 import 'package:customerapp/models/cart.dart';
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/product/product_overview.dart';
@@ -7,6 +8,7 @@ import 'package:customerapp/styles/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:customerapp/styles/product.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class CartBox extends StatelessWidget {
   double cartWidth;
@@ -214,9 +216,27 @@ class MakeOrderButton extends StatelessWidget {
         children: [
           ElevatedButton(
               onPressed: () {
-                cart.empty();
-                showDialog(
-                    context: context, builder: (context) => OrderDoneDialog());
+                final orderGeneration = cart.generateOrderDTO();
+                try {
+                  orderGeneration.then((orderDTO) {
+                    makeOrder(orderDTO).then((value) {
+                      showDialog(
+                          context: context,
+                          builder: (context) => OrderDoneDialog());
+                      cart.empty();
+                    });
+                  });
+                } catch (OrderCallbackFailed) {
+                  cart.empty();
+                  Fluttertoast.showToast(
+                      msg: "Order failed",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.TOP_RIGHT,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.red,
+                      textColor: Colors.white,
+                      fontSize: 16.0);
+                }
               },
               child: Text(text),
               style: makeOrderButtonStyle)

@@ -13,6 +13,14 @@ class Product_overview {
     return _name;
   }
 
+  int get idProd {
+    return _idProd;
+  }
+
+  int get idRestaurant {
+    return _idRest;
+  }
+
   String get imgPath {
     return _imgPath;
   }
