@@ -8,7 +8,7 @@ install:
   - dotnet tool install --global dotnet-ef
   - export PATH="$HOME/.dotnet/tools":$PATH
   - git clone https://github.com/flutter/flutter.git -b stable
-  - export PATH="./flutter/bin":$PATH
+  - export PATH="$TRAVIS_BUILD_DIR/flutter/bin:$PATH"
 
 stages:
   - build
@@ -28,6 +28,7 @@ jobs:
         - dotnet publish -c Release -o $TRAVIS_BUILD_DIR/backend_deployment/publish
     - name: "Frontend"
       script:
+        - $TRAVIS_BUILD_DIR/flutter/bin/flutter --version
         - cd $TRAVIS_BUILD_DIR/frontend/customerapp
         - flutter build web
         - cp -r web $TRAVIS_BUILD_DIR/frontend_deployment/web
