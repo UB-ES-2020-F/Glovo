@@ -1,26 +1,45 @@
+services:
+  - docker
+language: csharp
+mono: none
+dotnet: 3.1
+solution: server/glovo_webapi/glovo_webapi.sln
+install:
+  - dotnet tool install --global dotnet-ef
+  - export PATH="$HOME/.dotnet/tools":$PATH
+  - git clone https://github.com/flutter/flutter.git -b stable
+  - export PATH="$./flutter/bin":$PATH
+
+stages:
+  - build
+  - tests
+  - name: deploy
+    if: branch = devops-task-29
+
 jobs:
   include:
-  - name: Backend
-    services:
-      - docker
-    language: csharp
-    mono: none
-    dotnet: 3.1
-    solution: server/glovo_webapi/glovo_webapi.sln
-    install:
-      - dotnet tool install --global dotnet-ef
-      - export PATH="$HOME/.dotnet/tools":$PATH
-    before_script:
-      - dotnet-ef
-      - cd $TRAVIS_BUILD_DIR/server/glovo_webapi
-    script:
-      - dotnet restore
-      - cd glovo_webapi
-      - dotnet publish -c Release -o $TRAVIS_BUILD_DIR/backend_deployment/publish
-    deploy:
-      provider: script
-      script: bash $TRAVIS_BUILD_DIR/backend_deployment/deploy.sh
-      skip_cleanup: true
-      on:
-        branch: devops-task-29
-
+  
+    - stage: build
+      name: "Backend"
+      script:
+        - cd $TRAVIS_BUILD_DIR/server/glovo_webapi
+        - dotnet restore
+        - cd glovo_webapi
+        - dotnet publish -c Release -o $TRAVIS_BUILD_DIR/backend_deployment/publish
+    - name: "Frontend"
+      script:
+        - cd $TRAVIS_BUILD_DIR/frontend/customerapp
+        - flutter build web
+        - cp -r web $TRAVIS_BUILD_DIR/frontend_deployment/web
+    
+    - stage: tests
+      name: "Unit Tests"
+      script:
+    - name: "Integration Tests"
+      script:
+      
+    - stage: deploy
+      name: "Backend"
+      script: $TRAVIS_BUILD_DIR/backend_deployment/deploy.sh
+    - name: "Frontend"
+      script: $TRAVIS_BUILD_DIR/frontend_deployment/deploy.sh
