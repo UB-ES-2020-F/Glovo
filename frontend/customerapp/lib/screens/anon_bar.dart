@@ -18,6 +18,7 @@ class AnonBar extends StatelessWidget with PreferredSizeWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           AppBar(
+              automaticallyImplyLeading: false,
               elevation: 0,
               backgroundColor: Theme.of(context).backgroundColor,
               title: Padding(

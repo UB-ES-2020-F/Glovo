@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 final searchBarTextLinks = TextStyle(
-  fontSize: 14,
+  fontSize: 13,
   color: Colors.white,
 );
 
 final searchBarTextLinksHover = TextStyle(
-  fontSize: 14,
+  fontSize: 13,
   color: hoverIconColor,
 );
 

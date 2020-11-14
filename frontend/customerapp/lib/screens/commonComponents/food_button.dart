@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class FoodButton extends StatelessWidget {
+  FoodButton(Key key) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -1,5 +1,6 @@
 import 'package:customerapp/components/text_link.dart';
 import 'package:customerapp/models/signup.dart';
+import 'package:customerapp/screens/anon_root.dart';
 import 'package:customerapp/styles/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -29,13 +30,16 @@ class SignUpFormPage extends StatelessWidget {
           Center(
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 10),
-              child: Wrap(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
                       child: Text('Have an account? ',
                           style: Theme.of(context).textTheme.bodyText1)),
                   TextLink('Login', (context) {
-                    Navigator.pushNamed(context, '/sign-in');
+                    Navigator.pop(context);
+                    showSignIn(context);
                   }, signUpTextLinksBold, signUpTextLinksHoverBold, context),
                 ],
               ),
@@ -44,30 +48,34 @@ class SignUpFormPage extends StatelessWidget {
           Center(
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 20),
-              child: Wrap(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Expanded(
-                    child: Container(
-                        child: Text('By registering, you agree to our ',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText1
-                                .copyWith(fontSize: 10))),
+                  Text(
+                    'By registering, you agree to our ',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1
+                        .copyWith(fontSize: 10),
                   ),
-                  TextLink('Terms of Service', (context) {
-                    Navigator.pushNamed(context, '/sign-in');
-                  }, signUpTextLinks.copyWith(fontSize: 10),
-                      signUpTextLinksHover.copyWith(fontSize: 10), context),
-                  Container(
-                      child: Text(' and ',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1
-                              .copyWith(fontSize: 10))),
-                  TextLink('Privacy Policy', (context) {
-                    Navigator.pushNamed(context, '/sign-in');
-                  }, signUpTextLinks.copyWith(fontSize: 10),
-                      signUpTextLinksHover.copyWith(fontSize: 10), context)
+                  TextLink(
+                      'Terms of Service',
+                      (context) {},
+                      signUpTextLinks.copyWith(fontSize: 10),
+                      signUpTextLinksHover.copyWith(fontSize: 10),
+                      context),
+                  Text(' and ',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1
+                          .copyWith(fontSize: 10)),
+                  TextLink(
+                      'Privacy Policy',
+                      (context) {},
+                      signUpTextLinks.copyWith(fontSize: 10),
+                      signUpTextLinksHover.copyWith(fontSize: 10),
+                      context)
                 ],
               ),
             ),
@@ -108,6 +116,10 @@ class SignUpForm extends StatelessWidget {
                   labelText: 'First name',
                   labelStyle: labelTextInputStyle,
                 ),
+                onFieldSubmitted: (value) {
+                  trySendRegisterForm(context, signUpModel);
+                },
+                autofocus: true,
               )),
           Container(
               padding: EdgeInsets.symmetric(vertical: 15),
@@ -129,6 +141,9 @@ class SignUpForm extends StatelessWidget {
                   labelText: 'Email',
                   labelStyle: labelTextInputStyle,
                 ),
+                onFieldSubmitted: (value) {
+                  trySendRegisterForm(context, signUpModel);
+                },
               )),
           Container(
               padding: EdgeInsets.symmetric(vertical: 15),
@@ -162,6 +177,9 @@ class SignUpForm extends StatelessWidget {
                   labelText: 'Password',
                   labelStyle: labelTextInputStyle,
                 ),
+                onFieldSubmitted: (value) {
+                  trySendRegisterForm(context, signUpModel);
+                },
               )),
           SignUpButton(),
         ],
@@ -182,14 +200,9 @@ class SignUpButton extends StatelessWidget {
       child: Wrap(
         children: [
           ElevatedButton(
-            onPressed: signUpModel.formValid
-                ? () {
-                    if (signUpModel.formKey.currentState.validate()) {
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                          '/initial-logged-in', (route) => false);
-                    }
-                  }
-                : null,
+            onPressed: () {
+              trySendRegisterForm(context, signUpModel);
+            },
             child: Text('Sign up with email'),
             style: signUpModel.formValid
                 ? signUpButtonStyleEnabled
@@ -198,5 +211,14 @@ class SignUpButton extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+void trySendRegisterForm(BuildContext context, SignUpModel signUpModel) {
+  if (signUpModel.formValid) {
+    if (signUpModel.formKey.currentState.validate()) {
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil('/initial-logged-in', (route) => false);
+    }
   }
 }

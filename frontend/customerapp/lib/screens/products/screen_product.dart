@@ -1,18 +1,22 @@
 import 'package:customerapp/models/product/product_overview.dart';
+import 'package:customerapp/screens/products/concrete_product_card.dart';
 import 'package:customerapp/styles/product.dart';
 import 'package:customerapp/styles/signup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Screen_product extends StatelessWidget {
+class Screen_products extends StatelessWidget {
   Product_overview product;
+  Function add;
 
-  Screen_product();
+  Screen_products();
 
   @override
   Widget build(BuildContext context) {
-    final Product_overview prod = ModalRoute.of(context).settings.arguments;
-    this.product = prod;
+    final ConcreteProductArguments args =
+        ModalRoute.of(context).settings.arguments;
+    this.product = args.prod;
+    this.add = args.add;
 
     return Scaffold(
         body: Container(
@@ -52,18 +56,24 @@ class Screen_product extends StatelessWidget {
                         image: DecorationImage(
                             //fit: BoxFit.fitWidth,
                             image: NetworkImage(
-                          product.image,
+                          product.imgPath,
                         )))),
                 Padding(
-                    padding: EdgeInsets.only(left: 20),
+                    padding: EdgeInsets.only(left: 15),
                     child: Column(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(product.prod_description,
-                              style: DescriptionTextStyleProduct),
-                          Text("${product.price} euros",
-                              style: PriceTextStyleProduct)
+                          Container(
+                            width: MediaQuery.of(context).size.width - 275,
+                            child: Text(product.description,
+                                style: DescriptionTextStyleProduct),
+                          ),
+                          Container(
+                              width: MediaQuery.of(context).size.width - 275,
+                              child: Text("${product.price} euros",
+                                  style: PriceTextStyleProduct)),
                         ]))
               ],
             )),
@@ -71,7 +81,10 @@ class Screen_product extends StatelessWidget {
           ),
           Padding(
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                add(product);
+                Navigator.pop(context);
+              },
               child: Text("Add to your order"),
               style: greenButtonStyle,
             ),

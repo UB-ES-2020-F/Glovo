@@ -1,5 +1,6 @@
 import 'package:customerapp/components/text_link.dart';
 import 'package:customerapp/models/signin.dart';
+import 'package:customerapp/screens/anon_root.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -21,27 +22,27 @@ class SignInFormPage extends StatelessWidget {
         ),
       )),
       SignInForm(),
-      Align(
-          child: Container(
-              margin: EdgeInsets.all(20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "New to Komet? ",
-                    style: TextStyle(color: Color(0xFF9B9B9B)),
-                  ),
-                  TextLink('Sign up', (context) {
-                    Navigator.pushNamed(context, '/sign-up');
-                  },
-                      signUpTextLinks.copyWith(
-                          fontSize: 13, fontWeight: FontWeight.bold),
-                      signUpTextLinksHover.copyWith(
-                          fontSize: 13, fontWeight: FontWeight.bold),
-                      context)
-                ],
-              )),
-          alignment: Alignment.bottomRight)
+      Container(
+          margin: EdgeInsets.all(20.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                "New to Komet? ",
+                style: TextStyle(color: Color(0xFF9B9B9B)),
+              ),
+              TextLink('Sign up', (context) {
+                Navigator.pop(context);
+                showSignUp(context);
+              },
+                  signUpTextLinks.copyWith(
+                      fontSize: 13, fontWeight: FontWeight.bold),
+                  signUpTextLinksHover.copyWith(
+                      fontSize: 13, fontWeight: FontWeight.bold),
+                  context)
+            ],
+          )),
     ])));
   }
 }
@@ -60,6 +61,7 @@ class SignInForm extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 15),
               constraints: BoxConstraints(maxWidth: 600),
               child: TextFormField(
+                key: Key('login-email-text-field'),
                 onSaved: (value) => signInModel.email = value,
                 validator: (email) {
                   bool validEmail = EmailValidator.validate(email);
@@ -76,11 +78,16 @@ class SignInForm extends StatelessWidget {
                   labelText: 'E-mail',
                   labelStyle: labelTextInputStyle,
                 ),
+                onFieldSubmitted: (value) {
+                  trySendSignInForm(context, signInModel);
+                },
+                autofocus: true,
               )),
           Container(
               padding: EdgeInsets.symmetric(vertical: 15),
               constraints: BoxConstraints(maxWidth: 600),
               child: TextFormField(
+                key: Key('login-password-text-field'),
                 onSaved: (value) => signInModel.password = value,
                 obscureText: signInModel.passwordObfuscated,
                 validator: (password) {
@@ -109,14 +116,17 @@ class SignInForm extends StatelessWidget {
                   labelText: 'Password',
                   labelStyle: labelTextInputStyle,
                 ),
+                onFieldSubmitted: (value) {
+                  trySendSignInForm(context, signInModel);
+                },
               )),
           Align(
             child: Container(
                 margin: EdgeInsets.all(20.0),
                 alignment: Alignment.centerRight,
-                child: TextLink('Forgot your password?', (context) {
-                  Navigator.pushNamed(context, '/sign-in');
-                },
+                child: TextLink(
+                    'Forgot your password?',
+                    (context) {},
                     signUpTextLinks.copyWith(
                         fontSize: 13, fontWeight: FontWeight.bold),
                     signUpTextLinksHover.copyWith(
@@ -124,7 +134,7 @@ class SignInForm extends StatelessWidget {
                     context)),
             alignment: Alignment.bottomCenter,
           ),
-          SignUpButton(),
+          SignInButton(),
         ],
       ),
     );
@@ -134,30 +144,35 @@ class SignInForm extends StatelessWidget {
 /*
   It may be better to pass only formKey as parameter (or the model)
 */
-class SignUpButton extends StatelessWidget {
+class SignInButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var signUpModel = context.watch<SignInModel>();
+    var signInModel = context.watch<SignInModel>();
     return Container(
       padding: EdgeInsets.symmetric(vertical: 30),
       child: Wrap(
         children: [
           ElevatedButton(
-            onPressed: signUpModel.formValid
-                ? () {
-                    if (signUpModel.formKey.currentState.validate()) {
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                          '/initial-logged-in', (route) => false);
-                    }
-                  }
-                : null,
+            onPressed: () {
+              trySendSignInForm(context, signInModel);
+            },
+            key: Key('submit-login-button'),
             child: Text('Log in with email'),
-            style: signUpModel.formValid
+            style: signInModel.formValid
                 ? signUpButtonStyleEnabled
                 : signUpButtonStyleDisabled,
           )
         ],
       ),
     );
+  }
+}
+
+void trySendSignInForm(BuildContext context, SignInModel signInModel) {
+  if (signInModel.formValid) {
+    if (signInModel.formKey.currentState.validate()) {
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil('/initial-logged-in', (route) => false);
+    }
   }
 }

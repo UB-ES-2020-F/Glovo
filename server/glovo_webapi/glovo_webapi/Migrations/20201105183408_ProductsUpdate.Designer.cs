@@ -21,6 +21,49 @@ namespace glovo_webapi.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.0-rc.2.20475.6");
 
+            modelBuilder.Entity("glovo_webapi.Entities.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<DateTime>("BuyDateTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("RestaurantId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RestaurantId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("glovo_webapi.Entities.OrderProduct", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.HasKey("OrderId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrdersProducts");
+                });
+
             modelBuilder.Entity("glovo_webapi.Entities.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -93,21 +136,53 @@ namespace glovo_webapi.Migrations
 
                     b.ToTable("Users");
                 });
-
-            modelBuilder.Entity("glovo_webapi.Entities.Product", b =>
+            
+            modelBuilder.Entity("glovo_webapi.Entities.Order", b =>
                 {
-                    b.HasOne("glovo_webapi.Entities.Restaurant", "Rest")
-                        .WithMany("Product")
-                        .HasForeignKey("RestId")
+                    b.HasOne("glovo_webapi.Entities.Restaurant", "Restaurant")
+                        .WithMany()
+                        .HasForeignKey("RestaurantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Rest");
+                    b.HasOne("glovo_webapi.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Restaurant");
+
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("glovo_webapi.Entities.Restaurant", b =>
+            modelBuilder.Entity("glovo_webapi.Entities.OrderProduct", b =>
                 {
+                    b.HasOne("glovo_webapi.Entities.Order", "Order")
+                        .WithMany("OrdersProducts")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("glovo_webapi.Entities.Product", "Product")
+                        .WithMany("OrdersProducts")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("glovo_webapi.Entities.Order", b =>
+                {
+                    b.Navigation("OrdersProducts");
+                });
+
+            modelBuilder.Entity("glovo_webapi.Entities.Product", b =>
+                {
+                    b.Navigation("OrdersProducts");
                 });
 #pragma warning restore 612, 618
         }
