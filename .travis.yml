@@ -32,4 +32,13 @@ jobs:
         - heroku container:push web -a ub-es2020-glovo-webapi
         - heroku container:release web -a ub-es2020-glovo-webapi
     - name: "Frontend"
-      script: bash $TRAVIS_BUILD_DIR/frontend_deployment/deploy.sh
+      script:
+        - cd $TRAVIS_BUILD_DIR/frontend/customerapp
+        - flutter build web
+        - cp -r web $TRAVIS_BUILD_DIR/frontend_deploy/web
+        - cd $TRAVIS_BUILD_DIR/frontend_deploy
+        - git init
+        - heroku git:remote -a ub-es2020-glovo
+        - git add .
+        - git commit -am "deploy"
+        - git push heroku master
