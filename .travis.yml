@@ -39,8 +39,10 @@ jobs:
     - stage: tests
       name: "Unit Tests"
       script:
+        - echo "TODO"
     - name: "Integration Tests"
       script:
+        - echo "TODO"
       
     - stage: deploy
       name: "Backend"
