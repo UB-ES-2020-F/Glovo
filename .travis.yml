@@ -46,6 +46,6 @@ jobs:
       
     - stage: deploy
       name: "Backend"
-      script: $TRAVIS_BUILD_DIR/backend_deployment/deploy.sh
+      script: bash $TRAVIS_BUILD_DIR/backend_deployment/deploy.sh
     - name: "Frontend"
-      script: $TRAVIS_BUILD_DIR/frontend_deployment/deploy.sh
+      script: bash $TRAVIS_BUILD_DIR/frontend_deployment/deploy.sh
