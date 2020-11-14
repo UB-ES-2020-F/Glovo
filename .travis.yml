@@ -20,19 +20,6 @@ stages:
 jobs:
   include:
   
-    - stage: build
-      name: "Backend"
-      script:
-        - cd $TRAVIS_BUILD_DIR/server/glovo_webapi
-        - dotnet restore
-        - cd glovo_webapi
-        - dotnet publish -c Release -o $TRAVIS_BUILD_DIR/backend_deployment/publish
-    - name: "Frontend"
-      script:
-        - cd $TRAVIS_BUILD_DIR/frontend/customerapp
-        - flutter build web
-        - cp -r web $TRAVIS_BUILD_DIR/frontend_deployment/web
-    
     - stage: tests
       name: "Unit Tests"
       script:
