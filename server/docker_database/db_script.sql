@@ -18,9 +18,9 @@ VALUES
 	('KFC', 'https://res.cloudinary.com/glovoapp/w_1200,f_auto,q_auto/Stores/kgwyyskpc20x3zoquelm'),
 	('La Tagliatella', 'https://res.cloudinary.com/glovoapp/w_700,h_360,f_auto,q_auto/Stores/ut78sjpa3zs5sl2gf4wl'),
 	('UDON', 'https://res.cloudinary.com/glovoapp/w_700,h_360,f_auto,q_auto/Stores/oazhwswiwyaebj7fhw0p'),
-	('Crep Nova', 'https://res.cloudinary.com/glovoapp/w_700,h_360,f_auto,q_auto/Stores/dnhg7ldzheyqper7s0g4');
-	('Subway', 'https://res.cloudinary.com/glovoapp/w_700,h_360,f_auto,q_auto/Stores/ipxtregy0mx3y2fqhclp');
-	('Burger King', 'https://res.cloudinary.com/glovoapp/w_700,h_360,f_auto,q_auto/Stores/jor4u1grqkmamnybgjs8');
+	('Crep Nova', 'https://res.cloudinary.com/glovoapp/w_700,h_360,f_auto,q_auto/Stores/dnhg7ldzheyqper7s0g4'),
+	('Subway', 'https://res.cloudinary.com/glovoapp/w_700,h_360,f_auto,q_auto/Stores/ipxtregy0mx3y2fqhclp'),
+	('Burger King', 'https://res.cloudinary.com/glovoapp/w_700,h_360,f_auto,q_auto/Stores/jor4u1grqkmamnybgjs8'),
 	('Telepizza', 'https://res.cloudinary.com/glovoapp/w_700,h_360,f_auto,q_auto/Stores/s1ftlo8w1vn9ngbgfvep');
 
 
