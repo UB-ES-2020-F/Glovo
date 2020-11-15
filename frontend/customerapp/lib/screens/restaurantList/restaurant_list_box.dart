@@ -1,3 +1,4 @@
+import 'package:customerapp/infrastructure/persistence/repository/user_credentials_repository.dart';
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/restaurants.dart';
 import 'package:customerapp/models/user.dart';

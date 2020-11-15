@@ -19,17 +19,20 @@ class UserCredentialsAdapter extends TypeAdapter<UserCredentials> {
     return UserCredentials(
       fields[0] as String,
       fields[1] as String,
+      fields[2] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserCredentials obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
-      ..write(obj.username)
+      ..write(obj.email)
       ..writeByte(1)
-      ..write(obj.token);
+      ..write(obj.token)
+      ..writeByte(2)
+      ..write(obj.userId);
   }
 
   @override

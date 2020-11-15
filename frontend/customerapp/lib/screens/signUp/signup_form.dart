@@ -1,4 +1,5 @@
 import 'package:customerapp/components/text_link.dart';
+import 'package:customerapp/dto/user.dart';
 import 'package:customerapp/models/signup.dart';
 import 'package:customerapp/screens/anon_root.dart';
 import 'package:customerapp/styles/signup.dart';
@@ -6,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:email_validator/email_validator.dart';
-//import 'package:fluttertoast/fluttertoast.dart';
+import 'package:customerapp/endpoints/login_register.dart';
 
 class SignUpFormPage extends StatelessWidget {
   @override
@@ -217,8 +218,18 @@ class SignUpButton extends StatelessWidget {
 void trySendRegisterForm(BuildContext context, SignUpModel signUpModel) {
   if (signUpModel.formValid) {
     if (signUpModel.formKey.currentState.validate()) {
-      Navigator.of(context)
-          .pushNamedAndRemoveUntil('/initial-logged-in', (route) => false);
+      signUpModel.formKey.currentState.save();
+      print(signUpModel.password);
+      UserDTO formUser = new UserDTO();
+      formUser.email = signUpModel.email;
+      formUser.password = signUpModel.password;
+      formUser.name = signUpModel.firstName;
+      registerUser(formUser)
+          .then((value) => Navigator.of(context)
+              .pushNamedAndRemoveUntil('/', (route) => false))
+          .catchError((error) {
+        print(error);
+      });
     }
   }
 }
