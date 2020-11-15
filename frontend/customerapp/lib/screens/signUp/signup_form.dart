@@ -225,10 +225,8 @@ void trySendRegisterForm(BuildContext context, SignUpModel signUpModel) {
       formUser.password = signUpModel.password;
       formUser.name = signUpModel.firstName;
       registerUser(formUser)
-          .then((value) =>
-              //Save credentials
-              Navigator.of(context)
-                  .pushNamedAndRemoveUntil('/', (route) => false))
+          .then((value) => Navigator.of(context)
+              .pushNamedAndRemoveUntil('/', (route) => false))
           .catchError((error) {
         print(error);
       });

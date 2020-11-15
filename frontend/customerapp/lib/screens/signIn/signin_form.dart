@@ -8,6 +8,8 @@ import 'package:flutter/widgets.dart';
 import 'package:customerapp/styles/signup.dart';
 import 'package:provider/provider.dart';
 import 'package:customerapp/endpoints/login_register.dart';
+import 'package:customerapp/infrastructure/persistence/repository/user_credentials_repository.dart';
+import 'package:customerapp/models/user_credentials/user_credentials.dart';
 
 class SignInFormPage extends StatelessWidget {
   @override
@@ -173,16 +175,15 @@ void trySendSignInForm(BuildContext context, SignInModel signInModel) {
   if (signInModel.formValid) {
     if (signInModel.formKey.currentState.validate()) {
       signInModel.formKey.currentState.save();
-      print(signInModel.password);
       UserDTO formUser = new UserDTO();
       formUser.email = signInModel.email;
       formUser.password = signInModel.password;
-      loginUser(formUser)
-          .then((loggedUser) =>
-              //Save credentials
-              Navigator.of(context).pushNamedAndRemoveUntil(
-                  '/initial-logged-in', (route) => false))
-          .catchError((error) {
+      loginUser(formUser).then((loggedUser) {
+        UserCredentialsRepository().update(new UserCredentials(
+            loggedUser.email, loggedUser.token, loggedUser.id));
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil('/initial-logged-in', (route) => false);
+      }).catchError((error) {
         print(error);
       });
     }
