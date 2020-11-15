@@ -9,6 +9,7 @@ class ProductsListModel extends ChangeNotifier {
 
   ProductsListModel() {
     availableProducts = List();
+    /*
     availableProducts.add(Product(
         1,
         "Macarrons",
@@ -44,6 +45,7 @@ class ProductsListModel extends ChangeNotifier {
         "de la casa",
         5,
         0));
+        */
   }
 
   void addProduct(Product product) {

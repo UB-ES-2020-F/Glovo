@@ -39,14 +39,16 @@ class Products_sample extends StatelessWidget {
     final Restaurant restaurant = ModalRoute.of(context).settings.arguments;
 
     var productsModel = context.watch<ProductsListModel>();
-    if (!queryMade) {
-      queryProducts(context, productsModel, restaurant);
-      queryMade = true;
-    }
 
     cart = context.watch<Cart>();
     if (firstInstance) {
+      productsModel.removeProducts();
       cart.empty();
+    }
+
+    if (!queryMade) {
+      queryProducts(context, productsModel, restaurant);
+      queryMade = true;
     }
 
     firstInstance = false;
