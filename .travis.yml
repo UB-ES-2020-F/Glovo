@@ -37,7 +37,7 @@ jobs:
         - cd $TRAVIS_BUILD_DIR/frontend/customerapp
         - flutter build web
         - ls -R build/web/
-        - cp -r web $TRAVIS_BUILD_DIR/frontend_deploy/build/web
+        - cp -r build/web $TRAVIS_BUILD_DIR/frontend_deploy/web
         - cd $TRAVIS_BUILD_DIR/frontend_deploy
         - git init
         - heroku git:remote -a ub-es2020-glovo
