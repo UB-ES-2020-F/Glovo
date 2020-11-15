@@ -21,18 +21,12 @@ import 'cart_box.dart';
 import 'concrete_product_card.dart';
 
 class Products_sample extends StatelessWidget {
-  List prodCards = List();
   List prods = List();
   Cart cart;
   bool firstInstance;
   bool queryMade = false;
 
   Products_sample() {
-    prods = Mock_up_prod().prod;
-    for (var i = 0; i < prods.length; i++) {
-      prodCards.add(
-          Concrete_Product_Card(Key('product-card-$i'), prods[i], addToCart));
-    }
     firstInstance = true;
   }
 
@@ -48,11 +42,6 @@ class Products_sample extends StatelessWidget {
     if (!queryMade) {
       queryProducts(context, productsModel, restaurant);
       queryMade = true;
-    }
-
-    for (var i = 0; i < prods.length; i++) {
-      prodCards.add(
-          Concrete_Product_Card(Key('product-card-$i'), prods[i], addToCart));
     }
 
     cart = context.watch<Cart>();
@@ -113,7 +102,23 @@ class Products_sample extends StatelessWidget {
                             Expanded(
                                 child: Container(
                                     child: Center(
-                                        child: Product_grid(prodCards)))),
+                                        child: StaggeredGridView.countBuilder(
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 10,
+                              itemCount: productsModel.availableProducts.length,
+                              crossAxisCount:
+                                  MediaQuery.of(context).size.width > 600
+                                      ? 2
+                                      : 1,
+                              itemBuilder: (context, index) {
+                                return ProductListCard(
+                                    Key('product-card-$index'),
+                                    productsModel.availableProducts[index],
+                                    addToCart);
+                              },
+                              staggeredTileBuilder: (int index) =>
+                                  StaggeredTile.fit(1),
+                            )))),
                           ]),
                     ),
                     if (MediaQuery.of(context).size.width > 900)
@@ -135,26 +140,6 @@ class Products_sample extends StatelessWidget {
                         cart.getTotalPrice().toString() +
                         ' €)'))
         ]));
-  }
-}
-
-class Product_grid extends StatelessWidget {
-  List prodCards;
-  Product_grid(this.prodCards);
-
-  @override
-  Widget build(BuildContext context) {
-    return StaggeredGridView.countBuilder(
-      //padding: EdgeInsets.all(30),
-      crossAxisSpacing: 10,
-      mainAxisSpacing: 10,
-      itemCount: prodCards.length,
-      crossAxisCount: MediaQuery.of(context).size.width > 600 ? 2 : 1,
-      itemBuilder: (context, index) {
-        return prodCards.asMap()[index];
-      },
-      staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
-    );
   }
 }
 
