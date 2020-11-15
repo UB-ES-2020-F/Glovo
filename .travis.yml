@@ -36,6 +36,7 @@ jobs:
         - echo "machine git.heroku.com login eudald.elias@gmail.com password 49916134-f0ec-4564-a22d-c40da16b9872" > $HOME/.netrc
         - cd $TRAVIS_BUILD_DIR/frontend/customerapp
         - flutter build web
+        - ls -R web/
         - cp -r web $TRAVIS_BUILD_DIR/frontend_deploy/web
         - cd $TRAVIS_BUILD_DIR/frontend_deploy
         - git init
