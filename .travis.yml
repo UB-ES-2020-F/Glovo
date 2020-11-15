@@ -37,14 +37,18 @@ jobs:
         - flutter build web
         - cp -r web $TRAVIS_BUILD_DIR/frontend_deploy/web
         - cd $TRAVIS_BUILD_DIR/frontend_deploy
-        #- git init
-        #- heroku git:remote -a ub-es2020-glovo
-        #- git add .
-        #- git commit -am "deploy"
+        - git init
+        - heroku git:remote -a ub-es2020-glovo
+        - git add .
+        - git commit -am "deploy"
+      before_deploy:
+        - cd $TRAVIS_BUILD_DIR/frontend_deploy
       deploy:
         provider: heroku
         api_key: 49916134-f0ec-4564-a22d-c40da16b9872
         app: ub-es2020-glovo-webapi
+        skip_cleanup: true
+        strategy: git
         on:
           all_branches: true
       
