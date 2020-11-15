@@ -1,3 +1,4 @@
+import 'package:customerapp/endpoints/restaurants.dart';
 import 'package:customerapp/styles/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';

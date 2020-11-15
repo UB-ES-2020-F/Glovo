@@ -1,3 +1,4 @@
+import 'package:customerapp/dto/restaurant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
@@ -41,6 +42,10 @@ class RestaurantsListModel extends ChangeNotifier {
   addRestaurant(Restaurant restaurant) {
     availableRestaurants.add(restaurant);
   }
+
+  removeRestaurants() {
+    availableRestaurants.clear();
+  }
 }
 
 class Restaurant {
@@ -60,6 +65,19 @@ class Restaurant {
 
   Location get location {
     return _location;
+  }
+
+  factory Restaurant.fromDTO(RestaurantDTO restaurantDTO) {
+    return Restaurant(restaurantDTO.id, restaurantDTO.name,
+        restaurantDTO.imgPath, restaurantDTO.location);
+  }
+
+  RestaurantDTO toDTO() {
+    return RestaurantDTO(
+        id: this.id,
+        name: this.name,
+        imgPath: this.image,
+        location: this.location);
   }
 }
 
