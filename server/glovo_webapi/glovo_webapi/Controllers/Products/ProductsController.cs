@@ -4,6 +4,7 @@ using AutoMapper;
 using glovo_webapi.Entities;
 using glovo_webapi.Models.Product;
 using glovo_webapi.Services.Products;
+using glovo_webapi.Utils;
 using Microsoft.AspNetCore.Mvc;
 
 namespace glovo_webapi.Controllers
@@ -23,9 +24,20 @@ namespace glovo_webapi.Controllers
         
         //GET api/products
         [HttpGet]
-        public ActionResult<IEnumerable<ProductReadModel>> GetAllProducts()
+        public ActionResult<IEnumerable<ProductReadModel>> GetAllProducts([FromQuery]ProductCategory? category)
         {
-            IEnumerable<Product> products = _service.GetAllProducts();
+            IEnumerable<Product> products;
+            
+            if (category.HasValue)
+            {
+                Console.Write("Category: "+category.Value+"\n");
+                products = _service.GetProductsByCategory(category.Value);
+            }
+            else
+            {
+                Console.Write("Category: null\n");
+                products = _service.GetAllProducts();
+            }
             return Ok(_mapper.Map<IEnumerable<ProductReadModel>>(products));
         }
         

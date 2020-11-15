@@ -10,8 +10,8 @@ using glovo_webapi.Data;
 namespace glovo_webapi.Migrations
 {
     [DbContext(typeof(GlovoDbContext))]
-    [Migration("20201106001913_OrdersMigration")]
-    partial class OrdersMigration
+    [Migration("20201106183230_ProductCategories")]
+    partial class ProductCategories
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,31 +20,6 @@ namespace glovo_webapi.Migrations
                 .UseIdentityByDefaultColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.0-rc.2.20475.6");
-
-            modelBuilder.Entity("glovo_webapi.Entities.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
-
-                    b.Property<DateTime>("BuyDateTime")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<int?>("RestaurantId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RestaurantId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Orders");
-                });
 
             modelBuilder.Entity("glovo_webapi.Entities.Product", b =>
                 {
@@ -59,9 +34,6 @@ namespace glovo_webapi.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<int>("IdRest")
-                        .HasColumnType("integer");
-
                     b.Property<string>("ImgPath")
                         .HasColumnType("text");
 
@@ -69,15 +41,15 @@ namespace glovo_webapi.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("integer");
-
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
+                    b.Property<int>("RestaurantId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderId");
+                    b.HasIndex("RestaurantId");
 
                     b.ToTable("Products");
                 });
@@ -125,31 +97,20 @@ namespace glovo_webapi.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("glovo_webapi.Entities.Order", b =>
-                {
-                    b.HasOne("glovo_webapi.Entities.Restaurant", "Restaurant")
-                        .WithMany()
-                        .HasForeignKey("RestaurantId");
-
-                    b.HasOne("glovo_webapi.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("Restaurant");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("glovo_webapi.Entities.Product", b =>
                 {
-                    b.HasOne("glovo_webapi.Entities.Order", null)
-                        .WithMany("Products")
-                        .HasForeignKey("OrderId");
+                    b.HasOne("glovo_webapi.Entities.Restaurant", "Restaurant")
+                        .WithMany("Product")
+                        .HasForeignKey("RestaurantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Restaurant");
                 });
 
-            modelBuilder.Entity("glovo_webapi.Entities.Order", b =>
+            modelBuilder.Entity("glovo_webapi.Entities.Restaurant", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("Product");
                 });
 #pragma warning restore 612, 618
         }

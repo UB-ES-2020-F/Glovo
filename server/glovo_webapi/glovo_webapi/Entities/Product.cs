@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using glovo_webapi.Utils;
 
 namespace glovo_webapi.Entities
 {
@@ -23,6 +24,8 @@ namespace glovo_webapi.Entities
                 
                 [Required]
                 public Restaurant Restaurant { get; set; }
+                
+                public ProductCategory Category { get; set; }
 
                 public IEnumerable<OrderProduct> OrdersProducts { get; set; }
 

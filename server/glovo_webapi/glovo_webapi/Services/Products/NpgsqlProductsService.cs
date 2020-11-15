@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using glovo_webapi.Data;
 using glovo_webapi.Entities;
+using glovo_webapi.Utils;
 
 namespace  glovo_webapi.Services.Products
 {
@@ -19,6 +21,15 @@ namespace  glovo_webapi.Services.Products
             return _context.Products.ToList();
         }
 
+        public IEnumerable<Product> GetProductsByCategory(ProductCategory c)
+        {
+            if (c == ProductCategory.Uncategorized)
+            {
+                return _context.Products.ToList();
+            }
+            return _context.Products.Where(p => p.Category == c);
+        }
+
         public Product GetProductById(int id)
         {
             return _context.Products.FirstOrDefault(p => p.Id == id);
@@ -26,7 +37,26 @@ namespace  glovo_webapi.Services.Products
 
         public IEnumerable<Product> GetAllProductsOfRestaurant(int idRest)
         {
-            return _context.Products.Where(p => p.RestaurantId == idRest).ToList();
+            Restaurant r = _context.Restaurants.SingleOrDefault(p => p.Id == idRest);
+            if (r == null)
+            {
+                return null;
+            }
+            return _context.Products.Where(p => p.RestaurantId == idRest);
+        }
+
+        public IEnumerable<Product> GetAllProductsOfRestaurantByCategory(int idRest, ProductCategory c)
+        {
+            Restaurant r = _context.Restaurants.SingleOrDefault(p => p.Id == idRest);
+            if (r == null)
+            {
+                return null;
+            }
+            if (c == ProductCategory.Uncategorized)
+            {
+                return _context.Products.Where(p => p.RestaurantId == idRest);
+            }
+            return _context.Products.Where(p => p.RestaurantId == idRest && p.Category == c);
         }
 
         public Product GetProductOfRestaurantById(int idRest, int idProd)

@@ -21,20 +21,20 @@ VALUES
 	('Krusty Krab', 'img/KK_main.jpg');
 
 
-INSERT INTO "Products" ("Name", "ImgPath", "Description", "Price", "RestaurantId")
+INSERT INTO "Products" ("Name", "ImgPath", "Description", "Price", "RestaurantId", "Category")
 VALUES
-	('Chicken bucket', 'img/chicken_bucket.jpg', 'Delicioso cubo de pollo, contiene 16 piezas', 14.00, 1),
-	('Chicken bucket XXL', 'img/chicken_bucket_2.jpg', 'Deliciosisimo cubo de pollo, contiene 40 piezas', 30.00, 1),
-	('Chicken bucket XXXXL', 'img/chicken_bucket_3.jpg', 'Delissssssssiooooosssssso cubo de pollo, contiene 99 piezas', 65.00, 1),
-	('Patatas S', 'img/french_fries_1.jpg', '2 patatas fritas rancias', 2.99, 2),
-	('Patatas M', 'img/french_fries_2.jpg', '3 patatas fritas rancias', 3.99, 2),
-	('Patatas L', 'img/french_fries_3.jpg', '3 patatas fritas no rancias', 4.99, 2),
-	('Hambur Guesa', 'img/burger1.jpg', 'This hamburger will prevent you from starving', 7.95, 3),
-	('Hambur Guesa Guesa', 'img/burger2.jpg', 'This hamburger will prevent you from starving for two days', 7.96, 3),
-	('Hambur Goza', 'img/burger3.jpg', 'This hamburger will prevent you from starving for one week', 8.95, 3),
-	('Kangreburger', 'img/kkburger.jpg', 'Delicious krab burger', 1.00, 4),
-	('Kangrefries', 'img/kkfries.jpg', 'Delicious krab fries', 1.00, 4),
-	('Kangrecola', 'img/kkcola.jpg', 'Delicious krab cola', 1.00, 4);
+	('Chicken bucket', 'img/chicken_bucket.jpg', 'Delicioso cubo de pollo, contiene 16 piezas', 14.00, 1, 1),
+	('Chicken bucket XXL', 'img/chicken_bucket_2.jpg', 'Deliciosisimo cubo de pollo, contiene 40 piezas', 30.00, 1, 1),
+	('Chicken bucket XXXXL', 'img/chicken_bucket_3.jpg', 'Delissssssssiooooosssssso cubo de pollo, contiene 99 piezas', 65.00, 1, 1),
+	('Patatas S', 'img/french_fries_1.jpg', '2 patatas fritas rancias', 2.99, 2, 1),
+	('Patatas M', 'img/french_fries_2.jpg', '3 patatas fritas rancias', 3.99, 2, 1),
+	('Patatas L', 'img/french_fries_3.jpg', '3 patatas fritas no rancias', 4.99, 2, 1),
+	('Hambur Guesa', 'img/burger1.jpg', 'This hamburger will prevent you from starving', 7.95, 3, 0),
+	('Hambur Guesa Guesa', 'img/burger2.jpg', 'This hamburger will prevent you from starving for two days', 7.96, 3, 0),
+	('Hambur Goza', 'img/burger3.jpg', 'This hamburger will prevent you from starving for one week', 8.95, 3, 0),
+	('Kangreburger', 'img/kkburger.jpg', 'Delicious krab burger', 1.00, 4, 0),
+	('Kangrefries', 'img/kkfries.jpg', 'Delicious krab fries', 1.00, 4, 0),
+	('Kangrecola', 'img/kkcola.jpg', 'Delicious krab cola', 1.00, 4, 0);
 
 INSERT INTO "Orders" ("BuyDateTime", "UserId", "RestaurantId")
 VALUES
