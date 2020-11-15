@@ -14,7 +14,7 @@ class RestaurantDTO {
         name: json['name'],
         imgPath: (json.containsKey('imgPath')) ? json['imgPath'] : null,
         //Dummy location
-        location: new Location(2, 1));
+        location: new Location(40, 2.1));
   }
 
   Map<String, dynamic> toJson() {
