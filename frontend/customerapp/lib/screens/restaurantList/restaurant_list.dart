@@ -1,5 +1,6 @@
 import 'package:customerapp/components/appBar/default_logged_bar.dart';
 import 'package:customerapp/components/appBar/mobile_default_bar.dart';
+import 'package:customerapp/endpoints/restaurants.dart';
 import 'package:customerapp/models/restaurants.dart';
 import 'package:customerapp/responsive/screen_responsive.dart';
 import 'package:customerapp/screens/loggedPage/initial_logged_page.dart';
@@ -10,9 +11,14 @@ import 'package:provider/provider.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class RestaurantsList extends StatelessWidget {
+  bool queryMade = false;
+
   @override
   Widget build(BuildContext context) {
     var restaurantsModel = context.watch<RestaurantsListModel>();
+    queryRestaurants(context, restaurantsModel);
+    queryMade = true;
+
     Widget bar;
 
     var s = Bar_responsive(context, '/overview_mobile', DefaultLoggedBar());
@@ -52,4 +58,17 @@ class RestaurantsList extends StatelessWidget {
           ),
         ));
   }
+}
+
+void queryRestaurants(
+    BuildContext context, RestaurantsListModel restaurantsListModel) {
+  getRestaurants().then((restaurants) {
+    restaurantsListModel.removeRestaurants();
+    restaurants.forEach((element) {
+      restaurantsListModel.addRestaurant(Restaurant.fromDTO(element));
+    });
+    restaurantsListModel.notifyListeners();
+  }).catchError((error) {
+    print(error);
+  });
 }

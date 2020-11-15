@@ -15,10 +15,10 @@ VALUES
 
 INSERT INTO "Restaurants" ("Name", "ImgPath")
 VALUES
-	('Kentucky Fried Chicken', 'img/KFC_main.jpg'),
-	('McDonalds', 'img/MD_main.jpg'),
-	('Burger King', 'img/BK_main.jpg'),
-	('Krusty Krab', 'img/KK_main.jpg');
+	('Kentucky Fried Chicken', 'https://franchisopedia.com/public/files/richeditor/publications/KFC_franchise.jpg'),
+	('McDonalds', 'https://i.insider.com/52603e346bb3f7d610aaec3b?width=1100&format=jpeg&auto=webp'),
+	('Burger King', 'https://www.nevada.shopping/sites/nevada.shopping/files/styles/large/public/field/image/burger-king.jpg?itok=HGieOWOh'),
+	('Krusty Krab', 'https://steamuserimages-a.akamaihd.net/ugc/985611310397269750/AA8436B78625BB1AE9FA7530228BC9A073541667/?imw=637&imh=358&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true');
 
 
 INSERT INTO "Products" ("Name", "ImgPath", "Description", "Price", "RestaurantId")
