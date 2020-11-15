@@ -1,17 +1,31 @@
 import 'package:customerapp/app_config.dart';
 
-Future<String> makeUrl(EndpointDefinitions endpoint) async {
-  final config = await AppConfig.getConfig();
-  return '${config.apiUrl}${endpoint.value}';
-}
-
 class EndpointDefinitions {
-  final String value;
-  const EndpointDefinitions._internal(this.value);
-  static const ORDERS = const EndpointDefinitions._internal('/orders');
-  static const LOGIN = const EndpointDefinitions._internal('/users/login');
-  static const REGISTER =
-      const EndpointDefinitions._internal('/users/register');
-  static const RESTAURANTS =
-      const EndpointDefinitions._internal('/restaurants');
+  static Future<String> makeOrdersURL() async {
+    final config = await AppConfig.getConfig();
+    return '${config.apiUrl}' + '/orders';
+  }
+
+  static Future<String> makeLoginURL() async {
+    final config = await AppConfig.getConfig();
+    return '${config.apiUrl}' + '/users/login';
+  }
+
+  static Future<String> makeRegisterURL() async {
+    final config = await AppConfig.getConfig();
+    return '${config.apiUrl}' + '/users/register';
+  }
+
+  static Future<String> makeRestaurantsURL() async {
+    final config = await AppConfig.getConfig();
+    return '${config.apiUrl}' + '/restaurants';
+  }
+
+  static Future<String> makeRestaurantsProductsURL(int restaurantId) async {
+    final config = await AppConfig.getConfig();
+    return '${config.apiUrl}' +
+        '/restaurants/' +
+        restaurantId.toString() +
+        '/products';
+  }
 }

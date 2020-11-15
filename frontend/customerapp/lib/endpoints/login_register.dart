@@ -8,7 +8,7 @@ import 'package:customerapp/infrastructure/persistence/repository/user_credentia
 import 'package:http/http.dart' as http;
 
 Future<UserDTO> loginUser(UserDTO formUser) async {
-  final response = await http.post(await makeUrl(EndpointDefinitions.LOGIN),
+  final response = await http.post(await EndpointDefinitions.makeLoginURL(),
       headers: {
         "Content-Type": "application/json",
       },
@@ -22,7 +22,7 @@ Future<UserDTO> loginUser(UserDTO formUser) async {
 }
 
 Future<void> registerUser(UserDTO formUser) async {
-  final response = await http.post(await makeUrl(EndpointDefinitions.REGISTER),
+  final response = await http.post(await EndpointDefinitions.makeRegisterURL(),
       headers: {
         "Content-Type": "application/json",
       },

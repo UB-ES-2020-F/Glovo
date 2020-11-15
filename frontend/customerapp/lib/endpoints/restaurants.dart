@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 Future<List<RestaurantDTO>> getRestaurants() async {
   final response =
-      await http.get(await makeUrl(EndpointDefinitions.RESTAURANTS), headers: {
+      await http.get(await EndpointDefinitions.makeRestaurantsURL(), headers: {
     "Content-Type": "application/json",
   });
   if (response.statusCode == 200) {

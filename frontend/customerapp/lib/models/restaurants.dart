@@ -14,6 +14,7 @@ class RestaurantsListModel extends ChangeNotifier {
   @override
   RestaurantsListModel() {
     availableRestaurants = List();
+    /*
     availableRestaurants.add(Restaurant(
         1,
         'La Tagliatella',
@@ -34,16 +35,17 @@ class RestaurantsListModel extends ChangeNotifier {
         'Five Guys',
         'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/img-0056-1575287109.jpg',
         new Location(40, 2.1)));
+        */
   }
 
   /*
    * Not recommended approach, the best approach would be to use the constructor
    */
-  addRestaurant(Restaurant restaurant) {
+  void addRestaurant(Restaurant restaurant) {
     availableRestaurants.add(restaurant);
   }
 
-  removeRestaurants() {
+  void removeRestaurants() {
     availableRestaurants.clear();
   }
 }
