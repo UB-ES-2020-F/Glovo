@@ -1,4 +1,5 @@
 import 'package:customerapp/components/text_link.dart';
+import 'package:customerapp/dto/user.dart';
 import 'package:customerapp/models/signin.dart';
 import 'package:customerapp/screens/anon_root.dart';
 import 'package:email_validator/email_validator.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:customerapp/styles/signup.dart';
 import 'package:provider/provider.dart';
+import 'package:customerapp/endpoints/login_register.dart';
 
 class SignInFormPage extends StatelessWidget {
   @override
@@ -170,8 +172,19 @@ class SignInButton extends StatelessWidget {
 void trySendSignInForm(BuildContext context, SignInModel signInModel) {
   if (signInModel.formValid) {
     if (signInModel.formKey.currentState.validate()) {
-      Navigator.of(context)
-          .pushNamedAndRemoveUntil('/initial-logged-in', (route) => false);
+      signInModel.formKey.currentState.save();
+      print(signInModel.password);
+      UserDTO formUser = new UserDTO();
+      formUser.email = signInModel.email;
+      formUser.password = signInModel.password;
+      loginUser(formUser)
+          .then((loggedUser) =>
+              //Save credentials
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                  '/initial-logged-in', (route) => false))
+          .catchError((error) {
+        print(error);
+      });
     }
   }
 }

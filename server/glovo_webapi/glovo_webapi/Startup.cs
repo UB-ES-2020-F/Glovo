@@ -41,15 +41,18 @@ namespace glovo_webapi
                                 builder =>
                                 {
                                     if(Env.IsDevelopment()) {
-                                        builder.AllowAnyOrigin();
+                                        builder.AllowAnyOrigin()
+                                        		.AllowAnyMethod()
+                                        		.AllowAnyHeader();
                                     }
                                     else {
-                                        builder.WithOrigins("http://localhost:35969",
+                                        builder.WithOrigins("http://localhost:34819",
                                                         "http://localhost:*",
-                                                        "https://localhost:35969",
+                                                        "https://localhost:34819",
                                                         "http://komet.cat",
                                                         "https://komet.cat"
-                                                        );
+                                                        )
+                                        		.AllowAnyMethod();
                                     }  
                                 });
             });

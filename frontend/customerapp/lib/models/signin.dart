@@ -14,7 +14,7 @@ class SignInModel extends ChangeNotifier {
   GlobalKey<FormState> get formKey => _formKey;
 
   String get email => _email;
-  String get password => password;
+  String get password => _password;
 
   bool get formValid => _formValid;
 
