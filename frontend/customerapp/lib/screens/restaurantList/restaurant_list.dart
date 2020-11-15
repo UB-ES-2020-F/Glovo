@@ -16,8 +16,10 @@ class RestaurantsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var restaurantsModel = context.watch<RestaurantsListModel>();
-    queryRestaurants(context, restaurantsModel);
-    queryMade = true;
+    if (!queryMade) {
+      queryRestaurants(context, restaurantsModel);
+      queryMade = true;
+    }
 
     Widget bar;
 

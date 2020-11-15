@@ -1,4 +1,4 @@
-import 'package:customerapp/models/product/product_overview.dart';
+import 'package:customerapp/models/products.dart';
 import 'package:customerapp/screens/products/concrete_product_card.dart';
 import 'package:customerapp/styles/product.dart';
 import 'package:customerapp/styles/signup.dart';
@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Screen_products extends StatelessWidget {
-  Product_overview product;
+  Product product;
   Function add;
 
   Screen_products();

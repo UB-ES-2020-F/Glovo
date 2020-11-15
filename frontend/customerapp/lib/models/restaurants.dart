@@ -39,11 +39,11 @@ class RestaurantsListModel extends ChangeNotifier {
   /*
    * Not recommended approach, the best approach would be to use the constructor
    */
-  addRestaurant(Restaurant restaurant) {
+  void addRestaurant(Restaurant restaurant) {
     availableRestaurants.add(restaurant);
   }
 
-  removeRestaurants() {
+  void removeRestaurants() {
     availableRestaurants.clear();
   }
 }

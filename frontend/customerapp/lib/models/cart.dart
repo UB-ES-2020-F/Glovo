@@ -1,6 +1,6 @@
 import 'package:customerapp/dto/order.dart';
 import 'package:customerapp/infrastructure/persistence/repository/user_credentials_repository.dart';
-import 'package:customerapp/models/product/product_overview.dart';
+import 'package:customerapp/models/products.dart';
 import 'package:flutter/widgets.dart';
 
 class Cart extends ChangeNotifier {
@@ -8,12 +8,12 @@ class Cart extends ChangeNotifier {
 
   Cart();
 
-  void addItem(Product_overview product) {
+  void addItem(Product product) {
     _order.containsKey(product) ? _order[product]++ : _order[product] = 1;
     notifyListeners();
   }
 
-  void substractItem(Product_overview product) {
+  void substractItem(Product product) {
     if (_order.containsKey(product)) {
       _order[product]--;
       if (_order[product] == 0) {
@@ -58,12 +58,12 @@ class Cart extends ChangeNotifier {
   List<ProductDTO> _getProductsDTOs() {
     return _order.entries
         .map((product) =>
-            ProductDTO((product.key as Product_overview).idProd, product.value))
+            ProductDTO((product.key as Product).idProd, product.value))
         .toList();
   }
 
   int _getRestaurantId() {
-    return (order.entries.first.key as Product_overview)
+    return (order.entries.first.key as Product)
         .idRestaurant; // TODO it could be better having that as a parameter of the cart.
   }
 }

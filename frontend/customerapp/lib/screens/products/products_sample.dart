@@ -2,7 +2,7 @@ import 'dart:html';
 
 import 'package:customerapp/components/appBar/default_logged_bar.dart';
 import 'package:customerapp/models/cart.dart';
-import 'package:customerapp/models/product/mock_up_prod.dart';
+import 'package:customerapp/models/products.dart';
 import 'package:customerapp/models/restaurants.dart';
 import 'package:customerapp/screens/products/cart_box.dart';
 import 'package:customerapp/styles/product.dart';
@@ -13,8 +13,9 @@ import 'package:customerapp/screens/restaurantList/restaurant_list_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:customerapp/models/product/product_overview.dart';
+import 'package:customerapp/models/products.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:customerapp/endpoints/products.dart';
 
 import 'cart_box.dart';
 import 'concrete_product_card.dart';
@@ -24,6 +25,7 @@ class Products_sample extends StatelessWidget {
   List prods = List();
   Cart cart;
   bool firstInstance;
+  bool queryMade = false;
 
   Products_sample() {
     prods = Mock_up_prod().prod;
@@ -34,17 +36,30 @@ class Products_sample extends StatelessWidget {
     firstInstance = true;
   }
 
-  void addToCart(Product_overview prod) {
+  void addToCart(Product prod) {
     cart.addItem(prod);
   }
 
   @override
   Widget build(BuildContext context) {
     final Restaurant restaurant = ModalRoute.of(context).settings.arguments;
+
+    var productsModel = context.watch<ProductsListModel>();
+    if (!queryMade) {
+      queryProducts(context, productsModel, restaurant);
+      queryMade = true;
+    }
+
+    for (var i = 0; i < prods.length; i++) {
+      prodCards.add(
+          Concrete_Product_Card(Key('product-card-$i'), prods[i], addToCart));
+    }
+
     cart = context.watch<Cart>();
     if (firstInstance) {
       cart.empty();
     }
+
     firstInstance = false;
     double cartWidth = 350;
     var s = Bar_responsive(context, '/overview_mobile', DefaultLoggedBar());
@@ -129,8 +144,6 @@ class Product_grid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var restaurantsModel = context.watch<RestaurantsListModel>();
-
     return StaggeredGridView.countBuilder(
       //padding: EdgeInsets.all(30),
       crossAxisSpacing: 10,
@@ -143,4 +156,17 @@ class Product_grid extends StatelessWidget {
       staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
     );
   }
+}
+
+void queryProducts(BuildContext context, ProductsListModel productsListModel,
+    Restaurant restaurant) {
+  getProductsFromRestaurant(restaurant.id).then((products) {
+    productsListModel.removeProducts();
+    products.forEach((element) {
+      productsListModel.addProduct(Product.fromDTO(element));
+    });
+    productsListModel.notifyListeners();
+  }).catchError((error) {
+    print(error);
+  });
 }

@@ -1,11 +1,11 @@
 import 'package:customerapp/actions/extract-key-value.dart';
-import 'package:customerapp/models/product/product_overview.dart';
+import 'package:customerapp/models/products.dart';
 import 'package:customerapp/screens/products/dialog_product.dart';
 import 'package:customerapp/styles/product.dart';
 import 'package:flutter/material.dart';
 
 class Concrete_Product_Card extends StatefulWidget {
-  Product_overview _product_overview;
+  Product _product_overview;
   Function add;
 
   Concrete_Product_Card(Key key, this._product_overview, this.add)
@@ -16,14 +16,14 @@ class Concrete_Product_Card extends StatefulWidget {
     return Widget_stateful_card(key, _product_overview, add);
   }
 
-  Product_overview get product {
+  Product get product {
     return _product_overview;
   }
 }
 
 class Widget_stateful_card extends State<StatefulWidget> {
   Key key;
-  Product_overview _product_overview;
+  Product _product_overview;
   Function add;
   double elevation = 2;
 
@@ -122,7 +122,7 @@ class Widget_stateful_card extends State<StatefulWidget> {
 }
 
 class ConcreteProductArguments {
-  final Product_overview prod;
+  final Product prod;
   final Function add;
   ConcreteProductArguments(this.prod, this.add);
 }
