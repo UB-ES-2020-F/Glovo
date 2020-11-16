@@ -13,11 +13,27 @@ install:
 
 stages:
   - tests
-  - name: deploy
-    if: branch = devops-task-29
+  - deploy
+    if: branch = main
 
 jobs:
   include:
+    - stage: tests
+      name: "Unit Tests"
+      script:
+        - echo "PASS"
+    - name: "Integration Tests"
+      script:
+        - cd $TRAVIS_BUILD_DIR/server/glovo_webapi
+        - dotnet restore
+        - cd glovo_webapi
+        - dotnet build --no-incremental
+        - cd $TRAVIS_BUILD_DIR/server/docker_database
+        - bash load_server_travis.sh
+        - cd $TRAVIS_BUILD_DIR/server/glovo_webapi/glovo_webapi
+        - dotnet run
+        -
+    
     - stage: deploy
       name: "Backend"
       script:
