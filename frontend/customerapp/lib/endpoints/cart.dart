@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 Future<OrderDTO> makeOrder(OrderDTO order) async {
   try {
     final userCredentials = await UserCredentialsRepository().getCredentials();
-    final response = await http.post(await makeUrl(EndpointDefinitions.ORDERS),
+    final response = await http.post(await EndpointDefinitions.makeOrdersURL(),
         headers: {
           'content-type': 'application/json',
           'Authorization': 'Bearer ${userCredentials.token}'

@@ -1,12 +1,12 @@
 import 'dart:ui';
 
-import 'package:customerapp/models/product/product_overview.dart';
+import 'package:customerapp/models/products.dart';
 import 'package:customerapp/styles/product.dart';
 import 'package:customerapp/styles/signup.dart';
 import 'package:flutter/material.dart';
 
 class Dialog_product extends StatelessWidget {
-  Product_overview product;
+  Product product;
   Function add;
 
   Dialog_product(this.product, this.add);

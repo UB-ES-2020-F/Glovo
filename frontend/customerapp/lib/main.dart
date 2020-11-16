@@ -16,6 +16,7 @@ import 'package:customerapp/styles/Komet.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'app_config.dart';
+import 'models/products.dart';
 import 'models/restaurants.dart';
 import 'models/signin.dart';
 
@@ -45,6 +46,7 @@ class KometApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => LoggedModel()),
         ChangeNotifierProvider(create: (context) => SignInModel()),
         ChangeNotifierProvider(create: (context) => RestaurantsListModel()),
+        ChangeNotifierProvider(create: (context) => ProductsListModel()),
         ChangeNotifierProvider(create: (context) => Cart()),
       ],
       child: MaterialApp(
