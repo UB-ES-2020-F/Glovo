@@ -1,4 +1,5 @@
 import 'package:customerapp/actions/extract-key-value.dart';
+import 'package:customerapp/actions/toast_actions.dart';
 import 'package:customerapp/endpoints/cart.dart';
 import 'package:customerapp/models/cart.dart';
 import 'package:customerapp/models/logged.dart';
@@ -217,26 +218,18 @@ class MakeOrderButton extends StatelessWidget {
           ElevatedButton(
               onPressed: () {
                 final orderGeneration = cart.generateOrderDTO();
-                try {
-                  orderGeneration.then((orderDTO) {
-                    makeOrder(orderDTO).then((value) {
-                      showDialog(
-                          context: context,
-                          builder: (context) => OrderDoneDialog());
-                      cart.empty();
-                    });
+                orderGeneration.then((orderDTO) {
+                  makeOrder(orderDTO).then((value) {
+                    showDialog(
+                        context: context,
+                        builder: (context) => OrderDoneDialog());
+                    cart.empty();
+                  }).catchError((error, stackTrace) {
+                    cart.empty();
+                    showErrorToast(
+                        "The order failed, contact with the administrator");
                   });
-                } catch (OrderCallbackFailed) {
-                  cart.empty();
-                  Fluttertoast.showToast(
-                      msg: "Order failed",
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity.TOP_RIGHT,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: Colors.red,
-                      textColor: Colors.white,
-                      fontSize: 16.0);
-                }
+                });
               },
               child: Text(text),
               style: makeOrderButtonStyle)
