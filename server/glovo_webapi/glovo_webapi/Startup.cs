@@ -52,7 +52,7 @@ namespace glovo_webapi
                                                         "http://komet.cat",
                                                         "https://komet.cat"
                                                         )
-                                        		.AllowAnyMethod();
+                                        		.AllowAnyMethod().AllowAnyHeader();
                                     }  
                                 });
             });
