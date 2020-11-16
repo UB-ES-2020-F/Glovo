@@ -14,7 +14,7 @@ install:
 stages:
   - tests
   - name: deploy
-    if: branch = devops-task-29
+    if: branch = main
 
 jobs:
   include:
