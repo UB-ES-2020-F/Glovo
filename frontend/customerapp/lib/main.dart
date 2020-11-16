@@ -1,13 +1,13 @@
+import 'package:customerapp/components/appBar/overview_logged_mobile.dart';
+import 'package:customerapp/infrastructure/persistence/hive/hive_adapter.dart';
 import 'package:customerapp/infrastructure/persistence/repository/user_credentials_repository.dart';
 import 'package:customerapp/models/logged.dart';
-
 import 'package:customerapp/models/cart.dart';
-
 import 'package:customerapp/models/signup.dart';
+import 'package:customerapp/models/user_credentials/user_credentials.dart';
 import 'package:customerapp/screens/loggedPage/initial_logged_page.dart';
 import 'package:customerapp/screens/anon_root.dart';
 import 'package:customerapp/screens/products/products_sample.dart';
-
 import 'package:customerapp/screens/products/screen_product.dart';
 import 'package:customerapp/screens/restaurantList/restaurant_list.dart';
 import 'package:customerapp/screens/signIn/signin_page.dart';
@@ -15,33 +15,21 @@ import 'package:customerapp/screens/signUp/signup_page.dart';
 import 'package:customerapp/styles/Komet.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'infrastructure/persistence/hive/hive_adapter.dart';
-import 'components/appBar/overview_logged_mobile.dart';
+import 'app_config.dart';
+import 'models/products.dart';
 import 'models/restaurants.dart';
 import 'models/signin.dart';
-import 'models/user_credentials/user_credentials.dart';
 
-void main() {
+void main({String env}) async {
+  WidgetsFlutterBinding.ensureInitialized();
   setUpPersistence();
+  await AppConfig.setEnvironment(env);
 
-  /**
-   * Example of how to use repositories. They are async so keep that in mind
-   */
-  UserCredentialsRepository().update(UserCredentials("ruben", "zkkkasd"));
+  // MockUP user credentials
   UserCredentialsRepository()
-      .getCredentials()
-      .then((value) => print(value.username));
-  UserCredentialsRepository().update(UserCredentials("pedro", "zkkkasd"));
-  UserCredentialsRepository()
-      .getCredentials()
-      .then((value) => print(value.username));
-
-  /**
-   * End example
-   */
-
-  runApp(MyApp());
+      .update(UserCredentials('komet@komet.com', 'token', 0));
+  // End mockup
+  runApp(KometApp());
 }
 
 void setUpPersistence() async {
@@ -49,8 +37,7 @@ void setUpPersistence() async {
   UserCredentialsRepository().setUp(UserCredentialsAdapter());
 }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class KometApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -59,6 +46,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => LoggedModel()),
         ChangeNotifierProvider(create: (context) => SignInModel()),
         ChangeNotifierProvider(create: (context) => RestaurantsListModel()),
+        ChangeNotifierProvider(create: (context) => ProductsListModel()),
         ChangeNotifierProvider(create: (context) => Cart()),
       ],
       child: MaterialApp(

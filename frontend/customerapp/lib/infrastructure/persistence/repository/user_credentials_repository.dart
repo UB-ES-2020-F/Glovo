@@ -3,19 +3,23 @@ import 'package:customerapp/models/user_credentials/user_credentials.dart';
 
 class UserCredentialsRepository {
   static const _boxName = "userCredentials";
-  static final UserCredentialsRepository _userCredentialsRepository = UserCredentialsRepository._internal();
+  static final UserCredentialsRepository _userCredentialsRepository =
+      UserCredentialsRepository._internal();
   PersistentBox<UserCredentials> _userCredentialsBox;
   factory UserCredentialsRepository() {
     return _userCredentialsRepository;
   }
   UserCredentialsRepository._internal();
 
-  Future<UserCredentials> getCredentials() async { return _userCredentialsBox.getElement();}
+  Future<UserCredentials> getCredentials() async {
+    return _userCredentialsBox.getElement();
+  }
+
   void update(UserCredentials credentials) async {
     _userCredentialsBox.persistElement(credentials);
   }
 
-  void setUp (UserCredentialsAdapter adapter) {
+  void setUp(UserCredentialsAdapter adapter) {
     _userCredentialsBox = PersistentBox(adapter, _boxName);
     _userCredentialsBox.initBox();
   }

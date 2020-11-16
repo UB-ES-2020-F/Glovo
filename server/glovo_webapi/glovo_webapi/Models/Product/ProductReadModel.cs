@@ -1,3 +1,5 @@
+using glovo_webapi.Utils;
+
 namespace glovo_webapi.Models.Product
 {
         public class ProductReadModel
@@ -13,6 +15,13 @@ namespace glovo_webapi.Models.Product
                 public float Price { get; set; }
                 
                 public int RestaurantId { get; set; }
+                
+                public ProductCategory Category { get; set; }
+                
+                public string CategoryString
+                {
+                        get { return Category.ToString(); }
+                }
 
                 public ProductReadModel(int Id, string Name, string ImgPath, string Description, float Price, int RestaurantId)
                 {

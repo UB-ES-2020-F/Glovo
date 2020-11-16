@@ -16,7 +16,7 @@ class SignUpModel extends ChangeNotifier {
 
   String get firstName => _firstName;
   String get email => _email;
-  String get password => password;
+  String get password => _password;
 
   bool get formValid => _formValid;
 

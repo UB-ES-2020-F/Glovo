@@ -1,33 +1,32 @@
 import 'package:customerapp/actions/extract-key-value.dart';
-import 'package:customerapp/models/product/product_overview.dart';
+import 'package:customerapp/models/products.dart';
 import 'package:customerapp/screens/products/dialog_product.dart';
 import 'package:customerapp/styles/product.dart';
 import 'package:flutter/material.dart';
 
-class Concrete_Product_Card extends StatefulWidget {
-  Product_overview _product_overview;
+class ProductListCard extends StatefulWidget {
+  Product _product_overview;
   Function add;
 
-  Concrete_Product_Card(Key key, this._product_overview, this.add)
-      : super(key: key);
+  ProductListCard(Key key, this._product_overview, this.add) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return Widget_stateful_card(key, _product_overview, add);
+    return ProductListCardState(key, _product_overview, add);
   }
 
-  Product_overview get product {
+  Product get product {
     return _product_overview;
   }
 }
 
-class Widget_stateful_card extends State<StatefulWidget> {
+class ProductListCardState extends State<StatefulWidget> {
   Key key;
-  Product_overview _product_overview;
+  Product _product_overview;
   Function add;
   double elevation = 2;
 
-  Widget_stateful_card(this.key, this._product_overview, this.add);
+  ProductListCardState(this.key, this._product_overview, this.add);
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +121,7 @@ class Widget_stateful_card extends State<StatefulWidget> {
 }
 
 class ConcreteProductArguments {
-  final Product_overview prod;
+  final Product prod;
   final Function add;
   ConcreteProductArguments(this.prod, this.add);
 }
