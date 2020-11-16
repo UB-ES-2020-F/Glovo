@@ -4,7 +4,7 @@ class Mock_up_prod {
   List _prods = List();
 
   Mock_up_prod() {
-    _prods.add(Product_overview(
+    /*_prods.add(Product_overview(
         1,
         "Macarrons",
         "https://www.elgourmetcatala.cat/wp-content/uploads/2016/11/macarrones-a-la-bolo%C3%B1esa.jpg",
@@ -38,7 +38,7 @@ class Mock_up_prod {
         'https://www.gimmesomeoven.com/wp-content/uploads/2020/07/Tiramisu-Recipe-Cover.jpg',
         "de la casa",
         5,
-        0));
+        0));*/
   }
 
   List get prod {
