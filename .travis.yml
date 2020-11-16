@@ -35,7 +35,8 @@ jobs:
         - cd $TRAVIS_BUILD_DIR/server/glovo_webapi/glovo_webapi/publish
         - ASPNETCORE_ENVIRONMENT=Development
         - dotnet glovo_webapi.dll &
-        - flutter test $TRAVIS_BUILD_DIR/frontend/customerapp/test_driver/tests/endpoints/orders.dart
+        - cd $TRAVIS_BUILD_DIR/frontend/customerapp
+        - flutter test test_driver/tests/endpoints/orders.dart
     
     - stage: deploy
       name: "Backend"
