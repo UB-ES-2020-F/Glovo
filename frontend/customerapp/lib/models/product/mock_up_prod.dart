@@ -9,8 +9,8 @@ class Mock_up_prod {
         "Macarrons",
         "https://www.elgourmetcatala.cat/wp-content/uploads/2016/11/macarrones-a-la-bolo%C3%B1esa.jpg",
         "a la bolonyesa",
-        12,
-        0));
+        1,
+        1));
     _prods.add(Product_overview(
         2,
         "Tortellini",

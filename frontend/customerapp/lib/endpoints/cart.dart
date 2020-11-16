@@ -12,8 +12,8 @@ Future<OrderDTO> makeOrder(OrderDTO order) async {
     final userCredentials = await UserCredentialsRepository().getCredentials();
     final response = await http.post(await makeUrl(EndpointDefinitions.ORDERS),
         headers: {
-          "content-type": "application/json",
-          'Authorization': 'Bearer $userCredentials.token'
+          'content-type': 'application/json',
+          'Authorization': 'Bearer ${userCredentials.token}'
         },
         body: json.encode(order.toJson()));
     if (response.statusCode == 200) {
@@ -23,6 +23,6 @@ Future<OrderDTO> makeOrder(OrderDTO order) async {
           'Failed to make an order', response.statusCode, response.body);
     }
   } catch (ex) {
-    print(ex.toString());
+    return Future.error(ex);
   }
 }
