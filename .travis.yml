@@ -1,19 +1,67 @@
-matrix:
+services:
+  - docker
+language: csharp
+mono: none
+dotnet: 3.1
+solution: server/glovo_webapi/glovo_webapi.sln
+install:
+  - dotnet tool install --global dotnet-ef
+  - export PATH="$HOME/.dotnet/tools":$PATH
+  - git clone https://github.com/flutter/flutter.git -b beta
+  - export PATH="$TRAVIS_BUILD_DIR/flutter/bin:$PATH"
+  - flutter config --enable-web
+
+stages:
+  - tests
+  - name: deploy
+    if: branch = main
+
+jobs:
   include:
-    - language: csharp
-      mono: none
-      dotnet: 3.1
-      solution: server/glovo_webapi/glovo_webapi.sln
-      before_script:
-        - cd server/glovo_webapi
+    - stage: tests
+      name: "Unit Tests"
       script:
+        - echo "PASS"
+    - name: "Integration Tests"
+      script:
+        - echo "PASS"
+        - cd $TRAVIS_BUILD_DIR/server/glovo_webapi
         - dotnet restore
         - cd glovo_webapi
-        - dotnet publish -c Release
-      after_success:
-        #TODO
+        - dotnet build --no-incremental
+        - dotnet publish -c Release -o publish
+        - cd $TRAVIS_BUILD_DIR/server/docker_database
+        - bash load_server_travis.sh
+        - cd $TRAVIS_BUILD_DIR/server/glovo_webapi/glovo_webapi/publish
+        - ASPNETCORE_ENVIRONMENT=Development
+        - dotnet glovo_webapi.dll &
+        - cd $TRAVIS_BUILD_DIR/frontend/customerapp
+        - flutter test test_driver/tests/endpoints/orders.dart
+    
+    - stage: deploy
+      name: "Backend"
+      script:
+        - cd $TRAVIS_BUILD_DIR/server/glovo_webapi
+        - dotnet restore
+        - cd glovo_webapi
+        - dotnet publish -c Release -o $TRAVIS_BUILD_DIR/backend_deployment/publish
+        - cd $TRAVIS_BUILD_DIR/backend_deployment
+        - dotnet ef migrations script --idempotent --project $TRAVIS_BUILD_DIR/server/glovo_webapi/glovo_webapi -o migration.sql
+        - heroku pg:psql --app ub-es2020-glovo-webapi < migration.sql
+        - heroku container:login
+        - heroku container:push web -a ub-es2020-glovo-webapi
+        - heroku container:release web -a ub-es2020-glovo-webapi
+    - name: "Frontend"
+      script:
+        - echo "machine git.heroku.com login eudald.elias@gmail.com password 49916134-f0ec-4564-a22d-c40da16b9872" > $HOME/.netrc
+        - cd $TRAVIS_BUILD_DIR/frontend/customerapp
+        - flutter build web
+        - ls -R build/web/
+        - cp -r build/web $TRAVIS_BUILD_DIR/frontend_deploy/web
+        - cd $TRAVIS_BUILD_DIR/frontend_deploy
+        - git init
+        - heroku git:remote -a ub-es2020-glovo
+        - git add .
+        - git commit -am "deploy"
+        - git push -f heroku master
       
-        
-      
-      
-        
