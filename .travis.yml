@@ -13,7 +13,7 @@ install:
 
 stages:
   - tests
-  - deploy
+  - name: deploy
     if: branch = main
 
 jobs:
@@ -24,6 +24,7 @@ jobs:
         - echo "PASS"
     - name: "Integration Tests"
       script:
+        - echo "PASS"
         - cd $TRAVIS_BUILD_DIR/server/glovo_webapi
         - dotnet restore
         - cd glovo_webapi
