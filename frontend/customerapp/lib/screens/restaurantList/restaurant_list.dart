@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:customerapp/components/appBar/default_logged_bar.dart';
 import 'package:customerapp/components/appBar/mobile_default_bar.dart';
 import 'package:customerapp/endpoints/restaurants.dart';
@@ -32,6 +33,7 @@ class RestaurantsList extends StatelessWidget {
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
+              Container(height: MediaQuery.of(context).size.width / 1000000),
               Container(
                 alignment: Alignment.centerLeft,
                 padding: EdgeInsets.only(bottom: 20),
@@ -47,7 +49,7 @@ class RestaurantsList extends StatelessWidget {
                     mainAxisSpacing: 10,
                     itemCount: restaurantsModel.availableRestaurants.length,
                     crossAxisCount:
-                        MediaQuery.of(context).size.width > 600 ? 2 : 1,
+                        max(MediaQuery.of(context).size.width ~/ 300.0, 1),
                     itemBuilder: (context, index) {
                       return RestaurantsListCard(Key('restaurant-card-$index'),
                           restaurantsModel.availableRestaurants[index]);
