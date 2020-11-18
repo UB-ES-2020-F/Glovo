@@ -23,13 +23,14 @@ class ProfileSettings extends StatelessWidget {
               width: 300.0,
               child: Padding(
                 padding: EdgeInsets.all(20.0),
-                child: Column(
+                child: SingleChildScrollView(
+                    child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       'PROFILE',
-                      style: labelsProfileText,
+                      style: labelsProfileTitleText,
                     ),
                     Divider(
                       color: Colors.black,
@@ -38,7 +39,7 @@ class ProfileSettings extends StatelessWidget {
                     ),
                     UserInformation(),
                   ],
-                ),
+                )),
               )),
         ),
       ),
@@ -92,10 +93,13 @@ class UserInformation extends StatelessWidget {
             ),
           ),
         ])),
-        Divider(
-          color: Colors.black,
-          thickness: 0.1,
-          height: 1,
+        Padding(
+          padding: EdgeInsets.fromLTRB(0, 2 * verticalPadding, 0, 0),
+          child: Divider(
+            color: Colors.black,
+            thickness: 0.1,
+            height: 1,
+          ),
         ),
         Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Padding(
@@ -121,10 +125,13 @@ class UserInformation extends StatelessWidget {
             ),
           ),
         ]),
-        Divider(
-          color: Colors.black,
-          thickness: 0.1,
-          height: 1,
+        Padding(
+          padding: EdgeInsets.fromLTRB(0, 2 * verticalPadding, 0, 0),
+          child: Divider(
+            color: Colors.black,
+            thickness: 0.1,
+            height: 1,
+          ),
         ),
         Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Padding(
@@ -150,10 +157,13 @@ class UserInformation extends StatelessWidget {
             ),
           ),
         ]),
-        Divider(
-          color: Colors.black,
-          thickness: 0.1,
-          height: 1,
+        Padding(
+          padding: EdgeInsets.fromLTRB(0, 2 * verticalPadding, 0, 0),
+          child: Divider(
+            color: Colors.black,
+            thickness: 0.1,
+            height: 1,
+          ),
         ),
         Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Padding(
@@ -179,10 +189,13 @@ class UserInformation extends StatelessWidget {
             ),
           ),
         ]),
-        Divider(
-          color: Colors.black,
-          thickness: 0.1,
-          height: 1,
+        Padding(
+          padding: EdgeInsets.fromLTRB(0, 2 * verticalPadding, 0, 0),
+          child: Divider(
+            color: Colors.black,
+            thickness: 0.1,
+            height: 1,
+          ),
         ),
         Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Padding(
@@ -208,10 +221,13 @@ class UserInformation extends StatelessWidget {
             ),
           ),
         ]),
-        Divider(
-          color: Colors.black,
-          thickness: 0.1,
-          height: 1,
+        Padding(
+          padding: EdgeInsets.fromLTRB(0, 2 * verticalPadding, 0, 0),
+          child: Divider(
+            color: Colors.black,
+            thickness: 0.1,
+            height: 1,
+          ),
         ),
         Padding(
           padding:

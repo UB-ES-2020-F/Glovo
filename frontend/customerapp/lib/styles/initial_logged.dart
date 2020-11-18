@@ -34,14 +34,20 @@ final indicationsTextLinksHover = TextStyle(
 
 final hoverIconColor = Color(0xFFFFF3DA);
 
+final labelsProfileTitleText = TextStyle(
+  fontSize: 36,
+  fontWeight: FontWeight.w600,
+  color: Color(0x52000000),
+);
+
 final labelsProfileText = TextStyle(
-  fontSize: 15,
-  color: Color(0xFF909090),
+  fontSize: 14,
+  color: Color(0x66000000),
 );
 
 final fieldsProfileText = TextStyle(
-  fontSize: 15,
-  color: Color(0xFF555555),
+  fontSize: 14,
+  color: Color(0xFF606266),
 );
 
 final editTextLinksBold = TextStyle(
