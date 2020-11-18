@@ -50,4 +50,11 @@ class User {
   Location get location {
     return _location;
   }
+
+  set id(int value) => _id = value;
+  set name(String value) => _name = value;
+  set email(String value) => _email = value;
+  set direction(String value) => _direction = value;
+  set directionIndications(String value) => _directionIndications = value;
+  set location(Location value) => _location = value;
 }

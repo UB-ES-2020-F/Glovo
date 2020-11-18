@@ -1,5 +1,7 @@
 import 'package:customerapp/components/text_link.dart';
 import 'package:customerapp/dto/user.dart';
+import 'package:customerapp/models/location.dart';
+import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/signin.dart';
 import 'package:customerapp/screens/anon_root.dart';
 import 'package:email_validator/email_validator.dart';
@@ -181,6 +183,9 @@ void trySendSignInForm(BuildContext context, SignInModel signInModel) {
       loginUser(formUser).then((loggedUser) {
         UserCredentialsRepository().update(new UserCredentials(
             loggedUser.email, loggedUser.token, loggedUser.id));
+        LoggedModel.user.id = loggedUser.id;
+        LoggedModel.user.name = loggedUser.name;
+        LoggedModel.user.email = loggedUser.email;
         Navigator.of(context)
             .pushNamedAndRemoveUntil('/initial-logged-in', (route) => false);
       }).catchError((error) {
