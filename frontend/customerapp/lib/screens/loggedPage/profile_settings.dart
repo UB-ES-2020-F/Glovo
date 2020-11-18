@@ -70,7 +70,7 @@ class ProfileSettings extends StatelessWidget {
                                     padding: EdgeInsets.symmetric(
                                         vertical: verticalPadding),
                                     child: Text(
-                                      LoggedModel.firstName,
+                                      LoggedModel.user.name,
                                       style: fieldsProfileText,
                                     ),
                                   ),
@@ -86,7 +86,7 @@ class ProfileSettings extends StatelessWidget {
                                     padding: EdgeInsets.symmetric(
                                         vertical: verticalPadding),
                                     child: Text(
-                                      LoggedModel.email,
+                                      LoggedModel.user.email,
                                       style: fieldsProfileText,
                                     ),
                                   ),

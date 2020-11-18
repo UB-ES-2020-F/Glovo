@@ -176,7 +176,7 @@ class Subpage_user_profile extends StatelessWidget {
                                   Padding(
                                     padding: EdgeInsets.symmetric(vertical: 10),
                                     child: Text(
-                                      LoggedModel.firstName,
+                                      LoggedModel.user.name,
                                       style: fieldsProfileText,
                                     ),
                                   ),
@@ -190,7 +190,7 @@ class Subpage_user_profile extends StatelessWidget {
                                   Padding(
                                     padding: EdgeInsets.symmetric(vertical: 10),
                                     child: Text(
-                                      LoggedModel.email,
+                                      LoggedModel.user.email,
                                       style: fieldsProfileText,
                                     ),
                                   ),
