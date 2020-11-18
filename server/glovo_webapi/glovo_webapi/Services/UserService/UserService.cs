@@ -53,10 +53,6 @@ namespace glovo_webapi.Services.UserService
         public User GetById(int id)
         {
             User u = _context.Users.Find(id);
-            if (u == null)
-            {
-                throw new RequestException(UserExceptionCodes.UserNotFound);
-            }
             return u;
         }
 

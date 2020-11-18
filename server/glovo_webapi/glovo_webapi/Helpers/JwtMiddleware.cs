@@ -49,8 +49,14 @@ namespace WebApi.Helpers
                 }, out SecurityToken validatedToken);
                 var jwtToken = (JwtSecurityToken)validatedToken;
                 var userId = int.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
+                var authSalt = jwtToken.Claims.First(x => x.Type == "authSalt").Value;
                 // attach user to context on successful jwt validation
-                context.Items["User"] = userService.GetById(userId);
+                var user = userService.GetById(userId);
+                byte[] userAuthSalt = user.AuthSalt;
+                if (Encoding.Default.GetString(userAuthSalt) == authSalt)
+                {
+                    context.Items["User"] = user;
+                }
             }
             catch
             {
