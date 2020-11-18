@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using glovo_webapi.Utils;
 
 namespace glovo_webapi.Entities
 {
@@ -13,5 +14,8 @@ namespace glovo_webapi.Entities
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
         public byte[] AuthSalt { get; set; }
+        
+        [Required]
+        public UserRole Role;
     }
 }
