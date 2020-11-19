@@ -5,12 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class ProfileSettings extends StatelessWidget {
-  final double verticalPadding = 5;
-  final double radiusDialog = 13.0;
-  ProfileSettings(BuildContext context);
+  final double radiusDialog = 4;
+  ProfileSettings(BuildContext context)
+      : super(key: Key('profile-settings-menu'));
   @override
   Widget build(BuildContext context) {
-    var initialLoggedModel = LoggedModel();
     return Padding(
       padding: EdgeInsets.fromLTRB(10, 80, 60, 10),
       child: Align(
@@ -19,87 +18,242 @@ class ProfileSettings extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(radiusDialog),
           ),
-          elevation: 0,
+          elevation: 5,
           color: Colors.white,
           child: SizedBox(
               width: 300.0,
-              //height: 600.0,
               child: Padding(
                 padding: EdgeInsets.all(20.0),
-                child: Column(
+                child: SingleChildScrollView(
+                    child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'PERFIL',
-                      style: labelsProfileText,
-                    ),
-                    Divider(
-                      color: Colors.black,
-                      thickness: 0.3,
-                    ),
                     Container(
-                        width: 400.0,
-                        child: Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 2 * verticalPadding),
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: verticalPadding),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'Nombre',
-                                          style: labelsProfileText,
-                                        ),
-                                        TextLink(
-                                            'Editar',
-                                            (context) {},
-                                            editTextLinksBold,
-                                            editTextLinksHoverBold,
-                                            context)
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: verticalPadding),
-                                    child: Text(
-                                      LoggedModel.firstName,
-                                      style: fieldsProfileText,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: verticalPadding),
-                                    child: Text(
-                                      'E-mail',
-                                      style: labelsProfileText,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: verticalPadding),
-                                    child: Text(
-                                      LoggedModel.email,
-                                      style: fieldsProfileText,
-                                    ),
-                                  ),
-                                ]))),
+                      padding: EdgeInsets.only(top: 10),
+                      child: Text(
+                        'PROFILE',
+                        style: labelsProfileTitleText,
+                      ),
+                    ),
                     Divider(
                       color: Colors.black,
-                      thickness: 0.3,
+                      thickness: 0.1,
+                      height: 1,
                     ),
+                    UserInformation(),
                   ],
-                ),
+                )),
               )),
         ),
       ),
+    );
+  }
+}
+
+class UserInformation extends StatelessWidget {
+  final double verticalPadding = 6;
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Padding(
+            padding:
+                EdgeInsets.fromLTRB(0, 3 * verticalPadding, 0, verticalPadding),
+            child: Row(
+              key: Key('profile-settings-name-section'),
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Name',
+                  style: labelsProfileText,
+                ),
+                TextLink('Edit', (context) {}, editTextLinksBold,
+                    editTextLinksHoverBold, context)
+              ],
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: verticalPadding),
+            child: Text(
+              LoggedModel.user.name,
+              key: Key('profile-settings-name-value'),
+              style: fieldsProfileText,
+            ),
+          ),
+          Padding(
+            key: Key('profile-settings-email-section'),
+            padding: EdgeInsets.symmetric(vertical: verticalPadding),
+            child: Text(
+              'Email',
+              style: labelsProfileText,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: verticalPadding),
+            child: Text(
+              LoggedModel.user.email,
+              key: Key('profile-settings-email-value'),
+              style: fieldsProfileText,
+            ),
+          ),
+        ])),
+        Padding(
+          padding: EdgeInsets.fromLTRB(0, 2 * verticalPadding, 0, 0),
+          child: Divider(
+            color: Colors.black,
+            thickness: 0.1,
+            height: 1,
+          ),
+        ),
+        Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Padding(
+            padding:
+                EdgeInsets.fromLTRB(0, 3 * verticalPadding, 0, verticalPadding),
+            child: Row(
+              key: Key('profile-settings-phone-section'),
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Phone',
+                  style: labelsProfileText,
+                ),
+                TextLink('Edit', (context) {}, editTextLinksBold,
+                    editTextLinksHoverBold, context)
+              ],
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: verticalPadding),
+            child: Text(
+              "-",
+              style: fieldsProfileText,
+            ),
+          ),
+        ]),
+        Padding(
+          padding: EdgeInsets.fromLTRB(0, 2 * verticalPadding, 0, 0),
+          child: Divider(
+            color: Colors.black,
+            thickness: 0.1,
+            height: 1,
+          ),
+        ),
+        Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Padding(
+            padding:
+                EdgeInsets.fromLTRB(0, 3 * verticalPadding, 0, verticalPadding),
+            child: Row(
+              key: Key('profile-settings-password-section'),
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Password',
+                  style: labelsProfileText,
+                ),
+                TextLink('Edit', (context) {}, editTextLinksBold,
+                    editTextLinksHoverBold, context)
+              ],
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: verticalPadding),
+            child: Text(
+              "************",
+              style: fieldsProfileText,
+            ),
+          ),
+        ]),
+        Padding(
+          padding: EdgeInsets.fromLTRB(0, 2 * verticalPadding, 0, 0),
+          child: Divider(
+            color: Colors.black,
+            thickness: 0.1,
+            height: 1,
+          ),
+        ),
+        Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Padding(
+            padding:
+                EdgeInsets.fromLTRB(0, 3 * verticalPadding, 0, verticalPadding),
+            child: Row(
+              key: Key('profile-settings-card-section'),
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Card',
+                  style: labelsProfileText,
+                ),
+                TextLink('Create', (context) {}, editTextLinksBold,
+                    editTextLinksHoverBold, context)
+              ],
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: verticalPadding),
+            child: Text(
+              "-",
+              style: fieldsProfileText,
+            ),
+          ),
+        ]),
+        Padding(
+          padding: EdgeInsets.fromLTRB(0, 2 * verticalPadding, 0, 0),
+          child: Divider(
+            color: Colors.black,
+            thickness: 0.1,
+            height: 1,
+          ),
+        ),
+        Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Padding(
+            padding:
+                EdgeInsets.fromLTRB(0, 3 * verticalPadding, 0, verticalPadding),
+            child: Row(
+              key: Key('profile-settings-company-section'),
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Company details',
+                  style: labelsProfileText,
+                ),
+                TextLink('Create', (context) {}, editTextLinksBold,
+                    editTextLinksHoverBold, context)
+              ],
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: verticalPadding),
+            child: Text(
+              "-",
+              style: fieldsProfileText,
+            ),
+          ),
+        ]),
+        Padding(
+          padding: EdgeInsets.fromLTRB(0, 2 * verticalPadding, 0, 0),
+          child: Divider(
+            color: Colors.black,
+            thickness: 0.1,
+            height: 1,
+          ),
+        ),
+        Padding(
+          padding:
+              EdgeInsets.fromLTRB(0, 3 * verticalPadding, 0, verticalPadding),
+          child: Row(
+            key: Key('profile-settings-logout-section'),
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              TextLink('Logout', (context) {}, editTextLinksBold,
+                  editTextLinksHoverBold, context)
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
