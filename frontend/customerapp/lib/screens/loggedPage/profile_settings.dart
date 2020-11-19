@@ -6,7 +6,8 @@ import 'package:flutter/widgets.dart';
 
 class ProfileSettings extends StatelessWidget {
   final double radiusDialog = 4;
-  ProfileSettings(BuildContext context);
+  ProfileSettings(BuildContext context)
+      : super(key: Key('profile-settings-menu'));
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -28,9 +29,12 @@ class ProfileSettings extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'PROFILE',
-                      style: labelsProfileTitleText,
+                    Container(
+                      padding: EdgeInsets.only(top: 10),
+                      child: Text(
+                        'PROFILE',
+                        style: labelsProfileTitleText,
+                      ),
                     ),
                     Divider(
                       color: Colors.black,
@@ -60,6 +64,7 @@ class UserInformation extends StatelessWidget {
             padding:
                 EdgeInsets.fromLTRB(0, 3 * verticalPadding, 0, verticalPadding),
             child: Row(
+              key: Key('profile-settings-name-section'),
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
@@ -75,10 +80,12 @@ class UserInformation extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: verticalPadding),
             child: Text(
               LoggedModel.user.name,
+              key: Key('profile-settings-name-value'),
               style: fieldsProfileText,
             ),
           ),
           Padding(
+            key: Key('profile-settings-email-section'),
             padding: EdgeInsets.symmetric(vertical: verticalPadding),
             child: Text(
               'Email',
@@ -89,6 +96,7 @@ class UserInformation extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: verticalPadding),
             child: Text(
               LoggedModel.user.email,
+              key: Key('profile-settings-email-value'),
               style: fieldsProfileText,
             ),
           ),
@@ -106,6 +114,7 @@ class UserInformation extends StatelessWidget {
             padding:
                 EdgeInsets.fromLTRB(0, 3 * verticalPadding, 0, verticalPadding),
             child: Row(
+              key: Key('profile-settings-phone-section'),
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
@@ -138,6 +147,7 @@ class UserInformation extends StatelessWidget {
             padding:
                 EdgeInsets.fromLTRB(0, 3 * verticalPadding, 0, verticalPadding),
             child: Row(
+              key: Key('profile-settings-password-section'),
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
@@ -170,6 +180,7 @@ class UserInformation extends StatelessWidget {
             padding:
                 EdgeInsets.fromLTRB(0, 3 * verticalPadding, 0, verticalPadding),
             child: Row(
+              key: Key('profile-settings-card-section'),
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
@@ -202,6 +213,7 @@ class UserInformation extends StatelessWidget {
             padding:
                 EdgeInsets.fromLTRB(0, 3 * verticalPadding, 0, verticalPadding),
             child: Row(
+              key: Key('profile-settings-company-section'),
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
@@ -233,6 +245,7 @@ class UserInformation extends StatelessWidget {
           padding:
               EdgeInsets.fromLTRB(0, 3 * verticalPadding, 0, verticalPadding),
           child: Row(
+            key: Key('profile-settings-logout-section'),
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               TextLink('Logout', (context) {}, editTextLinksBold,

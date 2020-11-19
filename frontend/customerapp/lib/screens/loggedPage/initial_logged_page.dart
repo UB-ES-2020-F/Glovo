@@ -25,6 +25,7 @@ class InitialLogged extends StatelessWidget {
             children: [
               Text(
                 'Komet ',
+                key: Key('initial-logged-in-komet-title-text'),
                 style: TextStyle(
                     fontSize: 50,
                     fontWeight: FontWeight.bold,

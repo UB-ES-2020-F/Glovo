@@ -77,6 +77,7 @@ class UserActions extends StatelessWidget {
           ],
         )),
         IconButton(
+          key: Key('profile-button'),
           iconSize: 35.0,
           color: _selectMainButtonColor(barType),
           icon: Icon(Icons.account_circle_outlined),

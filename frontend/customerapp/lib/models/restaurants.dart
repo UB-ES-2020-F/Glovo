@@ -7,35 +7,9 @@ import 'location.dart';
 class RestaurantsListModel extends ChangeNotifier {
   List<Restaurant> availableRestaurants;
 
-  //RestaurantsListModel(List<Restaurant> restaurants);
-
-  // only for mocking data. Delete when endpoint is finished
-  @deprecated
   @override
   RestaurantsListModel() {
     availableRestaurants = List();
-    /*
-    availableRestaurants.add(Restaurant(
-        1,
-        'La Tagliatella',
-        'https://cdn2.cocinadelirante.com/sites/default/files/images/2018/12/como-hacer-cremosa-pasta-hervida-en-leche.jpeg',
-        new Location(40, 2.1)));
-    availableRestaurants.add(Restaurant(
-        2,
-        'Burger King',
-        'https://www.familycheck.es/wp-content/uploads/2019/11/Burger-King-1.jpg',
-        new Location(40.1, 2)));
-    availableRestaurants.add(Restaurant(
-        3,
-        "McDonald's",
-        'https://cdn.ticbeat.com/src/uploads/2018/06/mcdonalds-burger-king-subway-europa-810x547.jpg',
-        new Location(40.1, 2)));
-    availableRestaurants.add(Restaurant(
-        4,
-        'Five Guys',
-        'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/img-0056-1575287109.jpg',
-        new Location(40, 2.1)));
-        */
   }
 
   /*
