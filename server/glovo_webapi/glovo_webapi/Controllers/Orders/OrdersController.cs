@@ -51,7 +51,7 @@ namespace glovo_webapi.Controllers.Orders
         }
         
         //POST api/orders
-        [Authorize(Roles="Regular")]
+        [Authorize(Roles="Regular, Administrator")]
         [HttpPost]
         public ActionResult<GetOrderModel> PostOrder([FromBody] PostOrderModel postOrderModel)
         {

@@ -25,15 +25,21 @@ namespace glovo_webapi.Helpers
                     {StatusCode = StatusCodes.Status401Unauthorized};
                 return;
             }
-            var roleArray = Roles.Split(',')
-                .Select(x => x.Trim())
-                .Where(x => !string.IsNullOrWhiteSpace(x))
-                .ToArray();
-            if (roleArray.Length > 0 &&  roleArray.All(x => x != user.Role.ToString()))
+
+            if (Roles != null)
             {
-                //unauthorized role
-                context.Result = new JsonResult(new {message = "Unauthorized"})
-                    {StatusCode = StatusCodes.Status401Unauthorized};
+                var roleArray = Roles.Split(',')
+                    .Select(x => x.Trim())
+                    .Where(x => !string.IsNullOrWhiteSpace(x))
+                    .ToArray();
+                Console.Write("User Role: "+user.Role.ToString() + "Allowed roles: "+String.Join(",", roleArray));
+            
+                if (roleArray.Length > 0 &&  roleArray.All(x => x != user.Role.ToString()))
+                {
+                    //unauthorized role
+                    context.Result = new JsonResult(new {message = "Unauthorized"})
+                        {StatusCode = StatusCodes.Status401Unauthorized};
+                }
             }
         }
     }

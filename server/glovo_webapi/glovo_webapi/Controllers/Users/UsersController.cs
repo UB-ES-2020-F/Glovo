@@ -13,6 +13,7 @@ using glovo_webapi.Entities;
 using glovo_webapi.Models.Users;
 using glovo_webapi.Services.UserService;
 using glovo_webapi.Helpers;
+using glovo_webapi.Utils;
 
 namespace glovo_webapi.Controllers.Users
 {
@@ -104,7 +105,7 @@ namespace glovo_webapi.Controllers.Users
             }
         }
         
-        [Authorize]
+        [Authorize(Roles="Regular, Administrator")]
         [HttpPost("logout")]
         public IActionResult Logout()
         {
@@ -115,7 +116,7 @@ namespace glovo_webapi.Controllers.Users
         }
 
         //GET api/users
-        [Authorize]
+        [Authorize(Roles="Administrator")]
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -125,25 +126,42 @@ namespace glovo_webapi.Controllers.Users
         }
 
         //GET api/users/<userId>
-        [Authorize]
+        [Authorize(Roles="Regular, Administrator")]
         [HttpGet("{userId}")]
         public IActionResult GetById(int userId)
         {
             User user = _userService.GetById(userId);
+            User loggedUser = (User)HttpContext.Items["User"];
             if (user == null)
             {
                 return NotFound(new {message = "user id not found"});
+            }
+            if (loggedUser.Role == UserRole.Regular && user.Id != loggedUser.Id)
+            {
+                return Unauthorized(new {message = "Unauthorized"});
             }
             var model = _mapper.Map<UserModel>(user);
             return Ok(model);
         }
 
         //PUT api/users/<userId>
-        [Authorize]
+        [Authorize(Roles="Regular, Administrator")]
         [HttpPut("{userId}")]
         public IActionResult Update(int userId, [FromBody]UpdateUserModel model)
         {
             // map model to entity and set id
+            User loggedUser = (User)HttpContext.Items["User"];
+            if (loggedUser.Role == UserRole.Regular && userId != loggedUser.Id)
+            {
+                return Unauthorized(new {message = "Unauthorized"});
+            }
+            
+            User targetUser = _userService.GetById(userId);
+            if (targetUser == null)
+            {
+                return NotFound(new {message = "user id not found"});
+            }
+
             var user = _mapper.Map<User>(model);
             user.Id = userId;
 
@@ -168,10 +186,16 @@ namespace glovo_webapi.Controllers.Users
         }
 
         //DELETE api/users/<userId>
-        [Authorize]
+        [Authorize(Roles="Regular, Administrator")]
         [HttpDelete("{userId}")]
         public IActionResult Delete(int userId)
         {
+            User loggedUser = (User)HttpContext.Items["User"];
+            if (loggedUser.Role == UserRole.Regular && userId != loggedUser.Id)
+            {
+                return Unauthorized(new {message = "Unauthorized"});
+            }
+            
             try
             {
                 _userService.Delete(userId);

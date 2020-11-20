@@ -16,6 +16,6 @@ namespace glovo_webapi.Entities
         public byte[] AuthSalt { get; set; }
         
         [Required]
-        public UserRole Role;
+        public UserRole Role { get; set; }
     }
 }
