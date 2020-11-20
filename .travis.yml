@@ -16,6 +16,13 @@ stages:
   - name: deploy
     if: branch = main
 
+addons:
+  sonarcloud:
+    organization: "1komettest"
+    token:
+      secure: "uvZiACdrs4yDCWgXwCM5qlcRUgj/2926ZBhr+LMxhSp+LGDbcdVCjCrbDoCVPmXbUzIS4bpNuva6gbX8X01ISY858ATKtO9Qt+h0L/hSGSpMWdbRqI1SOLoFthKPVd01LfqLpejqqp3q7ZZ/wDvRnQ+qke7Y2cXXCAYrNgn2YBFYIYeOFdu29+03Lnbt4VLY1aDpUXwdlb9127D+KexfGV0jrLJs8Kg+o7E87GlH6ZsZo8lBOZz6Vhhcs7AZNjKiZYQUr5nw1nMEETHiST7CNDZXi/bl/RCOUDSlJbVrt8mglPRohTxNHSWaFxqeU/UkQHbHEpzzmZuUgUvR9olxqnSWgGhgD8EJOfBbk5JWlReT6JGS5PsDhQV8YF5peAkSrw7YALLEcItD2w2wU1yocK22BUvci4PfFx05wtbQcWas5ztEsHTD88x6YvWVcX9fkc73kgapUUpAcVJtJ55yv3QQS4nUKdTbdMzaUeYHd0CL/KaypS0iwhEswfl6aOlcIeccaP9uWvP6FAdS5qujcVg8U8RE7fxanIXZxQQMd9RMUISpYglDEBJUAmCqzyUZOtLS/BMyMkOvCkOj/oB+VLL4rvvimvHSE5ORiUGpLzKDruCInCYBRl9yH8Cl3eg2S11yD+BqqpQX0N9Vh6VbjmZdJcqqNjffuihfwdQljKA="
+
+
 jobs:
   include:
     - stage: tests
