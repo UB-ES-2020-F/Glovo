@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:customerapp/styles/signup.dart';
 import 'package:provider/provider.dart';
-import 'package:customerapp/endpoints/login_register.dart';
+import 'package:customerapp/endpoints/user.dart';
 import 'package:customerapp/infrastructure/persistence/repository/user_credentials_repository.dart';
 import 'package:customerapp/models/user_credentials/user_credentials.dart';
 
