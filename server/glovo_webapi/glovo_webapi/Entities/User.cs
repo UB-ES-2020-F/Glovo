@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations.Schema;
-using NetTopologySuite.Geometries;
 
 namespace glovo_webapi.Entities
 {
@@ -11,7 +10,7 @@ namespace glovo_webapi.Entities
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
         
-        [Column(TypeName="geometry (point)")]
-        public Point Location { get; set; }
+        public double? LocationLat { get; set; }
+        public double? LocationLong { get; set; }
     }
 }

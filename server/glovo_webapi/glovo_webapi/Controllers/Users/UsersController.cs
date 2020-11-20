@@ -10,9 +10,9 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using glovo_webapi.Services;
 using glovo_webapi.Entities;
+using glovo_webapi.Models;
 using glovo_webapi.Models.Users;
 using glovo_webapi.Services.UserService;
-using NetTopologySuite.Geometries;
 
 namespace glovo_webapi.Controllers
 {
@@ -165,7 +165,7 @@ namespace glovo_webapi.Controllers
         
         //GET api/users/logged/location
         [Authorize]
-        [HttpGet]
+        [HttpGet("logged/location")]
         public IActionResult GetUserLocation()
         {
             User loggedUser;
@@ -181,13 +181,14 @@ namespace glovo_webapi.Controllers
                 }
                 return BadRequest(new { error="location_usr-02",message = "unknown error"});
             }
-            return Ok(loggedUser.Location);
+            
+            return Ok(new Location(loggedUser.LocationLat, loggedUser.LocationLong));
         }
         
         //POST api/users/logged/location
         [Authorize]
-        [HttpGet]
-        public IActionResult PostUserLocation([FromBody]Point newLocation)
+        [HttpPost("logged/location")]
+        public IActionResult PostUserLocation([FromBody]Location newLocation)
         {
             User loggedUser;
             try
@@ -203,7 +204,8 @@ namespace glovo_webapi.Controllers
                 return BadRequest(new { error="location_usr-02",message = "unknown error"});
             }
 
-            loggedUser.Location = newLocation;
+            loggedUser.LocationLat = newLocation.Latitude;
+            loggedUser.LocationLong = newLocation.Longitude;
             try
             {
                 _userService.Update(loggedUser);
@@ -216,8 +218,8 @@ namespace glovo_webapi.Controllers
                 }
                 return BadRequest(new { error="location_usr-02",message = "unknown error"});
             }
-
-            return Ok(loggedUser.Location);
+            
+            return Ok(new Location(loggedUser.LocationLat, loggedUser.LocationLong));
         }
     }
 }

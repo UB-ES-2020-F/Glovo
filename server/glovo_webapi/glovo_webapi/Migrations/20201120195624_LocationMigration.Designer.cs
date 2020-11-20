@@ -4,21 +4,19 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using NetTopologySuite.Geometries;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using glovo_webapi.Data;
 
 namespace glovo_webapi.Migrations
 {
     [DbContext(typeof(GlovoDbContext))]
-    [Migration("20201119123821_UserLocationMigration")]
-    partial class UserLocationMigration
+    [Migration("20201120195624_LocationMigration")]
+    partial class LocationMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasPostgresExtension("postgis")
                 .UseIdentityByDefaultColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.0");
@@ -128,8 +126,11 @@ namespace glovo_webapi.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("text");
 
-                    b.Property<Point>("Location")
-                        .HasColumnType("geometry (point)");
+                    b.Property<double?>("LocationLat")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("LocationLong")
+                        .HasColumnType("double precision");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
