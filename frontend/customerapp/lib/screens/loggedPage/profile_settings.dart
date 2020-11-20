@@ -249,9 +249,16 @@ class UserInformation extends StatelessWidget {
             key: Key('profile-settings-logout-section'),
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              TextLink('Logout', (context) async {
-                logoutAndRedirectToWelcome(context);
-              }, editTextLinksBold, editTextLinksHoverBold, context)
+              TextLink(
+                'Logout',
+                (context) async {
+                  logoutAndRedirectToWelcome(context);
+                },
+                editTextLinksBold,
+                editTextLinksHoverBold,
+                context,
+                key: Key('profile-settings-logout-button'),
+              )
             ],
           ),
         ),

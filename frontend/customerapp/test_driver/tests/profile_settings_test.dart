@@ -7,7 +7,6 @@ import 'package:test/test.dart';
 
 import '../data/login.dart';
 import '../endpointComponents/user_endpoint.dart';
-import '../objectKeys/logged_page.dart';
 import '../objectKeys/profile_menu.dart';
 import '../pageComponents/anonymouse_page.dart';
 import '../pageComponents/logged_user_page.dart';
@@ -63,6 +62,13 @@ void main() {
       final profileSettingsScreen = ProfileSettingsScreen(driver);
       final email = await profileSettingsScreen.getEmail();
       expect(email, validUserEmail);
+    });
+    test(
+        'the user is logout and redirected to the initial page when the logout button is clicked',
+        () async {
+      final profileSettingsScreen = ProfileSettingsScreen(driver);
+      await profileSettingsScreen.clickLogoutButton();
+      expect(await profileSettingsScreen.isProfileMenuPresent(), false);
     });
     // This test can not be done until flutter driver adopts web, allowing to
     // "click outside". It should be tested manually.
