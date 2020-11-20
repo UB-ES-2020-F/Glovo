@@ -8,3 +8,4 @@ const password_section = 'profile-settings-password-section';
 const card_section = 'profile-settings-card-section';
 const company_section = 'profile-settings-company-section';
 const logout_section = 'profile-settings-logout-section';
+const logout_button = 'profile-settings-logout-button';

@@ -1,3 +1,4 @@
+import 'package:customerapp/actions/logout.dart';
 import 'package:customerapp/components/text_link.dart';
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/styles/initial_logged.dart';
@@ -248,8 +249,16 @@ class UserInformation extends StatelessWidget {
             key: Key('profile-settings-logout-section'),
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              TextLink('Logout', (context) {}, editTextLinksBold,
-                  editTextLinksHoverBold, context)
+              TextLink(
+                'Logout',
+                (context) async {
+                  logoutAndRedirectToWelcome(context);
+                },
+                editTextLinksBold,
+                editTextLinksHoverBold,
+                context,
+                key: Key('profile-settings-logout-button'),
+              )
             ],
           ),
         ),

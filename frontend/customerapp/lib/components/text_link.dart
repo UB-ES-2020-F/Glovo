@@ -9,10 +9,13 @@ class TextLink extends StatefulWidget {
   TextStyle _linkStyle;
   TextStyle _hoverStyle;
   BuildContext _context;
+  Key key;
 
   @override
-  TextLink(this._text, this._onTap, this._linkStyle, this._hoverStyle,
-      this._context);
+  TextLink(
+      this._text, this._onTap, this._linkStyle, this._hoverStyle, this._context,
+      {this.key})
+      : super(key: key ?? Key("text-link-default-value"));
 
   _TextLinkState createState() =>
       _TextLinkState(_text, _onTap, _linkStyle, _hoverStyle, _context);

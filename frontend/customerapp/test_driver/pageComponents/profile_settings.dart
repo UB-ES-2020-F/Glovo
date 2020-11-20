@@ -25,4 +25,9 @@ class ProfileSettingsScreen extends DriverPage {
     final email = find.byValueKey(email_value);
     return await driver.getText(email);
   }
+
+  Future<void> clickLogoutButton() async {
+    final logoutButton = find.byValueKey(logout_button);
+    await driver.tap(logoutButton);
+  }
 }
