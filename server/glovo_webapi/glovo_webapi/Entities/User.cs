@@ -1,3 +1,6 @@
+using System.ComponentModel.DataAnnotations.Schema;
+using NetTopologySuite.Geometries;
+
 namespace glovo_webapi.Entities
 {
     public class User
@@ -7,5 +10,8 @@ namespace glovo_webapi.Entities
         public string Email { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
+        
+        [Column(TypeName="geometry (point)")]
+        public Point Location { get; set; }
     }
 }

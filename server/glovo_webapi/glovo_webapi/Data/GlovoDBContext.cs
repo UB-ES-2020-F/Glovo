@@ -9,7 +9,10 @@ namespace glovo_webapi.Data
         {
             modelBuilder.Entity<OrderProduct>()
                 .HasKey(o => new { o.OrderId, o.ProductId });
+            
+            modelBuilder.HasPostgresExtension("postgis");
         }
+        
         public GlovoDbContext(DbContextOptions<GlovoDbContext> opt) : base(opt) { }
         
         public DbSet<Restaurant> Restaurants { get; set; }

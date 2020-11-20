@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using glovo_webapi.Data;
 using glovo_webapi.Entities;
+using Microsoft.AspNetCore.Http;
 
 namespace glovo_webapi.Services.UserService
 {
@@ -12,6 +13,7 @@ namespace glovo_webapi.Services.UserService
         User Authenticate(string email, string password);
         IEnumerable<User> GetAll();
         User GetById(int id);
+        User GetLogged();
         User Create(User user, string password);
         void Update(User user, string password = null);
         void Delete(int id);
@@ -20,10 +22,12 @@ namespace glovo_webapi.Services.UserService
     public class UserService : IUserService
     {
         private GlovoDbContext _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UserService(GlovoDbContext context)
+        public UserService(GlovoDbContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public User Authenticate(string email, string password)
@@ -60,6 +64,16 @@ namespace glovo_webapi.Services.UserService
             return u;
         }
 
+        public User GetLogged()
+        {
+            User loggedUser = (User) _httpContextAccessor.HttpContext.Items["User"];
+            if (loggedUser == null)
+            {
+                throw new RequestException(UserExceptionCodes.BadSession);
+            }
+            return loggedUser;
+        }
+        
         public User Create(User user, string password)
         {
             // validation

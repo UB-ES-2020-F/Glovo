@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebApi.Helpers;
+using Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite;
 
 namespace glovo_webapi
 {
@@ -72,7 +73,10 @@ namespace glovo_webapi
                 
             }
             Console.Write("Database connection string:"+connection);
-            services.AddDbContext<GlovoDbContext>(opt => opt.UseNpgsql(connection));
+            services.AddDbContext<GlovoDbContext>(opt => opt.UseNpgsql(
+                connection,
+                o => o.UseNetTopologySuite()
+                ));
         
             services.AddCors();
             services.AddControllers();

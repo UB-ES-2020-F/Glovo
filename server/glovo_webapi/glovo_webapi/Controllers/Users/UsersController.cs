@@ -7,13 +7,12 @@ using Microsoft.Extensions.Options;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
-using AutoMapper.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using glovo_webapi.Services;
 using glovo_webapi.Entities;
 using glovo_webapi.Models.Users;
 using glovo_webapi.Services.UserService;
-using Microsoft.Extensions.FileProviders;
+using NetTopologySuite.Geometries;
 
 namespace glovo_webapi.Controllers
 {
@@ -162,6 +161,63 @@ namespace glovo_webapi.Controllers
                 return NotFound(new {message = "user id not found"});
             }
             return Ok();
+        }
+        
+        //GET api/users/logged/location
+        [Authorize]
+        [HttpGet]
+        public IActionResult GetUserLocation()
+        {
+            User loggedUser;
+            try
+            {
+                loggedUser = _userService.GetLogged();
+            }
+            catch (RequestException ex)
+            {
+                if (ex.Code == UserExceptionCodes.BadPassword)
+                {
+                    return BadRequest(new { error="location_usr-01",message = "bad session"});
+                }
+                return BadRequest(new { error="location_usr-02",message = "unknown error"});
+            }
+            return Ok(loggedUser.Location);
+        }
+        
+        //POST api/users/logged/location
+        [Authorize]
+        [HttpGet]
+        public IActionResult PostUserLocation([FromBody]Point newLocation)
+        {
+            User loggedUser;
+            try
+            {
+                loggedUser = _userService.GetLogged();
+            }
+            catch (RequestException ex)
+            {
+                if (ex.Code == UserExceptionCodes.BadPassword)
+                {
+                    return BadRequest(new { error="location_usr-01",message = "bad session"});
+                }
+                return BadRequest(new { error="location_usr-02",message = "unknown error"});
+            }
+
+            loggedUser.Location = newLocation;
+            try
+            {
+                _userService.Update(loggedUser);
+            }
+            catch (RequestException ex)
+            {
+                if (ex.Code == UserExceptionCodes.UserNotFound)
+                {
+                    return BadRequest(new { error="location_usr-01",message = "bad session"});
+                }
+                return BadRequest(new { error="location_usr-02",message = "unknown error"});
+            }
+
+            return Ok(loggedUser.Location);
         }
     }
 }
