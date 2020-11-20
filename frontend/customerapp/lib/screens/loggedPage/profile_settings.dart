@@ -1,11 +1,9 @@
-import 'package:customerapp/actions/toast_actions.dart';
+import 'package:customerapp/actions/logout.dart';
 import 'package:customerapp/components/text_link.dart';
-import 'package:customerapp/infrastructure/persistence/repository/user_credentials_repository.dart';
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/styles/initial_logged.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:customerapp/endpoints/user.dart';
 
 class ProfileSettings extends StatelessWidget {
   final double radiusDialog = 4;
@@ -252,14 +250,7 @@ class UserInformation extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               TextLink('Logout', (context) async {
-                try {
-                  await logout();
-                  await UserCredentialsRepository().removeCredentials();
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, '/', (Route<dynamic> route) => false);
-                } catch (ex) {
-                  showErrorToast("Unable to logout, contact the administrator");
-                }
+                logoutAndRedirectToWelcome(context);
               }, editTextLinksBold, editTextLinksHoverBold, context)
             ],
           ),
