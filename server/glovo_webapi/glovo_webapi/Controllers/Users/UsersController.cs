@@ -144,9 +144,9 @@ namespace glovo_webapi.Controllers.Users
             return Ok(model);
         }
 
-        //PUT api/users/<userId>
+        //PUT api/users/update
         [Authorize(Roles="Regular, Administrator")]
-        [HttpPost("update")]
+        [HttpPut("update")]
         public IActionResult Update([FromBody]UpdateUserModel model)
         {
             // map model to entity and set id

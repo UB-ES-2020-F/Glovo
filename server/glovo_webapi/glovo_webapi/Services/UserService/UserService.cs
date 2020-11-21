@@ -83,6 +83,11 @@ namespace glovo_webapi.Services.UserService
             if (user == null)
                 throw new RequestException(UserExceptionCodes.UserNotFound);
 
+            if (!string.IsNullOrEmpty(userParam.Name))
+            {
+                user.Name = userParam.Name;
+            }
+            
             // update username if it has changed
             if (!string.IsNullOrWhiteSpace(userParam.Email) && userParam.Email != user.Email)
             {
