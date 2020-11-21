@@ -146,24 +146,13 @@ namespace glovo_webapi.Controllers.Users
 
         //PUT api/users/<userId>
         [Authorize(Roles="Regular, Administrator")]
-        [HttpPut("{userId}")]
-        public IActionResult Update(int userId, [FromBody]UpdateUserModel model)
+        [HttpPost("update")]
+        public IActionResult Update([FromBody]UpdateUserModel model)
         {
             // map model to entity and set id
-            User loggedUser = (User)HttpContext.Items["User"];
-            if (loggedUser.Role == UserRole.Regular && userId != loggedUser.Id)
-            {
-                return Unauthorized(new {message = "Unauthorized"});
-            }
-            
-            User targetUser = _userService.GetById(userId);
-            if (targetUser == null)
-            {
-                return NotFound(new {message = "user id not found"});
-            }
-
+            User targetUser = (User)HttpContext.Items["User"];
             var user = _mapper.Map<User>(model);
-            user.Id = userId;
+            user.Id = targetUser.Id;
 
             try
             {
