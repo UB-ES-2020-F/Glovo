@@ -51,9 +51,9 @@ jobs:
     - stage: code_ana
       script: 
         - cd $TRAVIS_BUILD_DIR/server/glovo_webapi
-        - dotnet sonarscanner begin /k:"komet-backend" /d:sonar.login=22f8d2eca713452d014065d4a3bfa6884ec28d17 /d:sonar.host.url=http://167.71.130.118:9000
+        - dotnet sonarscanner begin /k:"komet-backend" /d:sonar.login=$SONARQUBE_LOGIN /d:sonar.host.url=http://167.71.130.118:9000
         - dotnet build glovo_webapi.sln
-        - dotnet sonarscanner end  /d:sonar.login=22f8d2eca713452d014065d4a3bfa6884ec28d17 
+        - dotnet sonarscanner end  /d:sonar.login=$SONARQUBE_LOGIN 
     - stage: deploy
       name: "Backend"
       script:
@@ -81,4 +81,8 @@ jobs:
         - git commit -am "deploy"
         - git push -f heroku master
     
-      
+env:
+ global:
+    secure: "g9FPYDOd6zEegPRv5GW45uRvzA/C6lpPgP5Xt5Oh1GkIRkxvbSnIfZbRijrJbfp2HvpEaXhQtsb1SI1WmGrhjmzv3+g3eJhV35bh84d4e2cm1PBND55O2TDaS9GqAUcAKiWhG8x16pGvcwDUUpePG1lFEPilpRs1/Qhmk+FwjVQZCvZQI6kTRjsXaYyNd0j93g2bBSKT0tC/xZb9v0tcjqJoqQMayvzK3yjJVVueQC2ADK4N4fNWj4criV2XI6ysMD9q9xa9kWD6MRIx4v/LV24jcZKMUqOHZBhe1EDB/1utnrLDqt28mbA/zMiesTy+SM6Idy3Q3lqpMzUKanOx7vaJFdLHnmuCqhomLw/hSyE0SI5RqeT+IV0pX0MfsqgJTCue/tOjYV0KRk3LAgbybRU1VBm5GUkNMssYhlGlsnK5DXVtlYsNf8/MZQLSZa7QdfsziggwDcdJneQ1dCBpWcyaUoKZEUNX+9DntHqw4N3/pTeaH4Q1VtogrRukMmUs/7FmQxU+IQjhc6BjBRRVL9zBHZ7PhwXJHPcfHg2pxoVBHjYoXWCSoZ8sZXWboM2gr8enXY7Yj2fuZs4ynM96kB3Nwla1VRXOWHGtscexCFQIU8RVfhpTxxwgxSjJN98FnB2Z3UlbX+ODGjMvaAUxMefpPxNOXdGfnOepE1DUUt4="
+
+
