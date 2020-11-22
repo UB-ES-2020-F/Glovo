@@ -4,6 +4,8 @@ import 'package:customerapp/models/location.dart';
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/signin.dart';
 import 'package:customerapp/screens/anon_root.dart';
+import 'package:customerapp/screens/commonComponents/single_message_dialog.dart';
+import 'package:customerapp/styles/Komet.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -191,25 +193,15 @@ void trySendSignInForm(BuildContext context, SignInModel signInModel) {
             .pushNamedAndRemoveUntil('/initial-logged-in', (route) => false);
       }).catchError((error) {
         print(error);
+        Navigator.pop(context);
+        showLogInFailedDialog(context);
       });
     }
   }
 }
 
-showLoaderDialog(BuildContext context) {
-  AlertDialog alert = AlertDialog(
-    content: new Row(
-      children: [
-        CircularProgressIndicator(),
-        Container(margin: EdgeInsets.only(left: 7), child: Text("Loading...")),
-      ],
-    ),
-  );
+showLogInFailedDialog(BuildContext context) {
   showDialog(
-    barrierDismissible: false,
-    context: context,
-    builder: (BuildContext context) {
-      return alert;
-    },
-  );
+      context: context,
+      builder: (context) => SingleMessageDialog("Log in Failed"));
 }
