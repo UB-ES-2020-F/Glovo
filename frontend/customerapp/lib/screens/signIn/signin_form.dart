@@ -176,6 +176,7 @@ class SignInButton extends StatelessWidget {
 void trySendSignInForm(BuildContext context, SignInModel signInModel) {
   if (signInModel.formValid) {
     if (signInModel.formKey.currentState.validate()) {
+      showLoaderDialog(context);
       signInModel.formKey.currentState.save();
       UserDTO formUser = new UserDTO();
       formUser.email = signInModel.email;
@@ -193,4 +194,22 @@ void trySendSignInForm(BuildContext context, SignInModel signInModel) {
       });
     }
   }
+}
+
+showLoaderDialog(BuildContext context) {
+  AlertDialog alert = AlertDialog(
+    content: new Row(
+      children: [
+        CircularProgressIndicator(),
+        Container(margin: EdgeInsets.only(left: 7), child: Text("Loading...")),
+      ],
+    ),
+  );
+  showDialog(
+    barrierDismissible: false,
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }
