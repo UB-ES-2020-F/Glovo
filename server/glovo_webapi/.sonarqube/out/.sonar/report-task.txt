@@ -1,6 +1,6 @@
-projectKey=project-key
-serverUrl=http://localhost:9000
-serverVersion=8.5.1.38104
-dashboardUrl=http://localhost:9000/dashboard?id=project-key
-ceTaskId=AXXcS6X3BXIh_pJrlcVz
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AXXcS6X3BXIh_pJrlcVz
+projectKey=komet-backend
+serverUrl=http://167.71.130.118:9000
+serverVersion=8.3.0.34182
+dashboardUrl=http://167.71.130.118:9000/dashboard?id=komet-backend
+ceTaskId=AXXv6USt6OmkzvW0wmBJ
+ceTaskUrl=http://167.71.130.118:9000/api/ce/task?id=AXXv6USt6OmkzvW0wmBJ

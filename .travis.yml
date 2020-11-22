@@ -3,6 +3,8 @@ services:
 language: csharp
 mono: none
 dotnet: 3.1
+addons:
+ sonarqube: true
 solution: server/glovo_webapi/glovo_webapi.sln
 install:
   - dotnet tool install --global dotnet-ef
@@ -10,9 +12,11 @@ install:
   - git clone https://github.com/flutter/flutter.git -b beta
   - export PATH="$TRAVIS_BUILD_DIR/flutter/bin:$PATH"
   - flutter config --enable-web
+  - dotnet tool install --global dotnet-sonarscanner --version 4.8.0
 
 stages:
   - tests
+  - code_ana
   - name: deploy
     if: branch = main
 
@@ -44,7 +48,12 @@ jobs:
         - dotnet glovo_webapi.dll &
         - cd $TRAVIS_BUILD_DIR/frontend/customerapp
         - flutter test test_driver/tests/endpoints/orders.dart
-    
+    - stage: code_ana
+      script: 
+        - cd $TRAVIS_BUILD_DIR/server/glovo_webapi
+        - dotnet sonarscanner begin /k:"komet-backend" /d:sonar.login=22f8d2eca713452d014065d4a3bfa6884ec28d17 /d:sonar.host.url=http://167.71.130.118:9000
+        - dotnet build glovo_webapi.sln
+        - dotnet sonarscanner end  /d:sonar.login=22f8d2eca713452d014065d4a3bfa6884ec28d17 
     - stage: deploy
       name: "Backend"
       script:
@@ -71,4 +80,5 @@ jobs:
         - git add .
         - git commit -am "deploy"
         - git push -f heroku master
+    
       
