@@ -1,10 +1,15 @@
 services:
 - docker
 language: csharp
+
+env:
+  global:
+  - secure: MTv4wN5Io87jluypmSMs4i1XffRGFKo9MTfjNwHiqtc57kOb51TxcQDT6TE0MprMhkhTNcngvMV31xTUlc7qE7BMee0795xYSIs7mPpAmk3FIwSVd7SjeeNNFJfoe76oRdjkyu6Ztc8IaWAQmAT2eE1U83NnCPaP0wiHWYXL3Km3GMSGe3Ua4Hq5MJ95nJ5keTcJsv0RUeqUMoBnqme19eTbQ5yHj0AsusrtizZBMV+KHddyc1cwCxnnNcgMYT2+OcFskDOxDursui+5EhS/8xP7vH9RxqUjpwuBMsP5oBiIzUP9gbqt4ObyhlZRCwghbV0/0DgHhU0nM+21ct6Qo8DHQEMOhl7XV1eZJgGBRv7EHQ0bb8m4Tz+XniuKeFwETpGQvXcFVi4Kh9VZVBpljE/oFMCOFlh8MfH/oAZ8FYODH7dC3HaHsvseG8Vrr+FLz9MdatlSh0wOFbbH8mqCeA0JmarzvgLQSkf6ixII6Ogbps1FhFJFiTG2lLfXrImvTjM4iCPUs2Fr/1jvv21MpSWNYjLPE5M9Lvo3fzlS4kEIWz9QItEP2vqpDObaGd02f7Cc8uJn9QA+QIh/q6ktt9HlqEELY8RDjsySf1azvvsP7nbhcgXNoD3GtbXHm5truIYt+7rn8p15mJnmG4Tk+t+nbRlt4FihRYx933sdt30=
+
 mono: none
 dotnet: 3.1
 addons:
- sonarqube: true
+  sonarqube: true
 solution: server/glovo_webapi/glovo_webapi.sln
 install:
 - dotnet tool install --global dotnet-ef
@@ -41,13 +46,10 @@ jobs:
     - flutter test test_driver/tests/endpoints/orders.dart
   - stage: code_ana
     script:
-      script: 
-    script:
     - cd $TRAVIS_BUILD_DIR/server/glovo_webapi
-    - dotnet sonarscanner begin /k:"komet-backend" /d:sonar.login=$SONAR_LOGIN
-      /d:sonar.host.url=http://167.71.130.118:9000
+    - dotnet sonarscanner begin /k:"komet-backend" /d:sonar.login=$SONARSECRET /d:sonar.host.url=http://167.71.130.118:9000
     - dotnet build glovo_webapi.sln
-    - dotnet sonarscanner end  /d:sonar.login=$SONAR_LOGIN
+    - dotnet sonarscanner end /d:sonar.login=$SONARSECRET
   - stage: deploy
     name: Backend
     script:
@@ -75,7 +77,3 @@ jobs:
     - git add .
     - git commit -am "deploy"
     - git push -f heroku master
-env:
-  global:
-  - secure: g9FPYDOd6zEegPRv5GW45uRvzA/C6lpPgP5Xt5Oh1GkIRkxvbSnIfZbRijrJbfp2HvpEaXhQtsb1SI1WmGrhjmzv3+g3eJhV35bh84d4e2cm1PBND55O2TDaS9GqAUcAKiWhG8x16pGvcwDUUpePG1lFEPilpRs1/Qhmk+FwjVQZCvZQI6kTRjsXaYyNd0j93g2bBSKT0tC/xZb9v0tcjqJoqQMayvzK3yjJVVueQC2ADK4N4fNWj4criV2XI6ysMD9q9xa9kWD6MRIx4v/LV24jcZKMUqOHZBhe1EDB/1utnrLDqt28mbA/zMiesTy+SM6Idy3Q3lqpMzUKanOx7vaJFdLHnmuCqhomLw/hSyE0SI5RqeT+IV0pX0MfsqgJTCue/tOjYV0KRk3LAgbybRU1VBm5GUkNMssYhlGlsnK5DXVtlYsNf8/MZQLSZa7QdfsziggwDcdJneQ1dCBpWcyaUoKZEUNX+9DntHqw4N3/pTeaH4Q1VtogrRukMmUs/7FmQxU+IQjhc6BjBRRVL9zBHZ7PhwXJHPcfHg2pxoVBHjYoXWCSoZ8sZXWboM2gr8enXY7Yj2fuZs4ynM96kB3Nwla1VRXOWHGtscexCFQIU8RVfhpTxxwgxSjJN98FnB2Z3UlbX+ODGjMvaAUxMefpPxNOXdGfnOepE1DUUt4=
-  - secure: ZtV/PPovrfXOJPZtYtLVBveWEbsS3RnDyAbGAUAWsK8zro7r+W4UR5FwD6fp0TtzNV8PXNHmzxUu2hTHHtvaDLKzZcUe/jA7r+7YpjBsUy2sqlRPXJ0Nix/4mU5xe1NKZMCQX4OfuqPDXfne0RnslrmnQmTzK4EThCbGXq5aQ21732CbmiAAuMR0cEzUbIjeXryafoydDPeCSsXiKQBY36P8jLDESW+bzj1CYO4rLJwkTJbbPv3zLr9HOcNASqmtUw3qv22xGDxuSCG3lZyWTE8F97ptDv+Uc+/O/DjGreVK9KOPaTcjWZJlok/30WE1s/qH03iXh4H/z5fZ/pkSp2IvEZQtKwuE64M57assCNdt4bS3ONFw6oU0eLWVA7tIiE1TxGy8AIIFsi+kJFFeRUdXhtBE1TNpsaTWNEVkrNNo9fOZLwey+7MdSHIfp54CuPBUpmrU5GDKFKt+Y9lD/7kwfhkrB4ikIvoG/q6VB9PIy5DUYLxpLHV8RYD7ZFqR6ulDUvUjDCzFQWvjk4MNhZAP17CXSJ7B5O6Co9UPz5e5K546lviat/rVLd0cQb57CR/F8zs+LuYjOdA59XSNxDyYVUwxfqax61jpLBrQWpTP6aI+zzu2THXAkjRueEAE4agQvsIvXxw+hg72Dy2SpMFMBUf7IiiNZrKDKbIixVo=
