@@ -10,6 +10,7 @@ Future<List<RestaurantDTO>> getRestaurants() async {
       await http.get(await EndpointDefinitions.makeRestaurantsURL(), headers: {
     "Content-Type": "application/json",
   });
+  await new Future.delayed(const Duration(seconds: 3));
   if (response.statusCode == 200) {
     List<RestaurantDTO> restaurants = (json.decode(response.body) as List)
         .map((i) => RestaurantDTO.fromJson(i))

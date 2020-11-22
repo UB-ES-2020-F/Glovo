@@ -51,17 +51,7 @@ showLoaderDialog(BuildContext context) {
   Dialog loading = Dialog(
       elevation: 0,
       backgroundColor: Colors.transparent,
-      child: Padding(
-          padding: EdgeInsets.all(20.0),
-          child: Center(
-              child: SizedBox(
-            width: 80,
-            height: 80,
-            child: CircularProgressIndicator(
-              backgroundColor: Kommet_distinctive_green,
-              strokeWidth: 7,
-            ),
-          ))));
+      child: Padding(padding: EdgeInsets.all(20.0), child: Loader()));
   showDialog(
     barrierDismissible: false,
     context: context,
@@ -69,4 +59,19 @@ showLoaderDialog(BuildContext context) {
       return loading;
     },
   );
+}
+
+class Loader extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+        child: SizedBox(
+      width: 80,
+      height: 80,
+      child: CircularProgressIndicator(
+        backgroundColor: Kommet_distinctive_green,
+        strokeWidth: 7,
+      ),
+    ));
+  }
 }
