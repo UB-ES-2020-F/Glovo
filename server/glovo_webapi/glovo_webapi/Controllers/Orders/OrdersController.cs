@@ -9,6 +9,7 @@ using glovo_webapi.Services.Orders;
 using glovo_webapi.Services.UserService;
 using Microsoft.AspNetCore.Mvc;
 using glovo_webapi.Helpers;
+using glovo_webapi.Utils;
 
 namespace glovo_webapi.Controllers.Orders
 {
@@ -27,6 +28,7 @@ namespace glovo_webapi.Controllers.Orders
         
         //GET api/orders
         [HttpGet]
+        [Authorize(Roles="Administrator")]
         public ActionResult<IEnumerable<GetOrderModel>> GetAllOrders()
         {
             IEnumerable<Order> orders = _service.GetAllOrders();
@@ -35,15 +37,21 @@ namespace glovo_webapi.Controllers.Orders
         
         //GET api/orders/<orderId>
         [HttpGet("{orderId}")]
+        [Authorize(Roles="Regular, Administrator")]
         public ActionResult<GetOrderModel> GetOrderById(int orderId)
         {
             Order foundOrder = _service.GetOrderById(orderId);
+            User loggedUser = (User)HttpContext.Items["User"];
+            if (loggedUser.Role == UserRole.Regular && foundOrder.UserId != loggedUser.Id)
+            {
+                return Unauthorized(new {message = "Unauthorized"});
+            }
             if (foundOrder == null) { return NotFound(new {message = "order id not found"}); }
             return Ok(_mapper.Map<GetOrderModel>(foundOrder));
         }
         
         //POST api/orders
-        [Authorize]
+        [Authorize(Roles="Regular, Administrator")]
         [HttpPost]
         public ActionResult<GetOrderModel> PostOrder([FromBody] PostOrderModel postOrderModel)
         {
