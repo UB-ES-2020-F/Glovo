@@ -1,5 +1,5 @@
 services:
-  - docker
+- docker
 language: csharp
 mono: none
 dotnet: 3.1
@@ -7,82 +7,75 @@ addons:
  sonarqube: true
 solution: server/glovo_webapi/glovo_webapi.sln
 install:
-  - dotnet tool install --global dotnet-ef
-  - export PATH="$HOME/.dotnet/tools":$PATH
-  - git clone https://github.com/flutter/flutter.git -b beta
-  - export PATH="$TRAVIS_BUILD_DIR/flutter/bin:$PATH"
-  - flutter config --enable-web
-  - dotnet tool install --global dotnet-sonarscanner --version 4.8.0
-
+- dotnet tool install --global dotnet-ef
+- export PATH="$HOME/.dotnet/tools":$PATH
+- git clone https://github.com/flutter/flutter.git -b beta
+- export PATH="$TRAVIS_BUILD_DIR/flutter/bin:$PATH"
+- flutter config --enable-web
+- dotnet tool install --global dotnet-sonarscanner --version 4.8.0
 stages:
-  - tests
-  - code_ana
-  - name: deploy
-    if: branch = main
-
-addons:
-  sonarcloud:
-    organization: "1komettest"
-    token:
-      secure: "uvZiACdrs4yDCWgXwCM5qlcRUgj/2926ZBhr+LMxhSp+LGDbcdVCjCrbDoCVPmXbUzIS4bpNuva6gbX8X01ISY858ATKtO9Qt+h0L/hSGSpMWdbRqI1SOLoFthKPVd01LfqLpejqqp3q7ZZ/wDvRnQ+qke7Y2cXXCAYrNgn2YBFYIYeOFdu29+03Lnbt4VLY1aDpUXwdlb9127D+KexfGV0jrLJs8Kg+o7E87GlH6ZsZo8lBOZz6Vhhcs7AZNjKiZYQUr5nw1nMEETHiST7CNDZXi/bl/RCOUDSlJbVrt8mglPRohTxNHSWaFxqeU/UkQHbHEpzzmZuUgUvR9olxqnSWgGhgD8EJOfBbk5JWlReT6JGS5PsDhQV8YF5peAkSrw7YALLEcItD2w2wU1yocK22BUvci4PfFx05wtbQcWas5ztEsHTD88x6YvWVcX9fkc73kgapUUpAcVJtJ55yv3QQS4nUKdTbdMzaUeYHd0CL/KaypS0iwhEswfl6aOlcIeccaP9uWvP6FAdS5qujcVg8U8RE7fxanIXZxQQMd9RMUISpYglDEBJUAmCqzyUZOtLS/BMyMkOvCkOj/oB+VLL4rvvimvHSE5ORiUGpLzKDruCInCYBRl9yH8Cl3eg2S11yD+BqqpQX0N9Vh6VbjmZdJcqqNjffuihfwdQljKA="
-
-
+- tests
+- code_ana
+- name: deploy
+  if: branch = main
 jobs:
   include:
-    - stage: tests
-      name: "Unit Tests"
-      script:
-        - echo "PASS"
-    - name: "Integration Tests"
-      script:
-        - echo "PASS"
-        - cd $TRAVIS_BUILD_DIR/server/glovo_webapi
-        - dotnet restore
-        - cd glovo_webapi
-        - dotnet build --no-incremental
-        - dotnet publish -c Release -o publish
-        - cd $TRAVIS_BUILD_DIR/server/docker_database
-        - bash load_server_travis.sh
-        - cd $TRAVIS_BUILD_DIR/server/glovo_webapi/glovo_webapi/publish
-        - ASPNETCORE_ENVIRONMENT=Development
-        - dotnet glovo_webapi.dll &
-        - cd $TRAVIS_BUILD_DIR/frontend/customerapp
-        - flutter test test_driver/tests/endpoints/orders.dart
-    - stage: code_ana
+  - stage: tests
+    name: Unit Tests
+    script:
+    - echo "PASS"
+  - name: Integration Tests
+    script:
+    - echo "PASS"
+    - cd $TRAVIS_BUILD_DIR/server/glovo_webapi
+    - dotnet restore
+    - cd glovo_webapi
+    - dotnet build --no-incremental
+    - dotnet publish -c Release -o publish
+    - cd $TRAVIS_BUILD_DIR/server/docker_database
+    - bash load_server_travis.sh
+    - cd $TRAVIS_BUILD_DIR/server/glovo_webapi/glovo_webapi/publish
+    - ASPNETCORE_ENVIRONMENT=Development
+    - dotnet glovo_webapi.dll &
+    - cd $TRAVIS_BUILD_DIR/frontend/customerapp
+    - flutter test test_driver/tests/endpoints/orders.dart
+  - stage: code_ana
+    script:
       script: 
-        - cd $TRAVIS_BUILD_DIR/server/glovo_webapi
-        - dotnet sonarscanner begin /k:"komet-backend" /d:sonar.login=$SONARQUBE_LOGIN /d:sonar.host.url=http://167.71.130.118:9000
-        - dotnet build glovo_webapi.sln
-        - dotnet sonarscanner end  /d:sonar.login=$SONARQUBE_LOGIN 
-    - stage: deploy
-      name: "Backend"
-      script:
-        - cd $TRAVIS_BUILD_DIR/server/glovo_webapi
-        - dotnet restore
-        - cd glovo_webapi
-        - dotnet publish -c Release -o $TRAVIS_BUILD_DIR/backend_deployment/publish
-        - cd $TRAVIS_BUILD_DIR/backend_deployment
-        - dotnet ef migrations script --idempotent --project $TRAVIS_BUILD_DIR/server/glovo_webapi/glovo_webapi -o migration.sql
-        - heroku pg:psql --app ub-es2020-glovo-webapi < migration.sql
-        - heroku container:login
-        - heroku container:push web -a ub-es2020-glovo-webapi
-        - heroku container:release web -a ub-es2020-glovo-webapi
-    - name: "Frontend"
-      script:
-        - echo "machine git.heroku.com login eudald.elias@gmail.com password 49916134-f0ec-4564-a22d-c40da16b9872" > $HOME/.netrc
-        - cd $TRAVIS_BUILD_DIR/frontend/customerapp
-        - flutter build web
-        - ls -R build/web/
-        - cp -r build/web $TRAVIS_BUILD_DIR/frontend_deploy/web
-        - cd $TRAVIS_BUILD_DIR/frontend_deploy
-        - git init
-        - heroku git:remote -a ub-es2020-glovo
-        - git add .
-        - git commit -am "deploy"
-        - git push -f heroku master
-    
+    script:
+    - cd $TRAVIS_BUILD_DIR/server/glovo_webapi
+    - dotnet sonarscanner begin /k:"komet-backend" /d:sonar.login=$SONAR_LOGIN
+      /d:sonar.host.url=http://167.71.130.118:9000
+    - dotnet build glovo_webapi.sln
+    - dotnet sonarscanner end  /d:sonar.login=$SONAR_LOGIN
+  - stage: deploy
+    name: Backend
+    script:
+    - cd $TRAVIS_BUILD_DIR/server/glovo_webapi
+    - dotnet restore
+    - cd glovo_webapi
+    - dotnet publish -c Release -o $TRAVIS_BUILD_DIR/backend_deployment/publish
+    - cd $TRAVIS_BUILD_DIR/backend_deployment
+    - dotnet ef migrations script --idempotent --project $TRAVIS_BUILD_DIR/server/glovo_webapi/glovo_webapi
+      -o migration.sql
+    - heroku pg:psql --app ub-es2020-glovo-webapi < migration.sql
+    - heroku container:login
+    - heroku container:push web -a ub-es2020-glovo-webapi
+    - heroku container:release web -a ub-es2020-glovo-webapi
+  - name: Frontend
+    script:
+    - echo "machine git.heroku.com login eudald.elias@gmail.com password 49916134-f0ec-4564-a22d-c40da16b9872"
+    - cd $TRAVIS_BUILD_DIR/frontend/customerapp
+    - flutter build web
+    - ls -R build/web/
+    - cp -r build/web $TRAVIS_BUILD_DIR/frontend_deploy/web
+    - cd $TRAVIS_BUILD_DIR/frontend_deploy
+    - git init
+    - heroku git:remote -a ub-es2020-glovo
+    - git add .
+    - git commit -am "deploy"
+    - git push -f heroku master
 env:
- global:
-    secure: "g9FPYDOd6zEegPRv5GW45uRvzA/C6lpPgP5Xt5Oh1GkIRkxvbSnIfZbRijrJbfp2HvpEaXhQtsb1SI1WmGrhjmzv3+g3eJhV35bh84d4e2cm1PBND55O2TDaS9GqAUcAKiWhG8x16pGvcwDUUpePG1lFEPilpRs1/Qhmk+FwjVQZCvZQI6kTRjsXaYyNd0j93g2bBSKT0tC/xZb9v0tcjqJoqQMayvzK3yjJVVueQC2ADK4N4fNWj4criV2XI6ysMD9q9xa9kWD6MRIx4v/LV24jcZKMUqOHZBhe1EDB/1utnrLDqt28mbA/zMiesTy+SM6Idy3Q3lqpMzUKanOx7vaJFdLHnmuCqhomLw/hSyE0SI5RqeT+IV0pX0MfsqgJTCue/tOjYV0KRk3LAgbybRU1VBm5GUkNMssYhlGlsnK5DXVtlYsNf8/MZQLSZa7QdfsziggwDcdJneQ1dCBpWcyaUoKZEUNX+9DntHqw4N3/pTeaH4Q1VtogrRukMmUs/7FmQxU+IQjhc6BjBRRVL9zBHZ7PhwXJHPcfHg2pxoVBHjYoXWCSoZ8sZXWboM2gr8enXY7Yj2fuZs4ynM96kB3Nwla1VRXOWHGtscexCFQIU8RVfhpTxxwgxSjJN98FnB2Z3UlbX+ODGjMvaAUxMefpPxNOXdGfnOepE1DUUt4="
-
-
+  global:
+  - secure: g9FPYDOd6zEegPRv5GW45uRvzA/C6lpPgP5Xt5Oh1GkIRkxvbSnIfZbRijrJbfp2HvpEaXhQtsb1SI1WmGrhjmzv3+g3eJhV35bh84d4e2cm1PBND55O2TDaS9GqAUcAKiWhG8x16pGvcwDUUpePG1lFEPilpRs1/Qhmk+FwjVQZCvZQI6kTRjsXaYyNd0j93g2bBSKT0tC/xZb9v0tcjqJoqQMayvzK3yjJVVueQC2ADK4N4fNWj4criV2XI6ysMD9q9xa9kWD6MRIx4v/LV24jcZKMUqOHZBhe1EDB/1utnrLDqt28mbA/zMiesTy+SM6Idy3Q3lqpMzUKanOx7vaJFdLHnmuCqhomLw/hSyE0SI5RqeT+IV0pX0MfsqgJTCue/tOjYV0KRk3LAgbybRU1VBm5GUkNMssYhlGlsnK5DXVtlYsNf8/MZQLSZa7QdfsziggwDcdJneQ1dCBpWcyaUoKZEUNX+9DntHqw4N3/pTeaH4Q1VtogrRukMmUs/7FmQxU+IQjhc6BjBRRVL9zBHZ7PhwXJHPcfHg2pxoVBHjYoXWCSoZ8sZXWboM2gr8enXY7Yj2fuZs4ynM96kB3Nwla1VRXOWHGtscexCFQIU8RVfhpTxxwgxSjJN98FnB2Z3UlbX+ODGjMvaAUxMefpPxNOXdGfnOepE1DUUt4=
+  - secure: ZtV/PPovrfXOJPZtYtLVBveWEbsS3RnDyAbGAUAWsK8zro7r+W4UR5FwD6fp0TtzNV8PXNHmzxUu2hTHHtvaDLKzZcUe/jA7r+7YpjBsUy2sqlRPXJ0Nix/4mU5xe1NKZMCQX4OfuqPDXfne0RnslrmnQmTzK4EThCbGXq5aQ21732CbmiAAuMR0cEzUbIjeXryafoydDPeCSsXiKQBY36P8jLDESW+bzj1CYO4rLJwkTJbbPv3zLr9HOcNASqmtUw3qv22xGDxuSCG3lZyWTE8F97ptDv+Uc+/O/DjGreVK9KOPaTcjWZJlok/30WE1s/qH03iXh4H/z5fZ/pkSp2IvEZQtKwuE64M57assCNdt4bS3ONFw6oU0eLWVA7tIiE1TxGy8AIIFsi+kJFFeRUdXhtBE1TNpsaTWNEVkrNNo9fOZLwey+7MdSHIfp54CuPBUpmrU5GDKFKt+Y9lD/7kwfhkrB4ikIvoG/q6VB9PIy5DUYLxpLHV8RYD7ZFqR6ulDUvUjDCzFQWvjk4MNhZAP17CXSJ7B5O6Co9UPz5e5K546lviat/rVLd0cQb57CR/F8zs+LuYjOdA59XSNxDyYVUwxfqax61jpLBrQWpTP6aI+zzu2THXAkjRueEAE4agQvsIvXxw+hg72Dy2SpMFMBUf7IiiNZrKDKbIixVo=
