@@ -7,13 +7,12 @@ using Microsoft.Extensions.Options;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
-using AutoMapper.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using glovo_webapi.Services;
 using glovo_webapi.Entities;
+using glovo_webapi.Models;
 using glovo_webapi.Models.Users;
 using glovo_webapi.Services.UserService;
-using Microsoft.Extensions.FileProviders;
 
 namespace glovo_webapi.Controllers
 {
@@ -162,6 +161,38 @@ namespace glovo_webapi.Controllers
                 return NotFound(new {message = "user id not found"});
             }
             return Ok();
+        }
+        
+        //GET api/users/logged/location
+        [Authorize]
+        [HttpGet("logged/location")]
+        public IActionResult GetUserLocation()
+        {
+            User loggedUser = _userService.GetLogged();
+
+            return Ok(new Location(loggedUser.LocationLat, loggedUser.LocationLong));
+        }
+        
+        //POST api/users/logged/location
+        [Authorize]
+        [HttpPost("logged/location")]
+        public IActionResult PostUserLocation([FromBody]Location newLocation)
+        {
+            User loggedUser = _userService.GetLogged();
+
+            loggedUser.LocationLat = newLocation.Latitude;
+            loggedUser.LocationLong = newLocation.Longitude;
+            
+            try
+            {
+                _userService.Update(loggedUser);
+            }
+            catch (RequestException ex)
+            {
+                return BadRequest(new { error="location_usr-02",message = "unknown error"});
+            }
+            
+            return Ok(new Location(loggedUser.LocationLat, loggedUser.LocationLong));
         }
     }
 }

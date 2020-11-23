@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using AutoMapper;
 using glovo_webapi.Data;
 using glovo_webapi.Services.Orders;
@@ -7,6 +8,7 @@ using glovo_webapi.Services.Restaurants;
 using glovo_webapi.Services.UserService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
