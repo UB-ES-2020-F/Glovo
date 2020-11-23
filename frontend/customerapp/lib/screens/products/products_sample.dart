@@ -125,7 +125,17 @@ class Products_sample extends StatelessWidget {
                                             StaggeredTile.fit(1),
                                       );
                                     } else {
-                                      return CircularLoaderKomet();
+                                      return Padding(
+                                          padding:
+                                              EdgeInsets.fromLTRB(0, 0, 0, 10),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(15.0),
+                                                color: Color(0xAAFFFFFF)),
+                                            alignment: Alignment.centerLeft,
+                                            child: CircularLoaderKomet(),
+                                          ));
                                     }
                                   },
                                 );

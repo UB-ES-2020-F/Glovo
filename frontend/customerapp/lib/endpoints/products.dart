@@ -11,7 +11,6 @@ Future<List<ProductDTO>> getProductsFromRestaurant(int restaurantId) async {
       headers: {
         "Content-Type": "application/json",
       });
-  await new Future.delayed(const Duration(seconds: 3));
   if (response.statusCode == 200) {
     List<ProductDTO> products = (json.decode(response.body) as List)
         .map((i) => ProductDTO.fromJson(i))
