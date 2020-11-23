@@ -168,20 +168,8 @@ namespace glovo_webapi.Controllers
         [HttpGet("logged/location")]
         public IActionResult GetUserLocation()
         {
-            User loggedUser;
-            try
-            {
-                loggedUser = _userService.GetLogged();
-            }
-            catch (RequestException ex)
-            {
-                if (ex.Code == UserExceptionCodes.BadPassword)
-                {
-                    return BadRequest(new { error="location_usr-01",message = "bad session"});
-                }
-                return BadRequest(new { error="location_usr-02",message = "unknown error"});
-            }
-            
+            User loggedUser = _userService.GetLogged();
+
             return Ok(new Location(loggedUser.LocationLat, loggedUser.LocationLong));
         }
         
@@ -190,32 +178,17 @@ namespace glovo_webapi.Controllers
         [HttpPost("logged/location")]
         public IActionResult PostUserLocation([FromBody]Location newLocation)
         {
-            User loggedUser;
-            try
-            {
-                loggedUser = _userService.GetLogged();
-            }
-            catch (RequestException ex)
-            {
-                if (ex.Code == UserExceptionCodes.BadPassword)
-                {
-                    return BadRequest(new { error="location_usr-01",message = "bad session"});
-                }
-                return BadRequest(new { error="location_usr-02",message = "unknown error"});
-            }
+            User loggedUser = _userService.GetLogged();
 
             loggedUser.LocationLat = newLocation.Latitude;
             loggedUser.LocationLong = newLocation.Longitude;
+            
             try
             {
                 _userService.Update(loggedUser);
             }
             catch (RequestException ex)
             {
-                if (ex.Code == UserExceptionCodes.UserNotFound)
-                {
-                    return BadRequest(new { error="location_usr-01",message = "bad session"});
-                }
                 return BadRequest(new { error="location_usr-02",message = "unknown error"});
             }
             

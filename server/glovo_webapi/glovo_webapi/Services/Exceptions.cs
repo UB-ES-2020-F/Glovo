@@ -8,7 +8,6 @@ namespace glovo_webapi.Services.UserService
         public static int UserNotFound = 1;
         public static int BadPassword = 2;
         public static int UserAlreadyExists = 3;
-        public static int BadSession = 4;
     }
 
     static class OrderExceptionCodes

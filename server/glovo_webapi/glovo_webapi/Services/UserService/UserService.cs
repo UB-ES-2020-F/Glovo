@@ -67,10 +67,6 @@ namespace glovo_webapi.Services.UserService
         public User GetLogged()
         {
             User loggedUser = (User) _httpContextAccessor.HttpContext.Items["User"];
-            if (loggedUser == null)
-            {
-                throw new RequestException(UserExceptionCodes.BadSession);
-            }
             return loggedUser;
         }
         
