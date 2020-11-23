@@ -64,7 +64,7 @@ class RestaurantsList extends StatelessWidget {
                               StaggeredTile.fit(1),
                         );
                       } else {
-                        return Loader();
+                        return CircularLoaderKomet();
                       }
                     },
                   );

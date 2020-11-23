@@ -51,7 +51,8 @@ showLoaderDialog(BuildContext context) {
   Dialog loading = Dialog(
       elevation: 0,
       backgroundColor: Colors.transparent,
-      child: Padding(padding: EdgeInsets.all(20.0), child: Loader()));
+      child:
+          Padding(padding: EdgeInsets.all(20.0), child: CircularLoaderKomet()));
   showDialog(
     barrierDismissible: false,
     context: context,
@@ -61,7 +62,7 @@ showLoaderDialog(BuildContext context) {
   );
 }
 
-class Loader extends StatelessWidget {
+class CircularLoaderKomet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
