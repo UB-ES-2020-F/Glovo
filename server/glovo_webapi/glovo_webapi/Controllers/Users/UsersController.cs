@@ -187,7 +187,7 @@ namespace glovo_webapi.Controllers
             {
                 _userService.Update(loggedUser);
             }
-            catch (RequestException ex)
+            catch (Exception)
             {
                 return BadRequest(new { error="location_usr-02",message = "unknown error"});
             }
