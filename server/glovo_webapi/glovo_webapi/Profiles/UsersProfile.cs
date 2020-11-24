@@ -4,9 +4,9 @@ using glovo_webapi.Models.Users;
 
 namespace glovo_webapi.Profiles
 {
-    public class AutoMapperProfile : Profile
+    public class UsersProfile : Profile
     {
-        public AutoMapperProfile()
+        public UsersProfile()
         {
             CreateMap<User, UserModel>();
             CreateMap<RegisterModel, User>();

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using glovo_webapi.Data;
@@ -9,9 +10,10 @@ using glovo_webapi.Data;
 namespace glovo_webapi.Migrations
 {
     [DbContext(typeof(GlovoDbContext))]
-    partial class GlovoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201120195624_LocationMigration")]
+    partial class LocationMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -121,11 +123,7 @@ namespace glovo_webapi.Migrations
                         .HasColumnType("integer")
                         .UseIdentityByDefaultColumn();
 
-                    b.Property<byte[]>("AuthSalt")
-                        .HasColumnType("bytea");
-
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<double?>("LocationLat")
@@ -135,7 +133,6 @@ namespace glovo_webapi.Migrations
                         .HasColumnType("double precision");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<byte[]>("PasswordHash")
@@ -143,9 +140,6 @@ namespace glovo_webapi.Migrations
 
                     b.Property<byte[]>("PasswordSalt")
                         .HasColumnType("bytea");
-
-                    b.Property<int>("Role")
-                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
