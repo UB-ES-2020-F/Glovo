@@ -8,12 +8,17 @@ namespace glovo_webapi.Models.Restaurant
                 
                 public string ImgPath { get; set; }
                 
+                public double? LocationLat { get; set; }
+
+                public double? LocationLong { get; set; }
+                /*
                 public RestaurantReadModel(int Id, string Name, string ImgPath)
                 {
                         this.Id = Id;
                         this.Name = Name;
                         this.ImgPath = ImgPath;
                 }
+                */
                 
         }
 }
