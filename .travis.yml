@@ -2,9 +2,6 @@ services:
 - docker
 language: csharp
 
-env:
-  global:
-  - secure: MTv4wN5Io87jluypmSMs4i1XffRGFKo9MTfjNwHiqtc57kOb51TxcQDT6TE0MprMhkhTNcngvMV31xTUlc7qE7BMee0795xYSIs7mPpAmk3FIwSVd7SjeeNNFJfoe76oRdjkyu6Ztc8IaWAQmAT2eE1U83NnCPaP0wiHWYXL3Km3GMSGe3Ua4Hq5MJ95nJ5keTcJsv0RUeqUMoBnqme19eTbQ5yHj0AsusrtizZBMV+KHddyc1cwCxnnNcgMYT2+OcFskDOxDursui+5EhS/8xP7vH9RxqUjpwuBMsP5oBiIzUP9gbqt4ObyhlZRCwghbV0/0DgHhU0nM+21ct6Qo8DHQEMOhl7XV1eZJgGBRv7EHQ0bb8m4Tz+XniuKeFwETpGQvXcFVi4Kh9VZVBpljE/oFMCOFlh8MfH/oAZ8FYODH7dC3HaHsvseG8Vrr+FLz9MdatlSh0wOFbbH8mqCeA0JmarzvgLQSkf6ixII6Ogbps1FhFJFiTG2lLfXrImvTjM4iCPUs2Fr/1jvv21MpSWNYjLPE5M9Lvo3fzlS4kEIWz9QItEP2vqpDObaGd02f7Cc8uJn9QA+QIh/q6ktt9HlqEELY8RDjsySf1azvvsP7nbhcgXNoD3GtbXHm5truIYt+7rn8p15mJnmG4Tk+t+nbRlt4FihRYx933sdt30=
 
 mono: none
 dotnet: 3.1
@@ -47,9 +44,9 @@ jobs:
   - stage: code_ana
     script:
     - cd $TRAVIS_BUILD_DIR/server/glovo_webapi
-    - dotnet sonarscanner begin /k:"komet-backend" /d:sonar.login=$SONARSECRET /d:sonar.host.url=http://167.71.130.118:9000
+    - dotnet sonarscanner begin /k:"komet_backend" /d:sonar.login=$SONARQUBETOKEN /d:sonar.host.url=http://167.71.130.118:9000
     - dotnet build glovo_webapi.sln
-    - dotnet sonarscanner end /d:sonar.login=$SONARSECRET
+    - dotnet sonarscanner end /d:sonar.login=$SONARQUBETOKEN
   - stage: deploy
     name: Backend
     script:
