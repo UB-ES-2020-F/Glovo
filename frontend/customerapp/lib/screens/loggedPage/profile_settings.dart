@@ -1,6 +1,7 @@
 import 'package:customerapp/actions/logout.dart';
 import 'package:customerapp/components/text_link.dart';
 import 'package:customerapp/models/logged.dart';
+import 'package:customerapp/screens/commonComponents/single_message_dialog.dart';
 import 'package:customerapp/styles/initial_logged.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -252,6 +253,7 @@ class UserInformation extends StatelessWidget {
               TextLink(
                 'Logout',
                 (context) async {
+                  showLoaderDialog(context);
                   logoutAndRedirectToWelcome(context);
                 },
                 editTextLinksBold,
