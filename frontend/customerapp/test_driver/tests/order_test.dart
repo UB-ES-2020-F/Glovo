@@ -1,18 +1,11 @@
-import 'dart:io';
-
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
 import '../actions/check-is-present.dart';
 import '../data/login.dart';
-import '../objectKeys/anonymous_page.dart';
+import '../endpointComponents/user_endpoint.dart';
 import '../objectKeys/cart.dart';
-import '../objectKeys/logged_page.dart';
-import '../objectKeys/login.dart';
-import '../objectKeys/restaurant.dart';
-import '../objectKeys/restaurants.dart';
 import '../pageComponents/anonymouse_page.dart';
-import '../pageComponents/cart_page.dart';
 import '../pageComponents/logged_user_page.dart';
 import '../pageComponents/login_page.dart';
 import '../pageComponents/restaurant_page.dart';
@@ -25,6 +18,7 @@ void main() {
     // Connect to the Flutter driver before running any tests.
     setUpAll(() async {
       driver = await FlutterDriver.connect();
+      await createValidUserIfItDoesNotExist();
       await goToLogged(driver);
     });
 
@@ -71,6 +65,10 @@ void main() {
 
     // Close the connection to the driver after the tests have completed.
   });
+}
+
+Future<void> createValidUserIfItDoesNotExist() async {
+  await createUser(validName, validUserEmail, validUserPassword);
 }
 
 Future<void> goToRestaurantPage(FlutterDriver driver) async {

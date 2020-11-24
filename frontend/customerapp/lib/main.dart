@@ -24,11 +24,6 @@ void main({String env}) async {
   WidgetsFlutterBinding.ensureInitialized();
   setUpPersistence();
   await AppConfig.setEnvironment(env);
-
-  // MockUP user credentials
-  UserCredentialsRepository()
-      .update(UserCredentials('komet@komet.com', 'token', 0));
-  // End mockup
   runApp(KometApp());
 }
 

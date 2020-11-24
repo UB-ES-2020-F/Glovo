@@ -12,7 +12,7 @@ void main() {
   group('Orders endpoint tests', () {
     UserDTO user;
     setUpAll(() async {
-      await createUser(validUserEmail, validUserPassword);
+      await createUser(validName, validUserEmail, validUserPassword);
       user = await login(validUserEmail, validUserPassword);
     });
     test('it creates an order when the data is correct', () async {

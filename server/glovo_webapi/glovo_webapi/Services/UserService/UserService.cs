@@ -57,10 +57,6 @@ namespace glovo_webapi.Services.UserService
         public User GetById(int id)
         {
             User u = _context.Users.Find(id);
-            if (u == null)
-            {
-                throw new RequestException(UserExceptionCodes.UserNotFound);
-            }
             return u;
         }
 
@@ -101,6 +97,11 @@ namespace glovo_webapi.Services.UserService
             if (user == null)
                 throw new RequestException(UserExceptionCodes.UserNotFound);
 
+            if (!string.IsNullOrEmpty(userParam.Name))
+            {
+                user.Name = userParam.Name;
+            }
+            
             // update username if it has changed
             if (!string.IsNullOrWhiteSpace(userParam.Email) && userParam.Email != user.Email)
             {

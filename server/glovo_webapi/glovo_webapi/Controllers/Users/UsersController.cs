@@ -7,16 +7,18 @@ using Microsoft.Extensions.Options;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
+using System.Security.Cryptography;
 using glovo_webapi.Services;
 using glovo_webapi.Entities;
 using glovo_webapi.Models;
 using glovo_webapi.Models.Users;
 using glovo_webapi.Services.UserService;
+using glovo_webapi.Helpers;
+using glovo_webapi.Utils;
 
-namespace glovo_webapi.Controllers
+namespace glovo_webapi.Controllers.Users
 {
-    //[Authorize]
+    
     [ApiController]
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
@@ -36,7 +38,6 @@ namespace glovo_webapi.Controllers
         }
 
         //POST api/users/login
-        [AllowAnonymous]
         [HttpPost("login")]
         public IActionResult Authenticate([FromBody]LoginModel model)
         {
@@ -46,18 +47,30 @@ namespace glovo_webapi.Controllers
             } catch (RequestException) {
                 return BadRequest(new { error="login-01", message = "email or password is incorrect" });
             }
+            
+            var authSalt = new byte[32];
+            using (var generator = new RNGCryptoServiceProvider())
+            {
+                generator.GetBytes(authSalt);
+            }
 
+            string authSaltStr = Encoding.Default.GetString(authSalt);
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_configuration.Value.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),
+                Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()), 
+                    new Claim("authSalt", authSaltStr), }),
+                IssuedAt = DateTime.UtcNow,
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenString = tokenHandler.WriteToken(token);
 
+            user.AuthSalt = authSalt;
+            _userService.Update(user);
+            
             // return basic user info and authentication token
             return Ok(new
             {
@@ -69,7 +82,6 @@ namespace glovo_webapi.Controllers
         }
 
         //POST api/users/register
-        [AllowAnonymous]
         [HttpPost("register")]
         public IActionResult Register([FromBody]RegisterModel model)
         {
@@ -93,8 +105,19 @@ namespace glovo_webapi.Controllers
                 return BadRequest(new {message = "unknown error"});
             }
         }
+        
+        [Authorize(Roles="Regular, Administrator")]
+        [HttpPost("logout")]
+        public IActionResult Logout()
+        {
+            User user = (User)HttpContext.Items["User"];
+            user.AuthSalt = null;
+            _userService.Update(user);
+            return Ok();
+        }
 
         //GET api/users
+        [Authorize(Roles="Administrator")]
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -104,29 +127,33 @@ namespace glovo_webapi.Controllers
         }
 
         //GET api/users/<userId>
+        [Authorize(Roles="Regular, Administrator")]
         [HttpGet("{userId}")]
         public IActionResult GetById(int userId)
         {
-            User user = null;
-            try
-            {
-                user = _userService.GetById(userId);
-            }
-            catch (RequestException)
+            User user = _userService.GetById(userId);
+            User loggedUser = (User)HttpContext.Items["User"];
+            if (user == null)
             {
                 return NotFound(new {message = "user id not found"});
+            }
+            if (loggedUser.Role == UserRole.Regular && user.Id != loggedUser.Id)
+            {
+                return Unauthorized(new {message = "Unauthorized"});
             }
             var model = _mapper.Map<UserModel>(user);
             return Ok(model);
         }
 
-        //PUT api/users/<userId>
-        [HttpPut("{userId}")]
-        public IActionResult Update(int userId, [FromBody]UpdateUserModel model)
+        //PUT api/users/update
+        [Authorize(Roles="Regular, Administrator")]
+        [HttpPut("update")]
+        public IActionResult Update([FromBody]UpdateUserModel model)
         {
             // map model to entity and set id
+            User targetUser = (User)HttpContext.Items["User"];
             var user = _mapper.Map<User>(model);
-            user.Id = userId;
+            user.Id = targetUser.Id;
 
             try
             {
@@ -149,9 +176,16 @@ namespace glovo_webapi.Controllers
         }
 
         //DELETE api/users/<userId>
+        [Authorize(Roles="Regular, Administrator")]
         [HttpDelete("{userId}")]
         public IActionResult Delete(int userId)
         {
+            User loggedUser = (User)HttpContext.Items["User"];
+            if (loggedUser.Role == UserRole.Regular && userId != loggedUser.Id)
+            {
+                return Unauthorized(new {message = "Unauthorized"});
+            }
+            
             try
             {
                 _userService.Delete(userId);

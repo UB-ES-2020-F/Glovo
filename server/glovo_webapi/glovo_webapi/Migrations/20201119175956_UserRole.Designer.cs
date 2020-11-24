@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using glovo_webapi.Data;
@@ -9,15 +10,16 @@ using glovo_webapi.Data;
 namespace glovo_webapi.Migrations
 {
     [DbContext(typeof(GlovoDbContext))]
-    partial class GlovoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201119175956_UserRole")]
+    partial class UserRole
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .UseIdentityByDefaultColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
-                .HasAnnotation("ProductVersion", "5.0.0");
+                .HasAnnotation("ProductVersion", "5.0.0-rc.2.20475.6");
 
             modelBuilder.Entity("glovo_webapi.Entities.Order", b =>
                 {
@@ -127,12 +129,6 @@ namespace glovo_webapi.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<double?>("LocationLat")
-                        .HasColumnType("double precision");
-
-                    b.Property<double?>("LocationLong")
-                        .HasColumnType("double precision");
 
                     b.Property<string>("Name")
                         .IsRequired()

@@ -5,10 +5,10 @@ import 'package:flutter/widgets.dart';
 
 class LoggedModel extends ChangeNotifier {
   //testing variables. Will get real variables from backend
-  static String firstName = 'Josep Maria';
-  static String email = 'pepma@gmail.com';
-  static String direction = 'Carrer de Diputació, 234';
-  static String indicationsDirection = '4t 2a';
+  static String firstName = 'Unknown Name';
+  static String email = 'Unknown Email';
+  static String direction = 'Unknown direction';
+  static String indicationsDirection = '-';
   static int idUser = 99;
   static Location location = new Location(40, 2);
 
