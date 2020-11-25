@@ -1,11 +1,13 @@
+using System;
 using System.Collections.Generic;
 using AutoMapper;
 using glovo_webapi.Entities;
+using glovo_webapi.Models.Location;
 using glovo_webapi.Models.Restaurant;
 using glovo_webapi.Services.Restaurants;
 using Microsoft.AspNetCore.Mvc;
 
-namespace glovo_webapi.Controllers
+namespace glovo_webapi.Controllers.Restaurants
 {
     [ApiController]
     [Route("api/restaurants")]
@@ -22,22 +24,39 @@ namespace glovo_webapi.Controllers
        
         //GET api/restaurants
         [HttpGet]
-        public ActionResult<IEnumerable<RestaurantReadModel>> GetAllRestaurants()
+        public ActionResult<IEnumerable<RestaurantModel>> GetAllRestaurants()
         {
             IEnumerable<Restaurant> restaurants = _service.GetAllRestaurants();
-            return Ok(_mapper.Map<IEnumerable<RestaurantReadModel>>(restaurants));
+            return Ok(_mapper.Map<IEnumerable<RestaurantModel>>(restaurants));
         }
         
         //GET api/restaurants/<restId>
         [HttpGet("{restId}")]
-        public ActionResult<RestaurantReadModel> GetRestaurantById(int restId)
+        public ActionResult<RestaurantModel> GetRestaurantById(int restId)
         {
             Restaurant foundRestaurant = _service.GetRestaurantById(restId);
             if (foundRestaurant == null)
             {
                 return NotFound(new {message = "Restaurant id not found"});
             }
-            return Ok(_mapper.Map<RestaurantReadModel>(foundRestaurant));
+            return Ok(_mapper.Map<RestaurantModel>(foundRestaurant));
         }
+        
+        //GET api/restaurants/closest
+        [HttpGet("closest")]
+        public ActionResult<ViewRestaurantModel> GetClosestRestaurants([FromBody]LocationModel userLocation)
+        {
+            IEnumerable<Restaurant> restaurants = _service.GetAllRestaurants();
+            IEnumerable<ViewRestaurantModel> viewRestaurantModels =
+                _mapper.Map<IEnumerable<ViewRestaurantModel>>(
+                    restaurants,
+                    (opts) =>
+                    {
+                        opts.Items["userLocation"] = userLocation;
+                        opts.Items["deliveryFeeCalculator"] = new Func<double, double>((d) => { return 2.5 + (0.8 * d);});
+                    });
+
+            return Ok(viewRestaurantModels);
+        } 
     }
 }

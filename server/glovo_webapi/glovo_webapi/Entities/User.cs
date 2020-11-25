@@ -14,8 +14,7 @@ namespace glovo_webapi.Entities
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
         public byte[] AuthSalt { get; set; }
-        public double? LocationLat { get; set; }
-        public double? LocationLong { get; set; }
+        public Location Location { get; set; }
         [Required]
         public UserRole Role { get; set; }
     }
