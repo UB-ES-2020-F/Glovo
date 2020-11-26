@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <AnalysisConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.sonarsource.com/msbuild/integration/2015/1">
-  <SonarConfigDir>/home/pwn/Documents/ensw/Glovo/server/glovo_webapi/.sonarqube/conf</SonarConfigDir>
-  <SonarOutputDir>/home/pwn/Documents/ensw/Glovo/server/glovo_webapi/.sonarqube/out</SonarOutputDir>
-  <SonarBinDir>/home/pwn/Documents/ensw/Glovo/server/glovo_webapi/.sonarqube/bin</SonarBinDir>
-  <SonarScannerWorkingDirectory>/home/pwn/Documents/ensw/Glovo/server/glovo_webapi</SonarScannerWorkingDirectory>
+  <SonarConfigDir>/home/pwn/Documents/engsw/Glovo/server/glovo_webapi/.sonarqube/conf</SonarConfigDir>
+  <SonarOutputDir>/home/pwn/Documents/engsw/Glovo/server/glovo_webapi/.sonarqube/out</SonarOutputDir>
+  <SonarBinDir>/home/pwn/Documents/engsw/Glovo/server/glovo_webapi/.sonarqube/bin</SonarBinDir>
+  <SonarScannerWorkingDirectory>/home/pwn/Documents/engsw/Glovo/server/glovo_webapi</SonarScannerWorkingDirectory>
   <HasBeginStepCommandLineCredentials>true</HasBeginStepCommandLineCredentials>
   <SonarQubeHostUrl>http://167.71.130.118:9000</SonarQubeHostUrl>
   <SonarQubeVersion>8.3.0.34182</SonarQubeVersion>
-  <SonarProjectKey>komet-backend</SonarProjectKey>
+  <SonarProjectKey>komet_backend</SonarProjectKey>
   <AdditionalConfig>
     <ConfigSetting Id="BuildUri" />
     <ConfigSetting Id="TfsUri" />
@@ -106,8 +106,8 @@
   <AnalyzersSettings>
     <AnalyzerSettings>
       <Language>cs</Language>
-      <RuleSetFilePath>/home/pwn/Documents/ensw/Glovo/server/glovo_webapi/.sonarqube/conf/SonarQubeRoslyn-cs.ruleset</RuleSetFilePath>
-      <TestProjectRuleSetFilePath>/home/pwn/Documents/ensw/Glovo/server/glovo_webapi/.sonarqube/conf/SonarQubeRoslyn-cs-test.ruleset</TestProjectRuleSetFilePath>
+      <RuleSetFilePath>/home/pwn/Documents/engsw/Glovo/server/glovo_webapi/.sonarqube/conf/SonarQubeRoslyn-cs.ruleset</RuleSetFilePath>
+      <TestProjectRuleSetFilePath>/home/pwn/Documents/engsw/Glovo/server/glovo_webapi/.sonarqube/conf/SonarQubeRoslyn-cs-test.ruleset</TestProjectRuleSetFilePath>
       <AnalyzerPlugins>
         <AnalyzerPlugin Key="csharp" Version="8.6.1.17183" StaticResourceName="SonarAnalyzer-8.6.1.17183.zip">
           <AssemblyPaths>
@@ -126,13 +126,13 @@
         </AnalyzerPlugin>
       </AnalyzerPlugins>
       <AdditionalFilePaths>
-        <Path>/home/pwn/Documents/ensw/Glovo/server/glovo_webapi/.sonarqube/conf/cs/SonarLint.xml</Path>
+        <Path>/home/pwn/Documents/engsw/Glovo/server/glovo_webapi/.sonarqube/conf/cs/SonarLint.xml</Path>
       </AdditionalFilePaths>
     </AnalyzerSettings>
     <AnalyzerSettings>
       <Language>vbnet</Language>
-      <RuleSetFilePath>/home/pwn/Documents/ensw/Glovo/server/glovo_webapi/.sonarqube/conf/SonarQubeRoslyn-vbnet.ruleset</RuleSetFilePath>
-      <TestProjectRuleSetFilePath>/home/pwn/Documents/ensw/Glovo/server/glovo_webapi/.sonarqube/conf/SonarQubeRoslyn-vbnet-test.ruleset</TestProjectRuleSetFilePath>
+      <RuleSetFilePath>/home/pwn/Documents/engsw/Glovo/server/glovo_webapi/.sonarqube/conf/SonarQubeRoslyn-vbnet.ruleset</RuleSetFilePath>
+      <TestProjectRuleSetFilePath>/home/pwn/Documents/engsw/Glovo/server/glovo_webapi/.sonarqube/conf/SonarQubeRoslyn-vbnet-test.ruleset</TestProjectRuleSetFilePath>
       <AnalyzerPlugins>
         <AnalyzerPlugin Key="csharp" Version="8.6.1.17183" StaticResourceName="SonarAnalyzer-8.6.1.17183.zip">
           <AssemblyPaths>
@@ -151,7 +151,7 @@
         </AnalyzerPlugin>
       </AnalyzerPlugins>
       <AdditionalFilePaths>
-        <Path>/home/pwn/Documents/ensw/Glovo/server/glovo_webapi/.sonarqube/conf/vbnet/SonarLint.xml</Path>
+        <Path>/home/pwn/Documents/engsw/Glovo/server/glovo_webapi/.sonarqube/conf/vbnet/SonarLint.xml</Path>
       </AdditionalFilePaths>
     </AnalyzerSettings>
   </AnalyzersSettings>
