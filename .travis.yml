@@ -39,9 +39,9 @@ jobs:
         - flutter test test_driver/tests/endpoints/orders.dart
         - flutter test test_driver/tests/endpoints/products.dart
         - flutter test test_driver/tests/endpoints/restaurants.dart
-        - flutter drive --target=test_driver/tests/cart.dart
-        - flutter drive --target=test_driver/tests/order.dart
-        - flutter drive --target=test_driver/tests/profile_settings.dart
+        - flutter drive --target=test_driver/tests/cart.dart --browser-name=chrome
+        - flutter drive --target=test_driver/tests/order.dart --browser-name=chrome
+        - flutter drive --target=test_driver/tests/profile_settings.dart --browser-name=chrome
     
     - stage: deploy
       name: "Backend"
