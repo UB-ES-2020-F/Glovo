@@ -46,7 +46,7 @@ jobs:
       end /d:sonar.login=d48a60c50f73a7f5d0d8e90ec5a451494454e132 /d:sonar.host.url=http://167.71.130.118:9000
     - dotnet build glovo_webapi.sln
     - which dotnet
-    - dotnet sonarscanner end /d:sonar.login=d48a60c50f73a7f5d0d8e90ec5a451494454e132 /d:sonar.verbose=true
+    - dotnet sonarscanner end /d:sonar.login=d48a60c50f73a7f5d0d8e90ec5a451494454e132
   - stage: deploy
     name: Backend
     script:
