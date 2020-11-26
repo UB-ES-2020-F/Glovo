@@ -2,7 +2,7 @@ using glovo_webapi.Models.Location;
 
 namespace glovo_webapi.Models.Restaurant
 {
-        public class RestaurantModel
+        public class LocationRestaurantModel
         {
                 public int Id { get; set; }
                 

@@ -5,9 +5,9 @@ using glovo_webapi.Models.Restaurant;
 
 namespace glovo_webapi.Profiles
 {
-    public class CustomDistanceResolver : IValueResolver<Restaurant, ViewRestaurantModel, double?>
+    public class CustomDistanceResolver : IValueResolver<Restaurant, DistanceRestaurantModel, double?>
     {
-        public double? Resolve(Restaurant restaurant, ViewRestaurantModel viewRestaurantModel, double? member, ResolutionContext context)
+        public double? Resolve(Restaurant restaurant, DistanceRestaurantModel distanceRestaurantModel, double? member, ResolutionContext context)
         {
             if (context.Items["userLocation"] == null)
             {
@@ -17,9 +17,9 @@ namespace glovo_webapi.Profiles
         }
     }
     
-    public class CustomDeliveryFeeResolver : IValueResolver<Restaurant, ViewRestaurantModel, double?>
+    public class CustomDeliveryFeeResolver : IValueResolver<Restaurant, DistanceRestaurantModel, double?>
     {
-        public double? Resolve(Restaurant restaurant, ViewRestaurantModel viewRestaurantModel, double? member, ResolutionContext context)
+        public double? Resolve(Restaurant restaurant, DistanceRestaurantModel distanceRestaurantModel, double? member, ResolutionContext context)
         {
             if (context.Items["userLocation"] == null || context.Items["deliveryFeeCalculator"] == null)
             {
@@ -35,9 +35,9 @@ namespace glovo_webapi.Profiles
     {
         public RestaurantsProfile()
         {
-            CreateMap<Restaurant, RestaurantModel>();
+            CreateMap<Restaurant, LocationRestaurantModel>();
 
-            CreateMap<Restaurant, ViewRestaurantModel>()
+            CreateMap<Restaurant, DistanceRestaurantModel>()
                 .ForMember(
                     viewRestaurantModel => viewRestaurantModel.Distance,
                     opts => opts.MapFrom<CustomDistanceResolver>())

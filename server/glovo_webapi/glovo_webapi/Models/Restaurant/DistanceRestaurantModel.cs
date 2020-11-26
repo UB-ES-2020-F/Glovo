@@ -1,6 +1,6 @@
 namespace glovo_webapi.Models.Restaurant
 {
-        public class ViewRestaurantModel
+        public class DistanceRestaurantModel
         {
                 public int Id { get; set; }
                 

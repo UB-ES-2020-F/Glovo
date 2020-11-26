@@ -1,18 +1,14 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace glovo_webapi.Entities
 {
+    [Owned]
     public class Location
     {
         private readonly double _R = 6371;
         
-        public Location(double latitude, double longitude)
-        {
-            Latitude = latitude;
-            Longitude = longitude;
-        }
-
         [Range(-90, 90)]
         public double Latitude { get; set; }
 
