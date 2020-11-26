@@ -12,7 +12,7 @@ install:
 - git clone https://github.com/flutter/flutter.git -b beta
 - export PATH="$TRAVIS_BUILD_DIR/flutter/bin:$PATH"
 - flutter config --enable-web
-- dotnet tool install --global dotnet-sonarscanner --version 4.8.0
+- dotnet tool install --global dotnet-sonarscanner 
 stages:
 - tests
 - code_ana
@@ -42,10 +42,11 @@ jobs:
   - stage: code_ana
     script:
     - cd $TRAVIS_BUILD_DIR/server/glovo_webapi
-    - dotnet sonarscanner begin /k:"komet_backend" /d:sonar.login=dotnet sonarscanner
+    - dotnet sonarscanner begin /k:"komet_backend" /d:sonar.login=dotnet sonarscanner /d:sonar.verbose=true
       end /d:sonar.login=d48a60c50f73a7f5d0d8e90ec5a451494454e132 /d:sonar.host.url=http://167.71.130.118:9000
     - dotnet build glovo_webapi.sln
-    - dotnet sonarscanner end /d:sonar.login=d48a60c50f73a7f5d0d8e90ec5a451494454e132
+    - which dotnet
+    - dotnet sonarscanner end /d:sonar.login=d48a60c50f73a7f5d0d8e90ec5a451494454e132 /d:sonar.verbose=true
   - stage: deploy
     name: Backend
     script:
