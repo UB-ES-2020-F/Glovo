@@ -42,11 +42,11 @@ jobs:
   - stage: code_ana
     script:
     - cd $TRAVIS_BUILD_DIR/server/glovo_webapi
-    - dotnet sonarscanner begin /k:"komet_backend" /d:sonar.login=$SONARVAR
-      /d:sonar.host.url=http://167.71.130.118:9000 /d:sonar.verbose=true
+    - dotnet sonarscanner begin /k:"komet_backend" /d:sonar.login=$SONARTOK /d:sonar.host.url=http://167.71.130.118:9000
+      /d:sonar.verbose=true
     - dotnet build glovo_webapi.sln
     - which dotnet
-    - dotnet sonarscanner end /d:sonar.login=$SONARVAR
+    - dotnet sonarscanner end /d:sonar.login=$SONARTOK
   - stage: deploy
     name: Backend
     script:
@@ -76,5 +76,4 @@ jobs:
     - git push -f heroku master
 env:
   global:
-  - secure: 3rm1M/ndMhy3UZh6xLYgOvwm94Au9w5hrCOXWkFZ/yRwAcCWVTwA3xTEOSZXQvRELwyYTyX+6DfPghregd2aPP9DX6LV02Be64YxkgWYzoUPpnXdLkzlUe6GQgUkHEyDnPQe2dcSLzE14dvb9+BUm+SiGVXqEEqGC9S+yqSadVbUIN60/fzJNQvbo8hVz2TrmL2eqK5PaD0xFSMwgIUxGctxeo4kJT0ZY8u5xSxMG7X+yoFDGiHoDuv/20neunY7vQ8+EzrrV5gpqB75hG9KA/DMyATvpLM2SgHgVrr8qxoU2OmQl2HczorPv8vGGAny8SE33cZSDq35LiFDwvRc3kpQWa2WOta8l8/NTmbp6Z8EMFP1ox2UnPpS9OGlkkzPeNB3YqAlTD80NR5mc3dRcQNRm2KzKHRTrLNtxcynFkqx67e8v1aJ295qHLD6SW22wTvt79Ima2s6sfnawdBojUC2UaQIhtPeaXDwwQ8pJVGyUtVceFaXyDxfgKQhRItuZcrp92XNU4CoDatN4JGxcTb+yRlQa+yIV4XiXgSNAIIfaQXY/58do7GXFNZnwQYQH1o/6Hm7VCDnd3Eo73MUozw5TB++3Am9WrcF519QR8z0hvWi/kjhD3EczO8fPdqbY5C23oC6HV2EmKOnLYMgbnH+tDZwzPk65IItad0WwmE=
-  - secure: y79gg1ZXcWf6+AylKZIyR/5hNRmFUFTV9zpGpHF/8EAn7pjxb6gxr8RjoD0EJb4GD3agoRab3hoIkVgpi3vt1uSNQ2WtNFBpMUC583u8Msa5uIrxNhgSo0gJs2ZXmhH4SyXf/Ot6z9v/e1VpkqeCd6t3Ljpl44NG7u3Z3btKuHv+moyKT4cu7XAAWLVcSS5j5SqNIt6AE4qAOu5Ro01A8vLnpMh83V/vs/EIn2F0qIJ5zflxZH2laQrJWQrL+/LQVrQprKuCIasRSd8WCAUmEzF1DFAFigkNjfTPmbaXgmuTpNiehDnngO0FnbNzGvgeRl98mYKfW4FuRrW+TdvymN2melniStn1po/HdGc3W6evNIcapNkO3P6E1t9lgXC7tSxHy1FGmARlJXUZX4qMQF/+Vfx3UgyVY+t9pof+vmkob4Cmdo5pny2slWvJjJJd/gjmbNDXfSUec68Cvc2mHseMiFbeqOTVgbr9aU7q/H7IUICGQZF55XDphOMfoECeB5VxWr4jWNjvUJr49VfymGB9yVWlWfxW9hI8jHpZeNhjkvRCL27afzLanqUpTqhm59GnQjcJNzVoz630OCAPvmB1X3n08AWxR6DkIxfjYMpaY+qzQXfY030gNnvJHhDl84dThONOUttkIOA3eeXFUMeNqG2DFr7wJvnveNMpxzk=
+    secure: LWdBo7I/uCL3kGVGebvREUUbkYbzD8ZRLvldPit2j0frPH7+yzbc+bxBe9hoDyLtWB9/TE9dUCnBYmlayE20Rg/3ygI5K74qsWcYCXC5A1UgmDeLVV8EFL5IOo3PHNnsuPpFEmnYJ/oj307Dywmh9WRMK8hvCRzQzDZ4+IQUoX01Wec04zcB8EdZMkrcdlYHmBPXqtTOQ/yMHJCQpEeDyoCRj0YbzJRcDrokfaJY5g7+gmr6S20V9sLzRmuMlhikzLhEkuwY8r5orDWcOKGOKxiyMsQb/1knBZbFyUxYKjtKUJ3euYG4F8BhhLe387ap73YF92NIZlbTNu1qb0kxXlw7NwiYpkAv29elsa5e5oQjM8Qb4AZIWJUCbJm7+X8x3iiHdQRiRHcvSPlwdFdc/VWZlRjl6THn/my8iGDSmxPPYAe73S2gmb2vNIwPvRDE09m7Ij71DTwf7tKul+3Ewy2kvJn0dg2h1DC9mHjLc/41ztY8+cRc5jyXH9seO22arKUz8CUN11f/TAmESl13k405VIFk+0/PJXV2IwBsacudGmSBOsTkg3dp7j4+yRDPwMXAjct7fHHIo6JpMvG4IZaOOzgSSDEZOhBydX9dGeBCuI8Bnh840fI+CYscecCFp1gdH5g0Xd7+uTCKYGVa3ZizA8YOMdOOxpIDLGv6XNs=
