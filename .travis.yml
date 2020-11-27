@@ -21,7 +21,8 @@ install:
 - export PATH="$TRAVIS_BUILD_DIR/sonar_dir/sonar-scanner-cli-4.5.0.2216-linux/bin:$PATH"
 stages:
 - tests
-- code_ana
+- code_ana_backend
+- code_ana_frontend
 - name: deploy
   if: branch = main
 jobs:
@@ -45,14 +46,20 @@ jobs:
     - dotnet glovo_webapi.dll &
     - cd $TRAVIS_BUILD_DIR/frontend/customerapp
     - flutter test test_driver/tests/endpoints/orders.dart
-  - stage: code_ana
+  - stage: code_ana_backend
     script:
     - cd $TRAVIS_BUILD_DIR/server/glovo_webapi
-    - dotnet sonarscanner begin /k:"komet_backend" /d:sonar.login=$SONARTOK /d:sonar.branch.name=$TRAVIS_BRANCH /d:sonar.host.url=http://167.71.130.118:9000
+    - dotnet sonarscanner begin /k:"komet_backend" /d:sonar.login=$SONARTOK /d:sonar.projectDescription=$TRAVIS_BRANCH /d:sonar.host.url=http://167.71.130.118:9000
       /d:sonar.verbose=true
     - dotnet build glovo_webapi.sln
-    - which dotnet
     - dotnet sonarscanner end /d:sonar.login=$SONARTOK
+  - stage: code_ana_frontend
+    script:
+    - cd $TRAVIS_BUILD_DIR/frontend/customerapp
+    - flutter pub get
+    - flutter test --machine > tests.output
+    - flutter test --coverage
+    - sonar-scanner
   - stage: deploy
     name: Backend
     script:
