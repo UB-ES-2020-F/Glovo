@@ -20,10 +20,11 @@ install:
 - unzip sonar-scanner-cli-4.5.0.2216-linux.zip -d $TRAVIS_BUILD_DIR/sonar_dir
 stages:
 - tests
-- code_ana_backend
-- code_ana_frontend
+- code_analysis
 - name: deploy
   if: branch = main
+- name: code_analysis
+  if: type = pull_request
 jobs:
   include:
   - stage: tests
