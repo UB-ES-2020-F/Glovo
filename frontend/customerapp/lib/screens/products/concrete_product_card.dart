@@ -5,28 +5,28 @@ import 'package:customerapp/styles/product.dart';
 import 'package:flutter/material.dart';
 
 class ProductListCard extends StatefulWidget {
-  Product _product_overview;
+  Product _product;
   Function add;
 
-  ProductListCard(Key key, this._product_overview, this.add) : super(key: key);
+  ProductListCard(Key key, this._product, this.add) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return ProductListCardState(key, _product_overview, add);
+    return ProductListCardState(key, _product, add);
   }
 
   Product get product {
-    return _product_overview;
+    return _product;
   }
 }
 
 class ProductListCardState extends State<StatefulWidget> {
   Key key;
-  Product _product_overview;
+  Product _product;
   Function add;
   double elevation = 2;
 
-  ProductListCardState(this.key, this._product_overview, this.add);
+  ProductListCardState(this.key, this._product, this.add);
 
   @override
   Widget build(BuildContext context) {
@@ -64,19 +64,17 @@ class ProductListCardState extends State<StatefulWidget> {
                                   borderRadius: BorderRadius.circular(5.0),
                                   border: Border.all(color: Colors.black26),
                                   image: DecorationImage(
-                                      image: NetworkImage(
-                                          _product_overview.imgPath),
+                                      image: NetworkImage(_product.imgPath),
                                       fit: BoxFit.cover)),
-                              //'https://pngimg.com/uploads/pasta/pasta_PNG58.png',
                             ),
                           ),
                           ListTile(
                               title: Text(
-                                _product_overview.name,
+                                _product.name,
                                 style: TitleStyleProduct,
                               ),
                               subtitle: Padding(
-                                child: Text(_product_overview.description),
+                                child: Text(_product.description),
                                 padding: EdgeInsets.only(top: 7),
                               )),
                           Padding(
@@ -86,7 +84,8 @@ class ProductListCardState extends State<StatefulWidget> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text("${_product_overview.price} €"),
+                                    Text(_product.price.toStringAsFixed(2) +
+                                        " €"),
                                     IconButton(
                                       key: Key(
                                           '${extractKeyValue(key)}-product-add-to-card'),
@@ -95,12 +94,7 @@ class ProductListCardState extends State<StatefulWidget> {
                                         color: Color(0xff43C1A4),
                                       ),
                                       iconSize: 30,
-                                      onPressed: () => add(_product_overview)
-                                      /*() => showDialog(
-                          context: context,
-                          builder: (context) =>
-                              Dialog_product(_product_overview))*/
-                                      ,
+                                      onPressed: () => add(_product),
                                     )
                                   ]))
                         ]),
@@ -112,10 +106,10 @@ class ProductListCardState extends State<StatefulWidget> {
     if (MediaQuery.of(context).size.width > 600) {
       showDialog(
           context: context,
-          builder: (context) => Dialog_product(_product_overview, add));
+          builder: (context) => Dialog_product(_product, add));
     } else {
       Navigator.pushNamed(context, '/concrete_product',
-          arguments: ConcreteProductArguments(_product_overview, add));
+          arguments: ConcreteProductArguments(_product, add));
     }
   }
 }

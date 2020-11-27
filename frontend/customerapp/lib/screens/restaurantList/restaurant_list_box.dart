@@ -71,7 +71,7 @@ class RestaurantsListCard extends StatelessWidget {
                           Container(
                               padding: EdgeInsets.only(left: 2.5, right: 15),
                               child: Text(
-                                '$deliveryFee €',
+                                deliveryFee.toStringAsFixed(2) + ' €',
                                 style: restaurantListCardInsideImageText,
                               ))
                         ],

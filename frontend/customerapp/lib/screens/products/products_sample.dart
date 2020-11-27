@@ -159,7 +159,7 @@ class Products_sample extends StatelessWidget {
                     'Make order of ' +
                         cart.countItems().toString() +
                         ' items (' +
-                        cart.getTotalPrice().toString() +
+                        cart.getTotalPrice().toStringAsFixed(2) +
                         ' €)'))
         ]));
   }

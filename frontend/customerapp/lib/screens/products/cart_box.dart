@@ -111,7 +111,7 @@ class CartBox extends StatelessWidget {
                         style: NumberItemsCartStyle,
                       ),
                       Text(
-                        cart.getTotalPrice().toString() + ' €',
+                        cart.getTotalPrice().toStringAsFixed(2) + ' €',
                         style: TotalPriceCartStyle,
                       ),
                     ],
@@ -167,7 +167,7 @@ class ItemOnCart extends StatelessWidget {
                   width: 60,
                   alignment: Alignment.centerRight,
                   child: Text(
-                    (quantity * prod.price).toString() + ' €',
+                    (quantity * prod.price).toStringAsFixed(2) + ' €',
                     style: CartTimeFeeStyle,
                   )),
             ],
