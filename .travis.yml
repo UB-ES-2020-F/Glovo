@@ -45,19 +45,20 @@ jobs:
     - dotnet glovo_webapi.dll &
     - cd $TRAVIS_BUILD_DIR/frontend/customerapp
     - flutter test test_driver/tests/endpoints/orders.dart
-  - stage: code_ana_backend
+  - stage: code_analysis
+    name: backend
     script:
     - cd $TRAVIS_BUILD_DIR/server/glovo_webapi
     - dotnet sonarscanner begin /k:"komet_backend" /d:sonar.login=$SONARTOK /d:sonar.projectDescription=$TRAVIS_BRANCH /d:sonar.host.url=http://167.71.130.118:9000
       /d:sonar.verbose=true
     - dotnet build glovo_webapi.sln
     - dotnet sonarscanner end /d:sonar.login=$SONARTOK
-  - stage: code_ana_frontend
+    name: frontend
     script:
     - cd $TRAVIS_BUILD_DIR/frontend/customerapp
+    - flutter clean
     - flutter pub get
-    - flutter test --machine > tests.output
-    - flutter test --coverage
+    
     - export PATH="$TRAVIS_BUILD_DIR/sonar_dir/sonar-scanner-cli-4.5.0.2216-linux/bin:$PATH"
     - /home/travis/build/UB-ES-2020-F/Glovo/sonar_dir/sonar-scanner-4.5.0.2216-linux/bin/sonar-scanner
   - stage: deploy

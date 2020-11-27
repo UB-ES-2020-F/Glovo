@@ -10,8 +10,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:customerapp/main.dart';
 
 void main() {
-  testWidgets('basic test', (WidgetTester tester) async {
+  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(KometApp());
+
+    expect(find.text("Register"), findsOneWidget);
+    expect(find.text("Login"), findsOneWidget);
   });
 }
