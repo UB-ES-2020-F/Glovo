@@ -17,6 +17,9 @@ class ProductScreen extends StatelessWidget {
     this.product = args.prod;
     this.add = args.add;
 
-    return Scaffold(body: Container(child: ProductInformation(product, add)));
+    return Scaffold(
+        body: Container(
+            alignment: Alignment.center,
+            child: ProductInformation(product, add)));
   }
 }

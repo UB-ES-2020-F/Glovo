@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:customerapp/models/products.dart';
@@ -16,6 +17,7 @@ class ProductInformation extends StatelessWidget {
     return Container(
         alignment: Alignment.center,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
                 padding: EdgeInsets.all(10),
@@ -28,16 +30,23 @@ class ProductInformation extends StatelessWidget {
                     Navigator.pop(context);
                   },
                 )),
-            Text(product.name, style: registerToKometTextStyle),
+            Text(
+              product.name,
+              style: registerToKometTextStyle,
+              textAlign: TextAlign.center,
+            ),
             Padding(
+              padding: EdgeInsets.all(30),
               child: IntrinsicHeight(
                   child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                      height: 200,
-                      width: 200,
-                      padding: EdgeInsets.only(right: 20),
+                      height: min(
+                          MediaQuery.of(context).size.width / 2.0 - 60, 200.0),
+                      width: min(
+                          MediaQuery.of(context).size.width / 2.0 - 60, 200.0),
+                      padding: EdgeInsets.only(right: 15),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16.0),
                           image: DecorationImage(
@@ -45,23 +54,27 @@ class ProductInformation extends StatelessWidget {
                             product.imgPath,
                           )))),
                   Container(
-                      width: 200,
-                      padding: EdgeInsets.only(left: 10),
+                      width: min(
+                          MediaQuery.of(context).size.width / 2.0 - 60, 300.0),
+                      padding: EdgeInsets.only(left: 15),
                       child: Column(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(product.description,
-                                style: DescriptionTextStyleProduct),
+                            Text(
+                              product.description,
+                              style: DescriptionTextStyleProduct,
+                              textAlign: TextAlign.justify,
+                            ),
                             Text(product.price.toStringAsFixed(2) + " €",
                                 style: PriceTextStyleProduct),
                           ]))
                 ],
               )),
-              padding: EdgeInsets.all(30),
             ),
             Padding(
+              padding: EdgeInsets.all(20),
               child: ElevatedButton(
                 onPressed: () {
                   add(product);
@@ -70,7 +83,6 @@ class ProductInformation extends StatelessWidget {
                 child: Text("Add to your order"),
                 style: greenButtonStyle,
               ),
-              padding: EdgeInsets.all(20),
             )
           ],
         ));
