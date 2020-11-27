@@ -8,7 +8,7 @@ import 'package:customerapp/models/user_credentials/user_credentials.dart';
 import 'package:customerapp/screens/loggedPage/initial_logged_page.dart';
 import 'package:customerapp/screens/anon_root.dart';
 import 'package:customerapp/screens/products/products_sample.dart';
-import 'package:customerapp/screens/products/screen_product.dart';
+import 'package:customerapp/screens/products/product_screen.dart';
 import 'package:customerapp/screens/restaurantList/restaurant_list.dart';
 import 'package:customerapp/screens/signIn/signin_page.dart';
 import 'package:customerapp/screens/signUp/signup_page.dart';
@@ -54,7 +54,7 @@ class KometApp extends StatelessWidget {
             '/sign-in': (context) => SignInPage(),
             '/products': (context) => Products_sample(),
             '/restaurant-list': (context) => RestaurantsList(),
-            '/concrete_product': (context) => Screen_products(),
+            '/concrete_product': (context) => ProductScreen(),
             '/initial-logged-in': (context) => InitialLogged(),
             '/overview_mobile': (context) => TabBar_screen(),
           }),

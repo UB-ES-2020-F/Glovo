@@ -1,6 +1,6 @@
 import 'package:customerapp/actions/extract-key-value.dart';
 import 'package:customerapp/models/products.dart';
-import 'package:customerapp/screens/products/dialog_product.dart';
+import 'package:customerapp/screens/products/product_dialog.dart';
 import 'package:customerapp/styles/product.dart';
 import 'package:flutter/material.dart';
 
@@ -105,8 +105,7 @@ class ProductListCardState extends State<StatefulWidget> {
   void change_product(Function add) {
     if (MediaQuery.of(context).size.width > 600) {
       showDialog(
-          context: context,
-          builder: (context) => Dialog_product(_product, add));
+          context: context, builder: (context) => ProductDialog(_product, add));
     } else {
       Navigator.pushNamed(context, '/concrete_product',
           arguments: ConcreteProductArguments(_product, add));

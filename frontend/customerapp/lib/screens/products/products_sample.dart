@@ -15,7 +15,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:customerapp/endpoints/products.dart';
 
 import 'cart_box.dart';
-import 'concrete_product_card.dart';
+import 'product_card.dart';
 
 class Products_sample extends StatelessWidget {
   List prods = List();
