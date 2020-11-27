@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using glovo_webapi.Entities;
+using glovo_webapi.Utils;
 
 namespace glovo_webapi.Services.Restaurants
 {
@@ -19,5 +20,6 @@ namespace glovo_webapi.Services.Restaurants
         {
             return new Restaurant(id, "Kentucky Friend Chicken", "img/stores/KFC_main.jpg");
         }
+        
     }
 }

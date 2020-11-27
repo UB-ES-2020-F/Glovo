@@ -81,8 +81,7 @@ namespace glovo_webapi.Services.UserService
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
 
-            user.LocationLat = null;
-            user.LocationLong = null;
+            user.Location = null;
             
             _context.Users.Add(user);
             _context.SaveChanges();

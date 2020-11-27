@@ -13,17 +13,15 @@ namespace glovo_webapi.Entities
                 
                 public string ImgPath { get; set; }
                 
+                public Location Location { get; set; }
+                
                 public ICollection<Product> Products { get; set; }
 
-                public double? LocationLat { get; set; }
-                public double? LocationLong { get; set; }
-                
                 public Restaurant(int Id, string Name, string ImgPath)
                 {
                         this.Id = Id;
                         this.Name = Name;
                         this.ImgPath = ImgPath;
                 }
-                
         }
 }

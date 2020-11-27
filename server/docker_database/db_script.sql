@@ -14,7 +14,7 @@ VALUES
     ('Test 6', 'test6@glovo.net', null, null, 0),
     ('Admin', 'admin@glovo.net', '\xa708693392105b5478942aa4809102841ab167756c6cc3fdb3779b016c5cc7f6138c4bd064d3087dca315af69c0c336315c62ca7faf35369e7b8ffa70793c312', '\x89a36aef137ddd3d91b9f67afe74d9b57cbb5898db54a73640cd56f5c92de9aa8a374dd0b9e5a7054c3b39a38f4bdd552389ae186b4f9b4ce9674c0965cfb6b86bbe372dff7f91406dbce653463693426801d3c4ae93305e7478bf19e40929ffce067b498fd723c3ab8e6d9a3ba3db03027b350a60e2d1a9b2b7c2abd92a0332', 1);
 
-INSERT INTO "Restaurants" ("Name", "ImgPath", "LocationLat", "LocationLong")
+INSERT INTO "Restaurants" ("Name", "ImgPath", "Location_Latitude", "Location_Longitude")
 VALUES
 	('KFC', 'https://res.cloudinary.com/glovoapp/w_1200,f_auto,q_auto/Stores/kgwyyskpc20x3zoquelm', 20, 10),
 	('La Tagliatella', 'https://res.cloudinary.com/glovoapp/w_700,h_360,f_auto,q_auto/Stores/ut78sjpa3zs5sl2gf4wl', 20, 40),
