@@ -6,10 +6,22 @@ import 'package:customerapp/styles/restaurant_list.dart';
 import 'package:flutter/material.dart';
 import 'package:icon_shadow/icon_shadow.dart';
 
-class RestaurantsListCard extends StatelessWidget {
+class RestaurantsListCard extends StatefulWidget {
   Restaurant restaurant;
 
   RestaurantsListCard(Key key, this.restaurant) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() {
+    return RestaurantsListCardState(key, restaurant);
+  }
+}
+
+class RestaurantsListCardState extends State<StatefulWidget> {
+  Restaurant restaurant;
+  double elevation = 2;
+
+  RestaurantsListCardState(Key key, this.restaurant);
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +31,22 @@ class RestaurantsListCard extends StatelessWidget {
     TimeInterval timeInterval = new TimeInterval.distance(distance);
     return Container(
         child: Card(
+      elevation: this.elevation,
       child: Container(
           child: Column(
         children: [
           InkWell(
+              onHover: (value) {
+                if (value) {
+                  setState(() {
+                    elevation = 8;
+                  });
+                } else {
+                  setState(() {
+                    elevation = 2;
+                  });
+                }
+              },
               onTap: () => load_product(context, restaurant),
               child: Container(
                 alignment: Alignment.bottomCenter,
