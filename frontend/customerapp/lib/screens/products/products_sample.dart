@@ -67,9 +67,9 @@ class Products_sample extends StatelessWidget {
                       padding: MediaQuery.of(context).size.width < 600
                           ? EdgeInsets.fromLTRB(10, 30, 10, 0)
                           : EdgeInsets.fromLTRB(30, 30, 30, 0),
-                      width: MediaQuery.of(context).size.width < 900
+                      width: MediaQuery.of(context).size.width <= 900
                           ? MediaQuery.of(context).size.width - 40
-                          : MediaQuery.of(context).size.width - cartWidth - 90,
+                          : MediaQuery.of(context).size.width - cartWidth - 75,
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.max,

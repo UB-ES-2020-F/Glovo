@@ -87,7 +87,7 @@ class CartBox extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '$deliveryFee €',
+                      deliveryFee.toStringAsFixed(2) + ' €',
                       style: CartTimeFeeStyle,
                     ),
                   ],
@@ -95,7 +95,7 @@ class CartBox extends StatelessWidget {
             if (cart.order.isNotEmpty)
               Column(children: [
                 Padding(
-                  padding: EdgeInsets.all(5),
+                  padding: EdgeInsets.all(0),
                   child: Column(
                     key: Key('cart-items'),
                     children: items,
@@ -149,22 +149,23 @@ class ItemOnCart extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             children: [
               Container(
-                  padding: EdgeInsets.fromLTRB(0, 0, 15, 0),
-                  width: 48,
-                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                  width: 50,
+                  alignment: Alignment.centerRight,
                   child: Text(
                     quantity.toString() + 'x',
                     style: NumberItemsCartStyle,
                   )),
               Container(
-                  width: 200,
+                  width: 194,
+                  alignment: Alignment.centerLeft,
                   child: Text(
                     prod.name,
                     style: CartTimeFeeStyle,
                   )),
               Container(
-                  padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                  width: 60,
+                  padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                  width: 84,
                   alignment: Alignment.centerRight,
                   child: Text(
                     (quantity * prod.price).toStringAsFixed(2) + ' €',
