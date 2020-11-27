@@ -59,8 +59,8 @@ jobs:
     - flutter test --machine > tests.output
     - flutter test --coverage
     - export PATH="$TRAVIS_BUILD_DIR/sonar_dir/sonar-scanner-cli-4.5.0.2216-linux/bin:$PATH"
-    - ls $TRAVIS_BUILD_DIR/sonar_dir/sonar-scanner-cli-4.5.0.2216-linux/bin
-    - ./$TRAVIS_BUILD_DIR/sonar_dir/sonar-scanner-cli-4.5.0.2216-linux/bin/sonar-scanner
+    - ls /home/travis/build/UB-ES-2020-F/Glovo/sonar_dir/sonar-scanner-4.5.0.2216-linux/bin
+    - ./home/travis/build/UB-ES-2020-F/Glovo/sonar_dir/sonar-scanner-4.5.0.2216-linux/bin/sonar-scanner
   - stage: deploy
     name: Backend
     script:
