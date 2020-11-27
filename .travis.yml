@@ -42,8 +42,7 @@ jobs:
   - stage: code_ana
     script:
     - cd $TRAVIS_BUILD_DIR/server/glovo_webapi
-    - dotnet sonarscanner begin /k:"komet_backend" /d:sonar.login=dotnet sonarscanner /d:sonar.verbose=true
-      end /d:sonar.login=d48a60c50f73a7f5d0d8e90ec5a451494454e132 /d:sonar.host.url=http://167.71.130.118:9000
+    - dotnet sonarscanner begin /k:"komet_backend" /d:sonar.login=d48a60c50f73a7f5d0d8e90ec5a451494454e132 /d:sonar.host.url=http://167.71.130.118:9000 /d:sonar.verbose=true
     - dotnet build glovo_webapi.sln
     - which dotnet
     - dotnet sonarscanner end /d:sonar.login=d48a60c50f73a7f5d0d8e90ec5a451494454e132
