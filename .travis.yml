@@ -40,7 +40,7 @@ jobs:
         - flutter test test_driver/tests/endpoints/products.dart
         - flutter test test_driver/tests/endpoints/restaurants.dart
         - chmod +x ./test_driver/chromedriver
-        - ./test_driver/chromedriver --port=4444
+        - ./test_driver/chromedriver &
         - flutter drive --browser-name chrome --target=test_driver/tests/cart.dart
         - flutter drive --browser-name chrome --target=test_driver/tests/order.dart
         - flutter drive --browser-name chrome --target=test_driver/tests/profile_settings.dart
