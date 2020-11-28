@@ -18,6 +18,7 @@ install:
 - dotnet tool install --global dotnet-sonarscanner
 - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.5.0.2216-linux.zip
 - unzip sonar-scanner-cli-4.5.0.2216-linux.zip -d $TRAVIS_BUILD_DIR/sonar_dir
+
 stages:
 - tests
 - code_analysis
