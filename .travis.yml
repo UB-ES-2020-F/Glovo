@@ -68,7 +68,7 @@ jobs:
         - cd $TRAVIS_BUILD_DIR/frontend/customerapp
         - cp resources/config/prod-dev.json resources/config/dev.json
         - flutter build web
-        - ls -R build/web/
+        - cat  build/web/assets/resources/config/dev.json
         - cp -r build/web $TRAVIS_BUILD_DIR/frontend_deploy/web
         - cd $TRAVIS_BUILD_DIR/frontend_deploy
         - git init
