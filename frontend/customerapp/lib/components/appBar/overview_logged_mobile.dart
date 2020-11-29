@@ -17,62 +17,61 @@ class TabBar_screen extends StatelessWidget {
       Navigator.pop(context); //when resizing screen slowly, error occurs
     }
 
-    return Stack(
-      children: [
-        DefaultTabController(
-          length: 2,
-          child: new Scaffold(
-            appBar: new PreferredSize(
-              preferredSize: Size.fromHeight(kToolbarHeight * 0.8 + 28),
-              child: new Container(
-                color: Colors.white,
-                child: new SafeArea(
-                    child: Padding(
-                  padding: EdgeInsets.only(right: 50, left: 50, top: 20),
-                  child: Column(
-                    children: <Widget>[
-                      new TabBar(
-                        labelStyle: NotSelectedStyle_bar,
-                        labelColor: Kommet_distinctive_yellow,
-                        unselectedLabelColor: Colors.black,
-                        indicatorPadding: EdgeInsets.only(top: 50),
-                        indicatorWeight: 4,
-                        onTap: (value) {},
-                        unselectedLabelStyle: SelectedStyle_bar,
-                        indicatorColor: Kommet_distinctive_yellow,
-                        tabs: [
-                          Padding(
-                              padding: EdgeInsets.only(bottom: 5),
-                              child: Text("Orders")),
-                          Padding(
-                              padding: EdgeInsets.only(bottom: 5),
-                              child: Text("Account"))
-                        ],
-                      ),
+    return DefaultTabController(
+      length: 2,
+      child: new Scaffold(
+        appBar: new PreferredSize(
+          preferredSize: Size.fromHeight(kToolbarHeight * 0.8 + 28),
+          child: new Container(
+            color: Colors.white,
+            child: new SafeArea(
+                child: Padding(
+              padding: EdgeInsets.only(right: 50, left: 50, top: 20),
+              child: Column(
+                children: <Widget>[
+                  new TabBar(
+                    labelStyle: NotSelectedStyle_bar,
+                    labelColor: Kommet_distinctive_yellow,
+                    unselectedLabelColor: Colors.black,
+                    indicatorPadding: EdgeInsets.only(top: 50),
+                    indicatorWeight: 4,
+                    onTap: (value) {},
+                    unselectedLabelStyle: SelectedStyle_bar,
+                    indicatorColor: Kommet_distinctive_yellow,
+                    tabs: [
+                      Padding(
+                          padding: EdgeInsets.only(bottom: 5),
+                          child: Text("Orders")),
+                      Padding(
+                          padding: EdgeInsets.only(bottom: 5),
+                          child: Text("Account"))
                     ],
                   ),
-                )),
+                ],
               ),
-            ),
-            body: new TabBarView(
-              children: <Widget>[
-                Subpage_orders(),
-                Subpage_user_profile(),
-              ],
-            ),
+            )),
           ),
         ),
-        IconButton(
-          iconSize: 36,
-          icon: Image.asset(
-            'resources/images/arrow_diag.png',
+        body: Stack(children: [
+          TabBarView(
+            children: <Widget>[
+              Subpage_orders(),
+              Subpage_user_profile(),
+            ],
           ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          alignment: Alignment(1, -1),
-        )
-      ],
+          Align(
+              alignment: Alignment.bottomRight,
+              child: IconButton(
+                iconSize: 36,
+                icon: Image.asset(
+                  'resources/images/arrow_diag.png',
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ))
+        ]),
+      ),
     );
   }
 }
