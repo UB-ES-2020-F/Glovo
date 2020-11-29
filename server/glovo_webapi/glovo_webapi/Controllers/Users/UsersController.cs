@@ -31,7 +31,7 @@ namespace glovo_webapi.Controllers.Users
     {
         private IUserService _userService;
         private IMapper _mapper;
-        private readonly IOptions<AppConfiguration> _configuration;
+        private TokenCreatorValidator _tokenCreatorValidator;
 
         public UsersController(
             IUserService userService,
@@ -40,7 +40,7 @@ namespace glovo_webapi.Controllers.Users
         {
             _userService = userService;
             _mapper = mapper;
-            _configuration = configuration;
+            _tokenCreatorValidator = new TokenCreatorValidator(_userService, configuration);
         }
 
         //POST api/users/login
@@ -54,27 +54,9 @@ namespace glovo_webapi.Controllers.Users
                 return BadRequest(new { error="login-01", message = "email or password is incorrect" });
             }
             
-            var authSalt = new byte[32];
-            using (var generator = new RNGCryptoServiceProvider())
-            {
-                generator.GetBytes(authSalt);
-            }
+            TokenCreationParams tokenCreationParams = _tokenCreatorValidator.CreateToken(user, 60 * 24 * 7);
 
-            string authSaltStr = Encoding.Default.GetString(authSalt);
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_configuration.Value.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()), 
-                    new Claim("authSalt", authSaltStr), }),
-                IssuedAt = DateTime.UtcNow,
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            var tokenString = tokenHandler.WriteToken(token);
-
-            user.AuthSalt = authSalt;
+            user.AuthSalt = tokenCreationParams.SaltBytes;
             _userService.Update(user);
             
             // return basic user info and authentication token
@@ -83,7 +65,7 @@ namespace glovo_webapi.Controllers.Users
                 Id = user.Id,
                 Name = user.Name,
                 Email = user.Email,
-                Token = tokenString
+                Token = tokenCreationParams.TokenStr
             });
         }
 
@@ -244,53 +226,10 @@ namespace glovo_webapi.Controllers.Users
             } catch (RequestException) {
                 return BadRequest(new { error="recov-01", message = "email is incorrect" });
             }
-            
-            /*
-            var authSalt = new byte[32];
-            using (var generator = new RNGCryptoServiceProvider())
-            {
-                generator.GetBytes(authSalt);
-            }
 
-            string authSaltStr = Encoding.Default.GetString(authSalt);
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_configuration.Value.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()), 
-                    new Claim("authSalt", authSaltStr), }),
-                IssuedAt = DateTime.UtcNow,
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            var tokenString = tokenHandler.WriteToken(token);
+            TokenCreationParams tokenCreationParams = _tokenCreatorValidator.CreateToken(user, 30);
 
-            user.AuthSalt = authSalt;
-            _userService.Update(user);
-            */
-            
-            var recovSalt = new byte[32];
-            using (var generator = new RNGCryptoServiceProvider())
-            {
-                generator.GetBytes(recovSalt);
-            }
-
-            string recovSaltStr = Encoding.Default.GetString(recovSalt);
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_configuration.Value.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()), 
-                    new Claim("recoverySalt", recovSaltStr), }),
-                IssuedAt = DateTime.UtcNow,
-                Expires = DateTime.UtcNow.AddMinutes(30),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            var tokenString = tokenHandler.WriteToken(token);
-
-            user.RecoverySalt = recovSalt;
+            user.RecoverySalt = tokenCreationParams.SaltBytes;
             _userService.Update(user);
             
             //Send mail with mail and token link
@@ -299,7 +238,7 @@ namespace glovo_webapi.Controllers.Users
             message.To.Add (new MailboxAddress (user.Name, user.Email));
             message.Subject = "Restore Komet Account Password";
 
-            string link = tokenString;
+            string link = tokenCreationParams.TokenStr;
             message.Body = new TextPart ("plain") {
                 Text = "A password restoration of your account has been issued. If you want to change your password, go to this link:\n" + link
             };
@@ -328,68 +267,27 @@ namespace glovo_webapi.Controllers.Users
             try {
                 user = _userService.GetByEmail(passwordResetModel.Email);
             } catch (RequestException) {
-                return BadRequest(new { error="recov-01", message = "email is incorrect" });
+                return BadRequest(new { error="recov-01", message = "email does not exist" });
             }
-            
-            /*
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_configuration.Value.Secret);
-            tokenHandler.ValidateToken(token, new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(key),
-                ValidateIssuer = false,
-                ValidateAudience = false,
-                // set clockskew to zero so tokens expire exactly at token expiration time (instead of 5 minutes later)
-                ClockSkew = TimeSpan.Zero
-            }, out SecurityToken validatedToken);
-            var jwtToken = (JwtSecurityToken)validatedToken;
-            var userId = int.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
-            var authSalt = jwtToken.Claims.First(x => x.Type == "authSalt").Value;
-            // attach user to context on successful jwt validation
-            var user = userService.GetById(userId);
-            byte[] userAuthSalt = user.AuthSalt;
-            if (Encoding.Default.GetString(userAuthSalt) == authSalt)
-            {
-                context.Items["User"] = user;
-            }
-            */
-            
-            
+
+            TokenValidationParams tokenValidationParams;
             try
             {
-                Console.WriteLine("Print1");
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes(_configuration.Value.Secret);
-                Console.WriteLine("Print2");
-                tokenHandler.ValidateToken(passwordResetModel.RecoveryToken, new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    // set clockskew to zero so tokens expire exactly at token expiration time (instead of 5 minutes later)
-                    ClockSkew = TimeSpan.Zero
-                }, out SecurityToken validatedToken);
-                Console.WriteLine("Print3");
-                var jwtToken = (JwtSecurityToken)validatedToken;
-                var userId = int.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
-                var recoverySalt = jwtToken.Claims.First(x => x.Type == "recoverySalt").Value;
-                
-                Console.WriteLine("Print4");
-                Console.WriteLine(userId);
-                
-                // change password if all goes well
-                byte[] userRecoverySalt = user.RecoverySalt;
-                if (Encoding.Default.GetString(userRecoverySalt) == recoverySalt)
-                {
-                    _userService.Update(user, passwordResetModel.NewPassword);
-                }
+                tokenValidationParams = _tokenCreatorValidator.ValidateToken(passwordResetModel.RecoveryToken);
             }
-            catch (Exception ex) {
-                //IMPROVE THIS!!!
-                return BadRequest(new { error="recov-02", message = "recovery-not-available" });
+            catch (Exception)
+            {
+                return BadRequest(new { error="recov-02", message = "unknonwn error" });
             }
+            
+            if (Encoding.Default.GetString(tokenValidationParams.User.RecoverySalt) != 
+                Encoding.Default.GetString(tokenValidationParams.SaltBytes))
+            {
+                return BadRequest(new { error="recov-03", message = "recovery-not-available" });
+            }
+
+            user.RecoverySalt = null;
+            _userService.Update(user, passwordResetModel.NewPassword);
 
             return Ok();
         }
