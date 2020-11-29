@@ -14,9 +14,9 @@ install:
   - flutter config --enable-web
 
 stages:
-  #- tests
+  - tests
   - name: "deploy dev"
-    if: branch = devops-task-40
+    if: branch = dev
   - name: "deploy main"
     if: branch = main
 
