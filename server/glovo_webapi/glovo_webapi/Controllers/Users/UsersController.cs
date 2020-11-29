@@ -14,6 +14,7 @@ using glovo_webapi.Models;
 using glovo_webapi.Models.Users;
 using glovo_webapi.Services.UserService;
 using glovo_webapi.Helpers;
+using glovo_webapi.Models.Location;
 using glovo_webapi.Utils;
 
 namespace glovo_webapi.Controllers.Users
@@ -204,18 +205,17 @@ namespace glovo_webapi.Controllers.Users
         {
             User loggedUser = _userService.GetLogged();
 
-            return Ok(new Location(loggedUser.LocationLat, loggedUser.LocationLong));
+            return Ok(_mapper.Map<LocationModel>(loggedUser.Location));
         }
         
         //POST api/users/logged/location
         [Authorize]
         [HttpPost("logged/location")]
-        public IActionResult PostUserLocation([FromBody]Location newLocation)
+        public IActionResult PostUserLocation([FromBody]LocationModel newLocation)
         {
             User loggedUser = _userService.GetLogged();
 
-            loggedUser.LocationLat = newLocation.Latitude;
-            loggedUser.LocationLong = newLocation.Longitude;
+            loggedUser.Location = _mapper.Map<Location>(newLocation);
             
             try
             {
@@ -226,7 +226,7 @@ namespace glovo_webapi.Controllers.Users
                 return BadRequest(new { error="location_usr-02",message = "unknown error"});
             }
             
-            return Ok(new Location(loggedUser.LocationLat, loggedUser.LocationLong));
+            return Ok(_mapper.Map<LocationModel>(loggedUser.Location));
         }
     }
 }

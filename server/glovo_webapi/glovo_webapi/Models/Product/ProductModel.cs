@@ -2,7 +2,7 @@ using glovo_webapi.Utils;
 
 namespace glovo_webapi.Models.Product
 {
-        public class ProductReadModel
+        public class ProductModel
         {
                 public int Id { get; set; }
                 
@@ -23,7 +23,7 @@ namespace glovo_webapi.Models.Product
                         get { return Category.ToString(); }
                 }
 
-                public ProductReadModel(int Id, string Name, string ImgPath, string Description, float Price, int RestaurantId)
+                public ProductModel(int Id, string Name, string ImgPath, string Description, float Price, int RestaurantId)
                 {
                         this.Id = Id;
                         this.Name = Name;

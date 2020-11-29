@@ -17,4 +17,9 @@ namespace glovo_webapi.Services.UserService
         public static int ProductNotFound = 2;
         public static int BadOrderProduct = 3;
     }
+
+    static class ProductExceptionCodes
+    {
+        public static int RestaurantNotFound = 0;
+    }
 }

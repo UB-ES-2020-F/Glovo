@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using glovo_webapi.Data;
 using glovo_webapi.Entities;
+using glovo_webapi.Services.UserService;
 using glovo_webapi.Utils;
 
 namespace  glovo_webapi.Services.Products
@@ -40,7 +41,7 @@ namespace  glovo_webapi.Services.Products
             Restaurant r = _context.Restaurants.SingleOrDefault(p => p.Id == idRest);
             if (r == null)
             {
-                return null;
+                throw new RequestException(ProductExceptionCodes.RestaurantNotFound);
             }
             return _context.Products.Where(p => p.RestaurantId == idRest);
         }
@@ -50,7 +51,7 @@ namespace  glovo_webapi.Services.Products
             Restaurant r = _context.Restaurants.SingleOrDefault(p => p.Id == idRest);
             if (r == null)
             {
-                return null;
+                throw new RequestException(ProductExceptionCodes.RestaurantNotFound);
             }
             if (c == ProductCategory.Uncategorized)
             {
@@ -59,6 +60,7 @@ namespace  glovo_webapi.Services.Products
             return _context.Products.Where(p => p.RestaurantId == idRest && p.Category == c);
         }
 
+        //TODO: this method should not exists by the way. Products have unique Id regardless of restaurant.
         public Product GetProductOfRestaurantById(int idRest, int idProd)
         {
             return _context.Products.Where(p => p.RestaurantId == idRest).FirstOrDefault(p => p.Id == idProd);
