@@ -47,7 +47,7 @@ class KometApp extends StatelessWidget {
       child: MaterialApp(
           theme: appTheme,
           title: 'Komet',
-          initialRoute: '/initial-logged-in',
+          initialRoute: '/',
           routes: {
             '/': (context) => AnonRoute(),
             '/sign-up': (context) => SignUpPage(),

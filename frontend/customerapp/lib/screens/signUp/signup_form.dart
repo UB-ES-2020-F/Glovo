@@ -202,9 +202,12 @@ class SignUpButton extends StatelessWidget {
       child: Wrap(
         children: [
           ElevatedButton(
-            onPressed: () {
-              trySendRegisterForm(context, signUpModel);
-            },
+            onLongPress: null,
+            onPressed: signUpModel.formValid
+                ? () {
+                    trySendRegisterForm(context, signUpModel);
+                  }
+                : null,
             child: Text('Sign up with email'),
             style: signUpModel.formValid
                 ? signUpButtonStyleEnabled

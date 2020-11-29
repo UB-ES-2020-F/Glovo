@@ -160,9 +160,12 @@ class SignInButton extends StatelessWidget {
       child: Wrap(
         children: [
           ElevatedButton(
-            onPressed: () {
-              trySendSignInForm(context, signInModel);
-            },
+            onLongPress: null,
+            onPressed: signInModel.formValid
+                ? () {
+                    trySendSignInForm(context, signInModel);
+                  }
+                : null,
             key: Key('submit-login-button'),
             child: Text('Log in with email'),
             style: signInModel.formValid
