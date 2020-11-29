@@ -37,17 +37,12 @@ class SignInFormPage extends StatelessWidget {
             children: [
               Text(
                 "New to Komet? ",
-                style: TextStyle(color: Color(0xFF9B9B9B)),
+                style: signUpText,
               ),
               TextLink('Sign up', (context) {
                 Navigator.pop(context);
                 showSignUp(context);
-              },
-                  signUpTextLinks.copyWith(
-                      fontSize: 13, fontWeight: FontWeight.bold),
-                  signUpTextLinksHover.copyWith(
-                      fontSize: 13, fontWeight: FontWeight.bold),
-                  context)
+              }, signUpTextLinks, signUpTextLinksHover, context)
             ],
           )),
     ])));
@@ -131,14 +126,8 @@ class SignInForm extends StatelessWidget {
             child: Container(
                 margin: EdgeInsets.all(20.0),
                 alignment: Alignment.centerRight,
-                child: TextLink(
-                    'Forgot your password?',
-                    (context) {},
-                    signUpTextLinks.copyWith(
-                        fontSize: 13, fontWeight: FontWeight.bold),
-                    signUpTextLinksHover.copyWith(
-                        fontSize: 13, fontWeight: FontWeight.bold),
-                    context)),
+                child: TextLink('Forgot your password?', (context) {},
+                    signUpTextLinks, signUpTextLinksHover, context)),
             alignment: Alignment.bottomCenter,
           ),
           SignInButton(),
@@ -182,6 +171,7 @@ void trySendSignInForm(BuildContext context, SignInModel signInModel) {
   if (signInModel.formValid) {
     if (signInModel.formKey.currentState.validate()) {
       showLoaderDialog(context);
+      signInModel.formValid = false;
       signInModel.formKey.currentState.save();
       UserDTO formUser = new UserDTO();
       formUser.email = signInModel.email;
@@ -206,5 +196,5 @@ void trySendSignInForm(BuildContext context, SignInModel signInModel) {
 showLogInFailedDialog(BuildContext context) {
   showDialog(
       context: context,
-      builder: (context) => SingleMessageDialog("Log in Failed"));
+      builder: (context) => SingleMessageDialog("Log in failed"));
 }

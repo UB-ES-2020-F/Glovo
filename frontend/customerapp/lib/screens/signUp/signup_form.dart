@@ -41,12 +41,11 @@ class SignUpFormPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                      child: Text('Have an account? ',
-                          style: Theme.of(context).textTheme.bodyText1)),
+                      child: Text('Have an account? ', style: signUpText)),
                   TextLink('Login', (context) {
                     Navigator.pop(context);
                     showSignIn(context);
-                  }, signUpTextLinksBold, signUpTextLinksHoverBold, context),
+                  }, signUpTextLinks, signUpTextLinksHover, context),
                 ],
               ),
             ),
@@ -56,14 +55,11 @@ class SignUpFormPage extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.baseline,
                 children: [
                   Text(
                     'By registering, you agree to our ',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1
-                        .copyWith(fontSize: 10),
+                    style: signUpText.copyWith(fontSize: 10),
                   ),
                   TextLink(
                       'Terms of Service',
@@ -71,11 +67,7 @@ class SignUpFormPage extends StatelessWidget {
                       signUpTextLinks.copyWith(fontSize: 10),
                       signUpTextLinksHover.copyWith(fontSize: 10),
                       context),
-                  Text(' and ',
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText1
-                          .copyWith(fontSize: 10)),
+                  Text(' and ', style: signUpText.copyWith(fontSize: 10)),
                   TextLink(
                       'Privacy Policy',
                       (context) {},
@@ -227,6 +219,7 @@ void trySendRegisterForm(BuildContext context, SignUpModel signUpModel) {
   if (signUpModel.formValid) {
     if (signUpModel.formKey.currentState.validate()) {
       showLoaderDialog(context);
+      signUpModel.formValid = false;
       signUpModel.formKey.currentState.save();
       print(signUpModel.password);
       UserDTO formUser = new UserDTO();
@@ -259,5 +252,5 @@ void trySendRegisterForm(BuildContext context, SignUpModel signUpModel) {
 showSignUpFailedDialog(BuildContext context) {
   showDialog(
       context: context,
-      builder: (context) => SingleMessageDialog("Sign up Failed"));
+      builder: (context) => SingleMessageDialog("Sign up failed"));
 }
