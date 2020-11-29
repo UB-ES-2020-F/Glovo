@@ -24,7 +24,7 @@ namespace glovo_webapi.Controllers
         
         //GET api/products
         [HttpGet]
-        public ActionResult<IEnumerable<ProductReadModel>> GetAllProducts([FromQuery]ProductCategory? category)
+        public ActionResult<IEnumerable<ProductModel>> GetAllProducts([FromQuery]ProductCategory? category)
         {
             IEnumerable<Product> products;
             
@@ -38,19 +38,19 @@ namespace glovo_webapi.Controllers
                 Console.Write("Category: null\n");
                 products = _service.GetAllProducts();
             }
-            return Ok(_mapper.Map<IEnumerable<ProductReadModel>>(products));
+            return Ok(_mapper.Map<IEnumerable<ProductModel>>(products));
         }
         
         //GET api/products/<prodId>
         [HttpGet("{prodId}")]
-        public ActionResult<ProductReadModel> GetProductById(int prodId)
+        public ActionResult<ProductModel> GetProductById(int prodId)
         {
             Product foundProduct = _service.GetProductById(prodId);
             if (foundProduct == null)
             {
                 return NotFound(new {message = "product id not found"});
             }
-            return Ok(_mapper.Map<ProductReadModel>(foundProduct));
+            return Ok(_mapper.Map<ProductModel>(foundProduct));
         }
     }
 }

@@ -8,4 +8,9 @@ class LoggedUserPage extends DriverPage {
     final foodButton = find.byValueKey(foodBubbleButton);
     driver.tap(foodButton);
   }
+
+  Future<void> clickProfileButton() async {
+    final profButton = find.byValueKey(profileButton);
+    driver.tap(profButton);
+  }
 }

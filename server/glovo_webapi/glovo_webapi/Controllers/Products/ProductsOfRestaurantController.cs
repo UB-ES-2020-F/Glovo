@@ -3,6 +3,7 @@ using System.Linq;
 using AutoMapper;
 using glovo_webapi.Entities;
 using glovo_webapi.Models.Product;
+using glovo_webapi.Services;
 using glovo_webapi.Services.Products;
 using glovo_webapi.Utils;
 using Microsoft.AspNetCore.Mvc;
@@ -23,35 +24,38 @@ namespace glovo_webapi.Controllers
         }
 
         [HttpGet("{idRest}/products")]
-        public ActionResult<ProductReadModel> GetAllProductsOfRestaurant(int idRest, [FromQuery]ProductCategory? category)
+        public ActionResult<ProductModel> GetAllProductsOfRestaurant(int idRest, [FromQuery]ProductCategory? category)
         {
             IEnumerable<Product> products;
-            if (category.HasValue)
+            try
             {
-                products = _service.GetAllProductsOfRestaurantByCategory(idRest, category.Value);
+                if (category.HasValue)
+                {
+                    products = _service.GetAllProductsOfRestaurantByCategory(idRest, category.Value);
+                }
+                else
+                {
+                    products = _service.GetAllProductsOfRestaurant(idRest);
+                }
             }
-            else
-            {
-                products = _service.GetAllProductsOfRestaurant(idRest);
-            }
-            
-            if (products == null)
+            catch (RequestException)
             {
                 return NotFound(new {message = "restaurant id not found"});
             }
-            return Ok(_mapper.Map<IEnumerable<ProductReadModel>>(products));
+            return Ok(_mapper.Map<IEnumerable<ProductModel>>(products));
         }
 
         //GET api/restaurants/<restId>/products/<prodId>
+        //TODO: this endpoint should not exists. Products have unique id regardless of restaurant.
         [HttpGet("{restId}/products/{prodId}")]
-        public ActionResult<ProductReadModel> GetProductOfRestaurantById(int restId, int prodId)
+        public ActionResult<ProductModel> GetProductOfRestaurantById(int restId, int prodId)
         {
             Product foundProduct = _service.GetProductOfRestaurantById(restId, prodId);
             if (foundProduct == null)
             {
-                return NotFound(new {message = "product or restaurant id not found"});
+                return NotFound(new {message = "product not found"});
             }
-            return Ok(_mapper.Map<ProductReadModel>(foundProduct));            
+            return Ok(_mapper.Map<ProductModel>(foundProduct));            
         }
     }
 }

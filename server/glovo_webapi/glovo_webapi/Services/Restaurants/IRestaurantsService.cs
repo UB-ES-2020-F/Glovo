@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using glovo_webapi.Entities;
+using glovo_webapi.Utils;
 
 namespace glovo_webapi.Services.Restaurants
 {

@@ -2,12 +2,13 @@ import 'package:customerapp/components/text_link.dart';
 import 'package:customerapp/dto/user.dart';
 import 'package:customerapp/models/signup.dart';
 import 'package:customerapp/screens/anon_root.dart';
+import 'package:customerapp/screens/commonComponents/single_message_dialog.dart';
 import 'package:customerapp/styles/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:customerapp/endpoints/login_register.dart';
+import 'package:customerapp/endpoints/user.dart';
 
 class SignUpFormPage extends StatelessWidget {
   @override
@@ -218,6 +219,7 @@ class SignUpButton extends StatelessWidget {
 void trySendRegisterForm(BuildContext context, SignUpModel signUpModel) {
   if (signUpModel.formValid) {
     if (signUpModel.formKey.currentState.validate()) {
+      showLoaderDialog(context);
       signUpModel.formKey.currentState.save();
       print(signUpModel.password);
       UserDTO formUser = new UserDTO();
@@ -229,7 +231,15 @@ void trySendRegisterForm(BuildContext context, SignUpModel signUpModel) {
               .pushNamedAndRemoveUntil('/', (route) => false))
           .catchError((error) {
         print(error);
+        Navigator.pop(context);
+        showSignUpFailedDialog(context);
       });
     }
   }
+}
+
+showSignUpFailedDialog(BuildContext context) {
+  showDialog(
+      context: context,
+      builder: (context) => SingleMessageDialog("Sign up Failed"));
 }

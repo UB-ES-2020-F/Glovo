@@ -8,10 +8,18 @@ namespace glovo_webapi.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<OrderProduct>()
-                .HasKey(o => new { o.OrderId, o.ProductId });
+                .HasKey(o => new {o.OrderId, o.ProductId});
+
+            /*
+            modelBuilder.Entity<Restaurant>()
+                .OwnsOne(r => r.Location);
+            
+            modelBuilder.Entity<User>()
+                .OwnsOne(u => u.Location);
+            */
         }
-        public GlovoDbContext(DbContextOptions<GlovoDbContext> opt) : base(opt) { }
         
+        public GlovoDbContext(DbContextOptions<GlovoDbContext> opt) : base(opt) { }
         public DbSet<Restaurant> Restaurants { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Product> Products { get; set; }

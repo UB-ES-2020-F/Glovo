@@ -1,9 +1,7 @@
 import 'package:hive/hive.dart';
 import 'package:mutex/mutex.dart';
 
-
 const key = "key";
-
 
 class PersistentBox<P> {
   TypeAdapter<P> adapter;
@@ -18,20 +16,27 @@ class PersistentBox<P> {
   }
 
   void persistElement(P element) async {
-    if(!Hive.isBoxOpen(boxName)) 
-      hiveBoxForAdapter = await( Hive.openBox<P>(this.boxName));
+    if (!Hive.isBoxOpen(boxName))
+      hiveBoxForAdapter = await (Hive.openBox<P>(this.boxName));
     operationsLock.acquire();
     hiveBoxForAdapter.put(key, element);
     operationsLock.release();
   }
 
+  Future<void> removeElement() async {
+    if (!Hive.isBoxOpen(boxName))
+      hiveBoxForAdapter = await (Hive.openBox<P>(this.boxName));
+    operationsLock.acquire();
+    await hiveBoxForAdapter.delete(key);
+    operationsLock.release();
+  }
+
   Future<P> getElement() async {
-    if(!Hive.isBoxOpen(boxName)) 
-      hiveBoxForAdapter = await( Hive.openBox<P>(this.boxName));
+    if (!Hive.isBoxOpen(boxName))
+      hiveBoxForAdapter = await (Hive.openBox<P>(this.boxName));
     operationsLock.acquire();
     P toReturn = hiveBoxForAdapter.get(key);
     operationsLock.release();
     return toReturn;
   }
-
 }

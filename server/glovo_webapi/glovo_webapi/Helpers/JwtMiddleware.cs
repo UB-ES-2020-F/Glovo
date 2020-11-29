@@ -1,13 +1,12 @@
+using System;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using glovo_webapi;
 using glovo_webapi.Services.UserService;
+using glovo_webapi.Utils;
 
 namespace WebApi.Helpers
 {
@@ -24,33 +23,28 @@ namespace WebApi.Helpers
 
         public async Task Invoke(HttpContext context, IUserService userService)
         {
-            var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+            var tokenStr = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
 
-            if (token != null)
-                attachUserToContext(context, userService, token);
+            if (tokenStr != null)
+                AttachUserToContext(context, userService, tokenStr);
 
             await _next(context);
         }
 
-        private void attachUserToContext(HttpContext context, IUserService userService, string token)
+        private void AttachUserToContext(HttpContext context, IUserService userService, string tokenStr)
         {
+            Console.WriteLine("Attaching user");
+            TokenCreatorValidator tokenCreatorValidator = new TokenCreatorValidator(userService, _configuration); 
             try
             {
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes(_configuration.Value.Secret);
-                tokenHandler.ValidateToken(token, new TokenValidationParameters
+                TokenValidationParams tokenValidationParams = tokenCreatorValidator.ValidateToken(tokenStr);
+                
+                if (Encoding.Default.GetString(tokenValidationParams.User.AuthSalt) == 
+                    Encoding.Default.GetString(tokenValidationParams.SaltBytes))
                 {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    // set clockskew to zero so tokens expire exactly at token expiration time (instead of 5 minutes later)
-                    ClockSkew = TimeSpan.Zero
-                }, out SecurityToken validatedToken);
-                var jwtToken = (JwtSecurityToken)validatedToken;
-                var userId = int.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
-                // attach user to context on successful jwt validation
-                context.Items["User"] = userService.GetById(userId);
+                    Console.WriteLine("User attached");
+                    context.Items["User"] = tokenValidationParams.User;
+                }
             }
             catch
             {

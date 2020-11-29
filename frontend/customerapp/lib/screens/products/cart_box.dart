@@ -5,6 +5,7 @@ import 'package:customerapp/models/cart.dart';
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/products.dart';
 import 'package:customerapp/models/restaurants.dart';
+import 'package:customerapp/screens/commonComponents/single_message_dialog.dart';
 import 'package:customerapp/styles/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -217,17 +218,17 @@ class MakeOrderButton extends StatelessWidget {
         children: [
           ElevatedButton(
               onPressed: () {
+                showLoaderDialog(context);
                 final orderGeneration = cart.generateOrderDTO();
                 orderGeneration.then((orderDTO) {
                   makeOrder(orderDTO).then((value) {
-                    showDialog(
-                        context: context,
-                        builder: (context) => OrderDoneDialog());
+                    Navigator.pop(context);
+                    showOrderDoneDialog(context);
                     cart.empty();
                   }).catchError((error, stackTrace) {
                     cart.empty();
-                    showErrorToast(
-                        "The order failed, contact with the administrator");
+                    Navigator.pop(context);
+                    showOrderFailedDialog(context);
                   });
                 });
               },
@@ -239,45 +240,14 @@ class MakeOrderButton extends StatelessWidget {
   }
 }
 
-class OrderDoneDialog extends StatelessWidget {
-  OrderDoneDialog();
+showOrderFailedDialog(BuildContext context) {
+  showDialog(
+      context: context,
+      builder: (context) => SingleMessageDialog("Order Failed"));
+}
 
-  @override
-  Widget build(BuildContext context) {
-    return SimpleDialog(
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                  padding: EdgeInsets.all(10),
-                  alignment: Alignment(1, 1),
-                  child: IconButton(
-                    color: Color(0xFF6E6E6E),
-                    icon: Icon(Icons.clear),
-                    iconSize: 40,
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  )),
-              Text(
-                'Order done!',
-                style: CartTitleStyle,
-              ),
-              Padding(
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text("Okay"),
-                  style: greenButtonStyle,
-                ),
-                padding: EdgeInsets.all(20),
-              )
-            ],
-          )
-        ]);
-  }
+showOrderDoneDialog(BuildContext context) {
+  showDialog(
+      context: context,
+      builder: (context) => SingleMessageDialog("Order done!"));
 }

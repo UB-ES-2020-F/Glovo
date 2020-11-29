@@ -1,13 +1,17 @@
 import 'package:customerapp/components/text_link.dart';
 import 'package:customerapp/dto/user.dart';
+import 'package:customerapp/models/location.dart';
+import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/signin.dart';
 import 'package:customerapp/screens/anon_root.dart';
+import 'package:customerapp/screens/commonComponents/single_message_dialog.dart';
+import 'package:customerapp/styles/Komet.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:customerapp/styles/signup.dart';
 import 'package:provider/provider.dart';
-import 'package:customerapp/endpoints/login_register.dart';
+import 'package:customerapp/endpoints/user.dart';
 import 'package:customerapp/infrastructure/persistence/repository/user_credentials_repository.dart';
 import 'package:customerapp/models/user_credentials/user_credentials.dart';
 
@@ -174,6 +178,7 @@ class SignInButton extends StatelessWidget {
 void trySendSignInForm(BuildContext context, SignInModel signInModel) {
   if (signInModel.formValid) {
     if (signInModel.formKey.currentState.validate()) {
+      showLoaderDialog(context);
       signInModel.formKey.currentState.save();
       UserDTO formUser = new UserDTO();
       formUser.email = signInModel.email;
@@ -181,11 +186,22 @@ void trySendSignInForm(BuildContext context, SignInModel signInModel) {
       loginUser(formUser).then((loggedUser) {
         UserCredentialsRepository().update(new UserCredentials(
             loggedUser.email, loggedUser.token, loggedUser.id));
+        LoggedModel.user.id = loggedUser.id;
+        LoggedModel.user.name = loggedUser.name;
+        LoggedModel.user.email = loggedUser.email;
         Navigator.of(context)
             .pushNamedAndRemoveUntil('/initial-logged-in', (route) => false);
       }).catchError((error) {
         print(error);
+        Navigator.pop(context);
+        showLogInFailedDialog(context);
       });
     }
   }
+}
+
+showLogInFailedDialog(BuildContext context) {
+  showDialog(
+      context: context,
+      builder: (context) => SingleMessageDialog("Log in Failed"));
 }
