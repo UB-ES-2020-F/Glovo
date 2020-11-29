@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using Microsoft.Extensions.Options;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
@@ -16,6 +17,10 @@ using glovo_webapi.Services.UserService;
 using glovo_webapi.Helpers;
 using glovo_webapi.Models.Location;
 using glovo_webapi.Utils;
+using MailKit.Net.Smtp;
+using MailKit.Security;
+using MimeKit;
+using MimeKit.Text;
 
 namespace glovo_webapi.Controllers.Users
 {
@@ -26,7 +31,7 @@ namespace glovo_webapi.Controllers.Users
     {
         private IUserService _userService;
         private IMapper _mapper;
-        private readonly IOptions<AppConfiguration> _configuration;
+        private TokenCreatorValidator _tokenCreatorValidator;
 
         public UsersController(
             IUserService userService,
@@ -35,7 +40,7 @@ namespace glovo_webapi.Controllers.Users
         {
             _userService = userService;
             _mapper = mapper;
-            _configuration = configuration;
+            _tokenCreatorValidator = new TokenCreatorValidator(_userService, configuration);
         }
 
         //POST api/users/login
@@ -49,27 +54,9 @@ namespace glovo_webapi.Controllers.Users
                 return BadRequest(new { error="login-01", message = "email or password is incorrect" });
             }
             
-            var authSalt = new byte[32];
-            using (var generator = new RNGCryptoServiceProvider())
-            {
-                generator.GetBytes(authSalt);
-            }
+            TokenCreationParams tokenCreationParams = _tokenCreatorValidator.CreateToken(user, 60 * 24 * 7);
 
-            string authSaltStr = Encoding.Default.GetString(authSalt);
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_configuration.Value.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()), 
-                    new Claim("authSalt", authSaltStr), }),
-                IssuedAt = DateTime.UtcNow,
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            var tokenString = tokenHandler.WriteToken(token);
-
-            user.AuthSalt = authSalt;
+            user.AuthSalt = tokenCreationParams.SaltBytes;
             _userService.Update(user);
             
             // return basic user info and authentication token
@@ -78,7 +65,7 @@ namespace glovo_webapi.Controllers.Users
                 Id = user.Id,
                 Name = user.Name,
                 Email = user.Email,
-                Token = tokenString
+                Token = tokenCreationParams.TokenStr
             });
         }
 
@@ -228,5 +215,82 @@ namespace glovo_webapi.Controllers.Users
             
             return Ok(_mapper.Map<LocationModel>(loggedUser.Location));
         }
+        
+        //POST api/users/password-email
+        [HttpPost("password-email")]
+        public IActionResult SendPasswordEmail([FromBody] RecoveryEmailModel recovEmailModel)
+        {
+            User user = null;
+            try {
+                user = _userService.GetByEmail(recovEmailModel.Email);
+            } catch (RequestException) {
+                return BadRequest(new { error="recov-01", message = "email is incorrect" });
+            }
+
+            TokenCreationParams tokenCreationParams = _tokenCreatorValidator.CreateToken(user, 30);
+
+            user.RecoverySalt = tokenCreationParams.SaltBytes;
+            _userService.Update(user);
+            
+            //Send mail with mail and token link
+            var message = new MimeMessage ();
+            message.From.Add (new MailboxAddress ("Komet Account Recovery Bot", "glovopwdrecov@gmail.com"));
+            message.To.Add (new MailboxAddress (user.Name, user.Email));
+            message.Subject = "Restore Komet Account Password";
+
+            string link = tokenCreationParams.TokenStr;
+            message.Body = new TextPart ("plain") {
+                Text = "A password restoration of your account has been issued. If you want to change your password, go to this link:\n" + link
+            };
+
+            using (var client = new SmtpClient ()) {
+                client.Connect ("smtp.gmail.com", 587, false);
+
+                // Note: only needed if the SMTP server requires authentication
+                client.Authenticate ("kometpwdrecov@gmail.com", "glovodevpassword");
+
+                client.Send (message);
+                client.Disconnect (true);
+            }
+
+            return Ok(new
+            {
+                Email = user.Email
+            });
+        }
+        
+        //POST api/users/reset-password
+        [HttpPost("reset-password")]
+        public IActionResult ResetPassword([FromBody]PasswordResetModel passwordResetModel)
+        {
+            User user = null;
+            try {
+                user = _userService.GetByEmail(passwordResetModel.Email);
+            } catch (RequestException) {
+                return BadRequest(new { error="recov-01", message = "email does not exist" });
+            }
+
+            TokenValidationParams tokenValidationParams;
+            try
+            {
+                tokenValidationParams = _tokenCreatorValidator.ValidateToken(passwordResetModel.RecoveryToken);
+            }
+            catch (Exception)
+            {
+                return BadRequest(new { error="recov-02", message = "unknonwn error" });
+            }
+            
+            if (Encoding.Default.GetString(tokenValidationParams.User.RecoverySalt) != 
+                Encoding.Default.GetString(tokenValidationParams.SaltBytes))
+            {
+                return BadRequest(new { error="recov-03", message = "recovery-not-available" });
+            }
+
+            user.RecoverySalt = null;
+            _userService.Update(user, passwordResetModel.NewPassword);
+
+            return Ok();
+        }
+        
     }
 }

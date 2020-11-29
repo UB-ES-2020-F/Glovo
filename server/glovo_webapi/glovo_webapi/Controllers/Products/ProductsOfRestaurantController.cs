@@ -38,7 +38,7 @@ namespace glovo_webapi.Controllers
                     products = _service.GetAllProductsOfRestaurant(idRest);
                 }
             }
-            catch (RequestException r)
+            catch (RequestException)
             {
                 return NotFound(new {message = "restaurant id not found"});
             }
