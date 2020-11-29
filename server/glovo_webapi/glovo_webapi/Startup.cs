@@ -52,7 +52,11 @@ namespace glovo_webapi
                                                         "http://localhost:*",
                                                         "https://localhost:34819",
                                                         "http://komet.cat",
-                                                        "https://komet.cat"
+                                                        "https://komet.cat",
+                                                        "http://ub-es2020-glovo-dev.herokuapp.com",
+                                                        "https://ub-es2020-glovo-dev.herokuapp.com",
+                                                        "http://ub-es2020-glovo.herokuapp.com",
+                                                        "http://ub-es2020-glovo.herokuapp.com"
                                                         )
                                         		.AllowAnyMethod().AllowAnyHeader();
                                     }  
