@@ -46,6 +46,8 @@ jobs:
     - dotnet glovo_webapi.dll &
     - cd $TRAVIS_BUILD_DIR/frontend/customerapp
     - flutter test test_driver/tests/endpoints/orders.dart
+
+
   - stage: code_analysis
     name: backend
     script:
@@ -61,6 +63,8 @@ jobs:
     - flutter pub get
     - export PATH="$TRAVIS_BUILD_DIR/sonar_dir/sonar-scanner-cli-4.5.0.2216-linux/bin:$PATH"
     - /home/travis/build/UB-ES-2020-F/Glovo/sonar_dir/sonar-scanner-4.5.0.2216-linux/bin/sonar-scanner
+  
+  
   - stage: deploy
     name: Backend
     script:
