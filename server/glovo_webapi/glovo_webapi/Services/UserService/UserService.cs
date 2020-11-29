@@ -13,6 +13,7 @@ namespace glovo_webapi.Services.UserService
         User Authenticate(string email, string password);
         IEnumerable<User> GetAll();
         User GetById(int id);
+        User GetByEmail(string email);
         User GetLogged();
         User Create(User user, string password);
         void Update(User user, string password = null);
@@ -57,6 +58,22 @@ namespace glovo_webapi.Services.UserService
         public User GetById(int id)
         {
             User u = _context.Users.Find(id);
+            if (u == null)
+            {
+                throw new RequestException(UserExceptionCodes.UserNotFound);
+            }
+
+            return u;
+        }
+
+        public User GetByEmail(string email)
+        {
+            User u = _context.Users.FirstOrDefault(user => user.Email == email);
+            if (u == null)
+            {
+                throw new RequestException(UserExceptionCodes.UserNotFound);
+            }
+
             return u;
         }
 
