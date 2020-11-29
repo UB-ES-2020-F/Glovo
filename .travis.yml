@@ -14,7 +14,7 @@ install:
   - flutter config --enable-web
 
 stages:
-  - tests
+  #- tests
   - name: "deploy dev"
     if: branch = devops-task-40
   - name: "deploy main"
@@ -43,11 +43,11 @@ jobs:
         - flutter test test_driver/tests/endpoints/orders.dart
         - flutter test test_driver/tests/endpoints/products.dart
         - flutter test test_driver/tests/endpoints/restaurants.dart
-        - chmod +x ./test_driver/chromedriver
-        - ./test_driver/chromedriver &
-        - flutter drive -d web-server --browser-name chrome --target=test_driver/tests/cart.dart --release
-        - flutter drive -d web-server --browser-name chrome --target=test_driver/tests/order.dart --release
-        - flutter drive -d web-server --browser-name chrome --target=test_driver/tests/profile_settings.dart --release
+        #- chmod +x ./test_driver/chromedriver
+        #- ./test_driver/chromedriver &
+        #- flutter drive -d web-server --browser-name chrome --target=test_driver/tests/cart.dart --release
+        #- flutter drive -d web-server --browser-name chrome --target=test_driver/tests/order.dart --release
+        #- flutter drive -d web-server --browser-name chrome --target=test_driver/tests/profile_settings.dart --release
     
     - stage: "deploy dev"
       name: "Backend"
