@@ -21,7 +21,6 @@ install:
 
 stages:
 - tests
-- code_analysis
 - name: deploy
   if: branch = main
 - name: code_analysis
