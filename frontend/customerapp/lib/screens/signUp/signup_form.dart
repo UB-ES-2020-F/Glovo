@@ -1,6 +1,9 @@
 import 'package:customerapp/components/text_link.dart';
 import 'package:customerapp/dto/user.dart';
+import 'package:customerapp/infrastructure/persistence/repository/user_credentials_repository.dart';
+import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/signup.dart';
+import 'package:customerapp/models/user_credentials/user_credentials.dart';
 import 'package:customerapp/screens/anon_root.dart';
 import 'package:customerapp/screens/commonComponents/single_message_dialog.dart';
 import 'package:customerapp/styles/signup.dart';
@@ -229,10 +232,15 @@ void trySendRegisterForm(BuildContext context, SignUpModel signUpModel) {
       formUser.email = signUpModel.email;
       formUser.password = signUpModel.password;
       formUser.name = signUpModel.firstName;
-      registerUser(formUser)
-          .then((value) => Navigator.of(context)
-              .pushNamedAndRemoveUntil('/', (route) => false))
-          .catchError((error) {
+      registerUser(formUser).then((value) {
+        UserCredentialsRepository().update(
+            new UserCredentials(formUser.email, formUser.token, formUser.id));
+        LoggedModel.user.id = formUser.id;
+        LoggedModel.user.name = formUser.name;
+        LoggedModel.user.email = formUser.email;
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil('/initial-logged-in', (route) => false);
+      }).catchError((error) {
         print(error);
         Navigator.pop(context);
         showSignUpFailedDialog(context);
