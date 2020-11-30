@@ -15,7 +15,6 @@ install:
 - export PATH="$HOME/.dotnet/tools":$PATH
 - git clone https://github.com/flutter/flutter.git -b beta
 - export PATH="$TRAVIS_BUILD_DIR/flutter/bin:$PATH"
-- export PATH="$TRAVIS_BUILD_DIR/flutter/bin/cache/dart-sdk/bin:$PATH"
 - flutter config --enable-web
 - dotnet tool install --global dotnet-sonarscanner
 - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.5.0.2216-linux.zip
@@ -65,6 +64,7 @@ jobs:
     - stage: code_analysis
       name: "backend_ana"
       script:
+      - export PATH="$TRAVIS_BUILD_DIR/flutter/bin/cache/dart-sdk/bin:$PATH"
       - cd $TRAVIS_BUILD_DIR/server/glovo_webapi
       - dotnet sonarscanner begin /k:"komet_backend" /d:sonar.login=$SONARTOK /d:sonar.projectDescription=$TRAVIS_BRANCH /d:sonar.host.url=http://167.71.130.118:9000
         /d:sonar.verbose=true
@@ -72,6 +72,7 @@ jobs:
       - dotnet sonarscanner end /d:sonar.login=$SONARTOK
     - name: "frontend_ana"
       script:
+      - export PATH="$TRAVIS_BUILD_DIR/flutter/bin/cache/dart-sdk/bin:$PATH"
       - cd $TRAVIS_BUILD_DIR/frontend/customerapp
       - flutter clean
       - flutter pub get
