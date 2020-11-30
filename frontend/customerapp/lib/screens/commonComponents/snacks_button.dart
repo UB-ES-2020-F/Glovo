@@ -3,8 +3,8 @@ import 'package:customerapp/styles/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class FoodButton extends StatelessWidget {
-  FoodButton(Key key) : super(key: key);
+class SnacksButton extends StatelessWidget {
+  SnacksButton(Key key) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -13,23 +13,21 @@ class FoodButton extends StatelessWidget {
         height: 160,
         child: SizedBox.expand(
             child: RaisedButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/restaurant-list');
-          },
+          onPressed: () {},
           color: Colors.white,
           textColor: Colors.white,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Image(
-                image: AssetImage('resources/images/food_logo.png'),
+                image: AssetImage('resources/images/snacks_logo.png'),
                 height: 55,
                 width: 55,
               ),
               Padding(
                 padding: EdgeInsets.only(top: 0),
                 child: Text(
-                  'Food',
+                  'Snacks',
                   style: categoryButtonLabel,
                 ),
               )
