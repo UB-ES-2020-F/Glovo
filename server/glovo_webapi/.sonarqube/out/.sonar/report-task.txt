@@ -1,0 +1,6 @@
+projectKey=komet_backend
+serverUrl=http://167.71.130.118:9000
+serverVersion=8.3.0.34182
+dashboardUrl=http://167.71.130.118:9000/dashboard?id=komet_backend
+ceTaskId=AXYGkZ2p6OmkzvW0wmBp
+ceTaskUrl=http://167.71.130.118:9000/api/ce/task?id=AXYGkZ2p6OmkzvW0wmBp
