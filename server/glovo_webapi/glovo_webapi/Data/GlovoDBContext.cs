@@ -9,14 +9,6 @@ namespace glovo_webapi.Data
         {
             modelBuilder.Entity<OrderProduct>()
                 .HasKey(o => new {o.OrderId, o.ProductId});
-
-            /*
-            modelBuilder.Entity<Restaurant>()
-                .OwnsOne(r => r.Location);
-            
-            modelBuilder.Entity<User>()
-                .OwnsOne(u => u.Location);
-            */
         }
         
         public GlovoDbContext(DbContextOptions<GlovoDbContext> opt) : base(opt) { }
@@ -24,7 +16,6 @@ namespace glovo_webapi.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Order> Orders { get; set; }
-
         public DbSet<OrderProduct> OrdersProducts { get; set; }
     }
 }

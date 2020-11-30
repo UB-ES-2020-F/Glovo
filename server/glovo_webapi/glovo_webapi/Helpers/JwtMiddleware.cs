@@ -1,14 +1,13 @@
 using System;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Options;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using glovo_webapi;
 using glovo_webapi.Services.UserService;
 using glovo_webapi.Utils;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
 
-namespace WebApi.Helpers
+namespace glovo_webapi.Helpers
 {
     public class JwtMiddleware
     {
@@ -21,7 +20,7 @@ namespace WebApi.Helpers
             _configuration = configuration;
         }
 
-        public async Task Invoke(HttpContext context, IUserService userService)
+        public async Task Invoke(HttpContext context, IUsersService userService)
         {
             var tokenStr = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
 
@@ -31,9 +30,8 @@ namespace WebApi.Helpers
             await _next(context);
         }
 
-        private void AttachUserToContext(HttpContext context, IUserService userService, string tokenStr)
+        private void AttachUserToContext(HttpContext context, IUsersService userService, string tokenStr)
         {
-            Console.WriteLine("Attaching user");
             TokenCreatorValidator tokenCreatorValidator = new TokenCreatorValidator(userService, _configuration); 
             try
             {
@@ -42,7 +40,6 @@ namespace WebApi.Helpers
                 if (Encoding.Default.GetString(tokenValidationParams.User.AuthSalt) == 
                     Encoding.Default.GetString(tokenValidationParams.SaltBytes))
                 {
-                    Console.WriteLine("User attached");
                     context.Items["User"] = tokenValidationParams.User;
                 }
             }

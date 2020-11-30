@@ -2,15 +2,14 @@ using System.Collections.Generic;
 using System.Linq;
 using glovo_webapi.Data;
 using glovo_webapi.Entities;
-using glovo_webapi.Utils;
 
 namespace  glovo_webapi.Services.Restaurants
 {
-    public class NpgsqlRestaurantsService : IRestaurantsService
+    public class RestApiRestaurantsService : IRestaurantsService
     {
         private readonly GlovoDbContext _context;
 
-        public NpgsqlRestaurantsService(GlovoDbContext context)
+        public RestApiRestaurantsService(GlovoDbContext context)
         {
             _context = context;
         }
@@ -22,7 +21,11 @@ namespace  glovo_webapi.Services.Restaurants
 
         public Restaurant GetRestaurantById(int id)
         {
-            return _context.Restaurants.FirstOrDefault(r => r.Id == id);
+            Restaurant foundRestaurant = _context.Restaurants.FirstOrDefault(r => r.Id == id);
+            if (foundRestaurant == null)
+                throw new RequestException(RestaurantExceptionCodes.RestaurantNotFound);
+
+            return foundRestaurant;
         }
     }
 }
