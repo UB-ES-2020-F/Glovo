@@ -38,7 +38,7 @@ class InitialLogged extends StatelessWidget {
               ),
               Container(
                   constraints: BoxConstraints(
-                      maxHeight: MediaQuery.of(context).size.height - 150),
+                      maxHeight: MediaQuery.of(context).size.height - 184),
                   padding: EdgeInsets.only(left: 25, right: 25),
                   child: SingleChildScrollView(
                       child: Wrap(alignment: WrapAlignment.center, children: [
