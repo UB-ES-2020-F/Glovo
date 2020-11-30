@@ -36,12 +36,17 @@ class InitialLogged extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     color: Theme.of(context).accentColor),
               ),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                FoodButton(Key("food-bubble-button")),
-                SupermarketsButton(Key("supermarket-bubble-button")),
-                SnacksButton(Key("snacks-bubble-button")),
-                AnythingButton(Key("anything-bubble-button")),
-              ])
+              Container(
+                  constraints: BoxConstraints(
+                      maxHeight: MediaQuery.of(context).size.height - 184),
+                  padding: EdgeInsets.only(left: 25, right: 25),
+                  child: SingleChildScrollView(
+                      child: Wrap(alignment: WrapAlignment.center, children: [
+                    FoodButton(Key("food-bubble-button")),
+                    SupermarketsButton(Key("supermarket-bubble-button")),
+                    SnacksButton(Key("snacks-bubble-button")),
+                    AnythingButton(Key("anything-bubble-button")),
+                  ])))
             ],
           )))),
         ));
