@@ -96,7 +96,7 @@ class CartBox extends StatelessWidget {
               Column(mainAxisSize: MainAxisSize.min, children: [
                 Container(
                   constraints: BoxConstraints(
-                      maxHeight: MediaQuery.of(context).size.height - 416),
+                      maxHeight: MediaQuery.of(context).size.height - 421),
                   child: SingleChildScrollView(
                       child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -106,7 +106,7 @@ class CartBox extends StatelessWidget {
                   )),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                  padding: EdgeInsets.fromLTRB(0, 15, 0, 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -221,7 +221,7 @@ class MakeOrderButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 30),
+      padding: EdgeInsets.symmetric(vertical: 15),
       child: Wrap(
         children: [
           ElevatedButton(
