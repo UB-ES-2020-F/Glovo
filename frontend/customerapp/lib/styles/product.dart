@@ -17,8 +17,7 @@ final CartTitleStyle =
 
 final CartTimeFeeStyle = TextStyle(color: Colors.black, fontSize: 16);
 
-final NumberItemsCartStyle =
-    TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500);
+final NumberItemsCartStyle = TextStyle(color: Colors.black, fontSize: 14);
 
 final TotalPriceCartStyle = TextStyle(
     color: Color(0xFF4A4A4A), fontSize: 18, fontWeight: FontWeight.w500);
