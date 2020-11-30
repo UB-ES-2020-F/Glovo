@@ -19,67 +19,69 @@ class SignUpFormPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
+          constraints: BoxConstraints(
+              maxHeight: MediaQuery.of(context).size.height - 150),
           child: ListView(
-        shrinkWrap: true,
-        children: [
-          Center(
-              child: Container(
-            child: Text(
-              'Register to Komet',
-              style: registerToKometTextStyle,
-            ),
-          )),
-          Center(
-              child: Container(
-            child: SignUpForm(),
-          )),
-          Center(
-            child: Container(
-              padding: EdgeInsets.symmetric(vertical: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                      child: Text('Have an account? ', style: signUpText)),
-                  TextLink('Login', (context) {
-                    Navigator.pop(context);
-                    showSignIn(context);
-                  }, signUpTextLinks, signUpTextLinksHover, context),
-                ],
-              ),
-            ),
-          ),
-          Center(
-            child: Container(
-              padding: EdgeInsets.symmetric(vertical: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.baseline,
-                children: [
-                  Text(
-                    'By registering, you agree to our ',
-                    style: signUpText.copyWith(fontSize: 10),
+            shrinkWrap: true,
+            children: [
+              Center(
+                  child: Container(
+                child: Text(
+                  'Register to Komet',
+                  style: registerToKometTextStyle,
+                ),
+              )),
+              Center(
+                  child: Container(
+                child: SignUpForm(),
+              )),
+              Center(
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                          child: Text('Have an account? ', style: signUpText)),
+                      TextLink('Login', (context) {
+                        Navigator.pop(context);
+                        showSignIn(context);
+                      }, signUpTextLinks, signUpTextLinksHover, context),
+                    ],
                   ),
-                  TextLink(
-                      'Terms of Service',
-                      (context) {},
-                      signUpTextLinks.copyWith(fontSize: 10),
-                      signUpTextLinksHover.copyWith(fontSize: 10),
-                      context),
-                  Text(' and ', style: signUpText.copyWith(fontSize: 10)),
-                  TextLink(
-                      'Privacy Policy',
-                      (context) {},
-                      signUpTextLinks.copyWith(fontSize: 10),
-                      signUpTextLinksHover.copyWith(fontSize: 10),
-                      context)
-                ],
+                ),
               ),
-            ),
-          )
-        ],
-      )),
+              Center(
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    children: [
+                      Text(
+                        'By registering, you agree to our ',
+                        style: signUpText.copyWith(fontSize: 10),
+                      ),
+                      TextLink(
+                          'Terms of Service',
+                          (context) {},
+                          signUpTextLinks.copyWith(fontSize: 10),
+                          signUpTextLinksHover.copyWith(fontSize: 10),
+                          context),
+                      Text(' and ', style: signUpText.copyWith(fontSize: 10)),
+                      TextLink(
+                          'Privacy Policy',
+                          (context) {},
+                          signUpTextLinks.copyWith(fontSize: 10),
+                          signUpTextLinksHover.copyWith(fontSize: 10),
+                          context)
+                    ],
+                  ),
+                ),
+              )
+            ],
+          )),
     );
   }
 }

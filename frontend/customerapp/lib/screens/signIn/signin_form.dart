@@ -20,32 +20,34 @@ class SignInFormPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
         child: Container(
+            constraints: BoxConstraints(
+                maxHeight: MediaQuery.of(context).size.height - 150),
             child: ListView(shrinkWrap: true, children: [
-      Center(
-          child: Container(
-        child: Text(
-          'Login to Komet',
-          style: registerToKometTextStyle,
-        ),
-      )),
-      SignInForm(),
-      Container(
-          margin: EdgeInsets.all(20.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                "New to Komet? ",
-                style: signUpText,
-              ),
-              TextLink('Sign up', (context) {
-                Navigator.pop(context);
-                showSignUp(context);
-              }, signUpTextLinks, signUpTextLinksHover, context)
-            ],
-          )),
-    ])));
+              Center(
+                  child: Container(
+                child: Text(
+                  'Login to Komet',
+                  style: registerToKometTextStyle,
+                ),
+              )),
+              SignInForm(),
+              Container(
+                  margin: EdgeInsets.all(20.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "New to Komet? ",
+                        style: signUpText,
+                      ),
+                      TextLink('Sign up', (context) {
+                        Navigator.pop(context);
+                        showSignUp(context);
+                      }, signUpTextLinks, signUpTextLinksHover, context)
+                    ],
+                  )),
+            ])));
   }
 }
 
