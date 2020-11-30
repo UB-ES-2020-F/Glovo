@@ -13,7 +13,7 @@ solution: server/glovo_webapi/glovo_webapi.sln
 install:
 - dotnet tool install --global dotnet-ef
 - export PATH="$HOME/.dotnet/tools":$PATH
-- git clone https://github.com/flutter/flutter.git -b beta
+- git clone https://github.com/flutter/flutter.git --branch 1.23.0-18.1.pre --single-branch
 - export PATH="$TRAVIS_BUILD_DIR/flutter/bin:$PATH"
 - flutter config --enable-web
 - dotnet tool install --global dotnet-sonarscanner
@@ -26,8 +26,10 @@ stages:
     if: type = pull_request
   - name: "deploy dev"
     if: branch = dev
+    if: type = push
   - name: "deploy main"
     if: branch = main
+    if: type = push
   
 
 jobs:
