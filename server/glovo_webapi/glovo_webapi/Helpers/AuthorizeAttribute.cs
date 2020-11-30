@@ -4,9 +4,6 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Linq;
 using glovo_webapi.Entities;
-using glovo_webapi.Services.UserService;
-using glovo_webapi.Utils;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace glovo_webapi.Helpers
 {
@@ -21,7 +18,6 @@ namespace glovo_webapi.Helpers
             if (user == null)
             {
                 // not logged in
-                Console.WriteLine("Not logged in");
                 context.Result = new JsonResult(new {message = "Unauthorized"})
                     {StatusCode = StatusCodes.Status401Unauthorized};
                 return;
@@ -40,6 +36,8 @@ namespace glovo_webapi.Helpers
                     //unauthorized role
                     context.Result = new JsonResult(new {message = "Unauthorized"})
                         {StatusCode = StatusCodes.Status401Unauthorized};
+
+                    Console.WriteLine("FUCK");
                 }
             }
         }

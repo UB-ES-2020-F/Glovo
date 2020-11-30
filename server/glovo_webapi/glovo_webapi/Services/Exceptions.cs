@@ -1,25 +1,31 @@
-using System;
-
-namespace glovo_webapi.Services.UserService
+namespace glovo_webapi.Services
 {
-    static class UserExceptionCodes
+    internal static class UserExceptionCodes
     {
-        public static int InvalidCredentials = 0;
-        public static int UserNotFound = 1;
-        public static int BadPassword = 2;
-        public static int UserAlreadyExists = 3;
+        public const int InvalidCredentials = 0;
+        public const int UserNotFound = 1;
+        public const int BadPassword = 2;
+        public const int EmailAlreadyExists = 3;
+        public const int NoLoggedUser = 4;
     }
 
-    static class OrderExceptionCodes
+    internal static class OrderExceptionCodes
     {
-        public static int InvalidUser = 0;
-        public static int RestaurantNotFound = 1;
-        public static int ProductNotFound = 2;
-        public static int BadOrderProduct = 3;
+        public const int RestaurantNotFound = 0;
+        public const int UserNotFound = 1;
+        public const int OrderNotFound = 2;
+        public const int ProductNotFound = 3;
+        public const int BadOrderProduct = 4;
     }
 
-    static class ProductExceptionCodes
+    internal static class RestaurantExceptionCodes
     {
-        public static int RestaurantNotFound = 0;
+        public const int RestaurantNotFound = 0;
+    }
+    
+    internal static class ProductExceptionCodes
+    {
+        public const int RestaurantNotFound = 0;
+        public const int ProductNotFound = 1;
     }
 }

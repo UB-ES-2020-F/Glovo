@@ -2,9 +2,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace glovo_webapi.Models.Users
 {
-    public class RegisterModel
+    
+    //Receive
+    public class RegisterUserModel
     {
-        [Required] 
+        [Required]
         public string Name { get; set; }
         [Required]
         public string Email { get; set; }

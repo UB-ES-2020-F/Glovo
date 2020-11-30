@@ -5,16 +5,17 @@ namespace glovo_webapi.Entities
 {
     public class OrderProduct
     {
-        [Key, Column(Order = 1)]
+        [Key, ForeignKey("Order")]
         public int OrderId { get; set; }
         
-        [Key, Column(Order = 2)]
+        [Key, ForeignKey("Product")]
         public int ProductId { get; set; }
         
-        public Order Order { get; set; }
-        
-        public Product Product { get; set; }
-
+        [Required]
         public int Quantity { get; set; }
+        
+        public Order Order { get; set; }
+        public Product Product { get; set; }
+        
     }
 }

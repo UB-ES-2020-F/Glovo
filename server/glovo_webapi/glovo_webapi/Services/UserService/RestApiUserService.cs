@@ -7,25 +7,12 @@ using Microsoft.AspNetCore.Http;
 
 namespace glovo_webapi.Services.UserService
 {
-    
-    public interface IUserService
+    public class RestApiUserService : IUsersService
     {
-        User Authenticate(string email, string password);
-        IEnumerable<User> GetAll();
-        User GetById(int id);
-        User GetByEmail(string email);
-        User GetLogged();
-        User Create(User user, string password);
-        void Update(User user, string password = null);
-        void Delete(int id);
-    }
-    
-    public class UserService : IUserService
-    {
-        private GlovoDbContext _context;
+        private readonly GlovoDbContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UserService(GlovoDbContext context, IHttpContextAccessor httpContextAccessor)
+        public RestApiUserService(GlovoDbContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _httpContextAccessor = httpContextAccessor;
@@ -59,9 +46,7 @@ namespace glovo_webapi.Services.UserService
         {
             User u = _context.Users.Find(id);
             if (u == null)
-            {
                 throw new RequestException(UserExceptionCodes.UserNotFound);
-            }
 
             return u;
         }
@@ -70,9 +55,7 @@ namespace glovo_webapi.Services.UserService
         {
             User u = _context.Users.FirstOrDefault(user => user.Email == email);
             if (u == null)
-            {
                 throw new RequestException(UserExceptionCodes.UserNotFound);
-            }
 
             return u;
         }
@@ -80,6 +63,9 @@ namespace glovo_webapi.Services.UserService
         public User GetLogged()
         {
             User loggedUser = (User) _httpContextAccessor.HttpContext.Items["User"];
+            if (loggedUser == null)
+                throw new RequestException(UserExceptionCodes.NoLoggedUser);
+            
             return loggedUser;
         }
         
@@ -90,7 +76,7 @@ namespace glovo_webapi.Services.UserService
                 throw new RequestException(UserExceptionCodes.BadPassword);
 
             if (_context.Users.Any(x => x.Email == user.Email))
-                throw new RequestException(UserExceptionCodes.UserAlreadyExists);
+                throw new RequestException(UserExceptionCodes.EmailAlreadyExists);
 
             byte[] passwordHash, passwordSalt;
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
@@ -114,16 +100,14 @@ namespace glovo_webapi.Services.UserService
                 throw new RequestException(UserExceptionCodes.UserNotFound);
 
             if (!string.IsNullOrEmpty(userParam.Name))
-            {
                 user.Name = userParam.Name;
-            }
             
             // update username if it has changed
             if (!string.IsNullOrWhiteSpace(userParam.Email) && userParam.Email != user.Email)
             {
                 // throw error if the new username is already taken
                 if (_context.Users.Any(x => x.Email == userParam.Email))
-                    throw new RequestException(UserExceptionCodes.UserAlreadyExists);
+                    throw new RequestException(UserExceptionCodes.EmailAlreadyExists);
 
                 user.Email = userParam.Email;
             }
@@ -146,25 +130,22 @@ namespace glovo_webapi.Services.UserService
         {
             var user = _context.Users.Find(id);
             if (user == null)
-            {
                 throw new RequestException(UserExceptionCodes.UserNotFound);
-            }
+
             _context.Users.Remove(user);
             _context.SaveChanges();
         }
 
-        // private helper methods
+        //Private helper methods
 
         private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             if (password == null) throw new ArgumentNullException("password");
             if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
 
-            using (var hmac = new System.Security.Cryptography.HMACSHA512())
-            {
-                passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-            }
+            using var hmac = new System.Security.Cryptography.HMACSHA512();
+            passwordSalt = hmac.Key;
+            passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
         }
 
         private static bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)
@@ -174,13 +155,11 @@ namespace glovo_webapi.Services.UserService
             if (storedHash.Length != 64) throw new ArgumentException("Invalid length of password hash (64 bytes expected).", "passwordHash");
             if (storedSalt.Length != 128) throw new ArgumentException("Invalid length of password salt (128 bytes expected).", "passwordHash");
 
-            using (var hmac = new System.Security.Cryptography.HMACSHA512(storedSalt))
+            using var hmac = new System.Security.Cryptography.HMACSHA512(storedSalt);
+            var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+            for (int i = 0; i < computedHash.Length; i++)
             {
-                var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-                for (int i = 0; i < computedHash.Length; i++)
-                {
-                    if (computedHash[i] != storedHash[i]) return false;
-                }
+                if (computedHash[i] != storedHash[i]) return false;
             }
 
             return true;

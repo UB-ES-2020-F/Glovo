@@ -37,10 +37,10 @@ namespace glovo_webapi.Utils
     
     public class TokenCreatorValidator
     {
-        private readonly IUserService _userService;
+        private readonly IUsersService _userService;
         private readonly IOptions<AppConfiguration> _configuration;
 
-        public TokenCreatorValidator(IUserService userService, IOptions<AppConfiguration> configuration)
+        public TokenCreatorValidator(IUsersService userService, IOptions<AppConfiguration> configuration)
         {
             _userService = userService;
             _configuration = configuration;

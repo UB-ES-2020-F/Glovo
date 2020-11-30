@@ -1,9 +1,8 @@
 using System.Collections.Generic;
-using System.Linq;
 using AutoMapper;
 using glovo_webapi.Entities;
 using glovo_webapi.Models.Order;
-using glovo_webapi.Models.Product;
+using glovo_webapi.Services;
 using glovo_webapi.Services.Orders;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -24,23 +23,18 @@ namespace glovo_webapi.Controllers.Orders
         }
         
         //GET api/restaurants/<restId>/orders
+        [Authorize(Roles = "Administrator")]
         [HttpGet("{restId}/orders")]
-        [Authorize(Roles="Administrator")]
         public ActionResult<IEnumerable<GetOrderModel>> GetAllOrdersOfRestaurant(int restId)
         {
-            IEnumerable<Order> restaurantOrders = _service.GetAllOrdersOfRestaurant(restId);
-            if (restaurantOrders == null) { return NotFound(new {message = "restaurant id not found"}); }
+            IEnumerable<Order> restaurantOrders;
+            try {
+                restaurantOrders = _service.GetAllOrdersOfRestaurant(restId);
+            } catch (RequestException ) {
+                return NotFound(new{message = "Restaurant id does not exist"});
+            }
+            
             return Ok(_mapper.Map<IEnumerable<GetOrderModel>>(restaurantOrders));
-        }
-        
-        //GET api/restaurants/<restId>/orders/<orderId>
-        [HttpGet("{restId}/orders/{orderId}")]
-        [Authorize(Roles="Administrator")]
-        public ActionResult<GetOrderModel> GetProductOfRestaurantById(int restId, int orderId)
-        {
-            Order foundOrder = _service.GetOrderOfRestaurantById(restId, orderId);
-            if (foundOrder == null) { return NotFound(new {message = "restaurant id or order id not found"}); }
-            return Ok(_mapper.Map<GetOrderModel>(foundOrder));            
         }
     }
 }

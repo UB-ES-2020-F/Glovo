@@ -7,14 +7,13 @@ namespace glovo_webapi.Entities
     [Owned]
     public class Location
     {
-        private readonly double _R = 6371;
-        
-        [Range(-90, 90)]
+        [Required, Range(-90, 90)]
         public double Latitude { get; set; }
-
-        [Range(-180, 180)]
+        
+        [Required, Range(-180, 180)]
         public double Longitude { get; set; }
 
+        private const double R = 6371;
         public double DistanceTo(Location location)
         {
             double latRad1 = Latitude * Math.PI / 180.0;
@@ -25,7 +24,7 @@ namespace glovo_webapi.Entities
                        Math.Cos(latRad1) * Math.Cos(latRad2) * Math.Sin(difLon / 2) * Math.Sin(difLon / 2);
             double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
 
-            return _R * c;
+            return R * c;
         }
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using glovo_webapi.Data;
@@ -8,11 +7,11 @@ using glovo_webapi.Utils;
 
 namespace  glovo_webapi.Services.Products
 {
-    public class NpgsqlProductsService : IProductsService
+    public class RestApiProductsService : IProductsService
     {
         private readonly GlovoDbContext _context;
 
-        public NpgsqlProductsService(GlovoDbContext context)
+        public RestApiProductsService(GlovoDbContext context)
         {
             _context = context;
         }
@@ -33,16 +32,20 @@ namespace  glovo_webapi.Services.Products
 
         public Product GetProductById(int id)
         {
-            return _context.Products.FirstOrDefault(p => p.Id == id);
+            Product foundProduct = _context.Products.FirstOrDefault(p => p.Id == id);
+            if (foundProduct == null)
+            {
+                throw new RequestException(ProductExceptionCodes.ProductNotFound);
+            }
+
+            return foundProduct;
         }
 
         public IEnumerable<Product> GetAllProductsOfRestaurant(int idRest)
         {
             Restaurant r = _context.Restaurants.SingleOrDefault(p => p.Id == idRest);
             if (r == null)
-            {
                 throw new RequestException(ProductExceptionCodes.RestaurantNotFound);
-            }
             return _context.Products.Where(p => p.RestaurantId == idRest);
         }
 
@@ -50,20 +53,10 @@ namespace  glovo_webapi.Services.Products
         {
             Restaurant r = _context.Restaurants.SingleOrDefault(p => p.Id == idRest);
             if (r == null)
-            {
                 throw new RequestException(ProductExceptionCodes.RestaurantNotFound);
-            }
             if (c == ProductCategory.Uncategorized)
-            {
                 return _context.Products.Where(p => p.RestaurantId == idRest);
-            }
             return _context.Products.Where(p => p.RestaurantId == idRest && p.Category == c);
-        }
-
-        //TODO: this method should not exists by the way. Products have unique Id regardless of restaurant.
-        public Product GetProductOfRestaurantById(int idRest, int idProd)
-        {
-            return _context.Products.Where(p => p.RestaurantId == idRest).FirstOrDefault(p => p.Id == idProd);
         }
     }
 }

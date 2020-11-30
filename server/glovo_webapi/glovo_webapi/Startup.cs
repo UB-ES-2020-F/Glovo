@@ -1,19 +1,18 @@
 using System;
-using System.Linq;
 using AutoMapper;
 using glovo_webapi.Data;
+using glovo_webapi.Helpers;
 using glovo_webapi.Services.Orders;
 using glovo_webapi.Services.Products;
 using glovo_webapi.Services.Restaurants;
 using glovo_webapi.Services.UserService;
+using glovo_webapi.Utils;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using WebApi.Helpers;
 
 namespace glovo_webapi
 {
@@ -85,10 +84,10 @@ namespace glovo_webapi
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            services.AddScoped<IRestaurantsService, NpgsqlRestaurantsService>();
-            services.AddScoped<IProductsService, NpgsqlProductsService>();
-            services.AddScoped<IOrdersService, NpgsqlOrdersService>();
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IRestaurantsService, RestApiRestaurantsService>();
+            services.AddScoped<IProductsService, RestApiProductsService>();
+            services.AddScoped<IOrdersService, RestApiOrdersService>();
+            services.AddScoped<IUsersService, RestApiUserService>();
 
             services.AddOptions();
             services.Configure<AppConfiguration>(Configuration.GetSection("AppSettings"));

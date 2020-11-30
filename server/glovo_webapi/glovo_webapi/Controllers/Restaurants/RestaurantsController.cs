@@ -5,6 +5,7 @@ using AutoMapper;
 using glovo_webapi.Entities;
 using glovo_webapi.Models.Location;
 using glovo_webapi.Models.Restaurant;
+using glovo_webapi.Services;
 using glovo_webapi.Services.Restaurants;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,11 +36,13 @@ namespace glovo_webapi.Controllers.Restaurants
         [HttpGet("{restId}")]
         public ActionResult<LocationRestaurantModel> GetRestaurantById(int restId)
         {
-            Restaurant foundRestaurant = _service.GetRestaurantById(restId);
-            if (foundRestaurant == null)
-            {
+            Restaurant foundRestaurant;
+            try {
+                foundRestaurant = _service.GetRestaurantById(restId);
+            } catch (RequestException) {
                 return NotFound(new {message = "Restaurant id not found"});
             }
+            
             return Ok(_mapper.Map<LocationRestaurantModel>(foundRestaurant));
         }
         

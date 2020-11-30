@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Security.Claims;
 using AutoMapper;
 using glovo_webapi.Entities;
 using glovo_webapi.Models.Order;
@@ -40,13 +38,18 @@ namespace glovo_webapi.Controllers.Orders
         [Authorize(Roles="Regular, Administrator")]
         public ActionResult<GetOrderModel> GetOrderById(int orderId)
         {
-            Order foundOrder = _service.GetOrderById(orderId);
+            Order foundOrder;
+            try {
+                foundOrder = _service.GetOrderById(orderId);
+            } catch(RequestException) {
+                return NotFound(new {message = "Order id not found"});
+            }
+            
+            //Only let Regular users check their own orders
             User loggedUser = (User)HttpContext.Items["User"];
             if (loggedUser.Role == UserRole.Regular && foundOrder.UserId != loggedUser.Id)
-            {
                 return Unauthorized(new {message = "Unauthorized"});
-            }
-            if (foundOrder == null) { return NotFound(new {message = "order id not found"}); }
+
             return Ok(_mapper.Map<GetOrderModel>(foundOrder));
         }
         
@@ -56,26 +59,17 @@ namespace glovo_webapi.Controllers.Orders
         public ActionResult<GetOrderModel> PostOrder([FromBody] PostOrderModel postOrderModel)
         {
             Order order = _mapper.Map<PostOrderModel, Order>(postOrderModel);
-            Order addedOrder = null;
-            try
-            {
+            Order addedOrder;
+            try {
                 addedOrder = _service.AddOrder(order);
-            }
-            catch (RequestException ex)
-            {
+            } catch (RequestException ex) {
                 if (ex.Code == OrderExceptionCodes.RestaurantNotFound)
-                {
-                    return BadRequest(new { error="make_order-01",message = "restaurant does not exist" });
-                }
+                    return NotFound(new{message = "Restaurant id does not exist"});
                 if (ex.Code == OrderExceptionCodes.ProductNotFound)
-                {
-                    return BadRequest(new { error="make_order-02",message = "product does not exist" });
-                }
+                    return NotFound(new{message = "Product id does not exist"});
                 if (ex.Code == OrderExceptionCodes.BadOrderProduct)
-                {
-                    return BadRequest(new { error="make_order-03",message = "bad orderProduct data" });
-                }
-                return BadRequest(new {message = "unknown error"});
+                    return BadRequest(new{message = "Bad OrderProduct data"});
+                return BadRequest(new{message = "Unknown error"});
             }
             
             return Ok(_mapper.Map<Order, GetOrderModel>(addedOrder));
