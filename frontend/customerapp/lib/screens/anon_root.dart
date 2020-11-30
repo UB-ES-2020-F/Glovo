@@ -42,12 +42,17 @@ class LogInButton extends StatelessWidget {
   LogInButton() : super(key: Key('login-button'));
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-        onPressed: () {
-          showSignIn(context);
-        },
-        child: Text('Login'),
-        style: loginButtonStyle);
+    return Container(
+        width: 120,
+        height: 43,
+        child: SizedBox.expand(
+          child: ElevatedButton(
+              onPressed: () {
+                showSignIn(context);
+              },
+              child: Text('Login'),
+              style: loginButtonStyle),
+        ));
   }
 }
 
@@ -62,12 +67,17 @@ void showSignIn(BuildContext context) {
 class SignUpButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-        onPressed: () {
-          showSignUp(context);
-        },
-        child: Text('Register'),
-        style: registerButtonStyle);
+    return Container(
+        width: 120,
+        height: 43,
+        child: SizedBox.expand(
+          child: ElevatedButton(
+              onPressed: () {
+                showSignUp(context);
+              },
+              child: Text('Register'),
+              style: registerButtonStyle),
+        ));
   }
 }
 

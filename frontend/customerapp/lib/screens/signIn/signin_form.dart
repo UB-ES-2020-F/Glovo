@@ -20,37 +20,34 @@ class SignInFormPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
         child: Container(
+            constraints: BoxConstraints(
+                maxHeight: MediaQuery.of(context).size.height - 150),
             child: ListView(shrinkWrap: true, children: [
-      Center(
-          child: Container(
-        child: Text(
-          'Login to Komet',
-          style: registerToKometTextStyle,
-        ),
-      )),
-      SignInForm(),
-      Container(
-          margin: EdgeInsets.all(20.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                "New to Komet? ",
-                style: TextStyle(color: Color(0xFF9B9B9B)),
-              ),
-              TextLink('Sign up', (context) {
-                Navigator.pop(context);
-                showSignUp(context);
-              },
-                  signUpTextLinks.copyWith(
-                      fontSize: 13, fontWeight: FontWeight.bold),
-                  signUpTextLinksHover.copyWith(
-                      fontSize: 13, fontWeight: FontWeight.bold),
-                  context)
-            ],
-          )),
-    ])));
+              Center(
+                  child: Container(
+                child: Text(
+                  'Login to Komet',
+                  style: registerToKometTextStyle,
+                ),
+              )),
+              SignInForm(),
+              Container(
+                  margin: EdgeInsets.all(20.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "New to Komet? ",
+                        style: signUpText,
+                      ),
+                      TextLink('Sign up', (context) {
+                        Navigator.pop(context);
+                        showSignUp(context);
+                      }, signUpTextLinks, signUpTextLinksHover, context)
+                    ],
+                  )),
+            ])));
   }
 }
 
@@ -131,14 +128,8 @@ class SignInForm extends StatelessWidget {
             child: Container(
                 margin: EdgeInsets.all(20.0),
                 alignment: Alignment.centerRight,
-                child: TextLink(
-                    'Forgot your password?',
-                    (context) {},
-                    signUpTextLinks.copyWith(
-                        fontSize: 13, fontWeight: FontWeight.bold),
-                    signUpTextLinksHover.copyWith(
-                        fontSize: 13, fontWeight: FontWeight.bold),
-                    context)),
+                child: TextLink('Forgot your password?', (context) {},
+                    signUpTextLinks, signUpTextLinksHover, context)),
             alignment: Alignment.bottomCenter,
           ),
           SignInButton(),
@@ -160,9 +151,12 @@ class SignInButton extends StatelessWidget {
       child: Wrap(
         children: [
           ElevatedButton(
-            onPressed: () {
-              trySendSignInForm(context, signInModel);
-            },
+            onLongPress: null,
+            onPressed: signInModel.formValid
+                ? () {
+                    trySendSignInForm(context, signInModel);
+                  }
+                : null,
             key: Key('submit-login-button'),
             child: Text('Log in with email'),
             style: signInModel.formValid
@@ -179,6 +173,7 @@ void trySendSignInForm(BuildContext context, SignInModel signInModel) {
   if (signInModel.formValid) {
     if (signInModel.formKey.currentState.validate()) {
       showLoaderDialog(context);
+      signInModel.formValid = false;
       signInModel.formKey.currentState.save();
       UserDTO formUser = new UserDTO();
       formUser.email = signInModel.email;
@@ -203,5 +198,5 @@ void trySendSignInForm(BuildContext context, SignInModel signInModel) {
 showLogInFailedDialog(BuildContext context) {
   showDialog(
       context: context,
-      builder: (context) => SingleMessageDialog("Log in Failed"));
+      builder: (context) => SingleMessageDialog("Log in failed"));
 }

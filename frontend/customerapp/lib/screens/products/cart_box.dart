@@ -52,7 +52,7 @@ class CartBox extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
                 padding: EdgeInsets.all(10),
@@ -87,31 +87,36 @@ class CartBox extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '$deliveryFee €',
+                      deliveryFee.toStringAsFixed(2) + ' €',
                       style: CartTimeFeeStyle,
                     ),
                   ],
                 )),
             if (cart.order.isNotEmpty)
-              Column(children: [
-                Padding(
-                  padding: EdgeInsets.all(5),
-                  child: Column(
+              Column(mainAxisSize: MainAxisSize.min, children: [
+                Container(
+                  constraints: BoxConstraints(
+                      maxHeight: MediaQuery.of(context).size.height - 421),
+                  child: SingleChildScrollView(
+                      child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     key: Key('cart-items'),
                     children: items,
-                  ),
+                  )),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(0),
+                  padding: EdgeInsets.fromLTRB(0, 15, 0, 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         'Products TOTAL',
-                        style: NumberItemsCartStyle,
+                        style: CartTimeFeeStyle.copyWith(
+                            fontWeight: FontWeight.w500),
                       ),
                       Text(
-                        cart.getTotalPrice().toString() + ' €',
+                        cart.getTotalPrice().toStringAsFixed(2) + ' €',
                         style: TotalPriceCartStyle,
                       ),
                     ],
@@ -140,67 +145,70 @@ class ItemOnCart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            mainAxisSize: MainAxisSize.max,
+    return Container(
+        padding: EdgeInsets.fromLTRB(0, 0, 5, 0),
+        child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Container(
-                  padding: EdgeInsets.fromLTRB(0, 0, 15, 0),
-                  width: 48,
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    quantity.toString() + 'x',
-                    style: NumberItemsCartStyle,
-                  )),
-              Container(
-                  width: 200,
-                  child: Text(
-                    prod.name,
-                    style: CartTimeFeeStyle,
-                  )),
-              Container(
-                  padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                  width: 60,
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    (quantity * prod.price).toString() + ' €',
-                    style: CartTimeFeeStyle,
-                  )),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              IconButton(
-                key: Key('${extractKeyValue(key)}-remove-button'),
-                icon: Icon(
-                  Icons.remove,
-                  color: Color(0xff43C1A4),
-                ),
-                onPressed: () {
-                  cart.substractItem(prod);
-                },
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Container(
+                      padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                      width: 50,
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        quantity.toString() + 'x',
+                        style: NumberItemsCartStyle,
+                      )),
+                  Container(
+                      width: 189,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        prod.name,
+                        style: NumberItemsCartStyle,
+                      )),
+                  Container(
+                      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                      width: 84,
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        (quantity * prod.price).toStringAsFixed(2) + ' €',
+                        style: NumberItemsCartStyle,
+                      )),
+                ],
               ),
-              IconButton(
-                icon: Icon(
-                  Icons.add,
-                  color: Color(0xff43C1A4),
-                ),
-                onPressed: () {
-                  cart.addItem(prod);
-                },
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    key: Key('${extractKeyValue(key)}-remove-button'),
+                    icon: Icon(
+                      Icons.remove,
+                      color: Color(0xff43C1A4),
+                    ),
+                    onPressed: () {
+                      cart.substractItem(prod);
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(
+                      Icons.add,
+                      color: Color(0xff43C1A4),
+                    ),
+                    onPressed: () {
+                      cart.addItem(prod);
+                    },
+                  ),
+                ],
               ),
-            ],
-          ),
-          Divider(
-            color: Colors.black,
-            thickness: 0.3,
-          ),
-        ]);
+              Divider(
+                color: Colors.black,
+                thickness: 0.3,
+              ),
+            ]));
   }
 }
 
@@ -213,7 +221,7 @@ class MakeOrderButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 30),
+      padding: EdgeInsets.symmetric(vertical: 15),
       child: Wrap(
         children: [
           ElevatedButton(
