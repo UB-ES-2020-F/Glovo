@@ -54,8 +54,8 @@ namespace glovo_webapi.Controllers.Orders
         }
         
         //POST api/orders
-        [Authorize(Roles="Regular, Administrator")]
         [HttpPost]
+        [Authorize(Roles="Regular, Administrator")]
         public ActionResult<GetOrderModel> PostOrder([FromBody] PostOrderModel postOrderModel)
         {
             Order order = _mapper.Map<PostOrderModel, Order>(postOrderModel);

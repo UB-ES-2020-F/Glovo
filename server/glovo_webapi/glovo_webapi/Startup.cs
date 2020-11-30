@@ -9,6 +9,7 @@ using glovo_webapi.Services.UserService;
 using glovo_webapi.Utils;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Server.IISIntegration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -78,7 +79,7 @@ namespace glovo_webapi
             }
             Console.Write("Database connection string:"+connection);
             services.AddDbContext<GlovoDbContext>(opt => opt.UseNpgsql(connection));
-        
+
             services.AddCors();
             services.AddControllers();
 

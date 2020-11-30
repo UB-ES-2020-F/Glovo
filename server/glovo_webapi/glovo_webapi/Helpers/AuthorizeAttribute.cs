@@ -29,15 +29,12 @@ namespace glovo_webapi.Helpers
                     .Select(x => x.Trim())
                     .Where(x => !string.IsNullOrWhiteSpace(x))
                     .ToArray();
-                Console.WriteLine("User Role: "+user.Role.ToString() + "Allowed roles: "+String.Join(",", roleArray));
             
                 if (roleArray.Length > 0 && roleArray.All(x => x != user.Role.ToString()))
                 {
                     //unauthorized role
                     context.Result = new JsonResult(new {message = "Unauthorized"})
                         {StatusCode = StatusCodes.Status401Unauthorized};
-
-                    Console.WriteLine("FUCK");
                 }
             }
         }

@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using AutoMapper;
 using glovo_webapi.Entities;
+using glovo_webapi.Helpers;
 using glovo_webapi.Models.Order;
 using glovo_webapi.Services;
 using glovo_webapi.Services.Orders;
 using glovo_webapi.Utils;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace glovo_webapi.Controllers.Orders
@@ -24,8 +24,8 @@ namespace glovo_webapi.Controllers.Orders
         }
         
         //GET api/users/<userId>/orders
-        [Authorize(Roles="Regular, Administrator")]
         [HttpGet("{userId}/orders")]
+        [Authorize(Roles="Regular, Administrator")]
         public ActionResult<IEnumerable<GetOrderModel>> GetAllOrdersOfUser(int userId)
         {
             IEnumerable<Order> userOrders;

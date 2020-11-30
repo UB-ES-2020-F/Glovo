@@ -32,7 +32,6 @@ namespace glovo_webapi.Helpers
 
         private void AttachUserToContext(HttpContext context, IUsersService userService, string tokenStr)
         {
-            Console.WriteLine("Attaching user");
             TokenCreatorValidator tokenCreatorValidator = new TokenCreatorValidator(userService, _configuration); 
             try
             {
@@ -41,7 +40,6 @@ namespace glovo_webapi.Helpers
                 if (Encoding.Default.GetString(tokenValidationParams.User.AuthSalt) == 
                     Encoding.Default.GetString(tokenValidationParams.SaltBytes))
                 {
-                    Console.WriteLine("User attached");
                     context.Items["User"] = tokenValidationParams.User;
                 }
             }
