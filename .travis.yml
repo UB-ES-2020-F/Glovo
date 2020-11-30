@@ -25,11 +25,9 @@ stages:
   - name: code_analysis
     if: type = pull_request
   - name: "deploy dev"
-    if: branch = dev
-    if: type = push
+    if: branch = dev AND type = push
   - name: "deploy main"
-    if: branch = main
-    if: type = push
+    if: branch = main AND type = push
   
 
 jobs:
