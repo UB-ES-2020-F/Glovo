@@ -12,7 +12,7 @@ namespace glovo_webapi.Models.Order
         [Required]
         public int? RestaurantId { get; set; }
         [Required]
-        [AssertThat("Products.Count() != 0", ErrorMessage = "Longitude must be between -90 and 90")]
+        //[AssertThat("Products.Count() != 0", ErrorMessage = "Longitude must be between -90 and 90")]
         public IEnumerable<OrderProductModel> Products { get; set; }
     }
 }
