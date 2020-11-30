@@ -52,12 +52,25 @@ class TabBar_screen extends StatelessWidget {
             )),
           ),
         ),
-        body: new TabBarView(
-          children: <Widget>[
-            Subpage_orders(),
-            Subpage_user_profile(),
-          ],
-        ),
+        body: Stack(children: [
+          TabBarView(
+            children: <Widget>[
+              Subpage_orders(),
+              Subpage_user_profile(),
+            ],
+          ),
+          Align(
+              alignment: Alignment.bottomRight,
+              child: IconButton(
+                iconSize: 36,
+                icon: Image.asset(
+                  'resources/images/arrow_diag.png',
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ))
+        ]),
       ),
     );
   }
@@ -93,22 +106,6 @@ class Subpage_orders extends StatelessWidget {
                   ),
                 ],
               )),
-          Row(
-            children: [
-              Expanded(child: Container()),
-              IconButton(
-                iconSize: 40,
-                icon: Image.asset(
-                  'resources/images/arrow_diag.png',
-                  scale: 0.9,
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                alignment: Alignment(1, -1),
-              )
-            ],
-          )
         ],
       ),
     );
@@ -131,23 +128,7 @@ class Subpage_user_profile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     UserInformation(),
-                  ])),
-          Row(
-            children: [
-              Expanded(child: Container()),
-              IconButton(
-                iconSize: 40,
-                icon: Image.asset(
-                  'resources/images/arrow_diag.png',
-                  scale: 0.9,
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                alignment: Alignment(1, -1),
-              )
-            ],
-          )
+                  ]))
         ]);
   }
 }

@@ -64,15 +64,20 @@ final signUpButtonStyleDisabled = ButtonStyle(
 
 final signUpTextLinks = TextStyle(
   color: Color(0xFF2ABB9B),
+  fontSize: 14,
+  fontWeight: FontWeight.w600,
 );
 
-final signUpTextLinksBold = TextStyle(
-  fontWeight: FontWeight.bold,
-  color: Color(0xFF2ABB9B),
+final signUpText = TextStyle(
+  fontWeight: FontWeight.w300,
+  fontSize: 14,
+  color: Color(0xFF4a4a4a),
 );
 
 final signUpTextLinksHover = TextStyle(
   color: Color(0xFF528A84),
+  fontSize: 14,
+  fontWeight: FontWeight.w600,
 );
 
 final signUpTextLinksHoverBold = TextStyle(

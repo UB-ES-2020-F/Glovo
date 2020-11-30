@@ -15,7 +15,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:customerapp/endpoints/products.dart';
 
 import 'cart_box.dart';
-import 'concrete_product_card.dart';
+import 'product_card.dart';
 
 class Products_sample extends StatelessWidget {
   List prods = List();
@@ -67,9 +67,9 @@ class Products_sample extends StatelessWidget {
                       padding: MediaQuery.of(context).size.width < 600
                           ? EdgeInsets.fromLTRB(10, 30, 10, 0)
                           : EdgeInsets.fromLTRB(30, 30, 30, 0),
-                      width: MediaQuery.of(context).size.width < 900
+                      width: MediaQuery.of(context).size.width <= 900
                           ? MediaQuery.of(context).size.width - 40
-                          : MediaQuery.of(context).size.width - cartWidth - 90,
+                          : MediaQuery.of(context).size.width - cartWidth - 75,
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.max,
@@ -159,7 +159,7 @@ class Products_sample extends StatelessWidget {
                     'Make order of ' +
                         cart.countItems().toString() +
                         ' items (' +
-                        cart.getTotalPrice().toString() +
+                        cart.getTotalPrice().toStringAsFixed(2) +
                         ' €)'))
         ]));
   }
