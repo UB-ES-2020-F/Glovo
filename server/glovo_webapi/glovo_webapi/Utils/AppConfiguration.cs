@@ -1,4 +1,4 @@
-namespace glovo_webapi
+namespace glovo_webapi.Utils
 {
     public class AppConfiguration
     {
