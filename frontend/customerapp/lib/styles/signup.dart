@@ -21,7 +21,7 @@ final registerButtonStyle = ButtonStyle(
     textStyle: MaterialStateProperty.resolveWith((states) => TextStyle(
         color: Colors.white, fontSize: 14, fontWeight: FontWeight.w700)),
     shape: MaterialStateProperty.resolveWith((states) => RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20.0),
+        borderRadius: BorderRadius.circular(21.5),
         side: BorderSide(color: Color(0xFF2ABB9B)))),
     backgroundColor:
         MaterialStateColor.resolveWith((states) => Color(0xFF2ABB9B)));
@@ -34,7 +34,7 @@ final loginButtonStyle = ButtonStyle(
     textStyle: MaterialStateProperty.resolveWith((states) => TextStyle(
         color: Color(0xFF4A4A4A), fontSize: 14, fontWeight: FontWeight.w700)),
     shape: MaterialStateProperty.resolveWith((states) => RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20.0),
+        borderRadius: BorderRadius.circular(21.5),
         side: BorderSide(color: Colors.white))),
     backgroundColor: MaterialStateColor.resolveWith((states) => Colors.white));
 
@@ -64,15 +64,20 @@ final signUpButtonStyleDisabled = ButtonStyle(
 
 final signUpTextLinks = TextStyle(
   color: Color(0xFF2ABB9B),
+  fontSize: 14,
+  fontWeight: FontWeight.w600,
 );
 
-final signUpTextLinksBold = TextStyle(
-  fontWeight: FontWeight.bold,
-  color: Color(0xFF2ABB9B),
+final signUpText = TextStyle(
+  fontWeight: FontWeight.w300,
+  fontSize: 14,
+  color: Color(0xFF4a4a4a),
 );
 
 final signUpTextLinksHover = TextStyle(
   color: Color(0xFF528A84),
+  fontSize: 14,
+  fontWeight: FontWeight.w600,
 );
 
 final signUpTextLinksHoverBold = TextStyle(

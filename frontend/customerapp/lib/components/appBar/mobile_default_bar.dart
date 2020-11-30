@@ -1,6 +1,5 @@
 import 'dart:html';
 
-import 'package:customerapp/components/appBar/user_actions_bar.dart';
 import 'package:customerapp/styles/Komet.dart';
 import 'package:customerapp/styles/default_app_bar.dart';
 import 'package:flutter/cupertino.dart';

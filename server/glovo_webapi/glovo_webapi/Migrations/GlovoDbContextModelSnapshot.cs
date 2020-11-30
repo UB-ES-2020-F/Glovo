@@ -121,16 +121,15 @@ namespace glovo_webapi.Migrations
                         .HasColumnType("integer")
                         .UseIdentityByDefaultColumn();
 
+                    b.Property<byte[]>("AuthSalt")
+                        .HasColumnType("bytea");
+
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<double?>("LocationLat")
-                        .HasColumnType("double precision");
-
-                    b.Property<double?>("LocationLong")
-                        .HasColumnType("double precision");
-
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<byte[]>("PasswordHash")
@@ -138,6 +137,12 @@ namespace glovo_webapi.Migrations
 
                     b.Property<byte[]>("PasswordSalt")
                         .HasColumnType("bytea");
+
+                    b.Property<byte[]>("RecoverySalt")
+                        .HasColumnType("bytea");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -191,6 +196,58 @@ namespace glovo_webapi.Migrations
                         .IsRequired();
 
                     b.Navigation("Restaurant");
+                });
+
+            modelBuilder.Entity("glovo_webapi.Entities.Restaurant", b =>
+                {
+                    b.OwnsOne("glovo_webapi.Entities.Location", "Location", b1 =>
+                        {
+                            b1.Property<int>("RestaurantId")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer")
+                                .UseIdentityByDefaultColumn();
+
+                            b1.Property<double>("Latitude")
+                                .HasColumnType("double precision");
+
+                            b1.Property<double>("Longitude")
+                                .HasColumnType("double precision");
+
+                            b1.HasKey("RestaurantId");
+
+                            b1.ToTable("Restaurants");
+
+                            b1.WithOwner()
+                                .HasForeignKey("RestaurantId");
+                        });
+
+                    b.Navigation("Location");
+                });
+
+            modelBuilder.Entity("glovo_webapi.Entities.User", b =>
+                {
+                    b.OwnsOne("glovo_webapi.Entities.Location", "Location", b1 =>
+                        {
+                            b1.Property<int>("UserId")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer")
+                                .UseIdentityByDefaultColumn();
+
+                            b1.Property<double>("Latitude")
+                                .HasColumnType("double precision");
+
+                            b1.Property<double>("Longitude")
+                                .HasColumnType("double precision");
+
+                            b1.HasKey("UserId");
+
+                            b1.ToTable("Users");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserId");
+                        });
+
+                    b.Navigation("Location");
                 });
 
             modelBuilder.Entity("glovo_webapi.Entities.Order", b =>

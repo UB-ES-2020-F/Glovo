@@ -25,6 +25,7 @@ namespace glovo_webapi.Controllers.Orders
         
         //GET api/restaurants/<restId>/orders
         [HttpGet("{restId}/orders")]
+        [Authorize(Roles="Administrator")]
         public ActionResult<IEnumerable<GetOrderModel>> GetAllOrdersOfRestaurant(int restId)
         {
             IEnumerable<Order> restaurantOrders = _service.GetAllOrdersOfRestaurant(restId);
@@ -34,6 +35,7 @@ namespace glovo_webapi.Controllers.Orders
         
         //GET api/restaurants/<restId>/orders/<orderId>
         [HttpGet("{restId}/orders/{orderId}")]
+        [Authorize(Roles="Administrator")]
         public ActionResult<GetOrderModel> GetProductOfRestaurantById(int restId, int orderId)
         {
             Order foundOrder = _service.GetOrderOfRestaurantById(restId, orderId);

@@ -52,7 +52,11 @@ namespace glovo_webapi
                                                         "http://localhost:*",
                                                         "https://localhost:34819",
                                                         "http://komet.cat",
-                                                        "https://komet.cat"
+                                                        "https://komet.cat",
+                                                        "http://ub-es2020-glovo-dev.herokuapp.com",
+                                                        "https://ub-es2020-glovo-dev.herokuapp.com",
+                                                        "http://ub-es2020-glovo.herokuapp.com",
+                                                        "http://ub-es2020-glovo.herokuapp.com"
                                                         )
                                         		.AllowAnyMethod().AllowAnyHeader();
                                     }  
@@ -88,43 +92,7 @@ namespace glovo_webapi
 
             services.AddOptions();
             services.Configure<AppConfiguration>(Configuration.GetSection("AppSettings"));
-            
-            /*
-            byte[] key = Encoding.ASCII.GetBytes(Configuration.GetValue<string>("AppSettings:Secret"));
-            services.AddAuthentication(x =>
-                {
-                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
-                .AddJwtBearer(x =>
-                {
-                    x.Events = new JwtBearerEvents
-                    {
-                        OnTokenValidated = context =>
-                        {
-                            var userService = context.HttpContext.RequestServices.GetRequiredService<IUserService>();
-                            var userId = int.Parse(context.Principal.Identity.Name);
-                            var user = userService.GetById(userId);
-                            if (user == null)
-                            {
-                                // return unauthorized if user no longer exists
-                                context.Fail("Unauthorized");
-                            }
-                            return Task.CompletedTask;
-                        }
-                    };
-                    x.RequireHttpsMetadata = false;
-                    x.SaveToken = true;
-                    x.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(key),
-                        ValidateIssuer = false,
-                        ValidateAudience = false
-                    };
-                });
-            */
-            
+
             services.AddHttpContextAccessor();
         }
 

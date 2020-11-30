@@ -1,88 +1,87 @@
 import 'package:customerapp/components/text_link.dart';
 import 'package:customerapp/dto/user.dart';
+import 'package:customerapp/infrastructure/persistence/repository/user_credentials_repository.dart';
+import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/signup.dart';
+import 'package:customerapp/models/user_credentials/user_credentials.dart';
 import 'package:customerapp/screens/anon_root.dart';
+import 'package:customerapp/screens/signIn/signin_form.dart';
+import 'package:customerapp/screens/commonComponents/single_message_dialog.dart';
 import 'package:customerapp/styles/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:customerapp/endpoints/login_register.dart';
+import 'package:customerapp/endpoints/user.dart';
 
 class SignUpFormPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Container(
+          constraints: BoxConstraints(
+              maxHeight: MediaQuery.of(context).size.height - 150),
           child: ListView(
-        shrinkWrap: true,
-        children: [
-          Center(
-              child: Container(
-            child: Text(
-              'Register to Komet',
-              style: registerToKometTextStyle,
-            ),
-          )),
-          Center(
-              child: Container(
-            child: SignUpForm(),
-          )),
-          Center(
-            child: Container(
-              padding: EdgeInsets.symmetric(vertical: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                      child: Text('Have an account? ',
-                          style: Theme.of(context).textTheme.bodyText1)),
-                  TextLink('Login', (context) {
-                    Navigator.pop(context);
-                    showSignIn(context);
-                  }, signUpTextLinksBold, signUpTextLinksHoverBold, context),
-                ],
-              ),
-            ),
-          ),
-          Center(
-            child: Container(
-              padding: EdgeInsets.symmetric(vertical: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    'By registering, you agree to our ',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1
-                        .copyWith(fontSize: 10),
+            shrinkWrap: true,
+            children: [
+              Center(
+                  child: Container(
+                child: Text(
+                  'Register to Komet',
+                  style: registerToKometTextStyle,
+                ),
+              )),
+              Center(
+                  child: Container(
+                child: SignUpForm(),
+              )),
+              Center(
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                          child: Text('Have an account? ', style: signUpText)),
+                      TextLink('Login', (context) {
+                        Navigator.pop(context);
+                        showSignIn(context);
+                      }, signUpTextLinks, signUpTextLinksHover, context),
+                    ],
                   ),
-                  TextLink(
-                      'Terms of Service',
-                      (context) {},
-                      signUpTextLinks.copyWith(fontSize: 10),
-                      signUpTextLinksHover.copyWith(fontSize: 10),
-                      context),
-                  Text(' and ',
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText1
-                          .copyWith(fontSize: 10)),
-                  TextLink(
-                      'Privacy Policy',
-                      (context) {},
-                      signUpTextLinks.copyWith(fontSize: 10),
-                      signUpTextLinksHover.copyWith(fontSize: 10),
-                      context)
-                ],
+                ),
               ),
-            ),
-          )
-        ],
-      )),
+              Center(
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    children: [
+                      Text(
+                        'By registering, you agree to our ',
+                        style: signUpText.copyWith(fontSize: 10),
+                      ),
+                      TextLink(
+                          'Terms of Service',
+                          (context) {},
+                          signUpTextLinks.copyWith(fontSize: 10),
+                          signUpTextLinksHover.copyWith(fontSize: 10),
+                          context),
+                      Text(' and ', style: signUpText.copyWith(fontSize: 10)),
+                      TextLink(
+                          'Privacy Policy',
+                          (context) {},
+                          signUpTextLinks.copyWith(fontSize: 10),
+                          signUpTextLinksHover.copyWith(fontSize: 10),
+                          context)
+                    ],
+                  ),
+                ),
+              )
+            ],
+          )),
     );
   }
 }
@@ -201,9 +200,12 @@ class SignUpButton extends StatelessWidget {
       child: Wrap(
         children: [
           ElevatedButton(
-            onPressed: () {
-              trySendRegisterForm(context, signUpModel);
-            },
+            onLongPress: null,
+            onPressed: signUpModel.formValid
+                ? () {
+                    trySendRegisterForm(context, signUpModel);
+                  }
+                : null,
             child: Text('Sign up with email'),
             style: signUpModel.formValid
                 ? signUpButtonStyleEnabled
@@ -218,18 +220,39 @@ class SignUpButton extends StatelessWidget {
 void trySendRegisterForm(BuildContext context, SignUpModel signUpModel) {
   if (signUpModel.formValid) {
     if (signUpModel.formKey.currentState.validate()) {
+      showLoaderDialog(context);
+      signUpModel.formValid = false;
       signUpModel.formKey.currentState.save();
       print(signUpModel.password);
       UserDTO formUser = new UserDTO();
       formUser.email = signUpModel.email;
       formUser.password = signUpModel.password;
       formUser.name = signUpModel.firstName;
-      registerUser(formUser)
-          .then((value) => Navigator.of(context)
-              .pushNamedAndRemoveUntil('/', (route) => false))
-          .catchError((error) {
+      registerUser(formUser).then((value) {
+        loginUser(formUser).then((loggedUser) {
+          UserCredentialsRepository().update(new UserCredentials(
+              loggedUser.email, loggedUser.token, loggedUser.id));
+          LoggedModel.user.id = loggedUser.id;
+          LoggedModel.user.name = loggedUser.name;
+          LoggedModel.user.email = loggedUser.email;
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil('/initial-logged-in', (route) => false);
+        }).catchError((error) {
+          print(error);
+          Navigator.pop(context);
+          showLogInFailedDialog(context);
+        });
+      }).catchError((error) {
         print(error);
+        Navigator.pop(context);
+        showSignUpFailedDialog(context);
       });
     }
   }
+}
+
+showSignUpFailedDialog(BuildContext context) {
+  showDialog(
+      context: context,
+      builder: (context) => SingleMessageDialog("Sign up failed"));
 }

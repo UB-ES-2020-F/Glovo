@@ -1,13 +1,17 @@
 import 'package:customerapp/components/text_link.dart';
 import 'package:customerapp/dto/user.dart';
+import 'package:customerapp/models/location.dart';
+import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/signin.dart';
 import 'package:customerapp/screens/anon_root.dart';
+import 'package:customerapp/screens/commonComponents/single_message_dialog.dart';
+import 'package:customerapp/styles/Komet.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:customerapp/styles/signup.dart';
 import 'package:provider/provider.dart';
-import 'package:customerapp/endpoints/login_register.dart';
+import 'package:customerapp/endpoints/user.dart';
 import 'package:customerapp/infrastructure/persistence/repository/user_credentials_repository.dart';
 import 'package:customerapp/models/user_credentials/user_credentials.dart';
 
@@ -16,37 +20,34 @@ class SignInFormPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
         child: Container(
+            constraints: BoxConstraints(
+                maxHeight: MediaQuery.of(context).size.height - 150),
             child: ListView(shrinkWrap: true, children: [
-      Center(
-          child: Container(
-        child: Text(
-          'Login to Komet',
-          style: registerToKometTextStyle,
-        ),
-      )),
-      SignInForm(),
-      Container(
-          margin: EdgeInsets.all(20.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                "New to Komet? ",
-                style: TextStyle(color: Color(0xFF9B9B9B)),
-              ),
-              TextLink('Sign up', (context) {
-                Navigator.pop(context);
-                showSignUp(context);
-              },
-                  signUpTextLinks.copyWith(
-                      fontSize: 13, fontWeight: FontWeight.bold),
-                  signUpTextLinksHover.copyWith(
-                      fontSize: 13, fontWeight: FontWeight.bold),
-                  context)
-            ],
-          )),
-    ])));
+              Center(
+                  child: Container(
+                child: Text(
+                  'Login to Komet',
+                  style: registerToKometTextStyle,
+                ),
+              )),
+              SignInForm(),
+              Container(
+                  margin: EdgeInsets.all(20.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "New to Komet? ",
+                        style: signUpText,
+                      ),
+                      TextLink('Sign up', (context) {
+                        Navigator.pop(context);
+                        showSignUp(context);
+                      }, signUpTextLinks, signUpTextLinksHover, context)
+                    ],
+                  )),
+            ])));
   }
 }
 
@@ -127,14 +128,8 @@ class SignInForm extends StatelessWidget {
             child: Container(
                 margin: EdgeInsets.all(20.0),
                 alignment: Alignment.centerRight,
-                child: TextLink(
-                    'Forgot your password?',
-                    (context) {},
-                    signUpTextLinks.copyWith(
-                        fontSize: 13, fontWeight: FontWeight.bold),
-                    signUpTextLinksHover.copyWith(
-                        fontSize: 13, fontWeight: FontWeight.bold),
-                    context)),
+                child: TextLink('Forgot your password?', (context) {},
+                    signUpTextLinks, signUpTextLinksHover, context)),
             alignment: Alignment.bottomCenter,
           ),
           SignInButton(),
@@ -156,9 +151,12 @@ class SignInButton extends StatelessWidget {
       child: Wrap(
         children: [
           ElevatedButton(
-            onPressed: () {
-              trySendSignInForm(context, signInModel);
-            },
+            onLongPress: null,
+            onPressed: signInModel.formValid
+                ? () {
+                    trySendSignInForm(context, signInModel);
+                  }
+                : null,
             key: Key('submit-login-button'),
             child: Text('Log in with email'),
             style: signInModel.formValid
@@ -174,6 +172,8 @@ class SignInButton extends StatelessWidget {
 void trySendSignInForm(BuildContext context, SignInModel signInModel) {
   if (signInModel.formValid) {
     if (signInModel.formKey.currentState.validate()) {
+      showLoaderDialog(context);
+      signInModel.formValid = false;
       signInModel.formKey.currentState.save();
       UserDTO formUser = new UserDTO();
       formUser.email = signInModel.email;
@@ -181,11 +181,22 @@ void trySendSignInForm(BuildContext context, SignInModel signInModel) {
       loginUser(formUser).then((loggedUser) {
         UserCredentialsRepository().update(new UserCredentials(
             loggedUser.email, loggedUser.token, loggedUser.id));
+        LoggedModel.user.id = loggedUser.id;
+        LoggedModel.user.name = loggedUser.name;
+        LoggedModel.user.email = loggedUser.email;
         Navigator.of(context)
             .pushNamedAndRemoveUntil('/initial-logged-in', (route) => false);
       }).catchError((error) {
         print(error);
+        Navigator.pop(context);
+        showLogInFailedDialog(context);
       });
     }
   }
+}
+
+showLogInFailedDialog(BuildContext context) {
+  showDialog(
+      context: context,
+      builder: (context) => SingleMessageDialog("Log in failed"));
 }

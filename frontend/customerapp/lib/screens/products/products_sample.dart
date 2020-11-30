@@ -4,27 +4,23 @@ import 'package:customerapp/components/appBar/default_logged_bar.dart';
 import 'package:customerapp/models/cart.dart';
 import 'package:customerapp/models/products.dart';
 import 'package:customerapp/models/restaurants.dart';
+import 'package:customerapp/screens/commonComponents/single_message_dialog.dart';
 import 'package:customerapp/screens/products/cart_box.dart';
 import 'package:customerapp/styles/product.dart';
 import 'package:customerapp/responsive/screen_responsive.dart';
-import 'package:customerapp/screens/loggedPage/initial_logged_page.dart';
-import 'package:customerapp/screens/loggedPage/logged_bar.dart';
-import 'package:customerapp/screens/restaurantList/restaurant_list_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:customerapp/models/products.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:customerapp/endpoints/products.dart';
 
 import 'cart_box.dart';
-import 'concrete_product_card.dart';
+import 'product_card.dart';
 
 class Products_sample extends StatelessWidget {
   List prods = List();
   Cart cart;
   bool firstInstance;
-  bool queryMade = false;
 
   Products_sample() {
     firstInstance = true;
@@ -46,18 +42,12 @@ class Products_sample extends StatelessWidget {
       cart.empty();
     }
 
-    if (!queryMade) {
-      queryProducts(context, productsModel, restaurant);
-      queryMade = true;
-    }
-
     firstInstance = false;
     double cartWidth = 350;
     var s = Bar_responsive(context, '/overview_mobile', DefaultLoggedBar());
     var bar = s.get_responsive_bar();
 
     return Scaffold(
-        //backgroundColor: Theme.of(context).backgroundColor,
         appBar: bar,
         body: Stack(children: [
           Container(
@@ -77,9 +67,9 @@ class Products_sample extends StatelessWidget {
                       padding: MediaQuery.of(context).size.width < 600
                           ? EdgeInsets.fromLTRB(10, 30, 10, 0)
                           : EdgeInsets.fromLTRB(30, 30, 30, 0),
-                      width: MediaQuery.of(context).size.width < 900
+                      width: MediaQuery.of(context).size.width <= 900
                           ? MediaQuery.of(context).size.width - 40
-                          : MediaQuery.of(context).size.width - cartWidth - 90,
+                          : MediaQuery.of(context).size.width - cartWidth - 75,
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.max,
@@ -101,26 +91,56 @@ class Products_sample extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            Expanded(
-                                child: Container(
-                                    child: Center(
-                                        child: StaggeredGridView.countBuilder(
-                              crossAxisSpacing: 10,
-                              mainAxisSpacing: 10,
-                              itemCount: productsModel.availableProducts.length,
-                              crossAxisCount:
-                                  MediaQuery.of(context).size.width > 600
-                                      ? 2
-                                      : 1,
-                              itemBuilder: (context, index) {
-                                return ProductListCard(
-                                    Key('product-card-$index'),
-                                    productsModel.availableProducts[index],
-                                    addToCart);
-                              },
-                              staggeredTileBuilder: (int index) =>
-                                  StaggeredTile.fit(1),
-                            )))),
+                            Expanded(child: Container(child: Center(
+                              child: Builder(builder: (builder) {
+                                return FutureBuilder(
+                                  future:
+                                      getProductsFromRestaurant(restaurant.id),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot snapshot) {
+                                    if (snapshot.hasData) {
+                                      productsModel.removeProducts();
+                                      snapshot.data.forEach((element) {
+                                        productsModel.addProduct(
+                                            Product.fromDTO(element));
+                                      });
+                                      return StaggeredGridView.countBuilder(
+                                        crossAxisSpacing: 10,
+                                        mainAxisSpacing: 10,
+                                        itemCount: productsModel
+                                            .availableProducts.length,
+                                        crossAxisCount:
+                                            MediaQuery.of(context).size.width >
+                                                    600
+                                                ? 2
+                                                : 1,
+                                        itemBuilder: (context, index) {
+                                          return ProductListCard(
+                                              Key('product-card-$index'),
+                                              productsModel
+                                                  .availableProducts[index],
+                                              addToCart);
+                                        },
+                                        staggeredTileBuilder: (int index) =>
+                                            StaggeredTile.fit(1),
+                                      );
+                                    } else {
+                                      return Padding(
+                                          padding:
+                                              EdgeInsets.fromLTRB(0, 0, 0, 10),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(15.0),
+                                                color: Color(0xAAFFFFFF)),
+                                            alignment: Alignment.centerLeft,
+                                            child: CircularLoaderKomet(),
+                                          ));
+                                    }
+                                  },
+                                );
+                              }),
+                            ))),
                           ]),
                     ),
                     if (MediaQuery.of(context).size.width > 900)
@@ -139,21 +159,8 @@ class Products_sample extends StatelessWidget {
                     'Make order of ' +
                         cart.countItems().toString() +
                         ' items (' +
-                        cart.getTotalPrice().toString() +
+                        cart.getTotalPrice().toStringAsFixed(2) +
                         ' €)'))
         ]));
   }
-}
-
-void queryProducts(BuildContext context, ProductsListModel productsListModel,
-    Restaurant restaurant) {
-  getProductsFromRestaurant(restaurant.id).then((products) {
-    productsListModel.removeProducts();
-    products.forEach((element) {
-      productsListModel.addProduct(Product.fromDTO(element));
-    });
-    productsListModel.notifyListeners();
-  }).catchError((error) {
-    print(error);
-  });
 }

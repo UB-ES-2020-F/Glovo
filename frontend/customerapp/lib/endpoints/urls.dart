@@ -28,4 +28,9 @@ class EndpointDefinitions {
         restaurantId.toString() +
         '/products';
   }
+
+  static Future<String> makeLogoutURL() async {
+    final config = await AppConfig.getConfig();
+    return '${config.apiUrl}' + '/users/logout';
+  }
 }

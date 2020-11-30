@@ -4,6 +4,7 @@ import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
 import '../data/login.dart';
+import '../endpointComponents/user_endpoint.dart';
 import '../pageComponents/anonymouse_page.dart';
 import '../pageComponents/cart_page.dart';
 import '../pageComponents/logged_user_page.dart';
@@ -18,6 +19,7 @@ void main() {
     // Connect to the Flutter driver before running any tests.
     setUpAll(() async {
       driver = await FlutterDriver.connect();
+      await createValidUserIfItDoesNotExist();
       await goToRestaurantPage(driver);
     });
 
@@ -53,6 +55,10 @@ void main() {
       expect(numberOfItemsInCart, 0);
     });
   });
+}
+
+Future<void> createValidUserIfItDoesNotExist() async {
+  await createUser(validName, validUserEmail, validUserPassword);
 }
 
 Future<void> goToRestaurantPage(FlutterDriver driver) async {

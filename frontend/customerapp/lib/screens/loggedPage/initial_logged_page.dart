@@ -1,5 +1,8 @@
 import 'package:customerapp/responsive/screen_responsive.dart';
+import 'package:customerapp/screens/commonComponents/anything_button.dart';
 import 'package:customerapp/screens/commonComponents/food_button.dart';
+import 'package:customerapp/screens/commonComponents/snacks_button.dart';
+import 'package:customerapp/screens/commonComponents/supermarkets_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:customerapp/screens/loggedPage/logged_bar.dart';
@@ -22,15 +25,28 @@ class InitialLogged extends StatelessWidget {
               child: Container(
                   child: Center(
                       child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
                 'Komet ',
+                key: Key('initial-logged-in-komet-title-text'),
                 style: TextStyle(
                     fontSize: 50,
                     fontWeight: FontWeight.bold,
                     color: Theme.of(context).accentColor),
               ),
-              FoodButton(Key("food-bubble-button"))
+              Container(
+                  constraints: BoxConstraints(
+                      maxHeight: MediaQuery.of(context).size.height - 184),
+                  padding: EdgeInsets.only(left: 25, right: 25),
+                  child: SingleChildScrollView(
+                      child: Wrap(alignment: WrapAlignment.center, children: [
+                    FoodButton(Key("food-bubble-button")),
+                    SupermarketsButton(Key("supermarket-bubble-button")),
+                    SnacksButton(Key("snacks-bubble-button")),
+                    AnythingButton(Key("anything-bubble-button")),
+                  ])))
             ],
           )))),
         ));

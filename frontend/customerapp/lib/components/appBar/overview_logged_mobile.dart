@@ -3,6 +3,7 @@ import 'package:customerapp/components/text_link.dart';
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/signin.dart';
 import 'package:customerapp/responsive/screen_responsive.dart';
+import 'package:customerapp/screens/loggedPage/profile_settings.dart';
 import 'package:customerapp/styles/Komet.dart';
 import 'package:customerapp/styles/initial_logged.dart';
 import 'package:customerapp/styles/overview_mobile_bar.dart';
@@ -28,20 +29,6 @@ class TabBar_screen extends StatelessWidget {
               padding: EdgeInsets.only(right: 50, left: 50, top: 20),
               child: Column(
                 children: <Widget>[
-                  /*Container(
-                      //height: 10,
-                      padding: EdgeInsets.all(0),
-                      alignment: Alignment(1, 1),
-                      child: IconButton(
-                        hoverColor: Colors.transparent,
-                        color: Color(0xFF6E6E6E),
-                        icon: Icon(Icons.clear),
-                        iconSize: 15,
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      )),*/
-                  //new Expanded(child: new Container()),
                   new TabBar(
                     labelStyle: NotSelectedStyle_bar,
                     labelColor: Kommet_distinctive_yellow,
@@ -65,12 +52,25 @@ class TabBar_screen extends StatelessWidget {
             )),
           ),
         ),
-        body: new TabBarView(
-          children: <Widget>[
-            Subpage_orders(),
-            Subpage_user_profile(),
-          ],
-        ),
+        body: Stack(children: [
+          TabBarView(
+            children: <Widget>[
+              Subpage_orders(),
+              Subpage_user_profile(),
+            ],
+          ),
+          Align(
+              alignment: Alignment.bottomRight,
+              child: IconButton(
+                iconSize: 36,
+                icon: Image.asset(
+                  'resources/images/arrow_diag.png',
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ))
+        ]),
       ),
     );
   }
@@ -106,22 +106,6 @@ class Subpage_orders extends StatelessWidget {
                   ),
                 ],
               )),
-          Row(
-            children: [
-              Expanded(child: Container()),
-              IconButton(
-                iconSize: 40,
-                icon: Image.asset(
-                  'resources/images/arrow_diag.png',
-                  scale: 0.9,
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                alignment: Alignment(1, -1),
-              )
-            ],
-          )
         ],
       ),
     );
@@ -137,147 +121,17 @@ class Subpage_user_profile extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Padding(
+          Container(
+              constraints: BoxConstraints(
+                  maxHeight: MediaQuery.of(context).size.height - 100),
               padding: EdgeInsets.only(left: 25, right: 25),
-              child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Divider(
-                      color: Colors.black,
-                      thickness: 0.3,
-                    ),
-                    Container(
-                        child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: 2 * 10.0),
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(vertical: 10.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'Nombre',
-                                          style: labelsProfileText,
-                                        ),
-                                        TextLink(
-                                            'Editar',
-                                            (context) {},
-                                            editTextLinksBold,
-                                            editTextLinksHoverBold,
-                                            context)
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 10),
-                                    child: Text(
-                                      LoggedModel.firstName,
-                                      style: fieldsProfileText,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 10),
-                                    child: Text(
-                                      'E-mail',
-                                      style: labelsProfileText,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 10),
-                                    child: Text(
-                                      LoggedModel.email,
-                                      style: fieldsProfileText,
-                                    ),
-                                  ),
-                                ]))),
-                    Divider(
-                      color: Colors.black,
-                      thickness: 0.3,
-                    ),
-                    Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(vertical: 10.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Teléfono',
-                                  style: labelsProfileText,
-                                ),
-                                TextLink(
-                                    'Editar',
-                                    (context) {},
-                                    editTextLinksBold,
-                                    editTextLinksHoverBold,
-                                    context)
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(vertical: 10),
-                            child: Text(
-                              "-",
-                              style: fieldsProfileText,
-                            ),
-                          ),
-                        ]),
-                    Divider(
-                      color: Colors.black,
-                      thickness: 0.3,
-                    ),
-                    Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(vertical: 10.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Contraseña',
-                                  style: labelsProfileText,
-                                ),
-                                TextLink(
-                                    'Editar',
-                                    (context) {},
-                                    editTextLinksBold,
-                                    editTextLinksHoverBold,
-                                    context)
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(vertical: 10),
-                            child: Text(
-                              "************",
-                              style: fieldsProfileText,
-                            ),
-                          ),
-                        ])
-                  ])),
-          Row(
-            children: [
-              Expanded(child: Container()),
-              IconButton(
-                iconSize: 40,
-                icon: Image.asset(
-                  'resources/images/arrow_diag.png',
-                  scale: 0.9,
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                alignment: Alignment(1, -1),
-              )
-            ],
-          )
+              child: SingleChildScrollView(
+                  child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                    UserInformation(),
+                  ])))
         ]);
   }
 }
