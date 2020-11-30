@@ -96,6 +96,7 @@ jobs:
       script:
         - echo "machine git.heroku.com login eudald.elias@gmail.com password 49916134-f0ec-4564-a22d-c40da16b9872" > $HOME/.netrc
         - cd $TRAVIS_BUILD_DIR/frontend/customerapp
+        - flutter clean
         - cp resources/config/prod-dev.json resources/config/dev.json
         - flutter build web
         - cat  build/web/assets/resources/config/dev.json
@@ -124,6 +125,7 @@ jobs:
       script:
         - echo "machine git.heroku.com login eudald.elias@gmail.com password 49916134-f0ec-4564-a22d-c40da16b9872" > $HOME/.netrc
         - cd $TRAVIS_BUILD_DIR/frontend/customerapp
+        - flutter clean
         - cp resources/config/prod.json resources/config/dev.json
         - flutter build web
         - ls -R build/web/
