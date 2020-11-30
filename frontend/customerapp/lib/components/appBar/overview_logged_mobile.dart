@@ -121,14 +121,17 @@ class Subpage_user_profile extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Padding(
+          Container(
+              constraints: BoxConstraints(
+                  maxHeight: MediaQuery.of(context).size.height - 100),
               padding: EdgeInsets.only(left: 25, right: 25),
-              child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+              child: SingleChildScrollView(
+                  child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
                     UserInformation(),
-                  ]))
+                  ])))
         ]);
   }
 }
