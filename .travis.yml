@@ -62,14 +62,14 @@ jobs:
     
     
     - stage: code_analysis
-      name: backend
+      name: "backend_ana"
       script:
       - cd $TRAVIS_BUILD_DIR/server/glovo_webapi
       - dotnet sonarscanner begin /k:"komet_backend" /d:sonar.login=$SONARTOK /d:sonar.projectDescription=$TRAVIS_BRANCH /d:sonar.host.url=http://167.71.130.118:9000
         /d:sonar.verbose=true
       - dotnet build glovo_webapi.sln
       - dotnet sonarscanner end /d:sonar.login=$SONARTOK
-    - name: frontend
+    - name: "frontend_ana"
       script:
       - cd $TRAVIS_BUILD_DIR/frontend/customerapp
       - flutter clean
@@ -132,4 +132,7 @@ jobs:
         - git add .
         - git commit -am "deploy"
         - git push -f heroku master
-      
+env:
+  global:
+      secure: LWdBo7I/uCL3kGVGebvREUUbkYbzD8ZRLvldPit2j0frPH7+yzbc+bxBe9hoDyLtWB9/TE9dUCnBYmlayE20Rg/3ygI5K74qsWcYCXC5A1UgmDeLVV8EFL5IOo3PHNnsuPpFEmnYJ/oj307Dywmh9WRMK8hvCRzQzDZ4+IQUoX01Wec04zcB8EdZMkrcdlYHmBPXqtTOQ/yMHJCQpEeDyoCRj0YbzJRcDrokfaJY5g7+gmr6S20V9sLzRmuMlhikzLhEkuwY8r5orDWcOKGOKxiyMsQb/1knBZbFyUxYKjtKUJ3euYG4F8BhhLe387ap73YF92NIZlbTNu1qb0kxXlw7NwiYpkAv29elsa5e5oQjM8Qb4AZIWJUCbJm7+X8x3iiHdQRiRHcvSPlwdFdc/VWZlRjl6THn/my8iGDSmxPPYAe73S2gmb2vNIwPvRDE09m7Ij71DTwf7tKul+3Ewy2kvJn0dg2h1DC9mHjLc/41ztY8+cRc5jyXH9seO22arKUz8CUN11f/TAmESl13k405VIFk+0/PJXV2IwBsacudGmSBOsTkg3dp7j4+yRDPwMXAjct7fHHIo6JpMvG4IZaOOzgSSDEZOhBydX9dGeBCuI8Bnh840fI+CYscecCFp1gdH5g0Xd7+uTCKYGVa3ZizA8YOMdOOxpIDLGv6XNs=
+     
