@@ -56,9 +56,9 @@ jobs:
         - chmod +x ./test_driver/chromedriver
         - ./test_driver/chromedriver --verbose --port=4444 &
         - netstat -tulpn
-        #- flutter drive -d web-server --browser-name=chrome --target=test_driver/tests/cart.dart --release
-        #- flutter drive -d web-server --browser-name=chrome --target=test_driver/tests/order.dart --release
-        #- flutter drive -d web-server --browser-name=chrome --target=test_driver/tests/profile_settings.dart --release
+        - flutter drive -d web-server --browser-name=chrome --target=test_driver/tests/cart.dart --release
+        - flutter drive -d web-server --browser-name=chrome --target=test_driver/tests/order.dart --release
+        - flutter drive -d web-server --browser-name=chrome --target=test_driver/tests/profile_settings.dart --release
     
     
     - stage: code_analysis
