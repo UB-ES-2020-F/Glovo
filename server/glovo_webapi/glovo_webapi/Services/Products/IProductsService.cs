@@ -11,6 +11,5 @@ namespace glovo_webapi.Services.Products
         Product GetProductById(int id);
         IEnumerable<Product> GetAllProductsOfRestaurant(int idRest);
         IEnumerable<Product> GetAllProductsOfRestaurantByCategory(int idRest, ProductCategory c);
-        Product GetProductOfRestaurantById(int idRest, int idProd);
     }
 }

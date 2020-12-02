@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using AutoMapper;
 using glovo_webapi.Entities;
 using glovo_webapi.Models.Product;
@@ -8,7 +7,7 @@ using glovo_webapi.Services.Products;
 using glovo_webapi.Utils;
 using Microsoft.AspNetCore.Mvc;
 
-namespace glovo_webapi.Controllers
+namespace glovo_webapi.Controllers.Products
 {
     [ApiController]
     [Route("api/restaurants")]
@@ -27,35 +26,16 @@ namespace glovo_webapi.Controllers
         public ActionResult<ProductModel> GetAllProductsOfRestaurant(int idRest, [FromQuery]ProductCategory? category)
         {
             IEnumerable<Product> products;
-            try
-            {
+            try {
                 if (category.HasValue)
-                {
                     products = _service.GetAllProductsOfRestaurantByCategory(idRest, category.Value);
-                }
                 else
-                {
                     products = _service.GetAllProductsOfRestaurant(idRest);
-                }
+            } catch (RequestException) {
+                return NotFound(new {message = "Restaurant id not found"});
             }
-            catch (RequestException)
-            {
-                return NotFound(new {message = "restaurant id not found"});
-            }
+            
             return Ok(_mapper.Map<IEnumerable<ProductModel>>(products));
-        }
-
-        //GET api/restaurants/<restId>/products/<prodId>
-        //TODO: this endpoint should not exists. Products have unique id regardless of restaurant.
-        [HttpGet("{restId}/products/{prodId}")]
-        public ActionResult<ProductModel> GetProductOfRestaurantById(int restId, int prodId)
-        {
-            Product foundProduct = _service.GetProductOfRestaurantById(restId, prodId);
-            if (foundProduct == null)
-            {
-                return NotFound(new {message = "product not found"});
-            }
-            return Ok(_mapper.Map<ProductModel>(foundProduct));            
         }
     }
 }

@@ -1,5 +1,7 @@
 namespace glovo_webapi.Models.Users
 {
+    
+    //Send
     public class UserModel
     {
         public int Id { get; set; }

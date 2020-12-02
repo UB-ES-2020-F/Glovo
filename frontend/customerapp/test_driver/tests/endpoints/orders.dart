@@ -23,14 +23,14 @@ void main() {
     test('it returns an error when the restaurant does not exist', () async {
       final order = await generateOrderInvalidRestaurant(user);
       final responseCode = await doOrder(order, user.token);
-      expect(responseCode, 400);
+      expect(responseCode, 404);
     });
     test(
         'it returns an error when the restaurant exists but the product does not exist',
         () async {
       final order = await generateOrderInvalidProduct(user);
       final responseCode = await doOrder(order, user.token);
-      expect(responseCode, 400);
+      expect(responseCode, 404);
     });
   });
 }
