@@ -19,4 +19,13 @@ class LoggedModel extends ChangeNotifier {
       direction: direction,
       directionIndications: indicationsDirection,
       location: location);
+
+  LoggedModel() {
+    user.callback = () => notifyListeners();
+  }
+
+  User getUserAndNotify() {
+    notifyListeners();
+    return user;
+  }
 }

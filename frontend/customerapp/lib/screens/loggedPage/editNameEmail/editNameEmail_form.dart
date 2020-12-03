@@ -40,6 +40,7 @@ class EditNameEmailForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var editNameEmailModel = context.watch<EditNameEmailModel>();
+    var loggedModel = context.watch<LoggedModel>();
     return Form(
       onChanged: () => editNameEmailModel.formValid =
           editNameEmailModel.formKey.currentState.validate(),
@@ -68,7 +69,8 @@ class EditNameEmailForm extends StatelessWidget {
                   labelStyle: labelTextInputStyle,
                 ),
                 onFieldSubmitted: (value) {
-                  tryEditNameEmailForm(context, editNameEmailModel);
+                  tryEditNameEmailForm(
+                      context, editNameEmailModel, loggedModel);
                 },
                 autofocus: true,
               )),
@@ -94,7 +96,8 @@ class EditNameEmailForm extends StatelessWidget {
                   labelStyle: labelTextInputStyle,
                 ),
                 onFieldSubmitted: (value) {
-                  tryEditNameEmailForm(context, editNameEmailModel);
+                  tryEditNameEmailForm(
+                      context, editNameEmailModel, loggedModel);
                 },
               )),
           SaveInformationNameEmailButton(),
@@ -111,6 +114,7 @@ class SaveInformationNameEmailButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var editNameEmailModel = context.watch<EditNameEmailModel>();
+    var loggedModel = context.watch<LoggedModel>();
     return Container(
       padding: EdgeInsets.symmetric(vertical: 30),
       child: Wrap(
@@ -119,7 +123,8 @@ class SaveInformationNameEmailButton extends StatelessWidget {
             onLongPress: null,
             onPressed: editNameEmailModel.formValid
                 ? () {
-                    tryEditNameEmailForm(context, editNameEmailModel);
+                    tryEditNameEmailForm(
+                        context, editNameEmailModel, loggedModel);
                   }
                 : null,
             child: Text('Save'),
@@ -133,14 +138,14 @@ class SaveInformationNameEmailButton extends StatelessWidget {
   }
 }
 
-void tryEditNameEmailForm(
-    BuildContext context, EditNameEmailModel editNameEmailModel) {
+void tryEditNameEmailForm(BuildContext context,
+    EditNameEmailModel editNameEmailModel, LoggedModel loggedModel) {
   if (editNameEmailModel.formValid) {
     if (editNameEmailModel.formKey.currentState.validate()) {
       showLoaderDialog(context);
       editNameEmailModel.formKey.currentState.save();
-      LoggedModel.user.name = editNameEmailModel.firstName;
-      LoggedModel.user.email = editNameEmailModel.email;
+      loggedModel.getUserAndNotify().email = editNameEmailModel.email;
+      loggedModel.getUserAndNotify().name = editNameEmailModel.firstName;
       //ENPOINT CALL
       Navigator.pop(context);
       Navigator.pop(context);
