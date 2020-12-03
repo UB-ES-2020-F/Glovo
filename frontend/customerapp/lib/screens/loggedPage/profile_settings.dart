@@ -123,8 +123,8 @@ class UserInformation extends StatelessWidget {
                   'Phone',
                   style: labelsProfileText,
                 ),
-                TextLink('Edit', (context) {}, editTextLinksBold,
-                    editTextLinksHoverBold, context)
+                Text.rich(
+                    TextSpan(text: 'Edit', style: editTextLinksBoldInactive))
               ],
             ),
           ),
@@ -189,8 +189,8 @@ class UserInformation extends StatelessWidget {
                   'Card',
                   style: labelsProfileText,
                 ),
-                TextLink('Create', (context) {}, editTextLinksBold,
-                    editTextLinksHoverBold, context)
+                Text.rich(
+                    TextSpan(text: 'Create', style: editTextLinksBoldInactive))
               ],
             ),
           ),
@@ -222,8 +222,8 @@ class UserInformation extends StatelessWidget {
                   'Company details',
                   style: labelsProfileText,
                 ),
-                TextLink('Create', (context) {}, editTextLinksBold,
-                    editTextLinksHoverBold, context)
+                Text.rich(
+                    TextSpan(text: 'Create', style: editTextLinksBoldInactive)),
               ],
             ),
           ),
