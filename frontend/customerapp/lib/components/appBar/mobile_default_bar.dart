@@ -1,5 +1,8 @@
 import 'dart:html';
+import 'dart:math';
 
+import 'package:customerapp/models/logged.dart';
+import 'package:provider/provider.dart';
 import 'package:customerapp/styles/Komet.dart';
 import 'package:customerapp/styles/default_app_bar.dart';
 import 'package:flutter/cupertino.dart';
@@ -42,6 +45,7 @@ class Mobile_default_bar_state extends State<StatefulWidget> {
   get preferredSize => Size.fromHeight(appBarHeight);
   @override
   Widget build(BuildContext context) {
+    final loggedModel = context.watch<LoggedModel>();
     return AppBar(
         automaticallyImplyLeading: false,
         elevation: 3,
@@ -84,7 +88,7 @@ class Mobile_default_bar_state extends State<StatefulWidget> {
                     child: Row(
                       children: [
                         Text(
-                          "Barcelona",
+                          getTrimmedDirection(loggedModel),
                           style: TextStyle(
                               color: color_state_hover,
                               fontSize: 16,
@@ -93,7 +97,9 @@ class Mobile_default_bar_state extends State<StatefulWidget> {
                         IconButton(
                           icon: icon_state_hover,
                           hoverColor: Colors.transparent,
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/location');
+                          },
                         ),
                       ],
                       mainAxisSize: MainAxisSize.min,
@@ -111,4 +117,11 @@ class Mobile_default_bar_state extends State<StatefulWidget> {
               ],
             )));
   }
+}
+
+String getTrimmedDirection(LoggedModel loggedModel) {
+  String direction = loggedModel.getUserAndNotify().direction;
+  return (direction.length <= 20)
+      ? direction
+      : direction.substring(0, 20) + "...";
 }

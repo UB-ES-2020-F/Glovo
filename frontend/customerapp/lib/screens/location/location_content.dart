@@ -1,3 +1,4 @@
+import 'package:customerapp/models/location.dart';
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/map_location.dart';
 import 'package:customerapp/styles/location.dart';
@@ -117,8 +118,13 @@ class SetLocationButton extends StatelessWidget {
                     mapLocationModel.name =
                         mapLocationModel.locationTextController.text;
                     if (mapLocationModel.formValid) {
-                      loggedModel.
+                      loggedModel.getUserAndNotify().direction =
+                          mapLocationModel.name;
+                      loggedModel.getUserAndNotify().location = Location(
+                          mapLocationModel.currentCoordinates.latitude,
+                          mapLocationModel.currentCoordinates.longitude);
                     }
+                    Navigator.pop(context);
                   }
                 : null,
             child: Text('Set locaton'),
