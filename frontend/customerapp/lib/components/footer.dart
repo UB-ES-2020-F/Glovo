@@ -29,8 +29,8 @@ class Footer extends StatelessWidget {
                   MediaQuery.of(context).size.width, backgroundC)),
           Container(
               color: FooterBackgroundColor,
-              height: 300,
-              padding: EdgeInsets.only(bottom: 30, left: 20, right: 20),
+              height: 350,
+              padding: EdgeInsets.only( left: 20, right: 20),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
