@@ -12,6 +12,6 @@ final FooterTextTitleStyle = TextStyle(
 
 final FooterTextNormalStyle = TextStyle(
   color: Color(0xffffffff),
-  fontSize: 12
+  fontSize: 13
 );
 
