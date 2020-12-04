@@ -9,6 +9,7 @@ import 'package:customerapp/screens/anon_root.dart';
 
 class AnonBar extends StatelessWidget with PreferredSizeWidget {
   final double appBarHeight = 115.0;
+
   @override
   get preferredSize => Size.fromHeight(appBarHeight);
   @override

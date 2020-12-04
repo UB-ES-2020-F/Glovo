@@ -16,8 +16,6 @@ class AnonRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget bar;
 
-
-    
     var s = Bar_responsive(context, '/sign-up', AnonBar());
     bar = s.get_responsive_bar();
 
@@ -25,57 +23,29 @@ class AnonRoute extends StatelessWidget {
         backgroundColor: Theme.of(context).backgroundColor,
         appBar: bar,
         body: Padding(
-          padding: EdgeInsets.only(top: 20),
-          child: Center(
-              child: Container(
-                  child: Center(
-                      child: SingleChildScrollView(child: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Komet ',
-                style: TextStyle(
-                    fontSize: 50,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).accentColor),
-              ),
-              Text(
-                'Komet ',
-                style: TextStyle(
-                    fontSize: 50,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).accentColor),
-              ),
-              Text(
-                'Komet ',
-                style: TextStyle(
-                    fontSize: 50,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).accentColor),
-              ),
-              Text(
-                'Komet ',
-                style: TextStyle(
-                    fontSize: 50,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).accentColor),
-              ),
-              Text(
-                'Komet ',
-                style: TextStyle(
-                    fontSize: 50,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).accentColor),
-              ),
+            padding: EdgeInsets.only(top: 20),
+            child: Center(
+                child: Container(
+              child: Center(
+                  child: SingleChildScrollView(
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                    Text(
+                      'Komet ',
+                      style: TextStyle(
+                          fontSize: 50,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).accentColor),
+                    ),
 
-              //Container(height: 400,child:
-              //SampleAnimation(MediaQuery.of(context).size.width)),
-              Footer()
-              ]
-              ))),
-        ))));
+                    //Container(height: 400,child:
+                    //SampleAnimation(MediaQuery.of(context).size.width)),
+                    Footer(Theme.of(context).backgroundColor)
+                  ]))),
+            ))));
   }
 }
-
 
 class LogInButton extends StatelessWidget {
   LogInButton() : super(key: Key('login-button'));
@@ -120,14 +90,10 @@ class SignUpButton extends StatelessWidget {
   }
 }
 
-
-
 void showSignUp(BuildContext context) {
-  
   if (MediaQuery.of(context).size.width > 600) {
     showDialog(context: context, builder: (_) => SignUpDialog());
   } else {
     Navigator.pushNamed(context, '/sign-up');
   }
 }
-
