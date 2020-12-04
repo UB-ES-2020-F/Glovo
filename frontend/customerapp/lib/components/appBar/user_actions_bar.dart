@@ -20,34 +20,9 @@ class UserActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var loggedModel = context.watch<LoggedModel>();
     return Row(
       children: [
-        IconButton(
-          alignment: Alignment.topRight,
-          iconSize: 22.0,
-          color: _selectLocationIconColor(barType),
-          icon: Icon(Icons.location_on_outlined),
-          onPressed: () {
-            if (MediaQuery.of(context).size.width > 900) {
-              showDialog(context: context, builder: (_) => LocationDialog());
-            } else {
-              Navigator.pushNamed(context, '/location');
-            }
-          },
-        ),
-        IntrinsicWidth(
-            child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              getFormattedDirection(loggedModel, type),
-              style: _selectStreetNameTextLinksStyle(barType),
-            ),
-            Text(getFormattedInd(loggedModel, type),
-                style: _selectIndicationsTextLinksStyle(barType)),
-          ],
-        )),
+        DirectionsBox(barType, type),
         IconButton(
           key: Key('profile-button'),
           iconSize: 35.0,
@@ -65,6 +40,64 @@ class UserActions extends StatelessWidget {
         )
       ],
     );
+  }
+}
+
+class DirectionsBox extends StatefulWidget {
+  final BarType barType;
+  final int type;
+
+  DirectionsBox(this.barType, this.type);
+  @override
+  State<StatefulWidget> createState() {
+    return DirectionBoxState();
+  }
+}
+
+class DirectionBoxState extends State<DirectionsBox> {
+  var isHovered = false;
+  @override
+  Widget build(BuildContext context) {
+    var loggedModel = context.watch<LoggedModel>();
+    return InkWell(
+        onTap: () {
+          if (MediaQuery.of(context).size.width > 600) {
+            showDialog(context: context, builder: (_) => LocationDialog());
+          } else {
+            Navigator.pushNamed(context, '/location');
+          }
+        },
+        onHover: (value) {
+          if (value) {
+            setState(() {
+              isHovered = true;
+            });
+          } else {
+            setState(() {
+              isHovered = false;
+            });
+          }
+        },
+        hoverColor: Colors.transparent,
+        child: Row(mainAxisSize: MainAxisSize.min, children: [
+          Icon(
+            Icons.location_on_outlined,
+            color: _selectLocationIconColor(widget.barType, isHovered),
+          ),
+          IntrinsicWidth(
+              child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                getFormattedDirection(loggedModel, widget.type),
+                style: _selectStreetNameTextStyle(widget.barType, isHovered),
+              ),
+              Text(getFormattedInd(loggedModel, widget.type),
+                  style:
+                      _selectIndicationsTextStyle(widget.barType, isHovered)),
+            ],
+          )),
+        ]));
   }
 }
 
@@ -141,13 +174,20 @@ void _openProfileSettings(BuildContext context) {
 }
 
 // ignore: missing_return
-Color _selectLocationIconColor(BarType barType) {
+Color _selectLocationIconColor(BarType barType, bool isHovered) {
   switch (barType) {
     case BarType.initial:
-      return locationInitialColor;
+      return locationInitialColorIsHovered(isHovered);
     case BarType.defaultBar:
-      return locationDefaultColor;
+      return locationDefaultColorIsHovered(isHovered);
   }
+}
+
+TextStyle _selectStreetNameTextStyle(BarType barType, bool isHovered) {
+  if (!isHovered)
+    return _selectStreetNameTextLinksStyle(barType);
+  else
+    return _selectStreetNameTextLinksHoverStyle(barType);
 }
 
 TextStyle _selectStreetNameTextLinksStyle(BarType barType) {
@@ -166,6 +206,13 @@ TextStyle _selectStreetNameTextLinksHoverStyle(BarType barType) {
     case BarType.defaultBar:
       return defaultStreetNameTextLinksHover;
   }
+}
+
+TextStyle _selectIndicationsTextStyle(BarType barType, bool isHovered) {
+  if (!isHovered)
+    return _selectIndicationsTextLinksStyle(barType);
+  else
+    return _selectIndicationsTextLinksHoverStyle(barType);
 }
 
 TextStyle _selectIndicationsTextLinksStyle(BarType barType) {

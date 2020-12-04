@@ -63,7 +63,9 @@ class Mobile_default_bar_state extends State<StatefulWidget> {
                   iconSize: 0,
                 ),
                 InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(context, '/location');
+                    },
                     onHover: (value) {
                       if (value == true) {
                         setState(() {
@@ -93,13 +95,7 @@ class Mobile_default_bar_state extends State<StatefulWidget> {
                               fontSize: 16,
                               fontWeight: FontWeight.bold),
                         ),
-                        IconButton(
-                          icon: icon_state_hover,
-                          hoverColor: Colors.transparent,
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/location');
-                          },
-                        ),
+                        icon_state_hover,
                       ],
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,
