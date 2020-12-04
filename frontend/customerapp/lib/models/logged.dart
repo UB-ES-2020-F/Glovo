@@ -24,4 +24,8 @@ class LoggedModel extends ChangeNotifier {
     notifyListeners();
     return user;
   }
+
+  User getUser() {
+    return user;
+  }
 }

@@ -119,7 +119,7 @@ class Mobile_default_bar_state extends State<StatefulWidget> {
 }
 
 String getTrimmedDirection(LoggedModel loggedModel) {
-  String direction = loggedModel.getUserAndNotify().direction;
+  String direction = loggedModel.getUser().direction;
   return (direction.length <= 20)
       ? direction
       : direction.substring(0, 20) + "...";

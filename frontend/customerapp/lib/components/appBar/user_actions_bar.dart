@@ -40,18 +40,12 @@ class UserActions extends StatelessWidget {
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextLink(
-                getFormattedDirection(loggedModel, type),
-                (context) {},
-                _selectStreetNameTextLinksStyle(barType),
-                _selectStreetNameTextLinksHoverStyle(barType),
-                context),
-            TextLink(
-                getFormattedInd(loggedModel, type),
-                (context) {},
-                _selectIndicationsTextLinksStyle(barType),
-                _selectIndicationsTextLinksHoverStyle(barType),
-                context),
+            Text(
+              getFormattedDirection(loggedModel, type),
+              style: _selectStreetNameTextLinksStyle(barType),
+            ),
+            Text(getFormattedInd(loggedModel, type),
+                style: _selectIndicationsTextLinksStyle(barType)),
           ],
         )),
         IconButton(
@@ -77,18 +71,16 @@ class UserActions extends StatelessWidget {
 String getFormattedDirection(LoggedModel loggedModel, int type) {
   String direction;
   if (type == 1) {
-    if (loggedModel.getUserAndNotify().direction.length > 30) {
-      direction =
-          loggedModel.getUserAndNotify().direction.substring(0, 30) + "...";
+    if (loggedModel.getUser().direction.length > 30) {
+      direction = loggedModel.getUser().direction.substring(0, 30) + "...";
     } else {
-      direction = loggedModel.getUserAndNotify().direction;
+      direction = loggedModel.getUser().direction;
     }
   } else {
-    if (loggedModel.getUserAndNotify().direction.length > 15) {
-      direction =
-          loggedModel.getUserAndNotify().direction.substring(0, 15) + "...";
+    if (loggedModel.getUser().direction.length > 15) {
+      direction = loggedModel.getUser().direction.substring(0, 15) + "...";
     } else {
-      direction = loggedModel.getUserAndNotify().direction;
+      direction = loggedModel.getUser().direction;
     }
   }
   return direction;
@@ -97,20 +89,16 @@ String getFormattedDirection(LoggedModel loggedModel, int type) {
 String getFormattedInd(LoggedModel loggedModel, int type) {
   String ind;
   if (type == 1) {
-    if (loggedModel.getUserAndNotify().directionIndications.length > 30) {
-      ind =
-          loggedModel.getUserAndNotify().directionIndications.substring(0, 30) +
-              "...";
+    if (loggedModel.getUser().directionIndications.length > 30) {
+      ind = loggedModel.getUser().directionIndications.substring(0, 30) + "...";
     } else {
-      ind = loggedModel.getUserAndNotify().directionIndications;
+      ind = loggedModel.getUser().directionIndications;
     }
   } else {
-    if (loggedModel.getUserAndNotify().directionIndications.length > 15) {
-      ind =
-          loggedModel.getUserAndNotify().directionIndications.substring(0, 15) +
-              "...";
+    if (loggedModel.getUser().directionIndications.length > 15) {
+      ind = loggedModel.getUser().directionIndications.substring(0, 15) + "...";
     } else {
-      ind = loggedModel.getUserAndNotify().directionIndications;
+      ind = loggedModel.getUser().directionIndications;
     }
   }
   return ind;
@@ -124,6 +112,7 @@ class UserActionsBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var loggedModel = context.watch<LoggedModel>();
     return UserActions(barType, 1);
   }
 }
@@ -136,6 +125,7 @@ class UserActionsBar_aux extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var loggedModel = context.watch<LoggedModel>();
     return UserActions(barType, 2);
   }
 }

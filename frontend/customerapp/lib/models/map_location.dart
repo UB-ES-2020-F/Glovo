@@ -19,7 +19,7 @@ class MapLocationModel extends ChangeNotifier {
   set name(String value) {
     geocoder.geocode(maps.GeocoderRequest()..address = value,
         (results, status) {
-      if (status == maps.GeocoderStatus.OK) {
+      if (status == maps.GeocoderStatus.OK && results[0] != null) {
         _name = value;
         _locationTextController.text = _name;
         final coordOfText = results[0].geometry.location;
