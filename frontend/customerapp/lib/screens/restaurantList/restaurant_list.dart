@@ -1,12 +1,9 @@
 import 'dart:math';
 import 'package:customerapp/components/appBar/default_logged_bar.dart';
-import 'package:customerapp/components/appBar/mobile_default_bar.dart';
 import 'package:customerapp/endpoints/restaurants.dart';
 import 'package:customerapp/models/restaurants.dart';
 import 'package:customerapp/responsive/screen_responsive.dart';
 import 'package:customerapp/screens/commonComponents/single_message_dialog.dart';
-import 'package:customerapp/screens/loggedPage/initial_logged_page.dart';
-import 'package:customerapp/screens/loggedPage/logged_bar.dart';
 import 'package:customerapp/screens/restaurantList/restaurant_list_box.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

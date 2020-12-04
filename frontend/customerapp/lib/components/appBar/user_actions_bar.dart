@@ -1,6 +1,7 @@
 import 'dart:html';
 
 import 'package:customerapp/components/text_link.dart';
+import 'package:customerapp/screens/location/location_dialog.dart';
 import 'package:customerapp/screens/loggedPage/initial_logged_page.dart';
 import 'package:customerapp/screens/loggedPage/profile_settings.dart';
 import 'package:customerapp/styles/default_app_bar.dart';
@@ -56,7 +57,13 @@ class UserActions extends StatelessWidget {
           iconSize: 22.0,
           color: _selectLocationIconColor(barType),
           icon: Icon(Icons.location_on_outlined),
-          onPressed: () {},
+          onPressed: () {
+            if (MediaQuery.of(context).size.width > 900) {
+              showDialog(context: context, builder: (_) => LocationDialog());
+            } else {
+              Navigator.pushNamed(context, '/location');
+            }
+          },
         ),
         IntrinsicWidth(
             child: Column(
