@@ -99,7 +99,7 @@ namespace glovo_webapi.Controllers.Users
             user.RecoverySalt = null;
             
             //TODO CATCH EXCEPTIONS
-            _userService.Update(user, passwordResetModel.NewPassword);
+            _userService.SetNewPassword(user, passwordResetModel.NewPassword);
 
             return Ok();
         }

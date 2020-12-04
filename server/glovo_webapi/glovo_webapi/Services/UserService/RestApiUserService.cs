@@ -92,36 +92,41 @@ namespace glovo_webapi.Services.UserService
             return user;
         }
 
-        public void Update(User userParam, string password = null)
+        public void SetProfile(User user, string name, string email)
         {
-            var user = _context.Users.Find(userParam.Id);
-
-            if (user == null)
-                throw new RequestException(UserExceptionCodes.UserNotFound);
-
-            if (!string.IsNullOrEmpty(userParam.Name))
-                user.Name = userParam.Name;
+            if (!string.IsNullOrEmpty(name))
+                user.Name = name;
             
-            // update username if it has changed
-            if (!string.IsNullOrWhiteSpace(userParam.Email) && userParam.Email != user.Email)
+            if (!string.IsNullOrWhiteSpace(email) && email != user.Email)
             {
                 // throw error if the new username is already taken
-                if (_context.Users.Any(x => x.Email == userParam.Email))
+                if (_context.Users.Any(x => x.Email == email))
                     throw new RequestException(UserExceptionCodes.EmailAlreadyExists);
 
-                user.Email = userParam.Email;
+                user.Email = email;
             }
+            _context.Users.Update(user);
+            _context.SaveChanges();
+        }
 
-            // update password if provided
-            if (!string.IsNullOrWhiteSpace(password))
-            {
-                byte[] passwordHash, passwordSalt;
-                CreatePasswordHash(password, out passwordHash, out passwordSalt);
+        public void SetNewPassword(User user, string newPassword, string oldPassword = null)
+        {
+            if (oldPassword != null && !VerifyPasswordHash(oldPassword, user.PasswordHash, user.PasswordSalt))
+                throw new RequestException(UserExceptionCodes.InvalidCredentials);
+            
+            if (string.IsNullOrWhiteSpace(newPassword))
+                throw new RequestException(UserExceptionCodes.BadPassword);
+            
+            byte[] passwordHash, passwordSalt;
+            CreatePasswordHash(newPassword, out passwordHash, out passwordSalt);
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+            _context.Users.Update(user);
+            _context.SaveChanges();
+        }
 
-                user.PasswordHash = passwordHash;
-                user.PasswordSalt = passwordSalt;
-            }
-
+        public void Update(User user)
+        {
             _context.Users.Update(user);
             _context.SaveChanges();
         }

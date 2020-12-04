@@ -63,17 +63,36 @@ namespace glovo_webapi.Controllers.Users
         public IActionResult Update([FromBody]UpdateUserModel model)
         {
             //Map userModel to entity and set id
-            User targetUser = (User)HttpContext.Items["User"];
-            var user = _mapper.Map<User>(model);
-            user.Id = targetUser.Id;
+            User user = (User)HttpContext.Items["User"];
 
             try {
-                _userService.Update(user, model.Password);
+                _userService.SetProfile(user,model.Name, model.Email);
             } catch (RequestException ex) {
                 if (ex.Code == UserExceptionCodes.BadPassword)
                     return BadRequest(new {message = "Password doesn't meet requirements" });
                 if (ex.Code == UserExceptionCodes.EmailAlreadyExists)
                     return BadRequest(new {message = "Email already in use" });
+                return BadRequest(new {message = "Unknown error"});
+            }
+            
+            return Ok();
+        }
+        
+        //PUT api/users/update-password
+        [Authorize(Roles="Regular, Administrator")]
+        [HttpPut("update-password")]
+        public IActionResult UpdatePassword([FromBody]PasswordUpdateModel model)
+        {
+            //Map userModel to entity and set id
+            User user = (User)HttpContext.Items["User"];
+
+            try {
+                _userService.SetNewPassword(user,model.NewPassword, model.OldPassword);
+            } catch (RequestException ex) {
+                if (ex.Code == UserExceptionCodes.BadPassword)
+                    return BadRequest(new {message = "Password doesn't meet requirements" });
+                if (ex.Code == UserExceptionCodes.InvalidCredentials)
+                    return BadRequest(new {message = "Old password doesn't match" });
                 return BadRequest(new {message = "Unknown error"});
             }
             
