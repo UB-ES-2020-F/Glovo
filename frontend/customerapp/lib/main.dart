@@ -5,6 +5,7 @@ import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/cart.dart';
 import 'package:customerapp/models/signup.dart';
 import 'package:customerapp/models/user_credentials/user_credentials.dart';
+import 'package:customerapp/screens/location/location_page.dart';
 import 'package:customerapp/screens/loggedPage/editNameEmail/editNameEmail_page.dart';
 import 'package:customerapp/screens/loggedPage/initial_logged_page.dart';
 import 'package:customerapp/screens/anon_root.dart';
@@ -17,6 +18,7 @@ import 'package:customerapp/styles/Komet.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'app_config.dart';
+import 'models/map_location.dart';
 import 'models/changeNameEmail.dart';
 import 'models/products.dart';
 import 'models/restaurants.dart';
@@ -46,16 +48,18 @@ class KometApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => RestaurantsListModel()),
         ChangeNotifierProvider(create: (context) => ProductsListModel()),
         ChangeNotifierProvider(create: (context) => Cart()),
+        ChangeNotifierProvider(create: (context) => MapLocationModel()),
       ],
       child: MaterialApp(
           theme: appTheme,
           title: 'Komet',
-          initialRoute: '/initial-logged-in',
+          initialRoute: '/',
           routes: {
             '/': (context) => AnonRoute(),
             '/sign-up': (context) => SignUpPage(),
             '/sign-in': (context) => SignInPage(),
             '/edit-name-email': (context) => EditNameEmailPage(),
+            '/location': (context) => LocationPage(),
             '/products': (context) => Products_sample(),
             '/restaurant-list': (context) => RestaurantsList(),
             '/concrete_product': (context) => ProductScreen(),

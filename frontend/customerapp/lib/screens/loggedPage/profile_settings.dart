@@ -16,7 +16,6 @@ class ProfileSettings extends StatelessWidget {
       : super(key: Key('profile-settings-menu'));
   @override
   Widget build(BuildContext context) {
-    var loggedModel = context.watch<LoggedModel>();
     return Padding(
       padding: EdgeInsets.fromLTRB(10, 80, 60, 10),
       child: Align(

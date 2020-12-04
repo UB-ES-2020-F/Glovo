@@ -1,16 +1,13 @@
 import 'package:customerapp/actions/extract-key-value.dart';
-import 'package:customerapp/actions/toast_actions.dart';
 import 'package:customerapp/endpoints/cart.dart';
 import 'package:customerapp/models/cart.dart';
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/products.dart';
 import 'package:customerapp/models/restaurants.dart';
 import 'package:customerapp/screens/commonComponents/single_message_dialog.dart';
-import 'package:customerapp/styles/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:customerapp/styles/product.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class CartBox extends StatelessWidget {
   double cartWidth;
