@@ -14,7 +14,7 @@ class MapScreen extends StatelessWidget {
     return Container(
       width: 350,
       height: 350,
-      padding: EdgeInsets.all(30),
+      padding: EdgeInsets.only(left: 30, top: 30, bottom: 30, right: 0),
       child: GoogleMap(
         initialCameraPosition:
             const CameraPosition(target: LatLng(41.4, 2.15), zoom: 12),

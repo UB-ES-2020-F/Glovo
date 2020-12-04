@@ -97,16 +97,20 @@ String getFormattedDirection(LoggedModel loggedModel, int type) {
 String getFormattedInd(LoggedModel loggedModel, int type) {
   String ind;
   if (type == 1) {
-    if (LoggedModel.indicationsDirection.length > 30) {
-      ind = LoggedModel.indicationsDirection.substring(0, 30) + "...";
+    if (loggedModel.getUserAndNotify().directionIndications.length > 30) {
+      ind =
+          loggedModel.getUserAndNotify().directionIndications.substring(0, 30) +
+              "...";
     } else {
-      ind = LoggedModel.indicationsDirection;
+      ind = loggedModel.getUserAndNotify().directionIndications;
     }
   } else {
-    if (LoggedModel.indicationsDirection.length > 15) {
-      ind = LoggedModel.indicationsDirection.substring(0, 15) + "...";
+    if (loggedModel.getUserAndNotify().directionIndications.length > 15) {
+      ind =
+          loggedModel.getUserAndNotify().directionIndications.substring(0, 15) +
+              "...";
     } else {
-      ind = LoggedModel.indicationsDirection;
+      ind = loggedModel.getUserAndNotify().directionIndications;
     }
   }
   return ind;

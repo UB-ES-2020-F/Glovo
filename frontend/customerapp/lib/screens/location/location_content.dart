@@ -90,6 +90,27 @@ class LocationForm extends StatelessWidget {
                   },
                 )),
           ),
+          Visibility(
+              visible: mapLocationModel.formValid,
+              child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 15),
+                  constraints: (MediaQuery.of(context).size.width > 900)
+                      ? BoxConstraints(maxWidth: 300)
+                      : BoxConstraints(maxWidth: 900),
+                  child: TextFormField(
+                    controller: mapLocationModel.indicationsTextController,
+                    decoration: InputDecoration(
+                      border: locationInputTextBorder,
+                      focusedBorder: locationFocusedInputTextBorder,
+                      icon: Icon(
+                        Icons.home_outlined,
+                        color: Color(0xFF9B9B9B),
+                        size: 40,
+                      ),
+                      labelText: 'Floor, door, instructions...',
+                      labelStyle: labelTextInputStyle,
+                    ),
+                  ))),
           Container(
               padding: EdgeInsets.symmetric(vertical: 15),
               constraints: (MediaQuery.of(context).size.width > 900)
@@ -123,6 +144,8 @@ class SetLocationButton extends StatelessWidget {
                       loggedModel.getUserAndNotify().location = Location(
                           mapLocationModel.currentCoordinates.latitude,
                           mapLocationModel.currentCoordinates.longitude);
+                      loggedModel.getUserAndNotify().directionIndications =
+                          mapLocationModel.indicationsTextController.text;
                     }
                     Navigator.pop(context);
                   }

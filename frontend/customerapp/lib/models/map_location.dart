@@ -6,10 +6,13 @@ class MapLocationModel extends ChangeNotifier {
   LatLng _currentCoordinates;
   String _name = "";
   final _locationTextController = TextEditingController();
+  final _indicationsTextController = TextEditingController();
   bool formValid = false;
   final geocoder = maps.Geocoder();
 
   TextEditingController get locationTextController => _locationTextController;
+  TextEditingController get indicationsTextController =>
+      _indicationsTextController;
   LatLng get currentCoordinates => _currentCoordinates;
   String get name => _name;
 
