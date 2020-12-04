@@ -4,7 +4,6 @@ import 'package:customerapp/styles/Komet.dart';
 import 'package:customerapp/styles/overview_mobile_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class TabBar_screen extends StatelessWidget {
   @override
@@ -12,7 +11,6 @@ class TabBar_screen extends StatelessWidget {
     if (MediaQuery.of(context).size.width > 650) {
       Navigator.pop(context); //when resizing screen slowly, error occurs
     }
-    var loggedModel = context.watch<LoggedModel>();
 
     return DefaultTabController(
       length: 2,
@@ -112,7 +110,6 @@ class Subpage_orders extends StatelessWidget {
 class Subpage_user_profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var loggedModel = context.watch<LoggedModel>();
     return Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
