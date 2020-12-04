@@ -1,11 +1,6 @@
-import 'package:customerapp/components/appBar/mobile_default_bar.dart';
-import 'package:customerapp/components/text_link.dart';
 import 'package:customerapp/models/logged.dart';
-import 'package:customerapp/models/signin.dart';
-import 'package:customerapp/responsive/screen_responsive.dart';
 import 'package:customerapp/screens/loggedPage/profile_settings.dart';
 import 'package:customerapp/styles/Komet.dart';
-import 'package:customerapp/styles/initial_logged.dart';
 import 'package:customerapp/styles/overview_mobile_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
