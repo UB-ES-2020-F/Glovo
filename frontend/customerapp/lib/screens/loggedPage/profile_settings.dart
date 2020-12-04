@@ -1,10 +1,14 @@
 import 'package:customerapp/actions/logout.dart';
 import 'package:customerapp/components/text_link.dart';
+import 'package:customerapp/models/changeNameEmail.dart';
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/screens/commonComponents/single_message_dialog.dart';
 import 'package:customerapp/styles/initial_logged.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
+
+import 'editNameEmail/editNameEmail_dialog.dart';
 
 class ProfileSettings extends StatelessWidget {
   final double radiusDialog = 4;
@@ -12,6 +16,7 @@ class ProfileSettings extends StatelessWidget {
       : super(key: Key('profile-settings-menu'));
   @override
   Widget build(BuildContext context) {
+    var loggedModel = context.watch<LoggedModel>();
     return Padding(
       padding: EdgeInsets.fromLTRB(10, 80, 60, 10),
       child: Align(
@@ -57,6 +62,7 @@ class UserInformation extends StatelessWidget {
   final double verticalPadding = 6;
   @override
   Widget build(BuildContext context) {
+    var loggedModel = context.watch<LoggedModel>();
     return Column(
       children: [
         Container(
@@ -73,8 +79,9 @@ class UserInformation extends StatelessWidget {
                   'Name',
                   style: labelsProfileText,
                 ),
-                TextLink('Edit', (context) {}, editTextLinksBold,
-                    editTextLinksHoverBold, context)
+                TextLink('Edit', (context) {
+                  showChangeNameEmail(context);
+                }, editTextLinksBold, editTextLinksHoverBold, context)
               ],
             ),
           ),
@@ -266,5 +273,13 @@ class UserInformation extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+void showChangeNameEmail(BuildContext context) {
+  if (MediaQuery.of(context).size.width > 600) {
+    showDialog(context: context, builder: (_) => EditNameEmailDialog());
+  } else {
+    Navigator.pushNamed(context, '/edit-name-email');
   }
 }

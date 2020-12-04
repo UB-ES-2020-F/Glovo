@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 import 'location.dart';
 
 class User {
@@ -7,6 +9,7 @@ class User {
   String _direction;
   String _directionIndications;
   Location _location;
+  VoidCallback callback;
 
   static final User _user = User._internal();
   User._internal();
@@ -17,13 +20,15 @@ class User {
       String email,
       String direction,
       String directionIndications,
-      Location location}) {
+      Location location,
+      VoidCallback callback}) {
     _user._id = id;
     _user._name = name;
     _user._email = email;
     _user._direction = direction;
     _user._directionIndications = directionIndications;
     _user._location = location;
+    _user.callback = callback;
     return _user;
   }
 
@@ -52,9 +57,28 @@ class User {
   }
 
   set id(int value) => _id = value;
-  set name(String value) => _name = value;
-  set email(String value) => _email = value;
-  set direction(String value) => _direction = value;
-  set directionIndications(String value) => _directionIndications = value;
-  set location(Location value) => _location = value;
+  set name(String value) {
+    _name = value;
+    if (callback != null) callback();
+  }
+
+  set email(String value) {
+    _email = value;
+    if (callback != null) callback();
+  }
+
+  set direction(String value) {
+    _direction = value;
+    if (callback != null) callback();
+  }
+
+  set directionIndications(String value) {
+    _directionIndications = value;
+    if (callback != null) callback();
+  }
+
+  set location(Location value) {
+    _location = value;
+    if (callback != null) callback();
+  }
 }
