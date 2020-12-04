@@ -21,7 +21,7 @@ class Footer extends StatelessWidget{
               Container(height: 220,child:
               SampleAnimation(MediaQuery.of(context).size.width)),
               Container(color: FooterBackgroundColor,
-              height: 500,
+              height: 300,
               padding: EdgeInsets.only(bottom: 30, left: 20, right: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -182,7 +182,7 @@ class SampleAnimationState extends State<SampleAnimation> with SingleTickerProvi
   Animation _animation;
   Path _path;
   double c;
-  int size = 75;
+  int size = 100;
   Widget moto;
   
 
