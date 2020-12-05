@@ -50,17 +50,16 @@ jobs:
         - ASPNETCORE_ENVIRONMENT=Development
         - dotnet glovo_webapi.dll &
         - cd $TRAVIS_BUILD_DIR/frontend/customerapp
-        - cp resources/config/prod-dev.json resources/config/dev.json
         - flutter clean
         - flutter pub get
-        #- flutter test test_driver/tests/endpoints/orders.dart
-        #- flutter test test_driver/tests/endpoints/products.dart
-        #- flutter test test_driver/tests/endpoints/restaurants.dart
+        - flutter test test_driver/tests/endpoints/orders.dart
+        - flutter test test_driver/tests/endpoints/products.dart
+        - flutter test test_driver/tests/endpoints/restaurants.dart
         - chmod +x ./test_driver/chromedriver
         - ./test_driver/chromedriver --verbose --port=4444 &
-        #- netstat -tulpn
+        - netstat -tulpn
         - flutter devices
-        - flutter drive -d web-server --browser-name=chrome --target=test_driver/tests/cart.dart --release
+        #- flutter drive -d web-server --browser-name=chrome --target=test_driver/tests/cart.dart --release
         #- flutter drive -d web-server --browser-name=chrome --target=test_driver/tests/order.dart --release
         #- flutter drive -d web-server --browser-name=chrome --target=test_driver/tests/profile_settings.dart --release
     
