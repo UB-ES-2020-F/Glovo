@@ -19,14 +19,14 @@ class Footer extends StatelessWidget {
       return Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          /*CustomPaint(
-                painter: ShapesPainter(),
-                child: Container(height:100),
-              ),*/
-          Container(
+          CustomPaint(
+            painter: ShapesPainter(),
+            child: Container(height: 100),
+          ),
+          /*Container(
               height: 220,
               child: SampleAnimation(
-                  MediaQuery.of(context).size.width, backgroundC)),
+                  MediaQuery.of(context).size.width, backgroundC)),*/
           Container(
               color: FooterBackgroundColor,
               height: 300,
