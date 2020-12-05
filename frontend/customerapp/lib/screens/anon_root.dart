@@ -26,6 +26,7 @@ class AnonRoute extends StatelessWidget {
             child: Padding(
                 padding: EdgeInsets.only(top: 20),
                 child: Center(
+                    child: SingleChildScrollView(
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -48,7 +49,7 @@ class AnonRoute extends StatelessWidget {
                             ]),
                         Footer(Theme.of(context).backgroundColor)
                       ]),
-                ))));
+                )))));
   }
 }
 

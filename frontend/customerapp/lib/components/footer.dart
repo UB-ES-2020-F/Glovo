@@ -19,18 +19,18 @@ class Footer extends StatelessWidget {
       return Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          CustomPaint(
+          /*CustomPaint(
             painter: ShapesPainter(),
             child: Container(height: 100),
-          ),
-          /*Container(
+          ),*/
+          Container(
               height: 220,
               child: SampleAnimation(
-                  MediaQuery.of(context).size.width, backgroundC)),*/
+                  MediaQuery.of(context).size.width, backgroundC)),
           Container(
               color: FooterBackgroundColor,
               height: 350,
-              padding: EdgeInsets.only( left: 20, right: 20),
+              padding: EdgeInsets.only(left: 20, right: 20),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
