@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
@@ -62,14 +63,12 @@ namespace glovo_webapi.Controllers.Users
         [HttpPut("update")]
         public IActionResult Update([FromBody]UpdateUserModel model)
         {
-            //Map userModel to entity and set id
+            Console.Write("New update");
             User user = (User)HttpContext.Items["User"];
 
             try {
                 _userService.SetProfile(user,model.Name, model.Email);
             } catch (RequestException ex) {
-                if (ex.Code == UserExceptionCodes.BadPassword)
-                    return BadRequest(new {message = "Password doesn't meet requirements" });
                 if (ex.Code == UserExceptionCodes.EmailAlreadyExists)
                     return BadRequest(new {message = "Email already in use" });
                 return BadRequest(new {message = "Unknown error"});
