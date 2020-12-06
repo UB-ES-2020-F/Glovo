@@ -88,7 +88,7 @@ namespace glovo_webapi
             services.AddScoped<IRestaurantsService, RestApiRestaurantsService>();
             services.AddScoped<IProductsService, RestApiProductsService>();
             services.AddScoped<IOrdersService, RestApiOrdersService>();
-            services.AddScoped<IUsersService, RestApiUserService>();
+            services.AddScoped<IUsersService, RestApiUsersService>();
 
             services.AddOptions();
             services.Configure<AppConfiguration>(Configuration.GetSection("AppSettings"));

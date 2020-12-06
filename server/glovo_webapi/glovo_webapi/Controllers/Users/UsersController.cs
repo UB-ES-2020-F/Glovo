@@ -67,10 +67,10 @@ namespace glovo_webapi.Controllers.Users
             User user = (User)HttpContext.Items["User"];
 
             try {
-                _userService.SetProfile(user,model.Name, model.Email);
+                _userService.SetProfile(user, model.Name, model.Email);
             } catch (RequestException ex) {
                 if (ex.Code == UserExceptionCodes.EmailAlreadyExists)
-                    return BadRequest(new {message = "Email already in use" });
+                    return BadRequest(new {message = "Email already in use"});
                 return BadRequest(new {message = "Unknown error"});
             }
             
@@ -84,14 +84,14 @@ namespace glovo_webapi.Controllers.Users
         {
             //Map userModel to entity and set id
             User user = (User)HttpContext.Items["User"];
-
+            
             try {
                 _userService.SetNewPassword(user,model.NewPassword, model.OldPassword);
             } catch (RequestException ex) {
                 if (ex.Code == UserExceptionCodes.BadPassword)
-                    return BadRequest(new {message = "Password doesn't meet requirements" });
+                    return BadRequest(new {message = "Password doesn't meet requirements"});
                 if (ex.Code == UserExceptionCodes.InvalidCredentials)
-                    return BadRequest(new {message = "Old password doesn't match" });
+                    return BadRequest(new {message = "Old password doesn't match"});
                 return BadRequest(new {message = "Unknown error"});
             }
             
