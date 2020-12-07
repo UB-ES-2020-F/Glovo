@@ -24,42 +24,51 @@ class InitialLogged extends StatelessWidget {
             padding: EdgeInsets.only(top: 10),
             child: Center(
                 child: Container(
-              child: Center(
-                  child: SingleChildScrollView(
+                    child: Center(
+              child: SingleChildScrollView(
+                  child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: MediaQuery.of(context).size.height,
+                      ),
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Komet ',
-                          key: Key('initial-logged-in-komet-title-text'),
-                          style: TextStyle(
-                              fontSize: 50,
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).accentColor),
-                        ),
-                        Container(
-                            constraints: BoxConstraints(
-                                maxHeight:
-                                    MediaQuery.of(context).size.height - 184),
-                            padding: EdgeInsets.only(left: 25, right: 25),
-                            child: SingleChildScrollView(
-                                child: Wrap(
-                                    alignment: WrapAlignment.center,
-                                    children: [
-                                  FoodButton(Key("food-bubble-button")),
-                                  SupermarketsButton(
-                                      Key("supermarket-bubble-button")),
-                                  SnacksButton(Key("snacks-bubble-button")),
-                                  AnythingButton(Key("anything-bubble-button")),
-                                ])))
-                      ],
-                    ),
-                    Footer(Theme.of(context).backgroundColor),
-                  ]))),
-            ))));
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Komet ',
+                                  key:
+                                      Key('initial-logged-in-komet-title-text'),
+                                  style: TextStyle(
+                                      fontSize: 50,
+                                      fontWeight: FontWeight.bold,
+                                      color: Theme.of(context).accentColor),
+                                ),
+                                Container(
+                                    constraints: BoxConstraints(
+                                        maxHeight:
+                                            MediaQuery.of(context).size.height -
+                                                184),
+                                    padding:
+                                        EdgeInsets.only(left: 25, right: 25),
+                                    child: SingleChildScrollView(
+                                        child: Wrap(
+                                            alignment: WrapAlignment.center,
+                                            children: [
+                                          FoodButton(Key("food-bubble-button")),
+                                          SupermarketsButton(
+                                              Key("supermarket-bubble-button")),
+                                          SnacksButton(
+                                              Key("snacks-bubble-button")),
+                                          AnythingButton(
+                                              Key("anything-bubble-button")),
+                                        ])))
+                              ],
+                            ),
+                            Footer(Theme.of(context).backgroundColor),
+                          ]))),
+            )))));
   }
 }
