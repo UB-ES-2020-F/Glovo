@@ -64,7 +64,6 @@ jobs:
         #- flutter drive -d web-server --browser-name=chrome --target=test_driver/tests/profile_settings.dart --release
     
     
-    
     - stage: code_analysis
       name: "backend_ana"
       script:

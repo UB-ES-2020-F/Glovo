@@ -1,18 +1,18 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using glovo_webapi.Data;
 using glovo_webapi.Entities;
+using glovo_webapi.Helpers;
 using Microsoft.AspNetCore.Http;
 
 namespace glovo_webapi.Services.UserService
 {
-    public class RestApiUserService : IUsersService
+    public class RestApiUsersService : IUsersService
     {
         private readonly GlovoDbContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public RestApiUserService(GlovoDbContext context, IHttpContextAccessor httpContextAccessor)
+        public RestApiUsersService(GlovoDbContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _httpContextAccessor = httpContextAccessor;
@@ -30,7 +30,7 @@ namespace glovo_webapi.Services.UserService
                 throw new RequestException(UserExceptionCodes.InvalidCredentials);
 
             // check if password is correct
-            if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
+            if (!PasswordVerifier.VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
                 throw new RequestException(UserExceptionCodes.InvalidCredentials);
 
             // authentication successful
@@ -79,7 +79,7 @@ namespace glovo_webapi.Services.UserService
                 throw new RequestException(UserExceptionCodes.EmailAlreadyExists);
 
             byte[] passwordHash, passwordSalt;
-            CreatePasswordHash(password, out passwordHash, out passwordSalt);
+            PasswordVerifier.CreatePasswordHash(password, out passwordHash, out passwordSalt);
 
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
@@ -92,36 +92,42 @@ namespace glovo_webapi.Services.UserService
             return user;
         }
 
-        public void Update(User userParam, string password = null)
+        public void SetProfile(User user, string name, string email)
         {
-            var user = _context.Users.Find(userParam.Id);
-
-            if (user == null)
-                throw new RequestException(UserExceptionCodes.UserNotFound);
-
-            if (!string.IsNullOrEmpty(userParam.Name))
-                user.Name = userParam.Name;
-            
-            // update username if it has changed
-            if (!string.IsNullOrWhiteSpace(userParam.Email) && userParam.Email != user.Email)
+            if (!string.IsNullOrWhiteSpace(email) && email != user.Email)
             {
-                // throw error if the new username is already taken
-                if (_context.Users.Any(x => x.Email == userParam.Email))
+                //Throw error if the new email is already taken
+                if (_context.Users.Any(x => x.Email == email))
                     throw new RequestException(UserExceptionCodes.EmailAlreadyExists);
 
-                user.Email = userParam.Email;
+                user.Email = email;
             }
+            
+            if (!string.IsNullOrEmpty(name))
+                user.Name = name;
+            
+            _context.Users.Update(user);
+            _context.SaveChanges();
+        }
 
-            // update password if provided
-            if (!string.IsNullOrWhiteSpace(password))
-            {
-                byte[] passwordHash, passwordSalt;
-                CreatePasswordHash(password, out passwordHash, out passwordSalt);
+        public void SetNewPassword(User user, string newPassword, string oldPassword = null)
+        {
+            if (oldPassword != null && !PasswordVerifier.VerifyPasswordHash(oldPassword, user.PasswordHash, user.PasswordSalt))
+                throw new RequestException(UserExceptionCodes.InvalidCredentials);
+            
+            if (string.IsNullOrWhiteSpace(newPassword))
+                throw new RequestException(UserExceptionCodes.BadPassword);
+            
+            byte[] passwordHash, passwordSalt;
+            PasswordVerifier.CreatePasswordHash(newPassword, out passwordHash, out passwordSalt);
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+            _context.Users.Update(user);
+            _context.SaveChanges();
+        }
 
-                user.PasswordHash = passwordHash;
-                user.PasswordSalt = passwordSalt;
-            }
-
+        public void Update(User user)
+        {
             _context.Users.Update(user);
             _context.SaveChanges();
         }
@@ -134,35 +140,6 @@ namespace glovo_webapi.Services.UserService
 
             _context.Users.Remove(user);
             _context.SaveChanges();
-        }
-
-        //Private helper methods
-
-        private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
-        {
-            if (password == null) throw new ArgumentNullException("password");
-            if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
-
-            using var hmac = new System.Security.Cryptography.HMACSHA512();
-            passwordSalt = hmac.Key;
-            passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-        }
-
-        private static bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)
-        {
-            if (password == null) throw new ArgumentNullException("password");
-            if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
-            if (storedHash.Length != 64) throw new ArgumentException("Invalid length of password hash (64 bytes expected).", "passwordHash");
-            if (storedSalt.Length != 128) throw new ArgumentException("Invalid length of password salt (128 bytes expected).", "passwordHash");
-
-            using var hmac = new System.Security.Cryptography.HMACSHA512(storedSalt);
-            var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-            for (int i = 0; i < computedHash.Length; i++)
-            {
-                if (computedHash[i] != storedHash[i]) return false;
-            }
-
-            return true;
         }
     }
 }

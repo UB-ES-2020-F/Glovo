@@ -13,7 +13,6 @@ namespace glovo_webapi.Helpers
         public string Roles { get; set; }
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            //var userService = context.HttpContext.RequestServices.GetService<IUserService>();
             var user = (User) context.HttpContext.Items["User"];
             if (user == null)
             {

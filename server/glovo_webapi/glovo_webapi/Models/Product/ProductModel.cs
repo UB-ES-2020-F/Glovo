@@ -18,14 +18,14 @@ namespace glovo_webapi.Models.Product
                         get { return Category.ToString(); }
                 }
 
-                public ProductModel(int Id, string Name, string ImgPath, string Description, float Price, int RestaurantId)
+                public ProductModel(int id, string name, string imgPath, string description, float price, int restaurantId)
                 {
-                        this.Id = Id;
-                        this.Name = Name;
-                        this.ImgPath = ImgPath;
-                        this.Description = Description;
-                        this.Price = Price;
-                        this.RestaurantId = RestaurantId;
+                        this.Id = id;
+                        this.Name = name;
+                        this.ImgPath = imgPath;
+                        this.Description = description;
+                        this.Price = price;
+                        this.RestaurantId = restaurantId;
                 }
                 
         }
