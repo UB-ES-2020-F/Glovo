@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using glovo_webapi.Controllers.Users;
 using glovo_webapi.Data;
@@ -87,6 +88,32 @@ namespace glovo_webapi_test.Controllers.Users
         }
 
         [Fact]
+        public void GetAllUsersTest()
+        {
+            UsersController usersController = CreateFakeUsersController(_users[2]);
+            
+            //Retrieving all users
+            var response = usersController.GetAll();
+            Assert.IsType<OkObjectResult>(response.Result);
+            Assert.Equal(_users.Count, ((IEnumerable<UserModel>)((OkObjectResult)response.Result).Value).Count());
+        }
+        
+        [Fact]
+        public void GetUserByIdTest()
+        {
+            UsersController usersController = CreateFakeUsersController(_users[2]);
+            
+            //Retrieving existing user
+            var response = usersController.GetById(1);
+            Assert.IsType<OkObjectResult>(response.Result);
+            Assert.Equal(1, ((UserModel)((OkObjectResult)response.Result).Value).Id);
+            
+            //Retrieving non-existing user
+            response = usersController.GetById(0);
+            Assert.IsType<NotFoundObjectResult>(response.Result);
+        }
+        
+        [Fact]
         public void UpdateUserTest()
         {
             UsersController usersController = CreateFakeUsersController(_users[0]);
@@ -132,6 +159,21 @@ namespace glovo_webapi_test.Controllers.Users
             Assert.True(PasswordVerifier.VerifyPasswordHash(
                 "new-password-u1", _users[0].PasswordHash, _users[0].PasswordSalt
             ));
+        }
+        
+        [Fact]
+        public void DeleteUserTest()
+        {
+            UsersController usersController = CreateFakeUsersController(_users[2]);
+            
+            //Delete existing user, check disappeared
+            var response = usersController.Delete(1);
+            Assert.IsType<OkResult>(response);
+            Assert.Equal(_users.Count - 1, _usersService.GetAll().ToList().Count);
+            
+            //Delete past existing user
+            response = usersController.Delete(1);
+            Assert.IsType<NotFoundObjectResult>(response);
         }
     }
 }
