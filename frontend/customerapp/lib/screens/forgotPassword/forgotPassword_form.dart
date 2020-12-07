@@ -124,14 +124,22 @@ void tryForgotPasswordForm(
       forgotPasswordModel.formValid = false;
       forgotPasswordModel.formKey.currentState.save();
       //ENPOINT CALL
-      Navigator.pop(context);
-      Navigator.pop(context);
-      showForgotPasswordSucceess(context, forgotPasswordModel.email);
+      UserDTO formUser = new UserDTO();
+      formUser.email = forgotPasswordModel.email;
+      sendEmailForgotPassword(formUser).then((value) {
+        Navigator.pop(context);
+        Navigator.pop(context);
+        showForgotPasswordSuccess(context, forgotPasswordModel.email);
+      }).catchError((error) {
+        print(error);
+        Navigator.pop(context);
+        showForgotPasswordFailedDialog(context);
+      });
     }
   }
 }
 
-showForgotPasswordSucceess(BuildContext context, String email) {
+showForgotPasswordSuccess(BuildContext context, String email) {
   if (MediaQuery.of(context).size.width > 600) {
     showDialog(
         context: context, builder: (_) => ForgotPasswordSuccessDialog(email));
@@ -143,5 +151,6 @@ showForgotPasswordSucceess(BuildContext context, String email) {
 showForgotPasswordFailedDialog(BuildContext context) {
   showDialog(
       context: context,
-      builder: (context) => SingleMessageDialog("Action failed"));
+      builder: (context) =>
+          SingleMessageDialog("Couldn't send recovery email"));
 }
