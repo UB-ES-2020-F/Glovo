@@ -35,7 +35,8 @@ jobs:
     - stage: tests
       name: "Unit Tests"
       script:
-        - echo "PASS"
+        - cd $TRAVIS_BUILD_DIR/server/glovo_webapi/glovo_webapi_test
+        - dotnet test
     - name: "Integration Tests"
       script:
         - echo "PASS"
