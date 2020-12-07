@@ -22,28 +22,34 @@ class AnonRoute extends StatelessWidget {
     return Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
         appBar: bar,
-        body: Padding(
-            padding: EdgeInsets.only(top: 20),
-            child: Center(
-                child: Container(
-              child: Center(
-                  child: SingleChildScrollView(
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                    Text(
-                      'Komet ',
-                      style: TextStyle(
-                          fontSize: 50,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).accentColor),
-                    ),
+        body: Container(
+            child: Padding(
+                padding: EdgeInsets.only(top: 20),
+                child: Center(
+                    child: SingleChildScrollView(
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Komet ',
+                                style: TextStyle(
+                                    fontSize: 50,
+                                    fontWeight: FontWeight.bold,
+                                    color: Theme.of(context).accentColor),
+                              ),
 
-                    //Container(height: 400,child:
-                    //SampleAnimation(MediaQuery.of(context).size.width)),
-                    Footer(Theme.of(context).backgroundColor)
-                  ]))),
-            ))));
+                              //Container(height: 400,child:
+                              //SampleAnimation(MediaQuery.of(context).size.width)),
+                              //Footer(Theme.of(context).backgroundColor)
+                            ]),
+                        Footer(Theme.of(context).backgroundColor)
+                      ]),
+                )))));
   }
 }
 

@@ -15,9 +15,9 @@ class Footer extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           /*CustomPaint(
-                painter: ShapesPainter(),
-                child: Container(height:100),
-              ),*/
+            painter: ShapesPainter(),
+            child: Container(height: 100),
+          ),*/
           Container(
               height: 220,
               child: SampleAnimation(
