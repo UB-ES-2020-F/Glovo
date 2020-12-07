@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using ExpressiveAnnotations.Attributes;
 
 namespace glovo_webapi.Models.OrderProduct
 {

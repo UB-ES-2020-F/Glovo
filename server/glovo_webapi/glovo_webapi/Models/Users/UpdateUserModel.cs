@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace glovo_webapi.Models.Users
 {
     

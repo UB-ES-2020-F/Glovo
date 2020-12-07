@@ -15,12 +15,12 @@ namespace glovo_webapi.Controllers.Restaurants
     [Route("api/restaurants")]
     public class RestaurantsController : ControllerBase
     {
-        private readonly IRestaurantsService _service;
+        private readonly IRestaurantsService _restaurantsService;
         private readonly IMapper _mapper;
         
-        public RestaurantsController(IRestaurantsService service, IMapper mapper)
+        public RestaurantsController(IRestaurantsService restaurantsService, IMapper mapper)
         {
-            _service = service;
+            _restaurantsService = restaurantsService;
             _mapper = mapper;
         }
        
@@ -28,7 +28,7 @@ namespace glovo_webapi.Controllers.Restaurants
         [HttpGet]
         public ActionResult<IEnumerable<LocationRestaurantModel>> GetAllRestaurants()
         {
-            IEnumerable<Restaurant> restaurants = _service.GetAllRestaurants();
+            IEnumerable<Restaurant> restaurants = _restaurantsService.GetAllRestaurants();
             return Ok(_mapper.Map<IEnumerable<LocationRestaurantModel>>(restaurants));
         }
         
@@ -38,7 +38,7 @@ namespace glovo_webapi.Controllers.Restaurants
         {
             Restaurant foundRestaurant;
             try {
-                foundRestaurant = _service.GetRestaurantById(restId);
+                foundRestaurant = _restaurantsService.GetRestaurantById(restId);
             } catch (RequestException) {
                 return NotFound(new {message = "Restaurant id not found"});
             }
@@ -50,7 +50,7 @@ namespace glovo_webapi.Controllers.Restaurants
         [HttpGet("closest")]
         public ActionResult<DistanceRestaurantModel> GetClosestRestaurants([FromQuery]LocationModel userLocation)
         {
-            IEnumerable<Restaurant> restaurants = _service.GetAllRestaurants();
+            IEnumerable<Restaurant> restaurants = _restaurantsService.GetAllRestaurants();
             IEnumerable<DistanceRestaurantModel> viewRestaurantModels =
                 _mapper.Map<IEnumerable<DistanceRestaurantModel>>(
                     restaurants,
@@ -61,8 +61,8 @@ namespace glovo_webapi.Controllers.Restaurants
                     });
 
             viewRestaurantModels =
-                ((List<DistanceRestaurantModel>) viewRestaurantModels).OrderBy(vrm => vrm.Distance);
-            
+                ((List<DistanceRestaurantModel>) viewRestaurantModels).OrderBy(vrm => vrm.Distance).ToList();
+
             return Ok(viewRestaurantModels);
         } 
     }

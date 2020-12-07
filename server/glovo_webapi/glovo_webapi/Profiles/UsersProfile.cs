@@ -9,6 +9,7 @@ namespace glovo_webapi.Profiles
         public UsersProfile()
         {
             CreateMap<User, UserModel>();
+            CreateMap<User, SendLoginUserModel>();
             CreateMap<RegisterUserModel, User>();
             CreateMap<UpdateUserModel, User>();
         }
