@@ -9,14 +9,20 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
+import '../restricted_page.dart';
+
 class RestaurantsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    return RestrictedPage(this._build(context));
+  }
+
+  Widget _build(BuildContext context) {
     var restaurantsModel = context.watch<RestaurantsListModel>();
 
     Widget bar;
 
-    var s = Bar_responsive(context, '/overview_mobile', DefaultLoggedBar());
+    var s = Bar_responsive(context, '/overview-mobile', DefaultLoggedBar());
     bar = s.get_responsive_bar();
 
     return Scaffold(

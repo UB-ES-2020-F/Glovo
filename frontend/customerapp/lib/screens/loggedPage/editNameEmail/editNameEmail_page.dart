@@ -2,9 +2,15 @@ import 'package:customerapp/screens/loggedPage/editNameEmail/editNameEmail_form.
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../restricted_page.dart';
+
 class EditNameEmailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    return RestrictedPage(this._build(context));
+  }
+
+  Widget _build(BuildContext context) {
     return Scaffold(
       body: ListView(children: [
         Container(

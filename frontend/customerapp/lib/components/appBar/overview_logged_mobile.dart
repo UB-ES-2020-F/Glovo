@@ -1,5 +1,5 @@
-import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/screens/loggedPage/profile_settings.dart';
+import 'package:customerapp/screens/restricted_page.dart';
 import 'package:customerapp/styles/Komet.dart';
 import 'package:customerapp/styles/overview_mobile_bar.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,6 +8,10 @@ import 'package:flutter/material.dart';
 class TabBar_screen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    return RestrictedPage(this._build(context));
+  }
+
+  Widget _build(BuildContext context) {
     if (MediaQuery.of(context).size.width > 650) {
       Navigator.pop(context); //when resizing screen slowly, error occurs
     }

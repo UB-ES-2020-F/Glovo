@@ -14,6 +14,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:customerapp/endpoints/products.dart';
 
+import '../restricted_page.dart';
 import 'cart_box.dart';
 import 'product_card.dart';
 
@@ -32,6 +33,10 @@ class Products_sample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return RestrictedPage(this._build(context));
+  }
+
+  Widget _build(BuildContext context) {
     final Restaurant restaurant = ModalRoute.of(context).settings.arguments;
 
     var productsModel = context.watch<ProductsListModel>();
@@ -44,7 +49,7 @@ class Products_sample extends StatelessWidget {
 
     firstInstance = false;
     double cartWidth = 350;
-    var s = Bar_responsive(context, '/overview_mobile', DefaultLoggedBar());
+    var s = Bar_responsive(context, '/overview-mobile', DefaultLoggedBar());
     var bar = s.get_responsive_bar();
 
     return Scaffold(

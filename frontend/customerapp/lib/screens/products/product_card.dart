@@ -107,7 +107,7 @@ class ProductListCardState extends State<StatefulWidget> {
       showDialog(
           context: context, builder: (context) => ProductDialog(_product, add));
     } else {
-      Navigator.pushNamed(context, '/concrete_product',
+      Navigator.pushNamed(context, '/concrete-product',
           arguments: ConcreteProductArguments(_product, add));
     }
   }
