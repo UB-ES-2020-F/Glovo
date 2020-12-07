@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using AutoMapper;
 using glovo_webapi.Controllers.Users;
 using glovo_webapi.Data;
