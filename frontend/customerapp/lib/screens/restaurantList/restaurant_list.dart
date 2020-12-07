@@ -1,25 +1,28 @@
 import 'dart:math';
 import 'package:customerapp/components/appBar/default_logged_bar.dart';
-import 'package:customerapp/components/appBar/mobile_default_bar.dart';
 import 'package:customerapp/endpoints/restaurants.dart';
 import 'package:customerapp/models/restaurants.dart';
 import 'package:customerapp/responsive/screen_responsive.dart';
 import 'package:customerapp/screens/commonComponents/single_message_dialog.dart';
-import 'package:customerapp/screens/loggedPage/initial_logged_page.dart';
-import 'package:customerapp/screens/loggedPage/logged_bar.dart';
 import 'package:customerapp/screens/restaurantList/restaurant_list_box.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
+import '../restricted_page.dart';
+
 class RestaurantsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    return RestrictedPage(this._build(context));
+  }
+
+  Widget _build(BuildContext context) {
     var restaurantsModel = context.watch<RestaurantsListModel>();
 
     Widget bar;
 
-    var s = Bar_responsive(context, '/overview_mobile', DefaultLoggedBar());
+    var s = Bar_responsive(context, '/overview-mobile', DefaultLoggedBar());
     bar = s.get_responsive_bar();
 
     return Scaffold(
