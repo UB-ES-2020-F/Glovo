@@ -7,6 +7,8 @@ import 'package:customerapp/models/products.dart';
 import 'package:customerapp/models/restaurants.dart';
 import 'package:customerapp/screens/commonComponents/single_message_dialog.dart';
 import 'package:customerapp/screens/products/cart_box.dart';
+import 'package:customerapp/styles/Komet.dart';
+import 'package:customerapp/styles/category_prod.dart';
 import 'package:customerapp/styles/product.dart';
 import 'package:customerapp/responsive/screen_responsive.dart';
 import 'package:flutter/material.dart';
@@ -90,24 +92,30 @@ class Products_sample extends StatelessWidget {
                                   shrinkWrap: true,
                                   children: [
                                     Padding(
-                                      padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                                      child: Container(
-                                        height: 140,
                                         padding:
-                                            EdgeInsets.fromLTRB(40, 0, 40, 0),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(15.0),
-                                            color: Color(0xAAFFFFFF)),
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          restaurant == null
-                                              ? 'Products'
-                                              : restaurant.name,
-                                          style: RestaurantTitleStyle,
-                                        ),
-                                      ),
-                                    ),
+                                            EdgeInsets.fromLTRB(0, 0, 0, 10),
+                                        child: Container(
+                                          height: 120,
+                                          padding:
+                                              EdgeInsets.fromLTRB(40, 0, 40, 0),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(15.0),
+                                              color: Color(0xAAFFFFFF)),
+                                          alignment: Alignment.centerLeft,
+                                          child: Column(children: [
+                                            Padding(
+                                                padding:
+                                                    EdgeInsets.only(top: 10),
+                                                child: Text(
+                                                  restaurant == null
+                                                      ? 'Products'
+                                                      : restaurant.name,
+                                                  style: RestaurantTitleStyle,
+                                                )),
+                                            CustomRadio()
+                                          ]),
+                                        )),
                                     Expanded(
                                       child: Builder(builder: (builder) {
                                         return FutureBuilder(
@@ -198,4 +206,73 @@ class Products_sample extends StatelessWidget {
                         ' €)')),
         ]));
   }
+}
+
+class CustomRadio extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return CustomRadioState();
+  }
+}
+
+class CustomRadioState extends State<CustomRadio> {
+  List<RadioModel> sample = List<RadioModel>();
+
+  List<Widget> generate_widgets() {
+    List<Widget> llista = List<Widget>();
+    sample.asMap().forEach((key, value) {
+      llista.add(InkWell(
+          onTap: () {
+            setState(() {
+              sample.forEach((element) => element.isSelected = false);
+              sample[key].isSelected = true;
+            });
+          },
+          child:
+              Product_class_widget(sample[key].name, sample[key].isSelected)));
+    });
+
+    return llista;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    sample.add(RadioModel("primer", true));
+    sample.add(RadioModel("segundo", false));
+    sample.add(RadioModel("tercer", false));
+    sample.add(RadioModel("quart", false));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: generate_widgets(),
+    );
+  }
+}
+
+class Product_class_widget extends StatelessWidget {
+  String name;
+  bool isSelected;
+
+  Product_class_widget(this.name, this.isSelected);
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+        padding: EdgeInsets.only(left: 10),
+        child: Container(
+            child: Stack(children: [
+          Text(name,
+              style:
+                  isSelected ? ProdTextTitleStyle : ProdTextTitleStyle_basic),
+        ])));
+  }
+}
+
+class RadioModel {
+  String name;
+  bool isSelected;
+
+  RadioModel(this.name, this.isSelected);
 }
