@@ -1,10 +1,13 @@
 import 'package:customerapp/components/appBar/overview_logged_mobile.dart';
 import 'package:customerapp/infrastructure/persistence/hive/hive_adapter.dart';
 import 'package:customerapp/infrastructure/persistence/repository/user_credentials_repository.dart';
+import 'package:customerapp/models/forgotPassword.dart';
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/cart.dart';
 import 'package:customerapp/models/signup.dart';
 import 'package:customerapp/models/user_credentials/user_credentials.dart';
+import 'package:customerapp/screens/forgotPassword/forgotPassword_page.dart';
+import 'package:customerapp/screens/forgotPassword/forgotPassword_success.dart';
 import 'package:customerapp/screens/location/location_page.dart';
 import 'package:customerapp/screens/loggedPage/editNameEmail/editNameEmail_page.dart';
 import 'package:customerapp/screens/loggedPage/initial_logged_page.dart';
@@ -46,6 +49,7 @@ class KometApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => SignInModel()),
         ChangeNotifierProvider(create: (context) => EditNameEmailModel()),
         ChangeNotifierProvider(create: (context) => RestaurantsListModel()),
+        ChangeNotifierProvider(create: (context) => ForgotPasswordModel()),
         ChangeNotifierProvider(create: (context) => ProductsListModel()),
         ChangeNotifierProvider(create: (context) => Cart()),
         ChangeNotifierProvider(create: (context) => MapLocationModel()),
@@ -59,6 +63,9 @@ class KometApp extends StatelessWidget {
             '/sign-up': (context) => SignUpPage(),
             '/sign-in': (context) => SignInPage(),
             '/edit-name-email': (context) => EditNameEmailPage(),
+            '/forgot-password': (context) => ForgotPasswordPage(),
+            '/forgot-password-success': (context) =>
+                ForgotPasswordSuccessPage(),
             '/location': (context) => LocationPage(),
             '/products': (context) => Products_sample(),
             '/restaurant-list': (context) => RestaurantsList(),

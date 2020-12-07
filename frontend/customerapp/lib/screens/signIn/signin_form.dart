@@ -4,6 +4,7 @@ import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/signin.dart';
 import 'package:customerapp/screens/anon_root.dart';
 import 'package:customerapp/screens/commonComponents/single_message_dialog.dart';
+import 'package:customerapp/screens/forgotPassword/forgotPassword_dialog.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -33,7 +34,7 @@ class SignInFormPage extends StatelessWidget {
                   margin: EdgeInsets.all(20.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
                     children: [
                       Text(
                         "New to Komet? ",
@@ -126,8 +127,10 @@ class SignInForm extends StatelessWidget {
             child: Container(
                 margin: EdgeInsets.all(20.0),
                 alignment: Alignment.centerRight,
-                child: TextLink('Forgot your password?', (context) {},
-                    signUpTextLinks, signUpTextLinksHover, context)),
+                child: TextLink('Forgot your password?', (context) {
+                  Navigator.pop(context);
+                  showForgotPassword(context);
+                }, signUpTextLinks, signUpTextLinksHover, context)),
             alignment: Alignment.bottomCenter,
           ),
           SignInButton(),
@@ -197,4 +200,12 @@ showLogInFailedDialog(BuildContext context) {
   showDialog(
       context: context,
       builder: (context) => SingleMessageDialog("Log in failed"));
+}
+
+void showForgotPassword(BuildContext context) {
+  if (MediaQuery.of(context).size.width > 600) {
+    showDialog(context: context, builder: (_) => ForgotPasswordDialog());
+  } else {
+    Navigator.pushNamed(context, '/forgot-password');
+  }
 }
