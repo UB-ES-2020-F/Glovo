@@ -99,6 +99,7 @@
     <Property Name="sonar.updatecenter.url">https://update.sonarsource.org/update-center.properties</Property>
     <Property Name="sonar.core.id">86E1FA4D-AXXvsa8fRrkrpTwfPEyz</Property>
     <Property Name="sonar.core.startTime">11/22/2020 12:31:08 PM</Property>
+    <Property Name="sonar.cs.xunit.reportPaths">**/server/glovo_webapi/glovo_webapi_test/TestResults/**</Property>
   </ServerSettings>
   <LocalSettings>
     <Property Name="sonar.host.url">http://167.71.130.118:9000</Property>
