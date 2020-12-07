@@ -4,6 +4,7 @@ import 'package:customerapp/screens/commonComponents/anything_button.dart';
 import 'package:customerapp/screens/commonComponents/food_button.dart';
 import 'package:customerapp/screens/commonComponents/snacks_button.dart';
 import 'package:customerapp/screens/commonComponents/supermarkets_button.dart';
+import 'package:customerapp/screens/restricted_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:customerapp/screens/loggedPage/logged_bar.dart';
@@ -11,9 +12,13 @@ import 'package:customerapp/screens/loggedPage/logged_bar.dart';
 class InitialLogged extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    return RestrictedPage(this._build(context));
+  }
+
+  Widget _build(BuildContext context) {
     Widget bar;
 
-    var s = Bar_responsive(context, '/overview_mobile', InitialLoggedBar(),
+    var s = Bar_responsive(context, '/overview-mobile', InitialLoggedBar(),
         medium_bar: InitialLoggedBar_short());
     bar = s.get_responsive_bar();
 

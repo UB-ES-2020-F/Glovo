@@ -4,7 +4,6 @@ using glovo_webapi.Entities;
 using glovo_webapi.Models.Order;
 using glovo_webapi.Services;
 using glovo_webapi.Services.Orders;
-using glovo_webapi.Services.UserService;
 using Microsoft.AspNetCore.Mvc;
 using glovo_webapi.Helpers;
 using glovo_webapi.Utils;

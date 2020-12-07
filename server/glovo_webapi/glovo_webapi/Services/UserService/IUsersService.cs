@@ -11,7 +11,9 @@ namespace glovo_webapi.Services.UserService
         User GetByEmail(string email);
         User GetLogged();
         User Create(User user, string password);
-        void Update(User user, string password = null);
+        void SetProfile(User user, string name, string email);
+        void SetNewPassword(User user, string newPassword, string oldPassword=null);
+        void Update(User user);
         void Delete(int id);
     }
 }

@@ -34,20 +34,19 @@ namespace glovo_webapi.Controllers.Users
         
         //POST api/users/password-email
         [HttpPost("password-email")]
-        public IActionResult SendPasswordEmail([FromBody] string recoveryEmail)
+        public IActionResult SendPasswordEmail([FromBody] PasswordEmailModel passwordEmailModel)
         {
             User user;
             try {
-                user = _userService.GetByEmail(recoveryEmail);
+                user = _userService.GetByEmail(passwordEmailModel.Email);
             } catch (RequestException) {
-                return BadRequest(new {message = "Email is incorrect" });
+                return BadRequest(new {message = "Email is not found" });
             }
 
             TokenCreationParams tokenCreationParams = _tokenCreatorValidator.CreateToken(user, 30);
 
             user.RecoverySalt = tokenCreationParams.SaltBytes;
             
-            //TODO CATCH EXCEPTIONS
             _userService.Update(user);
             
             //Send mail with mail and token link
@@ -68,15 +67,15 @@ namespace glovo_webapi.Controllers.Users
                 client.Disconnect (true);
             }
 
-            return Ok(new
+            return Ok(new PasswordEmailModel
             {
-                user.Email
+                Email = user.Email
             });
         }
         
         //POST api/users/reset-password
         [HttpPost("reset-password")]
-        public IActionResult ResetPassword([FromBody]PasswordResetModel passwordResetModel)
+        public ActionResult ResetPassword([FromBody]PasswordResetModel passwordResetModel)
         {
             User user;
             try {
@@ -97,9 +96,17 @@ namespace glovo_webapi.Controllers.Users
                 return BadRequest(new {message = "Recovery link expired or invalid" });
 
             user.RecoverySalt = null;
-            
-            //TODO CATCH EXCEPTIONS
-            _userService.Update(user, passwordResetModel.NewPassword);
+
+            try {
+                _userService.SetNewPassword(user, passwordResetModel.NewPassword);
+            }
+            catch(RequestException ex) {
+                if(ex.Code == UserExceptionCodes.InvalidCredentials)
+                    return BadRequest(new {message = "Invalid old password"});
+                if(ex.Code == UserExceptionCodes.BadPassword)
+                    return BadRequest(new {message = "Invalid new password"});
+                return BadRequest(new {message = "Unknown error"});
+            }
 
             return Ok();
         }

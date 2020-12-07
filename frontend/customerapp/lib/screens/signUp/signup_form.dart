@@ -223,7 +223,6 @@ void trySendRegisterForm(BuildContext context, SignUpModel signUpModel) {
       showLoaderDialog(context);
       signUpModel.formValid = false;
       signUpModel.formKey.currentState.save();
-      print(signUpModel.password);
       UserDTO formUser = new UserDTO();
       formUser.email = signUpModel.email;
       formUser.password = signUpModel.password;
