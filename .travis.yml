@@ -70,7 +70,6 @@ jobs:
       - dotnet sonarscanner begin /k:"komet_backend" /d:sonar.login=$SONARTOK /d:sonar.projectDescription=$TRAVIS_BRANCH /d:sonar.host.url=http://167.71.130.118:9000
         /d:sonar.verbose=true
       - dotnet build glovo_webapi.sln
-      - dotnet test glovo_webapi.sln --test-adapter-path:. --logger:xunit 
       - dotnet sonarscanner end /d:sonar.login=$SONARTOK
     - name: "frontend_ana"
       script:
