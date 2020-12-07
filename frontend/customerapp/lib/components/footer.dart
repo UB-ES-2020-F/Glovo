@@ -47,6 +47,7 @@ class Footer extends StatelessWidget {
                                   child: Row(
                                     children: [
                                       IconButton(
+                                        onPressed: () {},
                                         iconSize: 30,
                                         icon: Image.asset(
                                           'resources/images/logo_kommet.png',
@@ -123,6 +124,7 @@ class Footer extends StatelessWidget {
                               padding: EdgeInsets.only(top: 2),
                               height: 70,
                               child: IconButton(
+                                  onPressed: () {},
                                   iconSize: 120,
                                   icon: Image.asset(
                                     'resources/images/download-button.png',
@@ -130,6 +132,7 @@ class Footer extends StatelessWidget {
                           Container(
                               height: 70,
                               child: IconButton(
+                                onPressed: () {},
                                 iconSize: 120,
                                 icon: Image.asset(
                                   'resources/images/download-button_android.png',
@@ -302,7 +305,10 @@ class SampleAnimationState extends State<SampleAnimation>
           left: posx - 10,
           child: Transform.rotate(
             angle: angle,
-            child: IconButton(iconSize: size.toDouble(), icon: moto_dude_img),
+            child: IconButton(
+                onPressed: () {},
+                iconSize: size.toDouble(),
+                icon: moto_dude_img),
           ));
     } else {
       return Container();
