@@ -50,7 +50,8 @@ Future<void> logout() async {
 }
 
 Future<void> sendEmailForgotPassword(String email) async {
-  final response = await http.post(await EndpointDefinitions.makeRegisterURL(),
+  final response = await http.post(
+      await EndpointDefinitions.makeSendEmailForgotPasswordURL(),
       headers: {
         "Content-Type": "application/json",
       },
