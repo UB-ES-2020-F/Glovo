@@ -34,11 +34,11 @@ namespace glovo_webapi.Controllers.Users
         
         //POST api/users/password-email
         [HttpPost("password-email")]
-        public IActionResult SendPasswordEmail([FromBody] string recoveryEmail)
+        public ActionResult<PasswordEmailModel> SendPasswordEmail([FromBody] PasswordEmailModel passwordEmailModel)
         {
             User user;
             try {
-                user = _userService.GetByEmail(recoveryEmail);
+                user = _userService.GetByEmail(passwordEmailModel.Email);
             } catch (RequestException) {
                 return BadRequest(new {message = "Email is incorrect" });
             }
@@ -68,9 +68,9 @@ namespace glovo_webapi.Controllers.Users
                 client.Disconnect (true);
             }
 
-            return Ok(new
+            return Ok(new PasswordEmailModel()
             {
-                user.Email
+                Email = user.Email
             });
         }
         
