@@ -123,8 +123,10 @@ void tryForgotPasswordForm(
       showLoaderDialog(context);
       forgotPasswordModel.formValid = false;
       forgotPasswordModel.formKey.currentState.save();
+      UserDTO formUser = new UserDTO();
+      formUser.email = forgotPasswordModel.email;
       //ENPOINT CALL
-      sendEmailForgotPassword(forgotPasswordModel.email).then((value) {
+      sendEmailForgotPassword(formUser).then((value) {
         Navigator.pop(context);
         Navigator.pop(context);
         showForgotPasswordSuccess(context, forgotPasswordModel.email);
