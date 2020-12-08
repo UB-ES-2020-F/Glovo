@@ -19,6 +19,8 @@ class AnonRoute extends StatelessWidget {
     var s = Bar_responsive(context, '/sign-up', AnonBar());
     bar = s.get_responsive_bar();
 
+    print("hola quease");
+
     return Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
         appBar: bar,

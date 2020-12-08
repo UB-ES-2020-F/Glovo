@@ -1,3 +1,6 @@
+import 'package:customerapp/dto/location.dart';
+import 'package:customerapp/endpoints/location.dart';
+import 'package:customerapp/exceptions/logout-callback-failed.dart';
 import 'package:customerapp/models/location.dart';
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/map_location.dart';
@@ -135,7 +138,7 @@ class SetLocationButton extends StatelessWidget {
           ElevatedButton(
             onLongPress: null,
             onPressed: mapLocationModel.formValid
-                ? () {
+                ? () async {
                     mapLocationModel.name =
                         mapLocationModel.locationTextController.text;
                     if (mapLocationModel.formValid) {
@@ -146,6 +149,21 @@ class SetLocationButton extends StatelessWidget {
                           mapLocationModel.currentCoordinates.longitude);
                       loggedModel.getUserAndNotify().directionIndications =
                           mapLocationModel.indicationsTextController.text;
+
+                      await savelocation(LocationDTO(
+                              latitude:
+                                  mapLocationModel.currentCoordinates.latitude,
+                              longitude: mapLocationModel
+                                  .currentCoordinates.longitude))
+                          .then((value) {
+                        print("OK");
+                      }).catchError((onError) {
+                        var e = onError as LogoutCallbackFailed;
+                        print(e.cause);
+                        print(e.errorCode);
+                        print(e.responseBody);
+                        print("No OK");
+                      });
                     }
                     Navigator.pop(context);
                   }
