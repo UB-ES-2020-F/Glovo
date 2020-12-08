@@ -49,13 +49,13 @@ Future<void> logout() async {
   }
 }
 
-Future<void> sendEmailForgotPassword(String email) async {
+Future<void> sendEmailForgotPassword(UserDTO formUser) async {
   final response = await http.post(
       await EndpointDefinitions.makeSendEmailForgotPasswordURL(),
       headers: {
         "Content-Type": "application/json",
       },
-      body: jsonEncode(email));
+      body: jsonEncode(formUser.toJson()));
   if (response.statusCode == 200) {
     return;
   } else {
