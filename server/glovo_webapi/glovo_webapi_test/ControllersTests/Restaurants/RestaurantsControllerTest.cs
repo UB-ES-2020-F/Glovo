@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 
-namespace glovo_webapi_test.Controllers.Restaurants
+namespace glovo_webapi_test.ControllersTests.Restaurants
 {
     
     public class RestaurantsControllerTest
@@ -28,7 +28,7 @@ namespace glovo_webapi_test.Controllers.Restaurants
             SeedDatabase();
         }
 
-        private IRestaurantsService _restaurantsService;
+        private RestApiRestaurantsService _restaurantsService;
 
         private List<Restaurant> _restaurants;
         
@@ -41,11 +41,11 @@ namespace glovo_webapi_test.Controllers.Restaurants
             
             _restaurants = new List<Restaurant>()
             {
-                new Restaurant("name-r1", "imgPath-u1", new Location(1, 0)),
-                new Restaurant("name-r2", "imgPath-u2", new Location(2, 0)),
-                new Restaurant("name-r3", "imgPath-u3", new Location(3, 0)),
-                new Restaurant("name-r4", "imgPath-u4", new Location(4, 0)),
-                new Restaurant("name-r5", "imgPath-u5", new Location(5, 0))
+                new Restaurant("name-r1", "imgPath-u1", new Location(1, 0)) {Id = 1},
+                new Restaurant("name-r2", "imgPath-u2", new Location(2, 0)) {Id = 2},
+                new Restaurant("name-r3", "imgPath-u3", new Location(3, 0)) {Id = 3},
+                new Restaurant("name-r4", "imgPath-u4", new Location(4, 0)) {Id = 4},
+                new Restaurant("name-r5", "imgPath-u5", new Location(5, 0)) {Id = 5}
             };
             
             context.AddRange(_restaurants);
@@ -93,9 +93,9 @@ namespace glovo_webapi_test.Controllers.Restaurants
             RestaurantsController restaurantsController = CreateFakeRestaurantsController();
             
             //Retrieving existing restaurant
-            var response = restaurantsController.GetRestaurantById(1);
+            var response = restaurantsController.GetRestaurantById(_restaurants[0].Id);
             Assert.IsType<OkObjectResult>(response.Result);
-            Assert.Equal(1, ((LocationRestaurantModel)((OkObjectResult)response.Result).Value).Id);
+            Assert.Equal(_restaurants[0].Id, ((LocationRestaurantModel)((OkObjectResult)response.Result).Value).Id);
             
             //Retrieving non-existing restaurant
             response = restaurantsController.GetRestaurantById(0);

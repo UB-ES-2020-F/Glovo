@@ -16,6 +16,7 @@ namespace glovo_webapi.Services
         public const int OrderNotFound = 2;
         public const int ProductNotFound = 3;
         public const int BadOrderProduct = 4;
+        public const int ProductNotBelongingToRestaurant = 5;
     }
 
     internal static class RestaurantExceptionCodes

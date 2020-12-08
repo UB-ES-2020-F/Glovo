@@ -4,7 +4,6 @@ using AutoMapper;
 using glovo_webapi.Controllers.Users;
 using glovo_webapi.Data;
 using glovo_webapi.Entities;
-using glovo_webapi.Helpers;
 using glovo_webapi.Models.Users;
 using glovo_webapi.Profiles;
 using glovo_webapi.Services.UserService;
@@ -14,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 
-namespace glovo_webapi_test.Controllers.Users
+namespace glovo_webapi_test.ControllersTests.Users
 {
     
     public class UsersControllerTest
@@ -42,9 +41,9 @@ namespace glovo_webapi_test.Controllers.Users
 
             _users = new List<User>()
             {
-                new User("u1", "u1@komet.net", "password-u1", new Location(0, 0), UserRole.Regular),
-                new User("u2", "u2@komet.net", "password-u2", new Location(0, 0), UserRole.Regular),
-                new User("a1", "a1@komet.net", "password-a1", new Location(0, 0), UserRole.Administrator)
+                new User("u1", "u1@komet.net", "password-u1", new Location(0, 0), UserRole.Regular) {Id = 1},
+                new User("u2", "u2@komet.net", "password-u2", new Location(0, 0), UserRole.Regular) {Id = 2},
+                new User("a1", "a1@komet.net", "password-a1", new Location(0, 0), UserRole.Administrator) {Id = 3}
             };
             
             context.AddRange(_users);
@@ -104,9 +103,9 @@ namespace glovo_webapi_test.Controllers.Users
             UsersController usersController = CreateFakeUsersController(_users[2]);
             
             //Retrieving existing user
-            var response = usersController.GetById(1);
+            var response = usersController.GetById(_users[0].Id);
             Assert.IsType<OkObjectResult>(response.Result);
-            Assert.Equal(1, ((UserModel)((OkObjectResult)response.Result).Value).Id);
+            Assert.Equal(_users[0].Id, ((UserModel)((OkObjectResult)response.Result).Value).Id);
             
             //Retrieving non-existing user
             response = usersController.GetById(0);
@@ -119,19 +118,20 @@ namespace glovo_webapi_test.Controllers.Users
             UsersController usersController = CreateFakeUsersController(_users[0]);
             
             //Update with non-already existing email
-            usersController.Update(
+            var response = usersController.Update(
                 new UpdateUserModel("new-u1", "new-u1@komet.net")
             );
-            
+            Assert.IsType<OkObjectResult>(response.Result);
+            Assert.Equal("new-u1", ((UpdateUserModel)((OkObjectResult)response.Result).Value).Name);
+            Assert.Equal("new-u1@komet.net",((UpdateUserModel)((OkObjectResult)response.Result).Value).Email);
             Assert.Equal("new-u1", _users[0].Name);
             Assert.Equal("new-u1@komet.net", _users[0].Email);
             
             //Updating with already existing email
-            usersController.Update(
-                new UpdateUserModel("u2", "u2@komet.net")
+            response = usersController.Update(
+                new UpdateUserModel("u2", _users[1].Email)
             );
-            
-            //Assert.IsType<BadRequestResult>(response.res);
+            Assert.IsType<BadRequestObjectResult>(response.Result);
             Assert.Equal("new-u1", _users[0].Name);
             Assert.Equal("new-u1@komet.net", _users[0].Email);
         }
