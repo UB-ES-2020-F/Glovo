@@ -6,6 +6,7 @@ import 'package:customerapp/components/footer.dart';
 
 import 'package:customerapp/endpoints/restaurants.dart';
 import 'package:customerapp/models/restaurants.dart';
+import 'package:customerapp/models/update_model.dart';
 import 'package:customerapp/responsive/screen_responsive.dart';
 import 'package:customerapp/screens/commonComponents/anything_button.dart';
 import 'package:customerapp/screens/commonComponents/food_button.dart';
@@ -31,6 +32,7 @@ class RestaurantsList extends StatelessWidget {
 
   Widget _build(BuildContext context) {
     var restaurantsModel = context.watch<RestaurantsListModel>();
+    var update = context.watch<Update_model>();
 
     Widget bar;
 
@@ -86,6 +88,8 @@ class RestaurantsList extends StatelessWidget {
                 );
               }),
             ),
+            update.update_restaurants ? Text("es true") : Text("es false"),
+            InkWell(onTap: () {}, child: Text("sdsd")),
             Footer(Color(0xffffffff)),
           ]),
         )));

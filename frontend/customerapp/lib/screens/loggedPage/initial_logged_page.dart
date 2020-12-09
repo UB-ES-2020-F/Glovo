@@ -4,6 +4,7 @@ import 'package:customerapp/endpoints/location.dart';
 import 'package:customerapp/exceptions/logout-callback-failed.dart';
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/map_location.dart';
+import 'package:customerapp/models/update_model.dart';
 import 'package:customerapp/responsive/screen_responsive.dart';
 import 'package:customerapp/screens/commonComponents/anything_button.dart';
 import 'package:customerapp/screens/commonComponents/food_button.dart';
