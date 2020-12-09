@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using AutoMapper;
 using glovo_webapi.Entities;
 using glovo_webapi.Models.Product;
-using glovo_webapi.Models.Restaurant;
 using glovo_webapi.Services;
 using glovo_webapi.Services.Products;
 using glovo_webapi.Utils;

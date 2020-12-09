@@ -4,7 +4,7 @@ namespace glovo_webapi.Models.Users
 {
     
     //Receive
-    public class LoginUserModel
+    public class ReceiveLoginUserModel
     {
         [Required]
         public string Email { get; set; }

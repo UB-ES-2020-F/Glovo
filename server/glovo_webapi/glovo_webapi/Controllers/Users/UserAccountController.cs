@@ -31,9 +31,9 @@ namespace glovo_webapi.Controllers.Users
         
         //POST api/users/login
         [HttpPost("login")]
-        public IActionResult Authenticate([FromBody]LoginUserModel userModel)
+        public ActionResult<SendLoginUserModel> Authenticate([FromBody]ReceiveLoginUserModel userModel)
         {
-            User user = null;
+            User user;
             try {
                 user = _userService.Authenticate(userModel.Email, userModel.Password);
             } catch (RequestException) {
@@ -41,24 +41,18 @@ namespace glovo_webapi.Controllers.Users
             }
             
             TokenCreationParams tokenCreationParams = _tokenCreatorValidator.CreateToken(user, 60 * 24 * 7);
-
             user.AuthSalt = tokenCreationParams.SaltBytes;
-            //TODO CATCH EXCEPTIONS
-            _userService.Update(user);
             
-            //TODO TURN THIS INTO A MODEL CLASS
-            return Ok(new
-            {
-                Id = user.Id,
-                Name = user.Name,
-                Email = user.Email,
-                Token = tokenCreationParams.TokenStr
-            });
+            _userService.Update(user);
+
+            SendLoginUserModel receiveLoginUserModel = _mapper.Map<SendLoginUserModel>(user);
+            receiveLoginUserModel.Token = tokenCreationParams.TokenStr;
+            return Ok(receiveLoginUserModel);
         }
 
         //POST api/users/register
         [HttpPost("register")]
-        public IActionResult Register([FromBody]RegisterUserModel userModel)
+        public ActionResult Register([FromBody]RegisterUserModel userModel)
         {
             // map userModel to entity
             var user = _mapper.Map<User>(userModel);
@@ -78,11 +72,10 @@ namespace glovo_webapi.Controllers.Users
         
         [Authorize(Roles="Regular, Administrator")]
         [HttpPost("logout")]
-        public IActionResult Logout()
+        public ActionResult Logout()
         {
             User user = (User)HttpContext.Items["User"];
             user.AuthSalt = null;
-            //TODO CATCH EXCEPTIONS
             _userService.Update(user);
             return Ok();
         }

@@ -2,16 +2,25 @@ import 'package:flutter/material.dart';
 
 final locationDefaultColor = Color(0xFF2ABB9B);
 
+final defaultColorHovered = Color(0xFF50D7B6);
+
+Color locationDefaultColorIsHovered(bool isHovered) {
+  if (!isHovered)
+    return locationDefaultColor;
+  else
+    return defaultColorHovered;
+}
+
 final defaultStreetNameTextLinks = TextStyle(
   fontSize: 14,
   fontWeight: FontWeight.bold,
-  color: Color(0xFF2ABB9B),
+  color: locationDefaultColor,
 );
 
 final defaultStreetNameTextLinksHover = TextStyle(
   fontSize: 14,
   fontWeight: FontWeight.bold,
-  color: Color(0xFF43B59C),
+  color: defaultColorHovered,
 );
 
 final defaultIndicationsTextLinks = TextStyle(
@@ -21,7 +30,7 @@ final defaultIndicationsTextLinks = TextStyle(
 
 final defaultIndicationsTextLinksHover = TextStyle(
   fontSize: 12,
-  color: Color(0xFFF8C458),
+  color: Color(0xFFFFD47C),
 );
 
 final defaultButtonMainColor = Color(0xFFCCCCCC);

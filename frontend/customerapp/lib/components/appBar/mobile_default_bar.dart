@@ -1,5 +1,7 @@
 import 'dart:html';
 
+import 'package:customerapp/models/logged.dart';
+import 'package:provider/provider.dart';
 import 'package:customerapp/styles/Komet.dart';
 import 'package:customerapp/styles/default_app_bar.dart';
 import 'package:flutter/cupertino.dart';
@@ -42,6 +44,7 @@ class Mobile_default_bar_state extends State<StatefulWidget> {
   get preferredSize => Size.fromHeight(appBarHeight);
   @override
   Widget build(BuildContext context) {
+    final loggedModel = context.watch<LoggedModel>();
     return AppBar(
         automaticallyImplyLeading: false,
         elevation: 3,
@@ -60,7 +63,9 @@ class Mobile_default_bar_state extends State<StatefulWidget> {
                   iconSize: 0,
                 ),
                 InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(context, '/location');
+                    },
                     onHover: (value) {
                       if (value == true) {
                         setState(() {
@@ -84,17 +89,13 @@ class Mobile_default_bar_state extends State<StatefulWidget> {
                     child: Row(
                       children: [
                         Text(
-                          "Barcelona",
+                          getTrimmedDirection(loggedModel),
                           style: TextStyle(
                               color: color_state_hover,
                               fontSize: 16,
                               fontWeight: FontWeight.bold),
                         ),
-                        IconButton(
-                          icon: icon_state_hover,
-                          hoverColor: Colors.transparent,
-                          onPressed: () {},
-                        ),
+                        icon_state_hover,
                       ],
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -111,4 +112,11 @@ class Mobile_default_bar_state extends State<StatefulWidget> {
               ],
             )));
   }
+}
+
+String getTrimmedDirection(LoggedModel loggedModel) {
+  String direction = loggedModel.getUser().direction;
+  return (direction.length <= 20)
+      ? direction
+      : direction.substring(0, 20) + "...";
 }
