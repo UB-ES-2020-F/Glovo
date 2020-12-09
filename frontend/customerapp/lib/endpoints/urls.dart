@@ -36,6 +36,6 @@ class EndpointDefinitions {
 
   static Future<String> makeSendEmailForgotPasswordURL() async {
     final config = await AppConfig.getConfig();
-    return '${config.apiUrl}' + 'users/password-email';
+    return '${config.apiUrl}' + '/users/password-email';
   }
 }
