@@ -1,4 +1,5 @@
 import 'package:customerapp/dto/user.dart';
+import 'package:customerapp/endpoints/user.dart';
 import 'package:customerapp/models/resetPassword.dart';
 import 'package:customerapp/screens/commonComponents/single_message_dialog.dart';
 import 'package:customerapp/styles/signup.dart';
@@ -38,7 +39,16 @@ class ResetPassword extends StatelessWidget {
   }
 }
 
-class ResetPasswordForm extends StatelessWidget {
+class ResetPasswordForm extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return ResetPasswordFormState();
+  }
+}
+
+class ResetPasswordFormState extends State<ResetPasswordForm> {
+  final _newPassword1Controller = new TextEditingController();
+  final _newPassword2Controller = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     var resetPasswordModel = context.watch<ResetPasswordModel>();
@@ -51,29 +61,77 @@ class ResetPasswordForm extends StatelessWidget {
           Container(
               padding: EdgeInsets.symmetric(vertical: 15),
               constraints: BoxConstraints(maxWidth: 600),
-              child: Text(
-                "Enter your email address to reset your password.",
-                style: signUpText.copyWith(fontSize: 16),
+              child: TextFormField(
+                controller: _newPassword1Controller,
+                enableInteractiveSelection: false,
+                onSaved: (value) => resetPasswordModel.newPassword1 = value,
+                obscureText: resetPasswordModel.newPassword1Obfuscated,
+                validator: (password) {
+                  bool passwordValid = password.isNotEmpty;
+                  return passwordValid ? null : "New password is required";
+                },
+                decoration: InputDecoration(
+                  border: signUpInputTextBorder,
+                  focusedBorder: signUpFocusedInputTextBorder,
+                  suffixIcon: IconButton(
+                      onPressed:
+                          resetPasswordModel.switchNewPassword1Obfuscation,
+                      icon: resetPasswordModel.newPassword1Obfuscated
+                          ? Icon(
+                              Icons.visibility_off_outlined,
+                              color: Color(0xFF9B9B9B),
+                            )
+                          : Icon(
+                              Icons.visibility,
+                              color: Color(0xFF9B9B9B),
+                            )),
+                  icon: Icon(
+                    Icons.lock_outlined,
+                    color: Color(0xFF9B9B9B),
+                    size: 40,
+                  ),
+                  labelText: 'New password',
+                  labelStyle: labelTextInputStyle,
+                ),
+                onFieldSubmitted: (value) {
+                  tryResetPasswordForm(context, resetPasswordModel);
+                },
               )),
           Container(
               padding: EdgeInsets.symmetric(vertical: 15),
               constraints: BoxConstraints(maxWidth: 600),
               child: TextFormField(
-                autofocus: true,
-                onSaved: (value) => resetPasswordModel.email = value,
-                validator: (email) {
-                  bool validEmail = EmailValidator.validate(email);
-                  return validEmail ? null : "Invalid email address";
+                controller: _newPassword2Controller,
+                enableInteractiveSelection: false,
+                onSaved: (value) => resetPasswordModel.newPassword2 = value,
+                obscureText: resetPasswordModel.newPassword2Obfuscated,
+                validator: (password) {
+                  if (password.isEmpty) return 'Re-enter new password';
+                  if (password != _newPassword1Controller.text)
+                    return 'Not Match';
+                  return null;
                 },
                 decoration: InputDecoration(
                   border: signUpInputTextBorder,
                   focusedBorder: signUpFocusedInputTextBorder,
+                  suffixIcon: IconButton(
+                      onPressed:
+                          resetPasswordModel.switchNewPassword2Obfuscation,
+                      icon: resetPasswordModel.newPassword2Obfuscated
+                          ? Icon(
+                              Icons.visibility_off_outlined,
+                              color: Color(0xFF9B9B9B),
+                            )
+                          : Icon(
+                              Icons.visibility,
+                              color: Color(0xFF9B9B9B),
+                            )),
                   icon: Icon(
-                    Icons.mail_outline_outlined,
+                    Icons.lock_outlined,
                     color: Color(0xFF9B9B9B),
                     size: 40,
                   ),
-                  labelText: 'Email',
+                  labelText: 'Repeat new password',
                   labelStyle: labelTextInputStyle,
                 ),
                 onFieldSubmitted: (value) {
@@ -123,12 +181,13 @@ void tryResetPasswordForm(
 
       //ENDPOINT CALL
       resetPassword().then((value) {
-        Navigator.pop(context);
-        Navigator.pop(context);
+        Navigator.pop(context); //loader
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil('/', (route) => false); //mainPage
         showResetPasswordSuccess(context);
       }).catchError((error) {
         print(error);
-        Navigator.pop(context);
+        Navigator.pop(context); //loader
         showResetPasswordFailedDialog(context);
       });
     }
@@ -144,5 +203,6 @@ showResetPasswordSuccess(BuildContext context) {
 showResetPasswordFailedDialog(BuildContext context) {
   showDialog(
       context: context,
-      builder: (context) => SingleMessageDialog("Couldn't reset the password"));
+      builder: (context) =>
+          SingleMessageDialog("Couldn't reset the password."));
 }

@@ -4,10 +4,12 @@ import 'package:customerapp/infrastructure/persistence/repository/user_credentia
 import 'package:customerapp/models/forgotPassword.dart';
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/cart.dart';
+import 'package:customerapp/models/resetPassword.dart';
 import 'package:customerapp/models/signup.dart';
 import 'package:customerapp/models/user_credentials/user_credentials.dart';
 import 'package:customerapp/screens/forgotPassword/forgotPassword_page.dart';
 import 'package:customerapp/screens/forgotPassword/forgotPassword_success.dart';
+import 'package:customerapp/screens/forgotPassword/resetPassword_page.dart';
 import 'package:customerapp/screens/location/location_page.dart';
 import 'package:customerapp/screens/loggedPage/editNameEmail/editNameEmail_page.dart';
 import 'package:customerapp/screens/loggedPage/initial_logged_page.dart';
@@ -50,6 +52,7 @@ class KometApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => EditNameEmailModel()),
         ChangeNotifierProvider(create: (context) => RestaurantsListModel()),
         ChangeNotifierProvider(create: (context) => ForgotPasswordModel()),
+        ChangeNotifierProvider(create: (context) => ResetPasswordModel()),
         ChangeNotifierProvider(create: (context) => ProductsListModel()),
         ChangeNotifierProvider(create: (context) => Cart()),
         ChangeNotifierProvider(create: (context) => MapLocationModel()),
@@ -57,7 +60,7 @@ class KometApp extends StatelessWidget {
       child: MaterialApp(
           theme: appTheme,
           title: 'Komet',
-          initialRoute: '/',
+          initialRoute: '/reset-password',
           routes: {
             '/': (context) => AnonRoute(),
             '/sign-up': (context) => SignUpPage(),
@@ -66,6 +69,7 @@ class KometApp extends StatelessWidget {
             '/forgot-password': (context) => ForgotPasswordPage(),
             '/forgot-password-success': (context) =>
                 ForgotPasswordSuccessPage(),
+            '/reset-password': (context) => ResetPasswordPage(),
             '/location': (context) => LocationPage(),
             '/products': (context) => Products_sample(),
             '/restaurant-list': (context) => RestaurantsList(),
