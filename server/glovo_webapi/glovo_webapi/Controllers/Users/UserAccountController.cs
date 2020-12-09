@@ -45,9 +45,9 @@ namespace glovo_webapi.Controllers.Users
             
             _userService.Update(user);
 
-            SendLoginUserModel receiveLoginUserModel = _mapper.Map<SendLoginUserModel>(user);
-            receiveLoginUserModel.Token = tokenCreationParams.TokenStr;
-            return Ok(receiveLoginUserModel);
+            SendLoginUserModel sendLoginUserModel = _mapper.Map<SendLoginUserModel>(user);
+            sendLoginUserModel.Token = tokenCreationParams.TokenStr;
+            return Ok(sendLoginUserModel);
         }
 
         //POST api/users/register
