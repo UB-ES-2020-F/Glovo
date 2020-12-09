@@ -9,7 +9,7 @@ import 'package:customerapp/screens/location/location_page.dart';
 import 'package:customerapp/screens/loggedPage/editNameEmail/editNameEmail_page.dart';
 import 'package:customerapp/screens/loggedPage/initial_logged_page.dart';
 import 'package:customerapp/screens/anon_root.dart';
-import 'package:customerapp/screens/products/products_sample.dart';
+import 'package:customerapp/screens/products/products.dart';
 import 'package:customerapp/screens/products/product_screen.dart';
 import 'package:customerapp/screens/restaurantList/restaurant_list.dart';
 import 'package:customerapp/screens/signIn/signin_page.dart';
@@ -60,7 +60,7 @@ class KometApp extends StatelessWidget {
             '/sign-in': (context) => SignInPage(),
             '/edit-name-email': (context) => EditNameEmailPage(),
             '/location': (context) => LocationPage(),
-            '/products': (context) => Products_sample(),
+            '/products': (context) => Products(),
             '/restaurant-list': (context) => RestaurantsList(),
             '/concrete-product': (context) => ProductScreen(),
             '/initial-logged-in': (context) => InitialLogged(),

@@ -1,3 +1,4 @@
+import 'package:customerapp/screens/commonComponents/single_message_dialog.dart';
 import 'package:customerapp/screens/loggedPage/profile_settings.dart';
 import 'package:customerapp/screens/restricted_page.dart';
 import 'package:customerapp/styles/Komet.dart';
@@ -5,74 +6,91 @@ import 'package:customerapp/styles/overview_mobile_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class TabBar_screen extends StatelessWidget {
+class TabBar_screen extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return RestrictedPage(this._build(context));
-  }
+  State<StatefulWidget> createState() => _TabBar_screen();
+}
 
-  Widget _build(BuildContext context) {
-    if (MediaQuery.of(context).size.width > 650) {
-      Navigator.pop(context); //when resizing screen slowly, error occurs
-    }
+class _TabBar_screen extends State<TabBar_screen> {
+  @override
+  Widget build(BuildContext context) => FutureBuilder(
+        future: userIsLogged(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data) {
+              if (MediaQuery.of(context).size.width > 650) {
+                Navigator.pop(
+                    context); //when resizing screen slowly, error occurs
+              }
 
-    return DefaultTabController(
-      length: 2,
-      child: new Scaffold(
-        appBar: new PreferredSize(
-          preferredSize: Size.fromHeight(kToolbarHeight * 0.8 + 28),
-          child: new Container(
-            color: Colors.white,
-            child: new SafeArea(
-                child: Padding(
-              padding: EdgeInsets.only(right: 50, left: 50, top: 20),
-              child: Column(
-                children: <Widget>[
-                  new TabBar(
-                    labelStyle: NotSelectedStyle_bar,
-                    labelColor: Kommet_distinctive_yellow,
-                    unselectedLabelColor: Colors.black,
-                    indicatorPadding: EdgeInsets.only(top: 50),
-                    indicatorWeight: 4,
-                    onTap: (value) {},
-                    unselectedLabelStyle: SelectedStyle_bar,
-                    indicatorColor: Kommet_distinctive_yellow,
-                    tabs: [
-                      Padding(
-                          padding: EdgeInsets.only(bottom: 5),
-                          child: Text("Orders")),
-                      Padding(
-                          padding: EdgeInsets.only(bottom: 5),
-                          child: Text("Account"))
-                    ],
+              return DefaultTabController(
+                length: 2,
+                child: new Scaffold(
+                  appBar: new PreferredSize(
+                    preferredSize: Size.fromHeight(kToolbarHeight * 0.8 + 28),
+                    child: new Container(
+                      color: Colors.white,
+                      child: new SafeArea(
+                          child: Padding(
+                        padding: EdgeInsets.only(right: 50, left: 50, top: 20),
+                        child: Column(
+                          children: <Widget>[
+                            new TabBar(
+                              labelStyle: NotSelectedStyle_bar,
+                              labelColor: Kommet_distinctive_yellow,
+                              unselectedLabelColor: Colors.black,
+                              indicatorPadding: EdgeInsets.only(top: 50),
+                              indicatorWeight: 4,
+                              onTap: (value) {},
+                              unselectedLabelStyle: SelectedStyle_bar,
+                              indicatorColor: Kommet_distinctive_yellow,
+                              tabs: [
+                                Padding(
+                                    padding: EdgeInsets.only(bottom: 5),
+                                    child: Text("Orders")),
+                                Padding(
+                                    padding: EdgeInsets.only(bottom: 5),
+                                    child: Text("Account"))
+                              ],
+                            ),
+                          ],
+                        ),
+                      )),
+                    ),
                   ),
-                ],
-              ),
-            )),
-          ),
-        ),
-        body: Stack(children: [
-          TabBarView(
-            children: <Widget>[
-              Subpage_orders(),
-              Subpage_user_profile(),
-            ],
-          ),
-          Align(
-              alignment: Alignment.bottomRight,
-              child: IconButton(
-                iconSize: 36,
-                icon: Image.asset(
-                  'resources/images/arrow_diag.png',
+                  body: Stack(children: [
+                    TabBarView(
+                      children: <Widget>[
+                        Subpage_orders(),
+                        Subpage_user_profile(),
+                      ],
+                    ),
+                    Align(
+                        alignment: Alignment.bottomRight,
+                        child: IconButton(
+                          iconSize: 36,
+                          icon: Image.asset(
+                            'resources/images/arrow_diag.png',
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ))
+                  ]),
                 ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ))
-        ]),
-      ),
-    );
-  }
+              );
+            } else {
+              Future.delayed(Duration.zero, () {
+                Navigator.pushNamed(context, '/');
+              });
+              return CircularLoaderKomet();
+              //
+            }
+          } else {
+            return CircularLoaderKomet();
+          }
+        },
+      );
 }
 
 class Subpage_orders extends StatelessWidget {
