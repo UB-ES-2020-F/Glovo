@@ -48,6 +48,8 @@ namespace glovo_webapi.Controllers.Users
             }
             
             User loggedUser = (User)HttpContext.Items["User"];
+            if(loggedUser == null)
+                return NotFound(new {message = "No user is logged"});
             if (loggedUser.Role == UserRole.Regular && user.Id != loggedUser.Id)
                 return Unauthorized(new {message = "Unauthorized"});
             
@@ -58,19 +60,25 @@ namespace glovo_webapi.Controllers.Users
         //PUT api/users/update
         [Authorize(Roles="Regular, Administrator")]
         [HttpPut("update")]
-        public ActionResult Update([FromBody]UpdateUserModel model)
+        public ActionResult<UpdateUserModel> Update([FromBody]UpdateUserModel model)
         {
-            User user = (User)HttpContext.Items["User"];
+            User loggedUser = (User)HttpContext.Items["User"];
+            if(loggedUser == null)
+                return NotFound(new {message = "No user is logged"});
 
             try {
-                _userService.SetProfile(user, model.Name, model.Email);
+                _userService.SetProfile(loggedUser, model.Name, model.Email);
             } catch (RequestException ex) {
                 if (ex.Code == UserExceptionCodes.EmailAlreadyExists)
                     return BadRequest(new {message = "Email already in use"});
                 return BadRequest(new {message = "Unknown error"});
             }
             
-            return Ok();
+            return Ok(new UpdateUserModel()
+            {
+                Email = loggedUser.Email,
+                Name = loggedUser.Name
+            });
         }
         
         //PUT api/users/update-password
@@ -79,10 +87,12 @@ namespace glovo_webapi.Controllers.Users
         public ActionResult UpdatePassword([FromBody]PasswordUpdateModel model)
         {
             //Map userModel to entity and set id
-            User user = (User)HttpContext.Items["User"];
+            User loggedUser = (User)HttpContext.Items["User"];
+            if(loggedUser == null)
+                return NotFound(new {message = "No user is logged"});
             
             try {
-                _userService.SetNewPassword(user,model.NewPassword, model.OldPassword);
+                _userService.SetNewPassword(loggedUser, model.NewPassword, model.OldPassword);
             } catch (RequestException ex) {
                 if (ex.Code == UserExceptionCodes.BadPassword)
                     return BadRequest(new {message = "Password doesn't meet requirements"});
@@ -100,6 +110,8 @@ namespace glovo_webapi.Controllers.Users
         public ActionResult Delete(int userId)
         {
             User loggedUser = (User)HttpContext.Items["User"];
+            if(loggedUser == null)
+                return NotFound(new {message = "No user is logged"});
             if (loggedUser.Role == UserRole.Regular && userId != loggedUser.Id)
                 return Unauthorized(new {message = "Unauthorized"});
             

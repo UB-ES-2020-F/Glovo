@@ -1,6 +1,6 @@
 using System;
 
-namespace glovo_webapi.Helpers
+namespace glovo_webapi.Utils
 {
     public static class PasswordVerifier
     {

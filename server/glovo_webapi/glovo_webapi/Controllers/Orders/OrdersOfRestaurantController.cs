@@ -31,8 +31,7 @@ namespace glovo_webapi.Controllers.Orders
             try {
                 restaurantOrders = _service.GetAllOrdersOfRestaurant(restId);
             } catch (RequestException) {
-                //CHANGE DRIVER TEST TO TEST TO NOT FOUND!!
-                return BadRequest(new{message = "Restaurant id does not exist"});
+                return NotFound(new{message = "Restaurant id does not exist"});
             }
             
             return Ok(_mapper.Map<IEnumerable<GetOrderModel>>(restaurantOrders));

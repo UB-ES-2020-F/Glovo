@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using glovo_webapi.Data;
@@ -49,9 +50,13 @@ namespace glovo_webapi.Services.Orders
             
             //Check all products exist
             foreach (OrderProduct orderProduct in order.OrdersProducts) {
-                if(orderProduct == null) {throw new RequestException(OrderExceptionCodes.BadOrderProduct);}
+                if(orderProduct == null) 
+                    throw new RequestException(OrderExceptionCodes.BadOrderProduct);
                 Product product = _context.Products.FirstOrDefault(p => p.Id == orderProduct.ProductId);
-                if (product == null) {throw new RequestException(OrderExceptionCodes.ProductNotFound);}
+                if (product == null) 
+                    throw new RequestException(OrderExceptionCodes.ProductNotFound);
+                if (product.RestaurantId != order.RestaurantId)
+                    throw new RequestException(OrderExceptionCodes.ProductNotBelongingToRestaurant);
             }
             
             //Add logged user Id to order

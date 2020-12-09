@@ -30,12 +30,9 @@ namespace glovo_webapi.Controllers.Users
         [HttpGet("logged/location")]
         public ActionResult<LocationModel> GetUserLocation()
         {
-            User loggedUser;
-            try {
-                loggedUser = _userService.GetLogged();
-            } catch (RequestException) {
+            User loggedUser = (User)HttpContext.Items["User"];
+            if(loggedUser == null)
                 return NotFound(new {message = "No user is logged"});
-            }
 
             return Ok(_mapper.Map<LocationModel>(loggedUser.Location));
         }
@@ -43,14 +40,11 @@ namespace glovo_webapi.Controllers.Users
         //POST api/users/logged/location
         [Authorize]
         [HttpPost("logged/location")]
-        public ActionResult PostUserLocation([FromBody]LocationModel newLocation)
+        public ActionResult<LocationModel> PostUserLocation([FromBody]LocationModel newLocation)
         {
-            User loggedUser;
-            try {
-                loggedUser = _userService.GetLogged();
-            } catch (RequestException) {
+            User loggedUser = (User)HttpContext.Items["User"];
+            if(loggedUser == null)
                 return NotFound(new {message = "No user is logged"});
-            }
 
             loggedUser.Location = _mapper.Map<Location>(newLocation);
             
