@@ -77,7 +77,22 @@ Future<void> updatePassword(UserPasswordDTO formPasswords) async {
   if (response.statusCode == 200) {
     return;
   } else {
+    throw LogoutCallbackFailed('Failed to change password',
+        response.statusCode, response.body);
+  }
+}
+  
+Future<void> sendEmailForgotPassword(UserDTO formUser) async {
+  final response = await http.post(
+      await EndpointDefinitions.makeSendEmailForgotPasswordURL(),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: jsonEncode(formUser.toJson()));
+  if (response.statusCode == 200) {
+    return;
+  } else {
     throw LogoutCallbackFailed(
-        'Failed to change password', response.statusCode, response.body);
+        'Failed to send recovery email', response.statusCode, response.body);
   }
 }

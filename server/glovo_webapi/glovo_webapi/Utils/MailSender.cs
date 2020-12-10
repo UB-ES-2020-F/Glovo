@@ -16,7 +16,7 @@ namespace glovo_webapi.Utils
             message.To.Add (new MailboxAddress (user.Name, user.Email));
             message.Subject = "Restore Komet Account Password";
 
-            string link = recoveryToken;
+            string link = "http://ub-es2020-glovo-dev.herokuapp.com/reset-password?email=" + user.Email + "&recoveryToken=" + recoveryToken;
             message.Body = new TextPart ("plain") {
                 Text = "A password restoration of your account has been issued. If you want to change your password, go to this link:\n" + link
             };
