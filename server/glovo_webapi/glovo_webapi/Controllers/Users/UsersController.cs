@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
-using Microsoft.Extensions.Options;
 using glovo_webapi.Services;
 using glovo_webapi.Entities;
 using glovo_webapi.Models.Users;
@@ -30,17 +29,16 @@ namespace glovo_webapi.Controllers.Users
         //GET api/users
         [Authorize(Roles="Administrator")]
         [HttpGet]
-        public IActionResult GetAll()
+        public ActionResult<IEnumerable<UserModel>> GetAll()
         {
-            var users = _userService.GetAll();
-            var model = _mapper.Map<IList<UserModel>>(users);
-            return Ok(model);
+            IEnumerable<User> users = _userService.GetAll();
+            return Ok(_mapper.Map<IEnumerable<UserModel>>(users));
         }
 
         //GET api/users/<userId>
         [Authorize(Roles="Regular, Administrator")]
         [HttpGet("{userId}")]
-        public IActionResult GetById(int userId)
+        public ActionResult<UserModel> GetById(int userId)
         {
             User user;
             try {
@@ -60,20 +58,36 @@ namespace glovo_webapi.Controllers.Users
         //PUT api/users/update
         [Authorize(Roles="Regular, Administrator")]
         [HttpPut("update")]
-        public IActionResult Update([FromBody]UpdateUserModel model)
+        public ActionResult Update([FromBody]UpdateUserModel model)
         {
-            //Map userModel to entity and set id
-            User targetUser = (User)HttpContext.Items["User"];
-            var user = _mapper.Map<User>(model);
-            user.Id = targetUser.Id;
+            User user = (User)HttpContext.Items["User"];
 
             try {
-                _userService.Update(user, model.Password);
+                _userService.SetProfile(user, model.Name, model.Email);
+            } catch (RequestException ex) {
+                if (ex.Code == UserExceptionCodes.EmailAlreadyExists)
+                    return BadRequest(new {message = "Email already in use"});
+                return BadRequest(new {message = "Unknown error"});
+            }
+            
+            return Ok();
+        }
+        
+        //PUT api/users/update-password
+        [Authorize(Roles="Regular, Administrator")]
+        [HttpPut("update-password")]
+        public ActionResult UpdatePassword([FromBody]PasswordUpdateModel model)
+        {
+            //Map userModel to entity and set id
+            User user = (User)HttpContext.Items["User"];
+            
+            try {
+                _userService.SetNewPassword(user,model.NewPassword, model.OldPassword);
             } catch (RequestException ex) {
                 if (ex.Code == UserExceptionCodes.BadPassword)
-                    return BadRequest(new {message = "Password doesn't meet requirements" });
-                if (ex.Code == UserExceptionCodes.EmailAlreadyExists)
-                    return BadRequest(new {message = "Email already in use" });
+                    return BadRequest(new {message = "Password doesn't meet requirements"});
+                if (ex.Code == UserExceptionCodes.InvalidCredentials)
+                    return BadRequest(new {message = "Old password doesn't match"});
                 return BadRequest(new {message = "Unknown error"});
             }
             
@@ -83,7 +97,7 @@ namespace glovo_webapi.Controllers.Users
         //DELETE api/users/<userId>
         [Authorize(Roles="Regular, Administrator")]
         [HttpDelete("{userId}")]
-        public IActionResult Delete(int userId)
+        public ActionResult Delete(int userId)
         {
             User loggedUser = (User)HttpContext.Items["User"];
             if (loggedUser.Role == UserRole.Regular && userId != loggedUser.Id)

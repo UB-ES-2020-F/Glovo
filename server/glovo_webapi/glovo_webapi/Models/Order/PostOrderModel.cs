@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using ExpressiveAnnotations.Attributes;
 using glovo_webapi.Models.OrderProduct;
 
 namespace glovo_webapi.Models.Order

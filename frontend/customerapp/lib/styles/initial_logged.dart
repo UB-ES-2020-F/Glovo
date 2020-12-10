@@ -60,6 +60,18 @@ final editTextLinksHoverBold = TextStyle(
   color: Color(0xFF104A3E),
 );
 
+final editTextLinksBoldInactive = TextStyle(
+  fontWeight: FontWeight.bold,
+  color: Color(0xFF777777),
+);
+
 final locationInitialColor = Colors.white;
+
+Color locationInitialColorIsHovered(bool isHovered) {
+  if (!isHovered)
+    return locationInitialColor;
+  else
+    return hoverIconColor;
+}
 
 final buttonMainColor = Colors.white;

@@ -1,12 +1,13 @@
 import 'dart:html';
 
 import 'package:customerapp/components/text_link.dart';
-import 'package:customerapp/screens/loggedPage/initial_logged_page.dart';
+import 'package:customerapp/screens/location/location_dialog.dart';
 import 'package:customerapp/screens/loggedPage/profile_settings.dart';
 import 'package:customerapp/styles/default_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/styles/initial_logged.dart';
+import 'package:provider/provider.dart';
 
 enum BarType { initial, defaultBar }
 
@@ -19,63 +20,9 @@ class UserActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var initialLoggedModel = LoggedModel();
-    String direction, ind;
-    List<Widget> direction_w, direction_indication_w;
-
-    if (type == 1) {
-      if (LoggedModel.direction.length > 30) {
-        direction = LoggedModel.direction.substring(0, 30) + "...";
-      } else {
-        direction = LoggedModel.direction;
-      }
-
-      if (LoggedModel.indicationsDirection.length > 30) {
-        ind = LoggedModel.indicationsDirection.substring(0, 30) + "...";
-      } else {
-        ind = LoggedModel.indicationsDirection;
-      }
-    } else {
-      if (LoggedModel.direction.length > 15) {
-        direction = LoggedModel.direction.substring(0, 15) + "...";
-      } else {
-        direction = LoggedModel.direction;
-      }
-
-      if (LoggedModel.indicationsDirection.length > 15) {
-        ind = LoggedModel.indicationsDirection.substring(0, 15) + "...";
-      } else {
-        ind = LoggedModel.indicationsDirection;
-      }
-    }
-
     return Row(
       children: [
-        IconButton(
-          alignment: Alignment.topRight,
-          iconSize: 22.0,
-          color: _selectLocationIconColor(barType),
-          icon: Icon(Icons.location_on_outlined),
-          onPressed: () {},
-        ),
-        IntrinsicWidth(
-            child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextLink(
-                direction,
-                (context) {},
-                _selectStreetNameTextLinksStyle(barType),
-                _selectStreetNameTextLinksHoverStyle(barType),
-                context),
-            TextLink(
-                ind,
-                (context) {},
-                _selectIndicationsTextLinksStyle(barType),
-                _selectIndicationsTextLinksHoverStyle(barType),
-                context),
-          ],
-        )),
+        DirectionsBox(barType, type),
         IconButton(
           key: Key('profile-button'),
           iconSize: 35.0,
@@ -96,6 +43,100 @@ class UserActions extends StatelessWidget {
   }
 }
 
+class DirectionsBox extends StatefulWidget {
+  final BarType barType;
+  final int type;
+
+  DirectionsBox(this.barType, this.type);
+  @override
+  State<StatefulWidget> createState() {
+    return DirectionBoxState();
+  }
+}
+
+class DirectionBoxState extends State<DirectionsBox> {
+  var isHovered = false;
+  @override
+  Widget build(BuildContext context) {
+    var loggedModel = context.watch<LoggedModel>();
+    return InkWell(
+        onTap: () {
+          if (MediaQuery.of(context).size.width > 600) {
+            showDialog(context: context, builder: (_) => LocationDialog());
+          } else {
+            Navigator.pushNamed(context, '/location');
+          }
+        },
+        onHover: (value) {
+          if (value) {
+            setState(() {
+              isHovered = true;
+            });
+          } else {
+            setState(() {
+              isHovered = false;
+            });
+          }
+        },
+        hoverColor: Colors.transparent,
+        child: Row(mainAxisSize: MainAxisSize.min, children: [
+          Icon(
+            Icons.location_on_outlined,
+            color: _selectLocationIconColor(widget.barType, isHovered),
+          ),
+          IntrinsicWidth(
+              child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                getFormattedDirection(loggedModel, widget.type),
+                style: _selectStreetNameTextStyle(widget.barType, isHovered),
+              ),
+              Text(getFormattedInd(loggedModel, widget.type),
+                  style:
+                      _selectIndicationsTextStyle(widget.barType, isHovered)),
+            ],
+          )),
+        ]));
+  }
+}
+
+String getFormattedDirection(LoggedModel loggedModel, int type) {
+  String direction;
+  if (type == 1) {
+    if (loggedModel.getUser().direction.length > 30) {
+      direction = loggedModel.getUser().direction.substring(0, 30) + "...";
+    } else {
+      direction = loggedModel.getUser().direction;
+    }
+  } else {
+    if (loggedModel.getUser().direction.length > 15) {
+      direction = loggedModel.getUser().direction.substring(0, 15) + "...";
+    } else {
+      direction = loggedModel.getUser().direction;
+    }
+  }
+  return direction;
+}
+
+String getFormattedInd(LoggedModel loggedModel, int type) {
+  String ind;
+  if (type == 1) {
+    if (loggedModel.getUser().directionIndications.length > 30) {
+      ind = loggedModel.getUser().directionIndications.substring(0, 30) + "...";
+    } else {
+      ind = loggedModel.getUser().directionIndications;
+    }
+  } else {
+    if (loggedModel.getUser().directionIndications.length > 15) {
+      ind = loggedModel.getUser().directionIndications.substring(0, 15) + "...";
+    } else {
+      ind = loggedModel.getUser().directionIndications;
+    }
+  }
+  return ind;
+}
+
 class UserActionsBar extends StatelessWidget {
   BarType barType;
   String optional;
@@ -104,8 +145,7 @@ class UserActionsBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var initialLoggedModel = LoggedModel();
-
+    var loggedModel = context.watch<LoggedModel>();
     return UserActions(barType, 1);
   }
 }
@@ -118,8 +158,7 @@ class UserActionsBar_aux extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var initialLoggedModel = LoggedModel();
-
+    var loggedModel = context.watch<LoggedModel>();
     return UserActions(barType, 2);
   }
 }
@@ -135,13 +174,20 @@ void _openProfileSettings(BuildContext context) {
 }
 
 // ignore: missing_return
-Color _selectLocationIconColor(BarType barType) {
+Color _selectLocationIconColor(BarType barType, bool isHovered) {
   switch (barType) {
     case BarType.initial:
-      return locationInitialColor;
+      return locationInitialColorIsHovered(isHovered);
     case BarType.defaultBar:
-      return locationDefaultColor;
+      return locationDefaultColorIsHovered(isHovered);
   }
+}
+
+TextStyle _selectStreetNameTextStyle(BarType barType, bool isHovered) {
+  if (!isHovered)
+    return _selectStreetNameTextLinksStyle(barType);
+  else
+    return _selectStreetNameTextLinksHoverStyle(barType);
 }
 
 TextStyle _selectStreetNameTextLinksStyle(BarType barType) {
@@ -160,6 +206,13 @@ TextStyle _selectStreetNameTextLinksHoverStyle(BarType barType) {
     case BarType.defaultBar:
       return defaultStreetNameTextLinksHover;
   }
+}
+
+TextStyle _selectIndicationsTextStyle(BarType barType, bool isHovered) {
+  if (!isHovered)
+    return _selectIndicationsTextLinksStyle(barType);
+  else
+    return _selectIndicationsTextLinksHoverStyle(barType);
 }
 
 TextStyle _selectIndicationsTextLinksStyle(BarType barType) {
