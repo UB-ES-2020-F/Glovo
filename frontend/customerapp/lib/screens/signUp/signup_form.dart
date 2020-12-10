@@ -40,7 +40,7 @@ class SignUpFormPage extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
                     children: [
                       Container(
                           child: Text('Have an account? ', style: signUpText)),
