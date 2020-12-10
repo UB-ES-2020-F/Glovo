@@ -176,9 +176,9 @@ void tryResetPasswordForm(
   if (resetPasswordModel.formValid) {
     if (resetPasswordModel.formKey.currentState.validate()) {
       showLoaderDialog(context);
-      resetPasswordModel.formValid = false;
       resetPasswordModel.formKey.currentState.save();
-
+      resetPasswordModel.obfuscateAll();
+      resetPasswordModel.formValid = false;
       //ENDPOINT CALL
       resetPassword().then((value) {
         Navigator.pop(context); //loader
