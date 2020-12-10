@@ -9,11 +9,11 @@ namespace glovo_webapi.Models.Users
         public string Name { get; set; }
 
         
-        public UserModel(int Id, string Email, string Name)
+        public UserModel(int id, string email, string name)
         {
-            this.Id = Id;
-            this.Email = Email;
-            this.Name = Name;
+            this.Id = id;
+            this.Email = email;
+            this.Name = name;
         }
     }
 }

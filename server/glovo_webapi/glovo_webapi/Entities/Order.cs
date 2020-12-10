@@ -22,5 +22,14 @@ namespace glovo_webapi.Entities
         public User User { get; set; }
         public Restaurant Restaurant { get; set; }
         public IEnumerable<OrderProduct> OrdersProducts { get; set; }
+        
+        public Order() {}
+
+        public Order(DateTime buyDateTime, int userId, int restaurantId)
+        {
+            BuyDateTime = buyDateTime;
+            UserId = userId;
+            RestaurantId = restaurantId;
+        }
     }
 }

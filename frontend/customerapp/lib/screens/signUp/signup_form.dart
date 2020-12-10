@@ -223,13 +223,12 @@ void trySendRegisterForm(BuildContext context, SignUpModel signUpModel) {
       showLoaderDialog(context);
       signUpModel.formValid = false;
       signUpModel.formKey.currentState.save();
-      print(signUpModel.password);
       UserDTO formUser = new UserDTO();
       formUser.email = signUpModel.email;
       formUser.password = signUpModel.password;
       formUser.name = signUpModel.firstName;
       registerUser(formUser).then((value) {
-        loginUser(formUser).then((loggedUser) {
+        loginUser(formUser).then((loggedUser) async {
           UserCredentialsRepository().update(new UserCredentials(
               loggedUser.email, loggedUser.token, loggedUser.id));
           LoggedModel.user.id = loggedUser.id;

@@ -17,5 +17,13 @@ namespace glovo_webapi.Entities
         public Order Order { get; set; }
         public Product Product { get; set; }
         
+        public OrderProduct() {}
+
+        public OrderProduct(int orderId, int productId, int quantity)
+        {
+            OrderId = orderId;
+            ProductId = productId;
+            Quantity = quantity;
+        }
     }
 }

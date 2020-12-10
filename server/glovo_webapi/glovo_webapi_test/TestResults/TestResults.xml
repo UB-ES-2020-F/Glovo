@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<assemblies timestamp="12/07/2020 17:25:16">
+  <assembly name="/home/gerard/Desktop/Uni/6-1/EDS/projecte/Glovo/server/glovo_webapi/glovo_webapi_test/bin/Debug/netcoreapp3.1/glovo_webapi_test.dll" run-date="2020-12-07" run-time="17:25:16" total="2" passed="2" failed="0" skipped="0" time="2.140" errors="0">
+    <errors />
+    <collection total="2" passed="2" failed="0" skipped="0" name="Test collection for glovo_webapi_test.Controllers.Users.UsersControllerTest" time="2.140">
+      <test name="glovo_webapi_test.Controllers.Users.UsersControllerTest.UpdateUserTest" type="glovo_webapi_test.Controllers.Users.UsersControllerTest" method="UpdateUserTest" time="1.9692224" result="Pass">
+        <traits />
+      </test>
+      <test name="glovo_webapi_test.Controllers.Users.UsersControllerTest.UpdatePasswordTest" type="glovo_webapi_test.Controllers.Users.UsersControllerTest" method="UpdatePasswordTest" time="0.1710620" result="Pass">
+        <traits />
+      </test>
+    </collection>
+  </assembly>
+</assemblies>

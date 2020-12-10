@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using ExpressiveAnnotations.Attributes;
 
 namespace glovo_webapi.Models.OrderProduct
 {
@@ -12,5 +11,11 @@ namespace glovo_webapi.Models.OrderProduct
         [Required]
         //[AssertThat("Quantity > 0", ErrorMessage = "Quantity must be greater than 0")]
         public int? Quantity { get; set; }
+
+        public OrderProductModel(int productId, int quantity)
+        {
+            ProductId = productId;
+            Quantity = quantity;
+        }
     }
 }

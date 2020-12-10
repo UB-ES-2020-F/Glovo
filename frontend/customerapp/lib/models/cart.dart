@@ -63,7 +63,6 @@ class Cart extends ChangeNotifier {
   }
 
   int _getRestaurantId() {
-    return (order.entries.first.key as Product)
-        .idRestaurant; // TODO it could be better having that as a parameter of the cart.
+    return (order.entries.first.key as Product).idRestaurant;
   }
 }

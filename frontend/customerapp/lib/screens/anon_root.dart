@@ -1,6 +1,10 @@
+import 'dart:ui';
+
+import 'package:customerapp/components/footer.dart';
 import 'package:customerapp/responsive/screen_responsive.dart';
 import 'package:customerapp/screens/signUp/signup_dialog.dart';
 import 'package:customerapp/screens/signIn/signin_dialog.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:customerapp/styles/signup.dart';
@@ -11,30 +15,44 @@ class AnonRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget bar;
 
-    var s = Bar_responsive(context, '/sign-up', AnonBar());
-    bar = s.get_responsive_bar();
+    var s = BarResponsive(context, '/sign-up', AnonBar());
+    bar = s.getResponsiveBar();
 
     return Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
         appBar: bar,
-        body: Padding(
-          padding: EdgeInsets.only(top: 20),
-          child: Center(
-              child: Container(
-                  child: Center(
-                      child: Column(
-            children: [
-              Text(
-                'Komet ',
-                style: TextStyle(
-                    fontSize: 50,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).accentColor),
-              ),
-              //FoodButton() <-- TODO Add when prepared to handle session
-            ],
-          )))),
-        ));
+        body: Container(
+            child: Padding(
+                padding: EdgeInsets.only(top: 20),
+                child: Center(
+                    child: SingleChildScrollView(
+                        child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: MediaQuery.of(context).size.height,
+                  ),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Komet ',
+                                style: TextStyle(
+                                    fontSize: 50,
+                                    fontWeight: FontWeight.bold,
+                                    color: Theme.of(context).accentColor),
+                              ),
+
+                              //Container(height: 400,child:
+                              //SampleAnimation(MediaQuery.of(context).size.width)),
+                              //Footer(Theme.of(context).backgroundColor)
+                            ]),
+                        Footer(Theme.of(context).backgroundColor)
+                      ]),
+                ))))));
   }
 }
 

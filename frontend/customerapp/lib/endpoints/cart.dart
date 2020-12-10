@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:customerapp/dto/order.dart';
 import 'package:customerapp/endpoints/urls.dart';

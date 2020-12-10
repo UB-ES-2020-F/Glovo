@@ -1,6 +1,5 @@
 import 'dart:collection';
 
-import 'package:customerapp/dto/restaurant.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../actions/compute_distance.dart';
@@ -45,7 +44,7 @@ void main() {
                     restaurantsAndDistancesToCurrent[restaurant.id])
                 .abs(),
             lessThan(
-                50)); //Note that the distances implies errors due to precission of each system. //TODO, use the same computations
+                50)); //Note that the distances implies errors due to precission of each system.
       }
     });
 

@@ -1,47 +1,47 @@
+// ignore: avoid_web_libraries_in_flutter
 import 'dart:html';
 
+import 'package:customerapp/models/logged.dart';
+import 'package:provider/provider.dart';
 import 'package:customerapp/styles/Komet.dart';
 import 'package:customerapp/styles/default_app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Mobile_default_bar extends StatefulWidget with PreferredSizeWidget {
-  String route_togo;
-  String route_from;
+class MobileDefaultBar extends StatefulWidget with PreferredSizeWidget {
+  final String routeToGo;
   final double appBarHeight = 115.0 / 3;
 
-  Mobile_default_bar(String route) {
-    this.route_togo = route;
-  }
+  MobileDefaultBar(this.routeToGo);
 
   @override
   State<StatefulWidget> createState() {
-    return Mobile_default_bar_state(route_togo);
+    return _MobileDefaultBar(routeToGo);
   }
 
   @override
-  // TODO: implement preferredSize
   Size get preferredSize => Size.fromHeight(appBarHeight);
 }
 
-class Mobile_default_bar_state extends State<StatefulWidget> {
+class _MobileDefaultBar extends State<StatefulWidget> {
   final double appBarHeight = 115.0 / 3;
 
-  String route_togo;
-  Color color_state_hover = Kommet_distinctive_green;
-  Widget icon_state_hover = Image.asset(
+  String routeToGo;
+  Color colorStateHover = kommetDistinctiveGreen;
+  Widget iconStateHover = Image.asset(
     'resources/images/dropdown-light.png',
     scale: 1,
   );
 
-  Mobile_default_bar_state(String route) {
-    this.route_togo = route;
+  _MobileDefaultBar(String route) {
+    this.routeToGo = route;
   }
 
-  @override
   get preferredSize => Size.fromHeight(appBarHeight);
+
   @override
   Widget build(BuildContext context) {
+    final loggedModel = context.watch<LoggedModel>();
     return AppBar(
         automaticallyImplyLeading: false,
         elevation: 3,
@@ -52,7 +52,7 @@ class Mobile_default_bar_state extends State<StatefulWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
-                  onPressed: () => Navigator.pushNamed(context, route_togo),
+                  onPressed: () => Navigator.pushNamed(context, routeToGo),
                   icon: Image.asset(
                     'resources/images/menu.png',
                     scale: 0.9,
@@ -60,20 +60,22 @@ class Mobile_default_bar_state extends State<StatefulWidget> {
                   iconSize: 0,
                 ),
                 InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(context, '/location');
+                    },
                     onHover: (value) {
                       if (value == true) {
                         setState(() {
-                          color_state_hover = Kommet_distinctive_green_hovered;
-                          icon_state_hover = Image.asset(
+                          colorStateHover = kommetDistinctiveGreenHovered;
+                          iconStateHover = Image.asset(
                             'resources/images/dropdown-darkk.png',
                             scale: 1,
                           );
                         });
                       } else {
                         setState(() {
-                          color_state_hover = Kommet_distinctive_green;
-                          icon_state_hover = Image.asset(
+                          colorStateHover = kommetDistinctiveGreen;
+                          iconStateHover = Image.asset(
                             'resources/images/dropdown-light.png',
                             scale: 1,
                           );
@@ -84,17 +86,13 @@ class Mobile_default_bar_state extends State<StatefulWidget> {
                     child: Row(
                       children: [
                         Text(
-                          "Barcelona",
+                          getTrimmedDirection(loggedModel),
                           style: TextStyle(
-                              color: color_state_hover,
+                              color: colorStateHover,
                               fontSize: 16,
                               fontWeight: FontWeight.bold),
                         ),
-                        IconButton(
-                          icon: icon_state_hover,
-                          hoverColor: Colors.transparent,
-                          onPressed: () {},
-                        ),
+                        iconStateHover,
                       ],
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -111,4 +109,11 @@ class Mobile_default_bar_state extends State<StatefulWidget> {
               ],
             )));
   }
+}
+
+String getTrimmedDirection(LoggedModel loggedModel) {
+  String direction = loggedModel.getUser().direction;
+  return (direction.length <= 20)
+      ? direction
+      : direction.substring(0, 20) + "...";
 }

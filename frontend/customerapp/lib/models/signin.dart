@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
 class SignInModel extends ChangeNotifier {
-  String _email;
-  String _password;
+  String email;
+  String password;
 
   bool _formValid = false;
 
@@ -13,13 +13,7 @@ class SignInModel extends ChangeNotifier {
   bool get passwordObfuscated => _passwordObfuscated;
   GlobalKey<FormState> get formKey => _formKey;
 
-  String get email => _email;
-  String get password => _password;
-
   bool get formValid => _formValid;
-
-  set email(String value) => _email = value;
-  set password(String value) => _password = value;
 
   set formValid(bool value) {
     _formValid = value;
