@@ -2,6 +2,7 @@ import 'package:customerapp/actions/logout.dart';
 import 'package:customerapp/components/text_link.dart';
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/screens/commonComponents/single_message_dialog.dart';
+import 'package:customerapp/screens/loggedPage/editPassword/editPassword_dialog.dart';
 import 'package:customerapp/styles/initial_logged.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -161,8 +162,9 @@ class UserInformation extends StatelessWidget {
                   'Password',
                   style: labelsProfileText,
                 ),
-                TextLink('Edit', (context) {}, editTextLinksBold,
-                    editTextLinksHoverBold, context)
+                TextLink('Edit', (context) {
+                  showEditPassword(context);
+                }, editTextLinksBold, editTextLinksHoverBold, context)
               ],
             ),
           ),
@@ -279,5 +281,13 @@ void showChangeNameEmail(BuildContext context) {
     showDialog(context: context, builder: (_) => EditNameEmailDialog());
   } else {
     Navigator.pushNamed(context, '/edit-name-email');
+  }
+}
+
+void showEditPassword(BuildContext context) {
+  if (MediaQuery.of(context).size.width > 600) {
+    showDialog(context: context, builder: (_) => EditPasswordDialog());
+  } else {
+    Navigator.pushNamed(context, '/edit-password');
   }
 }
