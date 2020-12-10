@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class SingleMessageDialog extends StatelessWidget {
-  String message;
+  final String message;
   SingleMessageDialog(this.message);
 
   @override
@@ -75,7 +75,7 @@ class CircularLoaderKomet extends StatelessWidget {
       width: 80,
       height: 80,
       child: CircularProgressIndicator(
-        backgroundColor: Kommet_distinctive_green,
+        backgroundColor: kommetDistinctiveGreen,
         strokeWidth: 7,
       ),
     ));

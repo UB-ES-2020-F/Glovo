@@ -37,6 +37,8 @@ namespace glovo_webapi.Controllers.Orders
             
             //Only let Regular users see their own orders
             User loggedUser = (User)HttpContext.Items["User"];
+            if(loggedUser == null)
+                return NotFound(new {message = "No user is logged"});
             if (loggedUser.Role == UserRole.Regular && userId != loggedUser.Id)
                 return Unauthorized(new {message = "Unauthorized"});
             

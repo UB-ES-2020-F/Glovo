@@ -11,8 +11,19 @@ namespace glovo_webapi
 {
     public class Program
     {
+        /*
+        private static string RandomString(int length)
+        {
+            Random Random = new Random();
+            const string chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[Random.Next(s.Length)]).ToArray());
+        }
+        */
+        
         public static void Main(string[] args)
         {
+            //Console.WriteLine(RandomString(1024));
             CreateHostBuilder(args).Build().Run();
         }
 

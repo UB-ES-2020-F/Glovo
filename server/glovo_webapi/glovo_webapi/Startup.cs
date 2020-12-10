@@ -9,7 +9,6 @@ using glovo_webapi.Services.UserService;
 using glovo_webapi.Utils;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Server.IISIntegration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -88,7 +87,7 @@ namespace glovo_webapi
             services.AddScoped<IRestaurantsService, RestApiRestaurantsService>();
             services.AddScoped<IProductsService, RestApiProductsService>();
             services.AddScoped<IOrdersService, RestApiOrdersService>();
-            services.AddScoped<IUsersService, RestApiUserService>();
+            services.AddScoped<IUsersService, RestApiUsersService>();
 
             services.AddOptions();
             services.Configure<AppConfiguration>(Configuration.GetSection("AppSettings"));
