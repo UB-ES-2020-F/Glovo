@@ -25,14 +25,15 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import '../restricted_page.dart';
 
 class RestaurantsList extends StatelessWidget {
+  var update;
   @override
   Widget build(BuildContext context) {
+    update = context.watch<Update_model>();
     return RestrictedPage(this._build(context));
   }
 
   Widget _build(BuildContext context) {
     var restaurantsModel = context.watch<RestaurantsListModel>();
-    var update = context.watch<Update_model>();
 
     Widget bar;
 
@@ -88,8 +89,6 @@ class RestaurantsList extends StatelessWidget {
                 );
               }),
             ),
-            update.update_restaurants ? Text("es true") : Text("es false"),
-            InkWell(onTap: () {}, child: Text("sdsd")),
             Footer(Color(0xffffffff)),
           ]),
         )));
