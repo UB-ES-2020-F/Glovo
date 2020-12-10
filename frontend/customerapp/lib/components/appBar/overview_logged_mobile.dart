@@ -1,17 +1,17 @@
+import 'package:customerapp/actions/check_login.dart';
 import 'package:customerapp/screens/commonComponents/single_message_dialog.dart';
 import 'package:customerapp/screens/loggedPage/profile_settings.dart';
-import 'package:customerapp/screens/restricted_page.dart';
 import 'package:customerapp/styles/Komet.dart';
 import 'package:customerapp/styles/overview_mobile_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class TabBar_screen extends StatefulWidget {
+class TabBarScreen extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _TabBar_screen();
+  State<StatefulWidget> createState() => _TabBarScreen();
 }
 
-class _TabBar_screen extends State<TabBar_screen> {
+class _TabBarScreen extends State<TabBarScreen> {
   @override
   Widget build(BuildContext context) => FutureBuilder(
         future: userIsLogged(),
@@ -36,14 +36,14 @@ class _TabBar_screen extends State<TabBar_screen> {
                         child: Column(
                           children: <Widget>[
                             new TabBar(
-                              labelStyle: NotSelectedStyle_bar,
-                              labelColor: Kommet_distinctive_yellow,
+                              labelStyle: notSelectedStyleBar,
+                              labelColor: kommetDistinctiveYellow,
                               unselectedLabelColor: Colors.black,
                               indicatorPadding: EdgeInsets.only(top: 50),
                               indicatorWeight: 4,
                               onTap: (value) {},
-                              unselectedLabelStyle: SelectedStyle_bar,
-                              indicatorColor: Kommet_distinctive_yellow,
+                              unselectedLabelStyle: selectedStyleBar,
+                              indicatorColor: kommetDistinctiveYellow,
                               tabs: [
                                 Padding(
                                     padding: EdgeInsets.only(bottom: 5),
@@ -61,8 +61,8 @@ class _TabBar_screen extends State<TabBar_screen> {
                   body: Stack(children: [
                     TabBarView(
                       children: <Widget>[
-                        Subpage_orders(),
-                        Subpage_user_profile(),
+                        SubPageOrders(),
+                        SubPageUserProfile(),
                       ],
                     ),
                     Align(
@@ -93,7 +93,7 @@ class _TabBar_screen extends State<TabBar_screen> {
       );
 }
 
-class Subpage_orders extends StatelessWidget {
+class SubPageOrders extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -129,7 +129,7 @@ class Subpage_orders extends StatelessWidget {
   }
 }
 
-class Subpage_user_profile extends StatelessWidget {
+class SubPageUserProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(

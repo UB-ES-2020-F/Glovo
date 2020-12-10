@@ -1,5 +1,3 @@
-import 'package:customerapp/models/location.dart';
-
 class ProductDTO {
   int id;
   String name;

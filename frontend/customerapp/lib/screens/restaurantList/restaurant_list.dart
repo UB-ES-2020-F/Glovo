@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:customerapp/actions/check_login.dart';
 import 'package:customerapp/components/appBar/default_logged_bar.dart';
 
 import 'package:customerapp/components/footer.dart';
@@ -12,8 +13,6 @@ import 'package:customerapp/screens/restaurantList/restaurant_list_box.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-
-import '../restricted_page.dart';
 
 class RestaurantsList extends StatefulWidget {
   @override
@@ -31,9 +30,9 @@ class _RestaurantsList extends State<RestaurantsList> {
 
               Widget bar;
 
-              var s = Bar_responsive(
+              var s = BarResponsive(
                   context, '/overview-mobile', DefaultLoggedBar());
-              bar = s.get_responsive_bar();
+              bar = s.getResponsiveBar();
 
               return Scaffold(
                   appBar: bar,
@@ -92,7 +91,6 @@ class _RestaurantsList extends State<RestaurantsList> {
                       Footer(Color(0xffffffff)),
                     ]),
                   )));
-              ;
             } else {
               Future.delayed(Duration.zero, () {
                 Navigator.pushNamed(context, '/');

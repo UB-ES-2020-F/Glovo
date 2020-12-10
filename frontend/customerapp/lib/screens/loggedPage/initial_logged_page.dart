@@ -1,6 +1,5 @@
 import 'package:customerapp/actions/check_login.dart';
 import 'package:customerapp/components/footer.dart';
-import 'package:customerapp/infrastructure/persistence/repository/user_credentials_repository.dart';
 import 'package:customerapp/responsive/screen_responsive.dart';
 import 'package:customerapp/screens/commonComponents/anything_button.dart';
 import 'package:customerapp/screens/commonComponents/food_button.dart';
@@ -25,10 +24,10 @@ class _InitialLogged extends State<InitialLogged> {
           if (snapshot.data) {
             Widget bar;
 
-            var s = Bar_responsive(
+            var s = BarResponsive(
                 context, '/overview-mobile', InitialLoggedBar(),
-                medium_bar: InitialLoggedBar_short());
-            bar = s.get_responsive_bar();
+                mediumBar: InitialLoggedBarShort());
+            bar = s.getResponsiveBar();
 
             return Scaffold(
                 backgroundColor: Theme.of(context).backgroundColor,

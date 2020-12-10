@@ -1,9 +1,8 @@
+import 'package:customerapp/actions/check_login.dart';
 import 'package:customerapp/screens/commonComponents/single_message_dialog.dart';
 import 'package:customerapp/screens/loggedPage/editNameEmail/editNameEmail_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
-import '../../restricted_page.dart';
 
 class EditNameEmailPage extends StatefulWidget {
   @override

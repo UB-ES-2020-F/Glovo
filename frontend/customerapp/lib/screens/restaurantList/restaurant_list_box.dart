@@ -1,4 +1,3 @@
-import 'package:customerapp/infrastructure/persistence/repository/user_credentials_repository.dart';
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/restaurants.dart';
 import 'package:customerapp/models/user.dart';
@@ -7,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:icon_shadow/icon_shadow.dart';
 
 class RestaurantsListCard extends StatefulWidget {
-  Restaurant restaurant;
+  final Restaurant restaurant;
 
   RestaurantsListCard(Key key, this.restaurant) : super(key: key);
 
@@ -47,7 +46,7 @@ class RestaurantsListCardState extends State<StatefulWidget> {
                   });
                 }
               },
-              onTap: () => load_product(context, restaurant),
+              onTap: () => loadProduct(context, restaurant),
               child: Container(
                 alignment: Alignment.bottomCenter,
                 height: 150,
@@ -108,7 +107,7 @@ class RestaurantsListCardState extends State<StatefulWidget> {
             padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
             alignment: Alignment.centerLeft,
             child: InkWell(
-                onTap: () => load_product(context, restaurant),
+                onTap: () => loadProduct(context, restaurant),
                 child: Text(
                   restaurant.name,
                   style: restaurantListCardName,
@@ -119,7 +118,7 @@ class RestaurantsListCardState extends State<StatefulWidget> {
     ));
   }
 
-  void load_product(BuildContext context, Restaurant restaurant) {
+  void loadProduct(BuildContext context, Restaurant restaurant) {
     Navigator.pushNamed(context, '/products', arguments: restaurant);
   }
 }

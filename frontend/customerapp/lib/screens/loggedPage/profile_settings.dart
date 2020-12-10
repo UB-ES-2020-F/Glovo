@@ -1,6 +1,5 @@
 import 'package:customerapp/actions/logout.dart';
 import 'package:customerapp/components/text_link.dart';
-import 'package:customerapp/models/changeNameEmail.dart';
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/screens/commonComponents/single_message_dialog.dart';
 import 'package:customerapp/styles/initial_logged.dart';
@@ -61,7 +60,7 @@ class UserInformation extends StatelessWidget {
   final double verticalPadding = 6;
   @override
   Widget build(BuildContext context) {
-    var loggedModel = context.watch<LoggedModel>();
+    context.watch<LoggedModel>();
     return Column(
       children: [
         Container(

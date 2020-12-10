@@ -1,8 +1,7 @@
+import 'package:customerapp/actions/check_login.dart';
 import 'package:customerapp/screens/commonComponents/single_message_dialog.dart';
 import 'package:customerapp/screens/location/location_content.dart';
 import 'package:flutter/material.dart';
-
-import '../restricted_page.dart';
 
 class LocationPage extends StatefulWidget {
   @override

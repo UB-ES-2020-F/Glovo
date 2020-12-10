@@ -5,8 +5,8 @@ import 'package:customerapp/screens/products/product_information.dart';
 import 'package:flutter/material.dart';
 
 class ProductDialog extends StatelessWidget {
-  Product product;
-  Function add;
+  final Product product;
+  final Function add;
 
   ProductDialog(this.product, this.add);
 
