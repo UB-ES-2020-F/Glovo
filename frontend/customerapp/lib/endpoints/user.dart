@@ -48,3 +48,36 @@ Future<void> logout() async {
         'Failed to logout', response.statusCode, response.body);
   }
 }
+
+Future<UserDTO> updateUserAndEmail(UserDTO formUser) async {
+  final userCredentials = await UserCredentialsRepository().getCredentials();
+  final response =
+      await http.put(await EndpointDefinitions.changeUserAndEmailURL(),
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer ${userCredentials.token}"
+          },
+          body: jsonEncode(formUser.toJson()));
+  if (response.statusCode == 200) {
+    return UserDTO.fromJson(jsonDecode(response.body));
+  } else {
+    throw LogoutCallbackFailed('Failed to change username and email',
+        response.statusCode, response.body);
+  }
+}
+
+Future<void> updatePassword(UserPasswordDTO formPasswords) async {
+  final userCredentials = await UserCredentialsRepository().getCredentials();
+  final response = await http.put(await EndpointDefinitions.changePasswordURL(),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer ${userCredentials.token}"
+      },
+      body: jsonEncode(formPasswords.toJson()));
+  if (response.statusCode == 200) {
+    return;
+  } else {
+    throw LogoutCallbackFailed(
+        'Failed to change password', response.statusCode, response.body);
+  }
+}

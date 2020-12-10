@@ -1,3 +1,4 @@
+import 'package:customerapp/dto/user.dart';
 import 'package:customerapp/models/changeNameEmail.dart';
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/screens/commonComponents/single_message_dialog.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:customerapp/styles/signup.dart';
 import 'package:provider/provider.dart';
+import 'package:customerapp/endpoints/user.dart';
 
 class EditNameEmail extends StatelessWidget {
   @override
@@ -135,9 +137,22 @@ void tryEditNameEmailForm(BuildContext context,
     if (editNameEmailModel.formKey.currentState.validate()) {
       showLoaderDialog(context);
       editNameEmailModel.formKey.currentState.save();
-      loggedModel.getUserAndNotify().email = editNameEmailModel.email;
-      loggedModel.getUserAndNotify().name = editNameEmailModel.firstName;
-      //ENPOINT CALL
+
+      UserDTO formUser = new UserDTO();
+      formUser.name = editNameEmailModel.firstName;
+      formUser.email = editNameEmailModel.email;
+
+      updateUserAndEmail(formUser).then((newLoggedUser) async {
+        LoggedModel.user.name = newLoggedUser.name;
+        LoggedModel.user.email = newLoggedUser.email;
+        loggedModel.getUserAndNotify().email = editNameEmailModel.email;
+        loggedModel.getUserAndNotify().name = editNameEmailModel.firstName;
+      }).catchError((error) {
+        print(error);
+        Navigator.pop(context);
+        showEditNameEmailFailedDialog(context);
+      });
+
       Navigator.pop(context);
       Navigator.pop(context);
     }

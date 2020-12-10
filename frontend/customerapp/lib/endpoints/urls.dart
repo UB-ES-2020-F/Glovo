@@ -33,4 +33,14 @@ class EndpointDefinitions {
     final config = await AppConfig.getConfig();
     return '${config.apiUrl}' + '/users/logout';
   }
+
+  static Future<String> changeUserAndEmailURL() async {
+    final config = await AppConfig.getConfig();
+    return '${config.apiUrl}' + '/users/update';
+  }
+
+  static Future<String> changePasswordURL() async {
+    final config = await AppConfig.getConfig();
+    return '${config.apiUrl}' + '/users/update-password';
+  }
 }

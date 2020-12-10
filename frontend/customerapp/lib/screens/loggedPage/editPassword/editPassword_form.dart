@@ -1,21 +1,11 @@
-import 'package:customerapp/components/text_link.dart';
-import 'package:customerapp/dto/user.dart';
-import 'package:customerapp/models/changeNameEmail.dart';
 import 'package:customerapp/models/editPassword.dart';
-import 'package:customerapp/models/location.dart';
-import 'package:customerapp/models/logged.dart';
-import 'package:customerapp/models/signin.dart';
-import 'package:customerapp/screens/anon_root.dart';
 import 'package:customerapp/screens/commonComponents/single_message_dialog.dart';
-import 'package:customerapp/styles/Komet.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:customerapp/styles/signup.dart';
 import 'package:provider/provider.dart';
 import 'package:customerapp/endpoints/user.dart';
-import 'package:customerapp/infrastructure/persistence/repository/user_credentials_repository.dart';
-import 'package:customerapp/models/user_credentials/user_credentials.dart';
+import 'package:customerapp/dto/user.dart';
 
 class EditPassword extends StatelessWidget {
   @override
@@ -216,7 +206,22 @@ void tryEditPasswordForm(
       showLoaderDialog(context);
       editPasswordModel.formKey.currentState.save();
       editPasswordModel.obfuscateAll();
-      //ENPOINT CALL
+
+      if (editPasswordModel.newPassword1 != editPasswordModel.newPassword2) {
+        Navigator.pop(context);
+        showEditPasswordFailedDialog(context);
+      } else {
+        UserPasswordDTO formPasswords = new UserPasswordDTO();
+        formPasswords.oldPassword = editPasswordModel.oldPassword;
+        formPasswords.newPassword = editPasswordModel.newPassword1;
+
+        updatePassword(formPasswords).then((value) => null).catchError((error) {
+          print(error);
+          Navigator.pop(context);
+          showEditPasswordFailedDialog(context);
+        });
+      }
+
       Navigator.pop(context);
       Navigator.pop(context);
     }
