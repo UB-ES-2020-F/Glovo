@@ -1,6 +1,6 @@
+// ignore: avoid_web_libraries_in_flutter
 import 'dart:html';
 
-import 'package:customerapp/components/text_link.dart';
 import 'package:customerapp/screens/location/location_dialog.dart';
 import 'package:customerapp/screens/loggedPage/profile_settings.dart';
 import 'package:customerapp/styles/default_app_bar.dart';
@@ -12,9 +12,8 @@ import 'package:provider/provider.dart';
 enum BarType { initial, defaultBar }
 
 class UserActions extends StatelessWidget {
-  BarType barType;
-  String optional;
-  int type;
+  final BarType barType;
+  final int type;
 
   UserActions(this.barType, this.type);
 
@@ -138,27 +137,22 @@ String getFormattedInd(LoggedModel loggedModel, int type) {
 }
 
 class UserActionsBar extends StatelessWidget {
-  BarType barType;
-  String optional;
+  final BarType barType;
 
-  UserActionsBar(this.barType) {}
+  UserActionsBar(this.barType);
 
   @override
   Widget build(BuildContext context) {
-    var loggedModel = context.watch<LoggedModel>();
     return UserActions(barType, 1);
   }
 }
 
-class UserActionsBar_aux extends StatelessWidget {
-  BarType barType;
-  String optional;
-
-  UserActionsBar_aux(this.barType) {}
+class UserActionsBarAux extends StatelessWidget {
+  final BarType barType;
+  UserActionsBarAux(this.barType);
 
   @override
   Widget build(BuildContext context) {
-    var loggedModel = context.watch<LoggedModel>();
     return UserActions(barType, 2);
   }
 }
@@ -196,6 +190,8 @@ TextStyle _selectStreetNameTextLinksStyle(BarType barType) {
       return streetNameTextLinks;
     case BarType.defaultBar:
       return defaultStreetNameTextLinks;
+    default:
+      throw UnimplementedError();
   }
 }
 
@@ -205,6 +201,8 @@ TextStyle _selectStreetNameTextLinksHoverStyle(BarType barType) {
       return streetNameTextLinksHover;
     case BarType.defaultBar:
       return defaultStreetNameTextLinksHover;
+    default:
+      throw UnimplementedError();
   }
 }
 
@@ -221,6 +219,8 @@ TextStyle _selectIndicationsTextLinksStyle(BarType barType) {
       return indicationsTextLinks;
     case BarType.defaultBar:
       return defaultIndicationsTextLinks;
+    default:
+      throw UnimplementedError();
   }
 }
 
@@ -230,6 +230,8 @@ TextStyle _selectIndicationsTextLinksHoverStyle(BarType barType) {
       return indicationsTextLinksHover;
     case BarType.defaultBar:
       return defaultIndicationsTextLinksHover;
+    default:
+      throw UnimplementedError();
   }
 }
 
@@ -239,5 +241,7 @@ Color _selectMainButtonColor(BarType barType) {
       return buttonMainColor;
     case BarType.defaultBar:
       return defaultButtonMainColor;
+    default:
+      throw UnimplementedError();
   }
 }

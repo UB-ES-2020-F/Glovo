@@ -1,11 +1,10 @@
+import 'package:customerapp/actions/check_login.dart';
 import 'package:customerapp/models/products.dart';
 import 'package:customerapp/screens/commonComponents/single_message_dialog.dart';
 import 'package:customerapp/screens/products/product_card.dart';
 import 'package:customerapp/screens/products/product_information.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../restricted_page.dart';
 
 class ProductScreen extends StatefulWidget {
   @override

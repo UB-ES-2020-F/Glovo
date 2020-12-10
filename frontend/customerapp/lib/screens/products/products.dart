@@ -1,3 +1,4 @@
+// ignore: avoid_web_libraries_in_flutter
 import 'dart:html';
 
 import 'package:customerapp/actions/check_login.dart';
@@ -55,9 +56,9 @@ class _Products extends State<Products> {
               firstInstance = false;
 
               double cartWidth = 350;
-              var s = Bar_responsive(
+              var s = BarResponsive(
                   context, '/overview-mobile', DefaultLoggedBar());
-              var bar = s.get_responsive_bar();
+              var bar = s.getResponsiveBar();
 
               return Scaffold(
                   appBar: bar,
@@ -126,7 +127,7 @@ class _Products extends State<Products> {
                                                     restaurant == null
                                                         ? 'Products'
                                                         : restaurant.name,
-                                                    style: RestaurantTitleStyle,
+                                                    style: restaurantTitleStyle,
                                                   ),
                                                 ),
                                               ),

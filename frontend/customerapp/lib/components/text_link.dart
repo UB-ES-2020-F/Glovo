@@ -3,13 +3,12 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 class TextLink extends StatefulWidget {
-  String _text;
-  //Function _onTap;
-  void Function(BuildContext) _onTap;
-  TextStyle _linkStyle;
-  TextStyle _hoverStyle;
-  BuildContext _context;
-  Key key;
+  final String _text;
+  final void Function(BuildContext) _onTap;
+  final TextStyle _linkStyle;
+  final TextStyle _hoverStyle;
+  final BuildContext _context;
+  final Key key;
 
   @override
   TextLink(

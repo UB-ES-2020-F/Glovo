@@ -1,12 +1,10 @@
 import 'package:customerapp/actions/logout.dart';
 import 'package:customerapp/components/text_link.dart';
-import 'package:customerapp/models/changeNameEmail.dart';
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/screens/commonComponents/single_message_dialog.dart';
 import 'package:customerapp/styles/initial_logged.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
 
 import 'editNameEmail/editNameEmail_dialog.dart';
 
@@ -61,7 +59,6 @@ class UserInformation extends StatelessWidget {
   final double verticalPadding = 6;
   @override
   Widget build(BuildContext context) {
-    var loggedModel = context.watch<LoggedModel>();
     return Column(
       children: [
         Container(

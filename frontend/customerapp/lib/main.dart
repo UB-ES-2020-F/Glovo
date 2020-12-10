@@ -64,7 +64,7 @@ class KometApp extends StatelessWidget {
             '/restaurant-list': (context) => RestaurantsList(),
             '/concrete-product': (context) => ProductScreen(),
             '/initial-logged-in': (context) => InitialLogged(),
-            '/overview-mobile': (context) => TabBar_screen(),
+            '/overview-mobile': (context) => TabBarScreen(),
           }),
     );
   }
