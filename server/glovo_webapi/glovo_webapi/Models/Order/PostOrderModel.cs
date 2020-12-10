@@ -13,6 +13,8 @@ namespace glovo_webapi.Models.Order
         [Required]
         public IEnumerable<OrderProductModel> Products { get; set; }
 
+        public PostOrderModel() {}
+        
         public PostOrderModel(int restaurantId, IEnumerable<OrderProductModel> products)
         {
             RestaurantId = restaurantId;
