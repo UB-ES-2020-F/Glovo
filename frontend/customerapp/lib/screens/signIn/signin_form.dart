@@ -176,7 +176,7 @@ void trySendSignInForm(BuildContext context, SignInModel signInModel) {
       UserDTO formUser = new UserDTO();
       formUser.email = signInModel.email;
       formUser.password = signInModel.password;
-      loginUser(formUser).then((loggedUser) {
+      loginUser(formUser).then((loggedUser) async {
         UserCredentialsRepository().update(new UserCredentials(
             loggedUser.email, loggedUser.token, loggedUser.id));
         LoggedModel.user.id = loggedUser.id;
