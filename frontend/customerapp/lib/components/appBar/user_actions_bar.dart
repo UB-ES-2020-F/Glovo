@@ -143,6 +143,7 @@ class UserActionsBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<LoggedModel>();
     return UserActions(barType, 1);
   }
 }
@@ -153,6 +154,7 @@ class UserActionsBarAux extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<LoggedModel>();
     return UserActions(barType, 2);
   }
 }
