@@ -7,20 +7,8 @@ class Update_model extends ChangeNotifier {
   //testing variables. Will get real variables from backend
   bool update_restaurants = false;
 
-  static Update_model model = new Update_model();
-
-  Update_model getUserAndNotify() {
-    notifyListeners();
-    return model;
-  }
-
-  void setUserAndNotify(bool t) {
-    notifyListeners();
+  Update_model update() {
     update_restaurants = true;
     notifyListeners();
-  }
-
-  Update_model getUser() {
-    return model;
   }
 }

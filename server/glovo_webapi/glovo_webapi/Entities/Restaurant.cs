@@ -22,9 +22,9 @@ namespace glovo_webapi.Entities
         
         public Restaurant(string name, string imgPath, Location location)
         {
-            this.Name = name;
-            this.ImgPath = imgPath;
-            this.Location = location;
+            Name = name;
+            ImgPath = imgPath;
+            Location = location;
         }
     }
 }

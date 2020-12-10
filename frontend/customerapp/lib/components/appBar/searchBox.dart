@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 class SearchBox extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return SearchBox_Stateful();
+    return _SearchBox();
   }
 }
 
-class SearchBox_Stateful extends State<StatefulWidget> {
+class _SearchBox extends State<StatefulWidget> {
   var isHoveredColor = Colors.white;
 
   @override

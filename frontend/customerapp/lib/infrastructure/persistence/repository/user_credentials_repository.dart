@@ -19,7 +19,7 @@ class UserCredentialsRepository {
     await _userCredentialsBox.removeElement();
   }
 
-  void update(UserCredentials credentials) async {
+  Future<void> update(UserCredentials credentials) async {
     _userCredentialsBox.persistElement(credentials);
   }
 

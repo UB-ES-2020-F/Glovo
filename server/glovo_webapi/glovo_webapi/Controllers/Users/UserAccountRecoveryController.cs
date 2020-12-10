@@ -29,12 +29,12 @@ namespace glovo_webapi.Controllers.Users
         {
             _userService = userService;
             _mapper = mapper;
-            _tokenCreatorValidator = new TokenCreatorValidator(_userService, configuration);
+            _tokenCreatorValidator = new TokenCreatorValidator(configuration.Value.Secret);
         }
         
         //POST api/users/password-email
         [HttpPost("password-email")]
-        public IActionResult SendPasswordEmail([FromBody] PasswordEmailModel passwordEmailModel)
+        public ActionResult<PasswordEmailModel> SendPasswordEmail([FromBody] PasswordEmailModel passwordEmailModel)
         {
             User user;
             try {
@@ -43,33 +43,16 @@ namespace glovo_webapi.Controllers.Users
                 return BadRequest(new {message = "Email is not found" });
             }
 
-            TokenCreationParams tokenCreationParams = _tokenCreatorValidator.CreateToken(user, 30);
+            TokenCreationParams tokenCreationParams = _tokenCreatorValidator.CreateToken(user.Id, 30);
 
             user.RecoverySalt = tokenCreationParams.SaltBytes;
-            
             _userService.Update(user);
-            
-            //Send mail with mail and token link
-            var message = new MimeMessage ();
-            message.From.Add (new MailboxAddress ("Komet Account Recovery Bot", "glovopwdrecov@gmail.com"));
-            message.To.Add (new MailboxAddress (user.Name, user.Email));
-            message.Subject = "Restore Komet Account Password";
 
-            string link = tokenCreationParams.TokenStr;
-            message.Body = new TextPart ("plain") {
-                Text = "A password restoration of your account has been issued. If you want to change your password, go to this link:\n" + link
-            };
-
-            using (var client = new SmtpClient ()) {
-                client.Connect ("smtp.gmail.com", 587, false);
-                client.Authenticate ("kometpwdrecov@gmail.com", "glovodevpassword");
-                client.Send (message);
-                client.Disconnect (true);
-            }
+            MailSender.SendRecoveryMail(user, tokenCreationParams.TokenStr);
 
             return Ok(new PasswordEmailModel
             {
-                Email = user.Email
+                Email = user.Email,
             });
         }
         
@@ -83,20 +66,22 @@ namespace glovo_webapi.Controllers.Users
             } catch (RequestException) {
                 return BadRequest(new {message = "Email does not exist" });
             }
-
+            
             TokenValidationParams tokenValidationParams;
+            User tokenUser;
             try {
                 tokenValidationParams = _tokenCreatorValidator.ValidateToken(passwordResetModel.RecoveryToken);
+                tokenUser = _userService.GetById(tokenValidationParams.UserId);
             } catch (Exception) {
                 return BadRequest(new {message = "Invalid token error" });
             }
             
-            if (Encoding.Default.GetString(tokenValidationParams.User.RecoverySalt) != 
+            if (Encoding.Default.GetString(tokenUser.RecoverySalt) != 
                 Encoding.Default.GetString(tokenValidationParams.SaltBytes))
                 return BadRequest(new {message = "Recovery link expired or invalid" });
 
             user.RecoverySalt = null;
-
+            
             try {
                 _userService.SetNewPassword(user, passwordResetModel.NewPassword);
             }
@@ -107,7 +92,7 @@ namespace glovo_webapi.Controllers.Users
                     return BadRequest(new {message = "Invalid new password"});
                 return BadRequest(new {message = "Unknown error"});
             }
-
+            
             return Ok();
         }
     }

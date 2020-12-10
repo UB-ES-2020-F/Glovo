@@ -1,3 +1,5 @@
+using System;
+using System.Text;
 using AutoMapper;
 using glovo_webapi.Entities;
 using glovo_webapi.Helpers;
@@ -5,6 +7,7 @@ using glovo_webapi.Models.Users;
 using glovo_webapi.Services;
 using glovo_webapi.Services.UserService;
 using glovo_webapi.Utils;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
@@ -26,7 +29,7 @@ namespace glovo_webapi.Controllers.Users
         {
             _userService = userService;
             _mapper = mapper;
-            _tokenCreatorValidator = new TokenCreatorValidator(_userService, configuration);
+            _tokenCreatorValidator = new TokenCreatorValidator(configuration.Value.Secret);
         }
         
         //POST api/users/login
@@ -40,14 +43,14 @@ namespace glovo_webapi.Controllers.Users
                 return BadRequest(new {message = "Email or password is incorrect" });
             }
             
-            TokenCreationParams tokenCreationParams = _tokenCreatorValidator.CreateToken(user, 60 * 24 * 7);
+            TokenCreationParams tokenCreationParams = _tokenCreatorValidator.CreateToken(user.Id, 60 * 24 * 7);
             user.AuthSalt = tokenCreationParams.SaltBytes;
             
             _userService.Update(user);
 
-            SendLoginUserModel receiveLoginUserModel = _mapper.Map<SendLoginUserModel>(user);
-            receiveLoginUserModel.Token = tokenCreationParams.TokenStr;
-            return Ok(receiveLoginUserModel);
+            SendLoginUserModel sendLoginUserModel = _mapper.Map<SendLoginUserModel>(user);
+            sendLoginUserModel.Token = tokenCreationParams.TokenStr;
+            return Ok(sendLoginUserModel);
         }
 
         //POST api/users/register
@@ -74,9 +77,12 @@ namespace glovo_webapi.Controllers.Users
         [HttpPost("logout")]
         public ActionResult Logout()
         {
-            User user = (User)HttpContext.Items["User"];
-            user.AuthSalt = null;
-            _userService.Update(user);
+            User loggedUser = (User)HttpContext.Items["User"];
+            if(loggedUser == null)
+                return NotFound(new {message = "No user is logged"});
+            
+            loggedUser.AuthSalt = null;
+            _userService.Update(loggedUser);
             return Ok();
         }
     }

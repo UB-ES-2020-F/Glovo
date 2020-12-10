@@ -7,8 +7,8 @@ import 'package:customerapp/styles/signup.dart';
 import 'package:flutter/material.dart';
 
 class ProductInformation extends StatelessWidget {
-  Product product;
-  Function add;
+  final Product product;
+  final Function add;
 
   ProductInformation(this.product, this.add);
 
@@ -64,11 +64,11 @@ class ProductInformation extends StatelessWidget {
                           children: [
                             Text(
                               product.description,
-                              style: DescriptionTextStyleProduct,
+                              style: descriptionTextStyleProduct,
                               textAlign: TextAlign.justify,
                             ),
                             Text(product.price.toStringAsFixed(2) + " €",
-                                style: PriceTextStyleProduct),
+                                style: priceTextStyleProduct),
                           ]))
                 ],
               )),
