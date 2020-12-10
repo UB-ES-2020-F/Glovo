@@ -12,6 +12,8 @@ namespace glovo_webapi.Models.OrderProduct
         //[AssertThat("Quantity > 0", ErrorMessage = "Quantity must be greater than 0")]
         public int? Quantity { get; set; }
 
+        public OrderProductModel() {}
+        
         public OrderProductModel(int productId, int quantity)
         {
             ProductId = productId;
