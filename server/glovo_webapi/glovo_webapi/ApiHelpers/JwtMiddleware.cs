@@ -1,7 +1,7 @@
-using System;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using glovo_webapi.Entities;
 using glovo_webapi.Services.UserService;
 using glovo_webapi.Utils;
 using Microsoft.AspNetCore.Http;
@@ -32,15 +32,15 @@ namespace glovo_webapi.Helpers
 
         private void AttachUserToContext(HttpContext context, IUsersService userService, string tokenStr)
         {
-            TokenCreatorValidator tokenCreatorValidator = new TokenCreatorValidator(userService, _configuration); 
+            TokenCreatorValidator tokenCreatorValidator = new TokenCreatorValidator(_configuration.Value.Secret); 
             try
             {
                 TokenValidationParams tokenValidationParams = tokenCreatorValidator.ValidateToken(tokenStr);
-                
-                if (Encoding.Default.GetString(tokenValidationParams.User.AuthSalt) == 
+                User tokenUser = userService.GetById(tokenValidationParams.UserId);
+                if (Encoding.Default.GetString(tokenUser.AuthSalt) == 
                     Encoding.Default.GetString(tokenValidationParams.SaltBytes))
                 {
-                    context.Items["User"] = tokenValidationParams.User;
+                    context.Items["User"] = tokenUser;
                 }
             }
             catch

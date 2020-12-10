@@ -12,5 +12,14 @@ namespace glovo_webapi.Models.Users
         public string Email { get; set; }
         [Required]
         public string Password { get; set; }
+        
+        public RegisterUserModel() {}
+
+        public RegisterUserModel(string name, string email, string password)
+        {
+            Name = name;
+            Email = email;
+            Password = password;
+        }
     }
 }

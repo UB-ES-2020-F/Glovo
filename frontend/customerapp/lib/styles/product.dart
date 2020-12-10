@@ -1,25 +1,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-final PriceTextStyleProduct = TextStyle(
+final priceTextStyleProduct = TextStyle(
     fontWeight: FontWeight.normal, color: Color(0xFF4a4a4a), fontSize: 18);
-final DescriptionTextStyleProduct =
+final descriptionTextStyleProduct =
     TextStyle(fontWeight: FontWeight.normal, color: Colors.black, fontSize: 15);
 
-final TitleStyleProduct =
+final titleStyleProduct =
     TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 22);
 
-final RestaurantTitleStyle =
+final restaurantTitleStyle =
     TextStyle(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 48);
 
-final CartTitleStyle =
+final cartTitleStyle =
     TextStyle(fontWeight: FontWeight.w500, color: Colors.black, fontSize: 28);
 
-final CartTimeFeeStyle = TextStyle(color: Colors.black, fontSize: 16);
+final cartTimeFeeStyle = TextStyle(color: Colors.black, fontSize: 16);
 
-final NumberItemsCartStyle = TextStyle(color: Colors.black, fontSize: 15);
+final numberItemsCartStyle = TextStyle(color: Colors.black, fontSize: 15);
 
-final TotalPriceCartStyle = TextStyle(
+final totalPriceCartStyle = TextStyle(
     color: Color(0xFF4A4A4A), fontSize: 18, fontWeight: FontWeight.w600);
 
 final makeOrderButtonStyle = ButtonStyle(
