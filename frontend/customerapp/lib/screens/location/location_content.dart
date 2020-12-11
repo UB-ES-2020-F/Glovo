@@ -4,6 +4,7 @@ import 'package:customerapp/exceptions/logout-callback-failed.dart';
 import 'package:customerapp/models/location.dart';
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/map_location.dart';
+import 'package:customerapp/models/update_model.dart';
 import 'package:customerapp/styles/location.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -131,6 +132,7 @@ class SetLocationButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final mapLocationModel = context.watch<MapLocationModel>();
     final loggedModel = context.watch<LoggedModel>();
+    final update = context.watch<Update_model>();
     return Container(
       padding: EdgeInsets.symmetric(vertical: 30),
       child: Wrap(
@@ -156,14 +158,16 @@ class SetLocationButton extends StatelessWidget {
                               longitude: mapLocationModel
                                   .currentCoordinates.longitude))
                           .then((value) {
-                        print("OK");
                       }).catchError((onError) {
                         var e = onError as LogoutCallbackFailed;
                         print(e.cause);
                         print(e.errorCode);
                         print(e.responseBody);
-                        print("No OK");
                       });
+
+                      update.update_restaurants = true;
+                      update.update();
+                
                     }
                     Navigator.pop(context);
                   }

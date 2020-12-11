@@ -46,7 +46,7 @@ class _Products extends State<Products> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data) {
-              final Restaurant restaurant =
+              final RestaurantLoc restaurant =
                   ModalRoute.of(context).settings.arguments;
               var productsModel = context.watch<ProductsListModel>();
 
@@ -73,7 +73,7 @@ class _Products extends State<Products> {
                                 image: NetworkImage(
                                     restaurant == null ? '' : restaurant.image),
                                 fit: BoxFit.fitWidth)),
-                        child: Expanded(
+                        
                           child: SingleChildScrollView(
                               child: Column(children: [
                             Padding(
@@ -85,8 +85,7 @@ class _Products extends State<Products> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Expanded(
-                                          child: Container(
+                                      Container(
                                         padding: MediaQuery.of(context)
                                                     .size
                                                     .width <
@@ -142,8 +141,7 @@ class _Products extends State<Products> {
                                                   ]),
                                                 ),
                                               ),
-                                              Expanded(
-                                                child:
+                                              
                                                     Builder(builder: (builder) {
                                                   return FutureBuilder(
                                                     future:
@@ -217,9 +215,9 @@ class _Products extends State<Products> {
                                                     },
                                                   );
                                                 }),
-                                              ),
+                                              
                                             ]),
-                                      )),
+                                      ),
                                       if (MediaQuery.of(context).size.width >
                                           900)
                                         Column(
@@ -233,7 +231,7 @@ class _Products extends State<Products> {
                                     ])),
                             Footer(Color(0x00000000))
                           ])),
-                        )),
+                        ),
                     if (MediaQuery.of(context).size.width <= 900 &&
                         cart.order.isNotEmpty)
                       Align(
@@ -340,64 +338,3 @@ class RadioModel {
   RadioModel(this.name, this.isSelected);
 }
 
-class GridView_general extends StatelessWidget {
-  var restaurant, productsModel;
-
-  Cart cart;
-  bool firstInstance = true;
-
-  GridView_general(this.restaurant, this.productsModel);
-
-  void addToCart(Product prod) {
-    cart.addItem(prod);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    cart = context.watch<Cart>();
-    if (firstInstance) {
-      productsModel.removeProducts();
-      cart.empty();
-    }
-
-    return Expanded(
-      child: Builder(builder: (builder) {
-        return FutureBuilder(
-          future: getProductsFromRestaurant(restaurant.id),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.hasData) {
-              productsModel.removeProducts();
-              snapshot.data.forEach((element) {
-                productsModel.addProduct(Product.fromDTO(element));
-              });
-              return StaggeredGridView.countBuilder(
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-                physics:
-                    NeverScrollableScrollPhysics(), // to disable GridView's scrolling
-                shrinkWrap: true,
-                itemCount: productsModel.availableProducts.length,
-                crossAxisCount: MediaQuery.of(context).size.width > 600 ? 2 : 1,
-                itemBuilder: (context, index) {
-                  return ProductListCard(Key('product-card-$index'),
-                      productsModel.availableProducts[index], addToCart);
-                },
-                staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
-              );
-            } else {
-              return Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15.0),
-                        color: Color(0xAAFFFFFF)),
-                    alignment: Alignment.centerLeft,
-                    child: CircularLoaderKomet(),
-                  ));
-            }
-          },
-        );
-      }),
-    );
-  }
-}

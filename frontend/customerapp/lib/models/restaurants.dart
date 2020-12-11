@@ -119,11 +119,11 @@ class RestaurantLoc {
   }*/
 }
 
-class RestaurantsListModel2 extends ChangeNotifier {
+class RestaurantsListModel_fee extends ChangeNotifier {
   List<RestaurantLoc> availableRestaurants;
 
   @override
-  RestaurantsListModel2() {
+  RestaurantsListModel_fee() {
     availableRestaurants = List();
   }
 

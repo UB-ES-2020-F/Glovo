@@ -164,7 +164,7 @@ class RestaurantsListCardState_loc extends State<StatefulWidget> {
                   });
                 }
               },
-              //onTap: () => loadProduct(context, restaurant),
+              onTap: () => loadProduct(context, restaurant),
               child: Container(
                 alignment: Alignment.bottomCenter,
                 height: 150,
@@ -225,7 +225,7 @@ class RestaurantsListCardState_loc extends State<StatefulWidget> {
             padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
             alignment: Alignment.centerLeft,
             child: InkWell(
-                //onTap: () => loadProduct(context, restaurant),
+                onTap: () => loadProduct(context, restaurant),
                 child: Text(
               restaurant.name,
               style: restaurantListCardName,
@@ -236,7 +236,7 @@ class RestaurantsListCardState_loc extends State<StatefulWidget> {
     ));
   }
 
-  void loadProduct(BuildContext context, Restaurant restaurant) {
+  void loadProduct(BuildContext context, RestaurantLoc restaurant) {
     Navigator.pushNamed(context, '/products', arguments: restaurant);
   }
 }

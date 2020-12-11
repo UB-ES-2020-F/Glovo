@@ -1,5 +1,6 @@
 import 'package:customerapp/actions/extract-key-value.dart';
 import 'package:customerapp/endpoints/cart.dart';
+import 'package:customerapp/exceptions/order-callback-failed.dart';
 import 'package:customerapp/models/cart.dart';
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/products.dart';
@@ -11,7 +12,7 @@ import 'package:customerapp/styles/product.dart';
 
 class CartBox extends StatelessWidget {
   final double cartWidth;
-  final Restaurant restaurant;
+  final RestaurantLoc restaurant;
   final Cart cart;
   final List prods;
   double distance;
@@ -22,10 +23,8 @@ class CartBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    distance = restaurant == null
-        ? null
-        : restaurant.location.getDistanceKm(LoggedModel.user.location);
-    deliveryFee = getDeliveryFee(distance);
+    distance = restaurant.distance;
+    deliveryFee = restaurant.deliveryFee;
     timeInterval = new TimeInterval.distance(distance);
     items = new List<Widget>();
     var idx = 0;
@@ -231,6 +230,7 @@ class MakeOrderButton extends StatelessWidget {
                     cart.empty();
                   }).catchError((error, stackTrace) {
                     cart.empty();
+                    print((error as OrderCallbackFailed).errorCode);
                     Navigator.pop(context);
                     showOrderFailedDialog(context);
                   });

@@ -50,7 +50,7 @@ class KometApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => EditNameEmailModel()),
         ChangeNotifierProvider(create: (context) => EditPasswordModel()),
         ChangeNotifierProvider(create: (context) => RestaurantsListModel()),
-        ChangeNotifierProvider(create: (context) => RestaurantsListModel2()),
+        ChangeNotifierProvider(create: (context) => RestaurantsListModel_fee()),
         ChangeNotifierProvider(create: (context) => ProductsListModel()),
         ChangeNotifierProvider(create: (context) => Cart()),
         ChangeNotifierProvider(create: (context) => Update_model()),

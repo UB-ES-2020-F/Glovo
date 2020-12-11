@@ -48,7 +48,6 @@ class _InitialLogged extends State<InitialLogged> {
             var update = context.watch<Update_model>();
 
             getlocation().then((value) {
-              print("OK1");
               getAddress_fromPos(
                   mapsOriginal.Geocoder(),
                   LatLng((value as LocationDTO).latitude,
@@ -57,7 +56,6 @@ class _InitialLogged extends State<InitialLogged> {
                   loggedModel);
             }).catchError((onError) {});
 
-            print("estoy aqui");
             var s = BarResponsive(
                 context, '/overview-mobile', InitialLoggedBar(),
                 mediumBar: InitialLoggedBarShort());
@@ -121,17 +119,14 @@ class _InitialLogged extends State<InitialLogged> {
                                                 ])))
                                       ],
                                     ),
-                                    Text(update.update_restaurants.toString()),
-                                    FloatingActionButton(
-                                      onPressed: () {
-                                        update.update();
-                                      },
-                                    ),
+                                    
                                     Footer(Theme.of(context).backgroundColor),
                                   ]))),
                     )))));
           } else {
             Future.delayed(Duration.zero, () {
+              var update = context.watch<Update_model>();
+              update.update_restaurants =false;
               Navigator.pushNamed(context, '/');
             });
             return CircularLoaderKomet();
