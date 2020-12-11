@@ -5,6 +5,7 @@ import 'package:customerapp/components/appBar/default_logged_bar.dart';
 import 'package:customerapp/components/footer.dart';
 
 import 'package:customerapp/endpoints/restaurants.dart';
+import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/restaurants.dart';
 import 'package:customerapp/models/update_model.dart';
 import 'package:customerapp/responsive/screen_responsive.dart';
@@ -32,6 +33,8 @@ class _RestaurantsList extends State<RestaurantsList> {
               Widget bar;
               var update;
               update = context.watch<Update_model>();
+
+              var loggedmodel = context.watch<LoggedModel>();
 
               var s = BarResponsive(
                   context, '/overview-mobile', DefaultLoggedBar());
@@ -91,6 +94,7 @@ class _RestaurantsList extends State<RestaurantsList> {
                           );
                         }),
                       ),
+                      Text(loggedmodel.getUser().location.latitude.toString()),
                       Footer(Color(0xffffffff)),
                     ]),
                   )));

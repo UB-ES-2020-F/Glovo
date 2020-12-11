@@ -3,6 +3,7 @@ import 'package:customerapp/components/footer.dart';
 import 'package:customerapp/dto/location.dart';
 import 'package:customerapp/endpoints/location.dart';
 import 'package:customerapp/exceptions/logout-callback-failed.dart';
+import 'package:customerapp/models/location.dart';
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/map_location.dart';
 import 'package:customerapp/models/update_model.dart';
