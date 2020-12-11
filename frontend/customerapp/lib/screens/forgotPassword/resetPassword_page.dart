@@ -9,17 +9,29 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 class ResetPasswordPage extends StatelessWidget {
+  String email, token;
+  ResetPasswordPage({
+    this.email,
+    this.token,
+  });
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(children: [
-        Container(padding: EdgeInsets.all(30), child: ResetPassword())
+        Container(
+            padding: EdgeInsets.all(30),
+            child: ResetPassword(email: email, token: token))
       ]),
     );
   }
 }
 
 class ResetPassword extends StatelessWidget {
+  String email, token;
+  ResetPassword({
+    this.email,
+    this.token,
+  });
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -34,6 +46,14 @@ class ResetPassword extends StatelessWidget {
                   style: registerToKometTextStyle,
                 ),
               )),
+              Text(
+                '$email',
+                style: registerToKometTextStyle,
+              ),
+              Text(
+                '$token',
+                style: registerToKometTextStyle,
+              ),
               ResetPasswordForm(),
             ])));
   }

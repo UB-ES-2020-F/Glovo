@@ -35,8 +35,9 @@ class AppModule extends MainModule {
             child: (context, __) => ForgotPasswordPage()),
         ModularRouter('/forgot-password-success',
             child: (context, __) => ForgotPasswordSuccessPage()),
-        ModularRouter('/reset-password',
-            child: (context, __) => ResetPasswordPage()),
+        ModularRouter('/reset-password/:email/:token',
+            child: (context, args) => ResetPasswordPage(
+                email: args.params['email'], token: args.params['token'])),
         ModularRouter('/edit-password',
             child: (context, __) => EditPasswordPage()),
         ModularRouter('/location', child: (context, __) => LocationPage()),

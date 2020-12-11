@@ -67,7 +67,7 @@ class KometApp extends StatelessWidget {
         title: 'Komet',
         navigatorKey: Modular.navigatorKey,
         onGenerateRoute: Modular.generateRoute,
-        initialRoute: '/reset-password',
+        initialRoute: '/',
       ),
     );
   }
