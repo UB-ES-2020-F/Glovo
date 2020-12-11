@@ -24,6 +24,8 @@ class RestaurantsListModel extends ChangeNotifier {
   }
 }
 
+//Mario: A Refactor should be done around this, I just duplicated code to have both ways of loading restaurants still posible
+
 class Restaurant {
   int id;
   String _name;
@@ -109,16 +111,10 @@ class RestaurantLoc {
         restaurantDTO.distance,
         restaurantDTO.deliveryFee);
   }
-
-  /*RestaurantDTO toDTO() {
-    return RestaurantDTO(
-        id: this.id,
-        name: this.name,
-        imgPath: this.image,
-        location: this.location);
-  }*/
 }
 
+
+//duplicated class to refactor
 class RestaurantsListModel_fee extends ChangeNotifier {
   List<RestaurantLoc> availableRestaurants;
 

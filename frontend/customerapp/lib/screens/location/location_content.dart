@@ -172,7 +172,7 @@ class SetLocationButton extends StatelessWidget {
                     Navigator.pop(context);
                   }
                 : null,
-            child: Text('Set locaton'),
+            child: Text('Set location'),
             style: mapLocationModel.formValid
                 ? locationButtonStyleEnabled
                 : locationButtonStyleDisabled,

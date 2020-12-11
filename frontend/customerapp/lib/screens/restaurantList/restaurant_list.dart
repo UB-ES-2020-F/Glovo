@@ -32,6 +32,8 @@ class _RestaurantsList extends State<RestaurantsList> {
                               l.getUserAndNotify().location.longitude);
 };*/
 
+  RestaurantsListModel_fee aux_model;
+
   @override
   Widget build(BuildContext context) => FutureBuilder(
         future: userIsLogged(),
@@ -63,85 +65,8 @@ class _RestaurantsList extends State<RestaurantsList> {
                           style: Theme.of(context).textTheme.headline1,
                         ),
                       ),
-                      /*Builder(builder: (builder) {
-                        return FutureBuilder(
-                          future: getRestaurants(),
-                          builder:
-                              (BuildContext context, AsyncSnapshot snapshot) {
-                            if (snapshot.hasData) {
-                              restaurantsModel.removeRestaurants();
-                              snapshot.data.forEach((element) {
-                                restaurantsModel
-                                    .addRestaurant(Restaurant.fromDTO(element));
-                              });
-                              return StaggeredGridView.countBuilder(
-                                crossAxisSpacing: 10,
-                                mainAxisSpacing: 10,
-                                physics:
-                                    NeverScrollableScrollPhysics(), // to disable GridView's scrolling
-                                shrinkWrap: true,
-                                itemCount: restaurantsModel
-                                    .availableRestaurants.length,
-                                crossAxisCount: max(
-                                    MediaQuery.of(context).size.width ~/ 300.0,
-                                    1),
-                                itemBuilder: (context, index) {
-                                  return RestaurantsListCard(
-                                      Key('restaurant-card-$index'),
-                                      restaurantsModel
-                                          .availableRestaurants[index]);
-                                },
-                                staggeredTileBuilder: (int index) =>
-                                    StaggeredTile.fit(1),
-                              );
-                            } else {
-                              return CircularLoaderKomet();
-                            }
-                          },
-                        );
-                      }),*/
-                      !update.update_restaurants ? 
-                      Builder(builder: (builder) {
-                        return FutureBuilder(
-                          future: getRestaurantsLoc(
-                              loggedmodel.getUserAndNotify().location.latitude,
-                              loggedmodel.getUserAndNotify().location.longitude),
-                          builder:
-                              (BuildContext context, AsyncSnapshot snapshot) {
-                            if (snapshot.hasData) {
-                              restaurantsModel_fee.removeRestaurants();
-                              snapshot.data.forEach((element) {
-                                restaurantsModel_fee.addRestaurant(
-                                    RestaurantLoc.fromDTO(element));
-                              });
-                              return StaggeredGridView.countBuilder(
-                                crossAxisSpacing: 10,
-                                mainAxisSpacing: 10,
-                                physics:
-                                    NeverScrollableScrollPhysics(), // to disable GridView's scrolling
-                                shrinkWrap: true,
-                                itemCount: restaurantsModel_fee
-                                    .availableRestaurants.length,
-                                crossAxisCount: max(
-                                    MediaQuery.of(context).size.width ~/ 300.0,
-                                    1),
-                                itemBuilder: (context, index) {
-                                  return RestaurantsListCard_loc(
-                                      Key('restaurant-card-$index'),
-                                      restaurantsModel_fee
-                                          .availableRestaurants[index]);
-                                },
-                                staggeredTileBuilder: (int index) =>
-                                    StaggeredTile.fit(1),
-                              );
-                            }
-                            else{
-                              return CircularLoaderKomet();
-                            }
-                   
-                          },
-                        );
-                      }) :
+                      
+                      update.update_restaurants ? 
                       Builder(builder: (builder) {
                         return FutureBuilder(
                           future: getRestaurantsLoc(
@@ -156,6 +81,7 @@ class _RestaurantsList extends State<RestaurantsList> {
                                 restaurantsModel_fee.addRestaurant(
                                     RestaurantLoc.fromDTO(element));
                               });
+                              aux_model = restaurantsModel_fee;
                               return StaggeredGridView.countBuilder(
                                 crossAxisSpacing: 10,
                                 mainAxisSpacing: 10,
@@ -185,9 +111,49 @@ class _RestaurantsList extends State<RestaurantsList> {
                             }
                           },
                         );
-                      }) 
-
-
+                      }):
+                      Builder(builder: (builder) {
+                        return FutureBuilder(
+                          future: getRestaurantsLoc(
+                              loggedmodel.getUserAndNotify().location.latitude,
+                              loggedmodel.getUserAndNotify().location.longitude),
+                          builder:
+                              (BuildContext context, AsyncSnapshot snapshot) {
+                            
+                            if (snapshot.hasData) {
+                              restaurantsModel_fee.removeRestaurants();
+                              snapshot.data.forEach((element) {
+                                restaurantsModel_fee.addRestaurant(
+                                    RestaurantLoc.fromDTO(element));
+                              });
+                              return StaggeredGridView.countBuilder(
+                                crossAxisSpacing: 10,
+                                mainAxisSpacing: 10,
+                                physics:
+                                    NeverScrollableScrollPhysics(), // to disable GridView's scrolling
+                                shrinkWrap: true,
+                                itemCount: restaurantsModel_fee
+                                    .availableRestaurants.length,
+                                crossAxisCount: max(
+                                    MediaQuery.of(context).size.width ~/ 300.0,
+                                    1),
+                                itemBuilder: (context, index) {
+                                  return RestaurantsListCard_loc(
+                                      Key('restaurant-card-$index'),
+                                      restaurantsModel_fee
+                                          .availableRestaurants[index]);
+                                },
+                                staggeredTileBuilder: (int index) =>
+                                    StaggeredTile.fit(1),
+                              );
+                            }
+                            else{
+                              return CircularLoaderKomet();
+                            }
+                        
+                          },
+                        );
+                      }),
 
                       /*StreamBuilder<List<Restaurant_feeDTO>>(
                           stream: _bids(loggedmodel),
@@ -205,7 +171,7 @@ class _RestaurantsList extends State<RestaurantsList> {
                           })*/
                           
     
-                      ,Footer(defaultAppBarBackgroundColor),
+                      Footer(defaultAppBarBackgroundColor),
                     ]),
                   )));
             } else {

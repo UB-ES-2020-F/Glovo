@@ -45,7 +45,6 @@ class _InitialLogged extends State<InitialLogged> {
             var locationModel = context.watch<MapLocationModel>();
             var loggedModel = context.watch<LoggedModel>();
 
-            var update = context.watch<Update_model>();
 
             getlocation().then((value) {
               getAddress_fromPos(
