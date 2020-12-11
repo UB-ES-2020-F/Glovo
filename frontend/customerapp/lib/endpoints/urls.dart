@@ -38,4 +38,9 @@ class EndpointDefinitions {
     final config = await AppConfig.getConfig();
     return '${config.apiUrl}' + '/users/password-email';
   }
+
+  static Future<String> makeSetRecoveryPasswordURL() async {
+    final config = await AppConfig.getConfig();
+    return '${config.apiUrl}' + '/users/reset-password';
+  }
 }

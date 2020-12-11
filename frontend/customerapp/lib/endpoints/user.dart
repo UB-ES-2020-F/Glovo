@@ -64,18 +64,17 @@ Future<void> sendEmailForgotPassword(UserDTO formUser) async {
   }
 }
 
-Future<void> resetPassword() async {
-  /*
-  final response = await http.post(
-      await EndpointDefinitions.makeSendEmailForgotPasswordURL(),
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: jsonEncode(formUser.toJson()));
+Future<void> resetPassword(UserDTO formUser) async {
+  final response =
+      await http.post(await EndpointDefinitions.makeSetRecoveryPasswordURL(),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: jsonEncode(formUser.toJson()));
   if (response.statusCode == 200) {
     return;
   } else {
     throw LogoutCallbackFailed(
-        'Failed to send recovery email', response.statusCode, response.body);
-  }*/
+        'Failed to set recovery password', response.statusCode, response.body);
+  }
 }

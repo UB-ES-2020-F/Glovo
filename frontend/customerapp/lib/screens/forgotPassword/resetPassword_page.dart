@@ -54,12 +54,17 @@ class ResetPassword extends StatelessWidget {
                 '$token',
                 style: registerToKometTextStyle,
               ),
-              ResetPasswordForm(),
+              ResetPasswordForm(email: email, token: token),
             ])));
   }
 }
 
 class ResetPasswordForm extends StatefulWidget {
+  String email, token;
+  ResetPasswordForm({
+    this.email,
+    this.token,
+  });
   @override
   State<StatefulWidget> createState() {
     return ResetPasswordFormState();
@@ -114,7 +119,8 @@ class ResetPasswordFormState extends State<ResetPasswordForm> {
                   labelStyle: labelTextInputStyle,
                 ),
                 onFieldSubmitted: (value) {
-                  tryResetPasswordForm(context, resetPasswordModel);
+                  tryResetPasswordForm(
+                      context, resetPasswordModel, widget.email, widget.token);
                 },
               )),
           Container(
@@ -155,10 +161,11 @@ class ResetPasswordFormState extends State<ResetPasswordForm> {
                   labelStyle: labelTextInputStyle,
                 ),
                 onFieldSubmitted: (value) {
-                  tryResetPasswordForm(context, resetPasswordModel);
+                  tryResetPasswordForm(
+                      context, resetPasswordModel, widget.email, widget.token);
                 },
               )),
-          ResetPasswordButton(),
+          ResetPasswordButton(email: widget.email, token: widget.token),
         ],
       ),
     );
@@ -166,6 +173,11 @@ class ResetPasswordFormState extends State<ResetPasswordForm> {
 }
 
 class ResetPasswordButton extends StatelessWidget {
+  String email, token;
+  ResetPasswordButton({
+    this.email,
+    this.token,
+  });
   @override
   Widget build(BuildContext context) {
     var resetPasswordModel = context.watch<ResetPasswordModel>();
@@ -177,7 +189,8 @@ class ResetPasswordButton extends StatelessWidget {
             onLongPress: null,
             onPressed: resetPasswordModel.formValid
                 ? () {
-                    tryResetPasswordForm(context, resetPasswordModel);
+                    tryResetPasswordForm(
+                        context, resetPasswordModel, email, token);
                   }
                 : null,
             child: Text('Reset'),
@@ -191,16 +204,20 @@ class ResetPasswordButton extends StatelessWidget {
   }
 }
 
-void tryResetPasswordForm(
-    BuildContext context, ResetPasswordModel resetPasswordModel) {
+void tryResetPasswordForm(BuildContext context,
+    ResetPasswordModel resetPasswordModel, String email, String token) {
   if (resetPasswordModel.formValid) {
     if (resetPasswordModel.formKey.currentState.validate()) {
       showLoaderDialog(context);
       resetPasswordModel.formKey.currentState.save();
       resetPasswordModel.obfuscateAll();
       resetPasswordModel.formValid = false;
+      UserDTO formUser = new UserDTO();
+      formUser.email = email;
+      formUser.token = token;
+      formUser.password = resetPasswordModel.newPassword1;
       //ENDPOINT CALL
-      resetPassword().then((value) {
+      resetPassword(formUser).then((value) {
         Navigator.pop(context); //loader
         Navigator.of(context)
             .pushNamedAndRemoveUntil('/', (route) => false); //mainPage
