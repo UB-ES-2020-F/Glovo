@@ -1,6 +1,4 @@
 import 'package:customerapp/components/text_link.dart';
-import 'package:customerapp/screens/forgotPassword/forgotPassword_form.dart';
-import 'package:customerapp/screens/loggedPage/editNameEmail/editNameEmail_form.dart';
 import 'package:customerapp/screens/signIn/signin_form.dart';
 import 'package:customerapp/styles/signup.dart';
 import 'package:flutter/material.dart';

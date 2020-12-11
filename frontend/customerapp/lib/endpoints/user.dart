@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:customerapp/dto/user.dart';
 import 'package:customerapp/dto/user_recovery.dart';
 import 'package:customerapp/endpoints/urls.dart';

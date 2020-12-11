@@ -1,10 +1,8 @@
-import 'package:customerapp/dto/user.dart';
 import 'package:customerapp/dto/user_recovery.dart';
 import 'package:customerapp/endpoints/user.dart';
 import 'package:customerapp/models/resetPassword.dart';
 import 'package:customerapp/screens/commonComponents/single_message_dialog.dart';
 import 'package:customerapp/styles/signup.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -47,14 +45,6 @@ class ResetPassword extends StatelessWidget {
                   style: registerToKometTextStyle,
                 ),
               )),
-              Text(
-                '$email',
-                style: registerToKometTextStyle,
-              ),
-              Text(
-                '$token',
-                style: registerToKometTextStyle,
-              ),
               ResetPasswordForm(email: email, token: token),
             ])));
   }
