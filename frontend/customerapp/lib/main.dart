@@ -7,6 +7,7 @@ import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/cart.dart';
 import 'package:customerapp/models/signup.dart';
 import 'package:customerapp/models/user_credentials/user_credentials.dart';
+import 'package:customerapp/screens/about_us.dart';
 import 'package:customerapp/screens/forgotPassword/forgotPassword_page.dart';
 import 'package:customerapp/screens/forgotPassword/forgotPassword_success.dart';
 import 'package:customerapp/screens/location/location_page.dart';
@@ -60,7 +61,7 @@ class KometApp extends StatelessWidget {
       child: MaterialApp(
           theme: appTheme,
           title: 'Komet',
-          initialRoute: '/',
+          initialRoute: '/about-us',
           routes: {
             '/': (context) => AnonRoute(),
             '/sign-up': (context) => SignUpPage(),
@@ -76,6 +77,7 @@ class KometApp extends StatelessWidget {
             '/concrete-product': (context) => ProductScreen(),
             '/initial-logged-in': (context) => InitialLogged(),
             '/overview-mobile': (context) => TabBarScreen(),
+            '/about-us': (context) => AboutUs(),
           }),
     );
   }

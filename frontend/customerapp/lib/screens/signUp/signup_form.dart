@@ -4,7 +4,7 @@ import 'package:customerapp/infrastructure/persistence/repository/user_credentia
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/signup.dart';
 import 'package:customerapp/models/user_credentials/user_credentials.dart';
-import 'package:customerapp/screens/anon_root.dart';
+import 'package:customerapp/screens/anon_bar.dart';
 import 'package:customerapp/screens/signIn/signin_form.dart';
 import 'package:customerapp/screens/commonComponents/single_message_dialog.dart';
 import 'package:customerapp/styles/signup.dart';
