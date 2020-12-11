@@ -28,15 +28,16 @@ namespace glovo_webapi.Entities
         public Restaurant Restaurant { get; set; }
         public IEnumerable<OrderProduct> OrdersProducts { get; set; }
 
-        public Product(int id, string name, string imgPath, string description, float price, int restaurantId)
+        public Product() {}
+        
+        public Product(string name, string imgPath, string description, float price, int restaurantId, ProductCategory category)
         {
-            this.Id = id;
-            this.Name = name;
-            this.ImgPath = imgPath;
-            this.Description = description;
-            this.Price = price;
-            this.RestaurantId = restaurantId;
-            this.OrdersProducts = new List<OrderProduct>();
+            Name = name;
+            ImgPath = imgPath;
+            Description = description;
+            Price = price;
+            RestaurantId = restaurantId;
+            Category = category;
         }
 
     }

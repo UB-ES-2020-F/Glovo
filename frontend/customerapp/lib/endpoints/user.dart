@@ -48,3 +48,18 @@ Future<void> logout() async {
         'Failed to logout', response.statusCode, response.body);
   }
 }
+
+Future<void> sendEmailForgotPassword(UserDTO formUser) async {
+  final response = await http.post(
+      await EndpointDefinitions.makeSendEmailForgotPasswordURL(),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: jsonEncode(formUser.toJson()));
+  if (response.statusCode == 200) {
+    return;
+  } else {
+    throw LogoutCallbackFailed(
+        'Failed to send recovery email', response.statusCode, response.body);
+  }
+}

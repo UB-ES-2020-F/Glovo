@@ -40,7 +40,7 @@ class SignUpFormPage extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
                     children: [
                       Container(
                           child: Text('Have an account? ', style: signUpText)),
@@ -228,7 +228,7 @@ void trySendRegisterForm(BuildContext context, SignUpModel signUpModel) {
       formUser.password = signUpModel.password;
       formUser.name = signUpModel.firstName;
       registerUser(formUser).then((value) {
-        loginUser(formUser).then((loggedUser) {
+        loginUser(formUser).then((loggedUser) async {
           UserCredentialsRepository().update(new UserCredentials(
               loggedUser.email, loggedUser.token, loggedUser.id));
           LoggedModel.user.id = loggedUser.id;

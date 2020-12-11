@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class SingleMessageDialog extends StatelessWidget {
-  String message;
+  final String message;
   SingleMessageDialog(this.message);
 
   @override
@@ -13,36 +13,41 @@ class SingleMessageDialog extends StatelessWidget {
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                  padding: EdgeInsets.all(10),
-                  alignment: Alignment(1, 1),
-                  child: IconButton(
-                    color: Color(0xFF6E6E6E),
-                    icon: Icon(Icons.clear),
-                    iconSize: 40,
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  )),
-              Text(
-                message,
-                style: registerToKometTextStyle,
-              ),
-              Padding(
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text("Okay"),
-                  style: greenButtonStyle,
-                ),
-                padding: EdgeInsets.all(20),
-              )
-            ],
-          )
+          Container(
+              constraints: BoxConstraints(maxWidth: 600),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                      padding: EdgeInsets.all(10),
+                      alignment: Alignment(1, 1),
+                      child: IconButton(
+                        color: Color(0xFF6E6E6E),
+                        icon: Icon(Icons.clear),
+                        iconSize: 40,
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      )),
+                  Container(
+                    padding: EdgeInsets.all(30),
+                    child: Text(
+                      message,
+                      style: registerToKometTextStyle,
+                    ),
+                  ),
+                  Padding(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text("Okay"),
+                      style: greenButtonStyle,
+                    ),
+                    padding: EdgeInsets.all(20),
+                  )
+                ],
+              ))
         ]);
   }
 }
@@ -70,7 +75,7 @@ class CircularLoaderKomet extends StatelessWidget {
       width: 80,
       height: 80,
       child: CircularProgressIndicator(
-        backgroundColor: Kommet_distinctive_green,
+        backgroundColor: kommetDistinctiveGreen,
         strokeWidth: 7,
       ),
     ));

@@ -38,7 +38,7 @@ class InitialLoggedBar extends StatelessWidget with PreferredSizeWidget {
   }
 }
 
-class InitialLoggedBar_short extends StatelessWidget with PreferredSizeWidget {
+class InitialLoggedBarShort extends StatelessWidget with PreferredSizeWidget {
   final double appBarHeight = 115.0;
 
   @override
@@ -59,7 +59,7 @@ class InitialLoggedBar_short extends StatelessWidget with PreferredSizeWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SearchBox(),
-                      UserActionsBar_aux(
+                      UserActionsBarAux(
                         BarType.initial,
                       )
                     ],

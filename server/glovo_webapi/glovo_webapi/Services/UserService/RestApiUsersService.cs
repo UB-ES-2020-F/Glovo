@@ -3,6 +3,7 @@ using System.Linq;
 using glovo_webapi.Data;
 using glovo_webapi.Entities;
 using glovo_webapi.Helpers;
+using glovo_webapi.Utils;
 using Microsoft.AspNetCore.Http;
 
 namespace glovo_webapi.Services.UserService
@@ -60,15 +61,6 @@ namespace glovo_webapi.Services.UserService
             return u;
         }
 
-        public User GetLogged()
-        {
-            User loggedUser = (User) _httpContextAccessor.HttpContext.Items["User"];
-            if (loggedUser == null)
-                throw new RequestException(UserExceptionCodes.NoLoggedUser);
-            
-            return loggedUser;
-        }
-        
         public User Create(User user, string password)
         {
             // validation

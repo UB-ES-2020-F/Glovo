@@ -9,7 +9,6 @@ namespace glovo_webapi.Services.UserService
         IEnumerable<User> GetAll();
         User GetById(int id);
         User GetByEmail(string email);
-        User GetLogged();
         User Create(User user, string password);
         void SetProfile(User user, string name, string email);
         void SetNewPassword(User user, string newPassword, string oldPassword=null);

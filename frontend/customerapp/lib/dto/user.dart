@@ -1,5 +1,3 @@
-import 'package:intl/intl.dart';
-
 class UserDTO {
   int id;
   String name;

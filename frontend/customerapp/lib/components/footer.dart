@@ -1,13 +1,8 @@
 import 'dart:ui';
 
-import 'package:customerapp/responsive/screen_responsive.dart';
-import 'package:customerapp/screens/signUp/signup_dialog.dart';
-import 'package:customerapp/screens/signIn/signin_dialog.dart';
 import 'package:customerapp/styles/footer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:customerapp/styles/signup.dart';
-import 'package:customerapp/screens/anon_bar.dart';
 
 class Footer extends StatelessWidget {
   Color backgroundC;

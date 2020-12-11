@@ -30,10 +30,8 @@ namespace glovo_webapi.Controllers.Products
             IEnumerable<Product> products;
             
             if (category.HasValue) {
-                Console.Write("Category: "+category.Value+"\n");
                 products = _service.GetProductsByCategory(category.Value);
             } else {
-                Console.Write("Category: null\n");
                 products = _service.GetAllProducts();
             }
             

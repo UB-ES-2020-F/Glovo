@@ -1,16 +1,33 @@
+import 'package:customerapp/actions/check_login.dart';
+import 'package:customerapp/screens/commonComponents/single_message_dialog.dart';
 import 'package:customerapp/screens/location/location_content.dart';
 import 'package:flutter/material.dart';
 
-import '../restricted_page.dart';
-
-class LocationPage extends StatelessWidget {
+class LocationPage extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return RestrictedPage(this._build(context));
-  }
+  State<StatefulWidget> createState() => _LocationPage();
+}
 
-  Widget _build(BuildContext context) {
-    return Scaffold(
-        body: Container(padding: EdgeInsets.all(30), child: LocationContent()));
-  }
+class _LocationPage extends State<LocationPage> {
+  @override
+  Widget build(BuildContext context) => FutureBuilder(
+        future: userIsLogged(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data) {
+              return Scaffold(
+                  body: Container(
+                      padding: EdgeInsets.all(30), child: LocationContent()));
+            } else {
+              Future.delayed(Duration.zero, () {
+                Navigator.pushNamed(context, '/');
+              });
+              return CircularLoaderKomet();
+              //
+            }
+          } else {
+            return CircularLoaderKomet();
+          }
+        },
+      );
 }

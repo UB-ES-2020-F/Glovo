@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using AutoMapper;
 using glovo_webapi.Entities;
@@ -46,6 +47,8 @@ namespace glovo_webapi.Controllers.Orders
             
             //Only let Regular users check their own orders
             User loggedUser = (User)HttpContext.Items["User"];
+            if(loggedUser == null)
+                return NotFound(new {message = "No user is logged"});
             if (loggedUser.Role == UserRole.Regular && foundOrder.UserId != loggedUser.Id)
                 return Unauthorized(new {message = "Unauthorized"});
 
@@ -66,6 +69,8 @@ namespace glovo_webapi.Controllers.Orders
                     return NotFound(new{message = "Restaurant id does not exist"});
                 if (ex.Code == OrderExceptionCodes.ProductNotFound)
                     return NotFound(new{message = "Product id does not exist"});
+                if (ex.Code == OrderExceptionCodes.ProductNotBelongingToRestaurant)
+                    return BadRequest(new{message = "Product is not from restaurant"});
                 if (ex.Code == OrderExceptionCodes.BadOrderProduct)
                     return BadRequest(new{message = "Bad OrderProduct data"});
                 return BadRequest(new{message = "Unknown error"});

@@ -2,9 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 class SignUpModel extends ChangeNotifier {
-  String _firstName;
-  String _email;
-  String _password;
+  String firstName;
+  String email;
+  String password;
 
   bool _formValid = false;
 
@@ -14,15 +14,7 @@ class SignUpModel extends ChangeNotifier {
   bool get passwordObfuscated => _passwordObfuscated;
   GlobalKey<FormState> get formKey => _formKey;
 
-  String get firstName => _firstName;
-  String get email => _email;
-  String get password => _password;
-
   bool get formValid => _formValid;
-
-  set firstName(String value) => _firstName = value;
-  set email(String value) => _email = value;
-  set password(String value) => _password = value;
 
   set formValid(bool value) {
     _formValid = value;
