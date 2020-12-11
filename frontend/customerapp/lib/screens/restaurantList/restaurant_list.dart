@@ -29,6 +29,7 @@ class _RestaurantsList extends State<RestaurantsList> {
           if (snapshot.hasData) {
             if (snapshot.data) {
               var restaurantsModel = context.watch<RestaurantsListModel>();
+              var restaurantsModel2 = context.watch<RestaurantsListModel2>();
 
               Widget bar;
               var update;
@@ -39,6 +40,8 @@ class _RestaurantsList extends State<RestaurantsList> {
               var s = BarResponsive(
                   context, '/overview-mobile', DefaultLoggedBar());
               bar = s.getResponsiveBar();
+
+              print("estoy aqui");
 
               return Scaffold(
                   appBar: bar,
@@ -54,46 +57,82 @@ class _RestaurantsList extends State<RestaurantsList> {
                           style: Theme.of(context).textTheme.headline1,
                         ),
                       ),
-                      Expanded(
-                        child: Builder(builder: (builder) {
-                          return FutureBuilder(
-                            future: getRestaurants(),
-                            builder:
-                                (BuildContext context, AsyncSnapshot snapshot) {
-                              if (snapshot.hasData) {
-                                restaurantsModel.removeRestaurants();
-                                snapshot.data.forEach((element) {
-                                  restaurantsModel.addRestaurant(
-                                      Restaurant.fromDTO(element));
-                                });
-                                return StaggeredGridView.countBuilder(
-                                  crossAxisSpacing: 10,
-                                  mainAxisSpacing: 10,
-                                  physics:
-                                      NeverScrollableScrollPhysics(), // to disable GridView's scrolling
-                                  shrinkWrap: true,
-                                  itemCount: restaurantsModel
-                                      .availableRestaurants.length,
-                                  crossAxisCount: max(
-                                      MediaQuery.of(context).size.width ~/
-                                          300.0,
-                                      1),
-                                  itemBuilder: (context, index) {
-                                    return RestaurantsListCard(
-                                        Key('restaurant-card-$index'),
-                                        restaurantsModel
-                                            .availableRestaurants[index]);
-                                  },
-                                  staggeredTileBuilder: (int index) =>
-                                      StaggeredTile.fit(1),
-                                );
-                              } else {
-                                return CircularLoaderKomet();
-                              }
-                            },
-                          );
-                        }),
-                      ),
+                      Builder(builder: (builder) {
+                        return FutureBuilder(
+                          future: getRestaurants(),
+                          builder:
+                              (BuildContext context, AsyncSnapshot snapshot) {
+                            if (snapshot.hasData) {
+                              restaurantsModel.removeRestaurants();
+                              snapshot.data.forEach((element) {
+                                restaurantsModel
+                                    .addRestaurant(Restaurant.fromDTO(element));
+                              });
+                              return StaggeredGridView.countBuilder(
+                                crossAxisSpacing: 10,
+                                mainAxisSpacing: 10,
+                                physics:
+                                    NeverScrollableScrollPhysics(), // to disable GridView's scrolling
+                                shrinkWrap: true,
+                                itemCount: restaurantsModel
+                                    .availableRestaurants.length,
+                                crossAxisCount: max(
+                                    MediaQuery.of(context).size.width ~/ 300.0,
+                                    1),
+                                itemBuilder: (context, index) {
+                                  return RestaurantsListCard(
+                                      Key('restaurant-card-$index'),
+                                      restaurantsModel
+                                          .availableRestaurants[index]);
+                                },
+                                staggeredTileBuilder: (int index) =>
+                                    StaggeredTile.fit(1),
+                              );
+                            } else {
+                              return CircularLoaderKomet();
+                            }
+                          },
+                        );
+                      }),
+                      /*Builder(builder: (builder) {
+                        return FutureBuilder(
+                          future: getRestaurantsLoc(
+                              loggedmodel.getUser().location.latitude,
+                              loggedmodel.getUser().location.longitude),
+                          builder:
+                              (BuildContext context, AsyncSnapshot snapshot) {
+                            if (snapshot.hasData) {
+                              restaurantsModel2.removeRestaurants();
+                              snapshot.data.forEach((element) {
+                                restaurantsModel2.addRestaurant(
+                                    RestaurantLoc.fromDTO(element));
+                              });
+                              return StaggeredGridView.countBuilder(
+                                crossAxisSpacing: 10,
+                                mainAxisSpacing: 10,
+                                physics:
+                                    NeverScrollableScrollPhysics(), // to disable GridView's scrolling
+                                shrinkWrap: true,
+                                itemCount: restaurantsModel
+                                    .availableRestaurants.length,
+                                crossAxisCount: max(
+                                    MediaQuery.of(context).size.width ~/ 300.0,
+                                    1),
+                                itemBuilder: (context, index) {
+                                  return RestaurantsListCard_loc(
+                                      Key('restaurant-card2-$index'),
+                                      restaurantsModel2
+                                          .availableRestaurants[index]);
+                                },
+                                staggeredTileBuilder: (int index) =>
+                                    StaggeredTile.fit(1),
+                              );
+                            } else {
+                              return CircularLoaderKomet();
+                            }
+                          },
+                        );
+                      }),*/
                       Text(loggedmodel.getUser().location.latitude.toString()),
                       Footer(Color(0xffffffff)),
                     ]),

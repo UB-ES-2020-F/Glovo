@@ -32,8 +32,7 @@ class Footer extends StatelessWidget {
                   children: [
                     Container(
                         width: 800,
-                        child: Expanded(
-                            child: Table(
+                        child: Table(
                           defaultVerticalAlignment:
                               TableCellVerticalAlignment.middle,
                           children: [
@@ -111,7 +110,7 @@ class Footer extends StatelessWidget {
                               Text("", style: FooterTextNormalStyle),
                             ])
                           ],
-                        ))),
+                        )),
                     Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [

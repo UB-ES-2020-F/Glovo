@@ -1,8 +1,11 @@
 import 'package:customerapp/actions/check_login.dart';
 import 'package:customerapp/components/footer.dart';
 import 'package:customerapp/dto/location.dart';
+import 'package:customerapp/dto/restaurant.dart';
 import 'package:customerapp/endpoints/location.dart';
+import 'package:customerapp/endpoints/restaurants.dart';
 import 'package:customerapp/exceptions/logout-callback-failed.dart';
+import 'package:customerapp/exceptions/order-callback-failed.dart';
 import 'package:customerapp/models/location.dart';
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/map_location.dart';
@@ -28,6 +31,11 @@ class InitialLogged extends StatefulWidget {
 
 class _InitialLogged extends State<InitialLogged> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) => FutureBuilder(
       future: userIsLogged(),
       builder: (context, snapshot) {
@@ -40,6 +48,7 @@ class _InitialLogged extends State<InitialLogged> {
             var update = context.watch<Update_model>();
 
             getlocation().then((value) {
+              print("OK1");
               getAddress_fromPos(
                   mapsOriginal.Geocoder(),
                   LatLng((value as LocationDTO).latitude,
@@ -47,6 +56,8 @@ class _InitialLogged extends State<InitialLogged> {
                   locationModel,
                   loggedModel);
             }).catchError((onError) {});
+
+            print("estoy aqui");
             var s = BarResponsive(
                 context, '/overview-mobile', InitialLoggedBar(),
                 mediumBar: InitialLoggedBarShort());

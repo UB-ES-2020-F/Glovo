@@ -83,3 +83,58 @@ class TimeInterval {
     }
   }
 }
+
+class RestaurantLoc {
+  int id;
+  String _name;
+  String _image;
+  double deliveryFee;
+  double distance;
+  RestaurantLoc(
+      this.id, this._name, this._image, this.distance, this.deliveryFee);
+
+  String get name {
+    return _name;
+  }
+
+  String get image {
+    return _image;
+  }
+
+  factory RestaurantLoc.fromDTO(Restaurant_feeDTO restaurantDTO) {
+    return RestaurantLoc(
+        restaurantDTO.id,
+        restaurantDTO.name,
+        restaurantDTO.imgPath,
+        restaurantDTO.distance,
+        restaurantDTO.deliveryFee);
+  }
+
+  /*RestaurantDTO toDTO() {
+    return RestaurantDTO(
+        id: this.id,
+        name: this.name,
+        imgPath: this.image,
+        location: this.location);
+  }*/
+}
+
+class RestaurantsListModel2 extends ChangeNotifier {
+  List<RestaurantLoc> availableRestaurants;
+
+  @override
+  RestaurantsListModel2() {
+    availableRestaurants = List();
+  }
+
+  /*
+   * Not recommended approach, the best approach would be to use the constructor
+   */
+  void addRestaurant(RestaurantLoc restaurant) {
+    availableRestaurants.add(restaurant);
+  }
+
+  void removeRestaurants() {
+    availableRestaurants.clear();
+  }
+}
