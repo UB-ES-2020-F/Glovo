@@ -68,8 +68,8 @@ void getAddress_fromPos(mapsOriginal.Geocoder geocoder, LatLng position,
       (results, status) {
     if (status == mapsOriginal.GeocoderStatus.OK) {
       if (results[3] != null) {
-        //loggedModel.getUser().location =
-        //    Location(position.latitude, position.longitude);
+        loggedModel.getUser().location =
+            Location(position.latitude, position.longitude);
         loggedModel.getUserAndNotify().direction = results[3].formattedAddress;
         return;
       } else {

@@ -29,11 +29,8 @@ class _RestaurantsList extends State<RestaurantsList> {
           if (snapshot.hasData) {
             if (snapshot.data) {
               var restaurantsModel = context.watch<RestaurantsListModel>();
-              var restaurantsModel2 = context.watch<RestaurantsListModel2>();
 
               Widget bar;
-              var update;
-              update = context.watch<Update_model>();
 
               var loggedmodel = context.watch<LoggedModel>();
 
