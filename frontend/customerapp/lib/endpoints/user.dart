@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:customerapp/dto/user.dart';
+import 'package:customerapp/dto/user_recovery.dart';
 import 'package:customerapp/endpoints/urls.dart';
 import 'package:customerapp/exceptions/logout-callback-failed.dart';
 import 'package:customerapp/infrastructure/persistence/repository/user_credentials_repository.dart';
@@ -64,7 +65,7 @@ Future<void> sendEmailForgotPassword(UserDTO formUser) async {
   }
 }
 
-Future<void> resetPassword(UserDTO formUser) async {
+Future<void> resetPassword(UserRecoveryDTO formUser) async {
   final response =
       await http.post(await EndpointDefinitions.makeSetRecoveryPasswordURL(),
           headers: {

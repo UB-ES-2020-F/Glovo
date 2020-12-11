@@ -1,4 +1,5 @@
 import 'package:customerapp/dto/user.dart';
+import 'package:customerapp/dto/user_recovery.dart';
 import 'package:customerapp/endpoints/user.dart';
 import 'package:customerapp/models/resetPassword.dart';
 import 'package:customerapp/screens/commonComponents/single_message_dialog.dart';
@@ -212,10 +213,10 @@ void tryResetPasswordForm(BuildContext context,
       resetPasswordModel.formKey.currentState.save();
       resetPasswordModel.obfuscateAll();
       resetPasswordModel.formValid = false;
-      UserDTO formUser = new UserDTO();
+      UserRecoveryDTO formUser = new UserRecoveryDTO();
       formUser.email = email;
-      formUser.token = token;
-      formUser.password = resetPasswordModel.newPassword1;
+      formUser.recoveryToken = token;
+      formUser.newPassword = resetPasswordModel.newPassword1;
       //ENDPOINT CALL
       resetPassword(formUser).then((value) {
         Navigator.pop(context); //loader
