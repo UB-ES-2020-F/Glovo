@@ -48,46 +48,43 @@ class _RestaurantsList extends State<RestaurantsList> {
                           style: Theme.of(context).textTheme.headline1,
                         ),
                       ),
-                      Expanded(
-                        child: Builder(builder: (builder) {
-                          return FutureBuilder(
-                            future: getRestaurants(),
-                            builder:
-                                (BuildContext context, AsyncSnapshot snapshot) {
-                              if (snapshot.hasData) {
-                                restaurantsModel.removeRestaurants();
-                                snapshot.data.forEach((element) {
-                                  restaurantsModel.addRestaurant(
-                                      Restaurant.fromDTO(element));
-                                });
-                                return StaggeredGridView.countBuilder(
-                                  crossAxisSpacing: 10,
-                                  mainAxisSpacing: 10,
-                                  physics:
-                                      NeverScrollableScrollPhysics(), // to disable GridView's scrolling
-                                  shrinkWrap: true,
-                                  itemCount: restaurantsModel
-                                      .availableRestaurants.length,
-                                  crossAxisCount: max(
-                                      MediaQuery.of(context).size.width ~/
-                                          300.0,
-                                      1),
-                                  itemBuilder: (context, index) {
-                                    return RestaurantsListCard(
-                                        Key('restaurant-card-$index'),
-                                        restaurantsModel
-                                            .availableRestaurants[index]);
-                                  },
-                                  staggeredTileBuilder: (int index) =>
-                                      StaggeredTile.fit(1),
-                                );
-                              } else {
-                                return CircularLoaderKomet();
-                              }
-                            },
-                          );
-                        }),
-                      ),
+                      Builder(builder: (builder) {
+                        return FutureBuilder(
+                          future: getRestaurants(),
+                          builder:
+                              (BuildContext context, AsyncSnapshot snapshot) {
+                            if (snapshot.hasData) {
+                              restaurantsModel.removeRestaurants();
+                              snapshot.data.forEach((element) {
+                                restaurantsModel
+                                    .addRestaurant(Restaurant.fromDTO(element));
+                              });
+                              return StaggeredGridView.countBuilder(
+                                crossAxisSpacing: 10,
+                                mainAxisSpacing: 10,
+                                physics:
+                                    NeverScrollableScrollPhysics(), // to disable GridView's scrolling
+                                shrinkWrap: true,
+                                itemCount: restaurantsModel
+                                    .availableRestaurants.length,
+                                crossAxisCount: max(
+                                    MediaQuery.of(context).size.width ~/ 300.0,
+                                    1),
+                                itemBuilder: (context, index) {
+                                  return RestaurantsListCard(
+                                      Key('restaurant-card-$index'),
+                                      restaurantsModel
+                                          .availableRestaurants[index]);
+                                },
+                                staggeredTileBuilder: (int index) =>
+                                    StaggeredTile.fit(1),
+                              );
+                            } else {
+                              return CircularLoaderKomet();
+                            }
+                          },
+                        );
+                      }),
                       Footer(Color(0xffffffff)),
                     ]),
                   )));
