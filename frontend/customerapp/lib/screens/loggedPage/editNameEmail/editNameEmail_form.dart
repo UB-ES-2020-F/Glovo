@@ -143,18 +143,15 @@ void tryEditNameEmailForm(BuildContext context,
       formUser.email = editNameEmailModel.email;
 
       updateUserAndEmail(formUser).then((newLoggedUser) async {
-        LoggedModel.user.name = newLoggedUser.name;
-        LoggedModel.user.email = newLoggedUser.email;
         loggedModel.getUserAndNotify().email = editNameEmailModel.email;
         loggedModel.getUserAndNotify().name = editNameEmailModel.firstName;
+        Navigator.pop(context); //exit loader
+        Navigator.pop(context); //exit changeInfo dialog
       }).catchError((error) {
         print(error);
-        Navigator.pop(context);
+        Navigator.pop(context); //exit loader
         showEditNameEmailFailedDialog(context);
       });
-
-      Navigator.pop(context);
-      Navigator.pop(context);
     }
   }
 }
@@ -162,5 +159,6 @@ void tryEditNameEmailForm(BuildContext context,
 showEditNameEmailFailedDialog(BuildContext context) {
   showDialog(
       context: context,
-      builder: (context) => SingleMessageDialog("Action failed"));
+      builder: (context) =>
+          SingleMessageDialog("Couldn't edit user information."));
 }

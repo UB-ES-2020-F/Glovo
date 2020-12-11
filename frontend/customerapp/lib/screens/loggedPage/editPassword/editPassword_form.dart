@@ -214,16 +214,15 @@ void tryEditPasswordForm(
         UserPasswordDTO formPasswords = new UserPasswordDTO();
         formPasswords.oldPassword = editPasswordModel.oldPassword;
         formPasswords.newPassword = editPasswordModel.newPassword1;
-
-        updatePassword(formPasswords).then((value) => null).catchError((error) {
+        updatePassword(formPasswords).then((value) async {
+          Navigator.pop(context); //exit loader
+          Navigator.pop(context); //exit changePassword dialog
+        }).catchError((error) {
           print(error);
-          Navigator.pop(context);
+          Navigator.pop(context); //exit loader
           showEditPasswordFailedDialog(context);
         });
       }
-
-      Navigator.pop(context);
-      Navigator.pop(context);
     }
   }
 }
@@ -231,5 +230,5 @@ void tryEditPasswordForm(
 showEditPasswordFailedDialog(BuildContext context) {
   showDialog(
       context: context,
-      builder: (context) => SingleMessageDialog("Action failed"));
+      builder: (context) => SingleMessageDialog("Couldn't change password."));
 }
