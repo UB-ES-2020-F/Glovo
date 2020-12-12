@@ -1,6 +1,7 @@
 import 'dart:ui';
 // ignore: avoid_web_libraries_in_flutter
 import 'dart:js' as js;
+import 'package:customerapp/components/appBar/default_logged_bar.dart';
 import 'package:customerapp/components/footer.dart';
 import 'package:customerapp/models/aboutus.dart';
 import 'package:customerapp/models/developer.dart';
@@ -211,33 +212,39 @@ class AboutUsBar extends StatelessWidget with PreferredSizeWidget {
 
   @override
   get preferredSize {
-    final double appBarHeight = 150;
+    final double appBarHeight = 160;
     return Size.fromHeight(appBarHeight);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      //color: Theme.of(context).backgroundColor,
-      alignment: Alignment.center,
-      child: Text(
-        'About us',
-        style: TextStyle(
-            fontSize: 50,
-            fontWeight: FontWeight.bold,
-            color: Theme.of(context).accentColor),
+    return Stack(children: [
+      Container(
+        //color: Theme.of(context).backgroundColor,
+        alignment: Alignment.center,
+        child: Text(
+          'About us',
+          style: TextStyle(
+              fontSize: 50,
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).accentColor),
+        ),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+              colors: [
+                Theme.of(context).backgroundColor,
+                Theme.of(context).primaryColorLight
+              ],
+              begin: const FractionalOffset(0.0, 0.8),
+              end: const FractionalOffset(0.0, 1.0),
+              stops: [0.0, 1.0],
+              tileMode: TileMode.clamp),
+        ),
       ),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-            colors: [
-              Theme.of(context).backgroundColor,
-              Theme.of(context).primaryColorLight
-            ],
-            begin: const FractionalOffset(0.0, 0.8),
-            end: const FractionalOffset(0.0, 1.0),
-            stops: [0.0, 1.0],
-            tileMode: TileMode.clamp),
-      ),
-    );
+      Container(
+          alignment: Alignment.topLeft,
+          padding: EdgeInsets.fromLTRB(40, 25, 40, 0),
+          child: Logo()),
+    ]);
   }
 }
