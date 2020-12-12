@@ -1,10 +1,9 @@
-import 'dart:math';
 import 'dart:ui';
+// ignore: avoid_web_libraries_in_flutter
 import 'dart:js' as js;
 import 'package:customerapp/components/footer.dart';
 import 'package:customerapp/models/aboutus.dart';
 import 'package:customerapp/models/developer.dart';
-import 'package:customerapp/styles/restaurant_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -14,7 +13,8 @@ class AboutUs extends StatelessWidget {
   Widget build(BuildContext context) {
     var developers = DeveloperList();
     return Scaffold(
-        backgroundColor: Theme.of(context).backgroundColor,
+        appBar: AboutUsBar(),
+        backgroundColor: Theme.of(context).primaryColorLight,
         body: Container(
             child: Padding(
                 padding: EdgeInsets.only(top: 20),
@@ -33,24 +33,37 @@ class AboutUs extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Container(
-                                padding: EdgeInsets.fromLTRB(50, 70, 50, 40),
+                                padding: EdgeInsets.fromLTRB(50, 0, 50, 40),
                                 child: Text(
-                                  'About us',
+                                  'OUR STORY',
                                   style: TextStyle(
-                                      fontSize: 50,
+                                      fontSize: 30,
                                       fontWeight: FontWeight.bold,
-                                      color: Theme.of(context).accentColor),
+                                      color:
+                                          Theme.of(context).primaryColorDark),
                                 ),
                               ),
                               Container(
-                                padding: EdgeInsets.fromLTRB(150, 20, 150, 20),
+                                padding: EdgeInsets.fromLTRB(100, 20, 100, 20),
                                 child: Text(
                                   aboutUsFirstPart,
-                                  textAlign: TextAlign.center,
+                                  textAlign: TextAlign.justify,
                                   style: TextStyle(
                                       fontSize: 16,
-                                      //fontWeight: FontWeight.bold,
-                                      color: Theme.of(context).accentColor),
+                                      fontWeight: FontWeight.w500,
+                                      color:
+                                          Theme.of(context).primaryColorDark),
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.fromLTRB(50, 50, 50, 20),
+                                child: Text(
+                                  'OUR TEAM',
+                                  style: TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold,
+                                      color:
+                                          Theme.of(context).primaryColorDark),
                                 ),
                               ),
                               Container(
@@ -73,7 +86,7 @@ class AboutUs extends StatelessWidget {
                                         StaggeredTile.fit(1),
                                   ))
                             ]),
-                        Footer(Theme.of(context).backgroundColor)
+                        Footer(Theme.of(context).primaryColorLight)
                       ]),
                 ))))));
   }
@@ -127,25 +140,60 @@ class RestaurantsListCardState extends State<StatefulWidget> {
                 padding: EdgeInsets.only(bottom: 10, left: 0, right: 0, top: 0),
               )),
           Container(
-            height: 150,
+            constraints: BoxConstraints(minHeight: 150),
             padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-            alignment: Alignment.centerLeft,
+            alignment: Alignment.center,
             child: InkWell(
                 onTap: () => redirectGithubURL(context, developer),
-                child: Column(children: [
-                  Text(
-                    developer.name,
-                    style: restaurantListCardName,
-                  ),
-                  Text(
-                    developer.githubUsername,
-                    style: restaurantListCardName,
-                  ),
-                  Text(
-                    developer.roles,
-                    style: restaurantListCardName,
-                  )
-                ])),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        developer.name,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).primaryColorDark),
+                      ),
+                      Wrap(
+                        alignment: WrapAlignment.center,
+                        crossAxisAlignment: WrapCrossAlignment.start,
+                        children: [
+                          Text(
+                            'Github Username: ',
+                            style: TextStyle(
+                                fontSize: 16,
+                                //fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
+                          Text(
+                            developer.githubUsername,
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).primaryColorDark),
+                          ),
+                        ],
+                      ),
+                      Text(
+                        'Roles:',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 16,
+                            //fontWeight: FontWeight.bold,
+                            color: Colors.black),
+                      ),
+                      Text(
+                        developer.roles,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).primaryColorDark),
+                      ),
+                    ])),
           )
         ],
       )),
@@ -163,14 +211,33 @@ class AboutUsBar extends StatelessWidget with PreferredSizeWidget {
 
   @override
   get preferredSize {
-    final double appBarHeight = MediaQuery.of(context).size.width / 5;
+    final double appBarHeight = 150;
     return Size.fromHeight(appBarHeight);
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.amber,
+      //color: Theme.of(context).backgroundColor,
+      alignment: Alignment.center,
+      child: Text(
+        'About us',
+        style: TextStyle(
+            fontSize: 50,
+            fontWeight: FontWeight.bold,
+            color: Theme.of(context).accentColor),
+      ),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+            colors: [
+              Theme.of(context).backgroundColor,
+              Theme.of(context).primaryColorLight
+            ],
+            begin: const FractionalOffset(0.0, 0.8),
+            end: const FractionalOffset(0.0, 1.0),
+            stops: [0.0, 1.0],
+            tileMode: TileMode.clamp),
+      ),
     );
   }
 }

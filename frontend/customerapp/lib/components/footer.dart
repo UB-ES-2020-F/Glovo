@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:customerapp/components/text_link.dart';
 import 'package:customerapp/styles/footer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -65,8 +66,11 @@ class Footer extends StatelessWidget {
                             ]),
                             TableRow(children: [
                               Padding(
-                                child: Text("About us",
-                                    style: FooterTextNormalStyle),
+                                child: TextLink('About us', (context) {
+                                  Navigator.of(context).pushNamedAndRemoveUntil(
+                                      '/about-us', (route) => false);
+                                }, FooterTextNormalStyle, FooterTextNormalStyle,
+                                    context),
                                 padding: EdgeInsets.only(bottom: 15),
                               ),
                               Text("Careers", style: FooterTextNormalStyle),
