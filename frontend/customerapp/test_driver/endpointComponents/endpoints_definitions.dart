@@ -14,7 +14,8 @@ final PRODUCTS_OF_RESTAURANT_BY_CATEGORY = (int idRestaurant, int idCategory) =>
 // ignore: non_constant_identifier_names
 final PRODUCTS_BY_CATEGORY =
     (int idCategory) => '$_ENV/products?category=$idCategory';
-
 // ignore: non_constant_identifier_names
 final CLOSEST_RESTAURANTS = (double latitude, double longitude) =>
     '$RESTAURANTS/closest?latitude=$latitude&longitude=$longitude';
+final CHANGE_USER_AND_EMAIL = '$_ENV/users/update';
+final CHANGE_PASSWORD = '$_ENV/users/update-password';
