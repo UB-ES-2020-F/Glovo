@@ -1,5 +1,4 @@
 import 'package:customerapp/screens/forgotPassword/forgotPassword_form.dart';
-import 'package:customerapp/screens/loggedPage/editNameEmail/editNameEmail_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
