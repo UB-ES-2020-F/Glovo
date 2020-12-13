@@ -75,3 +75,6 @@ Color locationInitialColorIsHovered(bool isHovered) {
 }
 
 final buttonMainColor = Colors.white;
+
+final bigTextStyle =
+    TextStyle(fontSize: 60, color: Colors.white, fontWeight: FontWeight.w700);

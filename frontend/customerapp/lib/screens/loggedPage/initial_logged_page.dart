@@ -6,6 +6,7 @@ import 'package:customerapp/screens/commonComponents/food_button.dart';
 import 'package:customerapp/screens/commonComponents/single_message_dialog.dart';
 import 'package:customerapp/screens/commonComponents/snacks_button.dart';
 import 'package:customerapp/screens/commonComponents/supermarkets_button.dart';
+import 'package:customerapp/styles/initial_logged.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:customerapp/screens/loggedPage/logged_bar.dart';
@@ -52,16 +53,35 @@ class _InitialLogged extends State<InitialLogged> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          'Komet ',
+                                        Image.asset(
+                                          'resources/images/name_and_logo.png',
+                                          width: 250,
                                           key: Key(
                                               'initial-logged-in-komet-title-text'),
-                                          style: TextStyle(
-                                              fontSize: 50,
-                                              fontWeight: FontWeight.bold,
-                                              color: Theme.of(context)
-                                                  .accentColor),
                                         ),
+                                        Container(
+                                            padding: EdgeInsets.fromLTRB(
+                                                50, 50, 50, 0),
+                                            constraints:
+                                                BoxConstraints(maxWidth: 800),
+                                            child: FittedBox(
+                                                fit: BoxFit.scaleDown,
+                                                child: Text(
+                                                  "Anything you want",
+                                                  style: bigTextStyle,
+                                                ))),
+                                        Container(
+                                            padding: EdgeInsets.fromLTRB(
+                                                80, 0, 80, 50),
+                                            constraints:
+                                                BoxConstraints(maxWidth: 800),
+                                            child: FittedBox(
+                                                fit: BoxFit.scaleDown,
+                                                child: Text(
+                                                  "Delivered in minutes",
+                                                  style: bigTextStyle.copyWith(
+                                                      fontSize: 48),
+                                                ))),
                                         Container(
                                             constraints: BoxConstraints(
                                                 maxHeight:

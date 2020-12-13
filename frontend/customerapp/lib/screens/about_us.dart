@@ -245,6 +245,7 @@ class AboutUsBar extends StatelessWidget with PreferredSizeWidget {
       Container(
           alignment: Alignment.topLeft,
           padding: EdgeInsets.fromLTRB(40, 25, 40, 0),
+          transform: Matrix4.translationValues(0.0, -55.0, 0.0),
           child: Logo()),
     ]);
   }

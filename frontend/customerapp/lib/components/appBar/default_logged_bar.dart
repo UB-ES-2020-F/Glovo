@@ -39,7 +39,8 @@ class Logo extends StatelessWidget {
       onPressed: () {
         return Navigator.pushNamed(context, '/initial-logged-in');
       },
-      iconSize: 80,
+      hoverColor: Colors.transparent,
+      iconSize: 180,
       icon: Image.asset(
         'resources/images/name_and_logo.png',
       ),
@@ -55,6 +56,7 @@ class LogoGray extends StatelessWidget {
         return Navigator.pushNamed(context, '/initial-logged-in');
       },
       iconSize: 60,
+      hoverColor: Colors.transparent,
       icon: Image.asset(
         'resources/images/name_and_logo_over_gray_lq.png',
       ),

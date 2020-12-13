@@ -33,12 +33,9 @@ class AnonRoute extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Text(
-                                'Komet ',
-                                style: TextStyle(
-                                    fontSize: 50,
-                                    fontWeight: FontWeight.bold,
-                                    color: Theme.of(context).accentColor),
+                              Image.asset(
+                                'resources/images/name_and_logo.png',
+                                width: 250,
                               ),
                             ]),
                         Footer(Theme.of(context).backgroundColor)
