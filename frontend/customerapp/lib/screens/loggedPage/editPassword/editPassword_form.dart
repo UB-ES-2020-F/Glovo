@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:customerapp/styles/signup.dart';
 import 'package:provider/provider.dart';
+import 'package:customerapp/endpoints/user.dart';
+import 'package:customerapp/dto/user.dart';
+
 
 class EditPassword extends StatelessWidget {
   @override
@@ -204,9 +207,23 @@ void tryEditPasswordForm(
       showLoaderDialog(context);
       editPasswordModel.formKey.currentState.save();
       editPasswordModel.obfuscateAll();
-      //ENPOINT CALL
-      Navigator.pop(context);
-      Navigator.pop(context);
+
+      if (editPasswordModel.newPassword1 != editPasswordModel.newPassword2) {
+        Navigator.pop(context);
+        showEditPasswordFailedDialog(context);
+      } else {
+        UserPasswordDTO formPasswords = new UserPasswordDTO();
+        formPasswords.oldPassword = editPasswordModel.oldPassword;
+        formPasswords.newPassword = editPasswordModel.newPassword1;
+        updatePassword(formPasswords).then((value) async {
+          Navigator.pop(context); //exit loader
+          Navigator.pop(context); //exit changePassword dialog
+        }).catchError((error) {
+          print(error);
+          Navigator.pop(context); //exit loader
+          showEditPasswordFailedDialog(context);
+        });
+      }
     }
   }
 }
@@ -214,5 +231,5 @@ void tryEditPasswordForm(
 showEditPasswordFailedDialog(BuildContext context) {
   showDialog(
       context: context,
-      builder: (context) => SingleMessageDialog("Action failed"));
+      builder: (context) => SingleMessageDialog("Couldn't change password."));
 }

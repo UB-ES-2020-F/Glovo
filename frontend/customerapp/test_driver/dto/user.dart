@@ -24,3 +24,20 @@ class UserDTO {
     return toReturn;
   }
 }
+
+class UserPasswordDTO {
+  String oldPassword;
+  String newPassword;
+  UserPasswordDTO({this.oldPassword, this.newPassword});
+  factory UserPasswordDTO.fromJson(Map<String, dynamic> json) {
+    return UserPasswordDTO(
+        oldPassword: json['oldPassword'], newPassword: json['newPassword']);
+  }
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> toReturn = {
+      'oldPassword': oldPassword,
+      'newPassword': newPassword
+    };
+    return toReturn;
+  }
+}
