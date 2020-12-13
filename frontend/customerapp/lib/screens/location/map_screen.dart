@@ -14,6 +14,7 @@ class MapScreen extends StatelessWidget {
     final mapLocationModel = context.watch<MapLocationModel>();
     final geocoder = mapsOriginal.Geocoder();
     return Container(
+      key: Key('location-map'),
       width: 350,
       height: 350,
       padding: EdgeInsets.only(left: 30, top: 30, bottom: 30, right: 0),

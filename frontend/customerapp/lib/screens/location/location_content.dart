@@ -74,6 +74,7 @@ class LocationForm extends StatelessWidget {
                     ? BoxConstraints(maxWidth: 300)
                     : BoxConstraints(maxWidth: 900),
                 child: TextFormField(
+                  key: Key('location-text'),
                   controller: mapLocationModel.locationTextController,
                   decoration: InputDecoration(
                     border: locationInputTextBorder,
@@ -102,6 +103,7 @@ class LocationForm extends StatelessWidget {
                       ? BoxConstraints(maxWidth: 300)
                       : BoxConstraints(maxWidth: 900),
                   child: TextFormField(
+                    key: Key('location-indication'),
                     controller: mapLocationModel.indicationsTextController,
                     decoration: InputDecoration(
                       border: locationInputTextBorder,
@@ -128,6 +130,7 @@ class LocationForm extends StatelessWidget {
 }
 
 class SetLocationButton extends StatelessWidget {
+  SetLocationButton() : super(key: Key('set-location-button'));
   @override
   Widget build(BuildContext context) {
     final mapLocationModel = context.watch<MapLocationModel>();
@@ -157,8 +160,8 @@ class SetLocationButton extends StatelessWidget {
                                   mapLocationModel.currentCoordinates.latitude,
                               longitude: mapLocationModel
                                   .currentCoordinates.longitude))
-                          .then((value) {
-                      }).catchError((onError) {
+                          .then((value) {})
+                          .catchError((onError) {
                         var e = onError as LogoutCallbackFailed;
                         print(e.cause);
                         print(e.errorCode);
@@ -167,7 +170,6 @@ class SetLocationButton extends StatelessWidget {
 
                       update.update_restaurants = true;
                       update.update();
-                
                     }
                     Navigator.pop(context);
                   }

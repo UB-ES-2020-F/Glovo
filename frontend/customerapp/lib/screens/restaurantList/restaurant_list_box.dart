@@ -137,8 +137,12 @@ class RestaurantsListCard_loc extends StatefulWidget {
 class RestaurantsListCardState_loc extends State<StatefulWidget> {
   RestaurantLoc restaurant;
   double elevation = 2;
+  String key;
 
-  RestaurantsListCardState_loc(Key key, this.restaurant);
+  RestaurantsListCardState_loc(Key key, this.restaurant) {
+    String rawKey = key.toString();
+    this.key = rawKey.substring(3, rawKey.length - 3);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -227,9 +231,10 @@ class RestaurantsListCardState_loc extends State<StatefulWidget> {
             child: InkWell(
                 onTap: () => loadProduct(context, restaurant),
                 child: Text(
-              restaurant.name,
-              style: restaurantListCardName,
-            )),
+                  restaurant.name,
+                  key: Key('${this.key}-name'),
+                  style: restaurantListCardName,
+                )),
           )
         ],
       )),

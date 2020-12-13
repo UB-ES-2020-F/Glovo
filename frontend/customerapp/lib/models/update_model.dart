@@ -1,5 +1,3 @@
-import 'package:customerapp/models/location.dart';
-import 'package:customerapp/models/user.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
