@@ -4,6 +4,7 @@ import 'package:customerapp/styles/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+// ignore: must_be_immutable
 class ForgotPasswordSuccessDialog extends StatelessWidget {
   String email;
   ForgotPasswordSuccessDialog(this.email);
@@ -60,6 +61,7 @@ class ForgotPasswordSuccessPage extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class ForgotPasswordSuccess extends StatelessWidget {
   String email;
   ForgotPasswordSuccess(this.email);

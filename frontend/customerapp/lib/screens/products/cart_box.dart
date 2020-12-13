@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:customerapp/styles/product.dart';
 
+// ignore: must_be_immutable
 class CartBox extends StatelessWidget {
   final double cartWidth;
   final Restaurant restaurant;

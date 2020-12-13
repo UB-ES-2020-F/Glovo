@@ -206,6 +206,7 @@ class RestaurantsListCardState extends State<StatefulWidget> {
   }
 }
 
+// ignore: must_be_immutable
 class AboutUsBar extends StatelessWidget with PreferredSizeWidget {
   BuildContext context;
   AboutUsBar([this.context]);

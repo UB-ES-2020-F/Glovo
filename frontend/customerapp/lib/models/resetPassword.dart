@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
 class ResetPasswordModel extends ChangeNotifier {
-  String _newPassword1;
-  String _newPassword2;
+  String newPassword1;
+  String newPassword2;
 
   bool _formValid = false;
 
@@ -17,13 +17,7 @@ class ResetPasswordModel extends ChangeNotifier {
 
   GlobalKey<FormState> get formKey => _formKey;
 
-  String get newPassword1 => _newPassword1;
-  String get newPassword2 => _newPassword2;
-
   bool get formValid => _formValid;
-
-  set newPassword1(String value) => _newPassword1 = value;
-  set newPassword2(String value) => _newPassword2 = value;
 
   set formValid(bool value) {
     _formValid = value;
