@@ -17,5 +17,7 @@ final PRODUCTS_BY_CATEGORY =
 // ignore: non_constant_identifier_names
 final CLOSEST_RESTAURANTS = (double latitude, double longitude) =>
     '$RESTAURANTS/closest?latitude=$latitude&longitude=$longitude';
+// ignore: non_constant_identifier_names
 final CHANGE_USER_AND_EMAIL = '$_ENV/users/update';
+// ignore: non_constant_identifier_names
 final CHANGE_PASSWORD = '$_ENV/users/update-password';
