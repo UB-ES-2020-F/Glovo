@@ -9,6 +9,7 @@ namespace glovo_webapi.Profiles
         public ProductsProfile()
         {
             CreateMap<Product, ProductModel>();
+            CreateMap<ProductGroup, ProductGroupModel>();
         }
     }
 }
