@@ -4,6 +4,7 @@ import 'dart:html';
 import 'package:customerapp/actions/check_login.dart';
 import 'package:customerapp/components/appBar/default_logged_bar.dart';
 import 'package:customerapp/components/footer.dart';
+import 'package:customerapp/dto/category_product.dart';
 import 'package:customerapp/models/cart.dart';
 import 'package:customerapp/models/products.dart';
 import 'package:customerapp/models/restaurants.dart';
@@ -11,10 +12,12 @@ import 'package:customerapp/screens/commonComponents/single_message_dialog.dart'
 import 'package:customerapp/screens/products/cart_box.dart';
 import 'package:customerapp/styles/Komet.dart';
 import 'package:customerapp/styles/category_prod.dart';
+import 'package:customerapp/styles/main_page.dart';
 import 'package:customerapp/styles/product.dart';
 import 'package:customerapp/responsive/screen_responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:customerapp/endpoints/products.dart';
@@ -31,6 +34,8 @@ class _Products extends State<Products> {
   List prods = List();
   Cart cart;
   bool firstInstance;
+
+  List<String> cats;
 
   _Products() {
     firstInstance = true;
@@ -72,7 +77,8 @@ class _Products extends State<Products> {
                           image: DecorationImage(
                               image: NetworkImage(
                                   restaurant == null ? '' : restaurant.image),
-                              fit: BoxFit.fitWidth)),
+                              fit: BoxFit.fitWidth,
+                              alignment: Alignment.topCenter)),
 
                       child: SingleChildScrollView(
                           child: Column(children: [
@@ -95,12 +101,17 @@ class _Products extends State<Products> {
                                         : MediaQuery.of(context).size.width -
                                             cartWidth -
                                             75,
-                                    child: ListView(
-                                        physics:
-                                            NeverScrollableScrollPhysics(), // to disable GridView's scrolling
-                                        shrinkWrap: true,
-                                        children: [
-                                          Padding(
+                                    child: 
+                                          Builder(builder: (builder) {
+                                            return FutureBuilder(
+                                              future: getProductsFromRestaurant(
+                                                  restaurant.id),
+                                              builder: (BuildContext context,
+                                                  AsyncSnapshot snapshot2) {
+                                                if (snapshot2.hasData) {
+                                                  //the categories
+                                                  cats = (snapshot2.data as List<Category_productDTO>).map((e) => e.name).toList();
+                                                  List<Widget> content = [Container(child: Padding(
                                             padding: EdgeInsets.fromLTRB(
                                                 0, 0, 0, 10),
                                             child: Container(
@@ -126,57 +137,21 @@ class _Products extends State<Products> {
                                                               restaurantTitleStyle,
                                                         )),
                                                     Divider(),
-                                                    CustomRadio()
+                                                    //we construct the radiobutton with the cats
+                                                    CustomRadio(cats),
+                                                    
+                                                    
+                                              
                                                   ]),
                                             ),
-                                          ),
-                                          Builder(builder: (builder) {
-                                            return FutureBuilder(
-                                              future: getProductsFromRestaurant(
-                                                  restaurant.id),
-                                              builder: (BuildContext context,
-                                                  AsyncSnapshot snapshot2) {
-                                                if (snapshot2.hasData) {
-                                                  productsModel
-                                                      .removeProducts();
-                                                  snapshot2.data
-                                                      .forEach((element) {
-                                                    productsModel.addProduct(
-                                                        Product.fromDTO(
-                                                            element));
-                                                  });
-                                                  return StaggeredGridView
-                                                      .countBuilder(
-                                                    crossAxisSpacing: 10,
-                                                    mainAxisSpacing: 10,
-                                                    physics:
-                                                        NeverScrollableScrollPhysics(), // to disable GridView's scrolling
-                                                    shrinkWrap: true,
-                                                    itemCount: productsModel
-                                                        .availableProducts
-                                                        .length,
-                                                    crossAxisCount:
-                                                        MediaQuery.of(context)
-                                                                    .size
-                                                                    .width >
-                                                                600
-                                                            ? 2
-                                                            : 1,
-                                                    itemBuilder:
-                                                        (context, index) {
-                                                      return ProductListCard(
-                                                          Key(
-                                                              'product-card-$index'),
-                                                          productsModel
-                                                                  .availableProducts[
-                                                              index],
-                                                          addToCart);
-                                                    },
-                                                    staggeredTileBuilder: (int
-                                                            index) =>
-                                                        StaggeredTile.fit(1),
-                                                  );
-                                                } else {
+                                          )),
+                                          ...getGrids(snapshot2.data, productsModel)] as List <Widget>; 
+                                          return ListView(
+                                        physics:
+                                            NeverScrollableScrollPhysics(), // to disable GridView's scrolling
+                                        shrinkWrap: true,
+                                        children: content);
+                                        } else {
                                                   return Padding(
                                                       padding:
                                                           EdgeInsets.fromLTRB(
@@ -198,7 +173,7 @@ class _Products extends State<Products> {
                                               },
                                             );
                                           }),
-                                        ]),
+      
                                   ),
                                   if (MediaQuery.of(context).size.width > 900)
                                     Column(
@@ -238,23 +213,85 @@ class _Products extends State<Products> {
           }
         },
       );
+
+
+      //Returns a List<widgets> with each gridview for every category
+      List<Widget> getGrids(List<Category_productDTO> l, ProductsListModel model){
+        List<Widget> toret = List();
+
+        for(var category in l){
+          List<Product> p = List();
+            for(var pp in category.llista_prods){
+              Product product;
+            p.add(Product.fromDTO(pp));
+            model.availableProducts.add(product);
+          }
+
+          toret.add(Container (child: Text(category.name, key: Key(category.name), style: Category_style,),
+          decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          15.0),
+                                                  color: Color(0xAAFFFFFF)),alignment: Alignment.center, padding: EdgeInsets.all(10),margin: EdgeInsets.only(bottom: 5),));
+          toret.add(StaggeredGridView
+                                                      .countBuilder(
+                                                    crossAxisSpacing: 10,
+                                                    mainAxisSpacing: 10,
+                                                    physics:
+                                                        NeverScrollableScrollPhysics(), // to disable GridView's scrolling
+                                                    shrinkWrap: true,
+                                                    itemCount: p
+                                                        
+                                                        .length,
+                                                    crossAxisCount:
+                                                        MediaQuery.of(context)
+                                                                    .size
+                                                                    .width >
+                                                                600
+                                                            ? 2
+                                                            : 1,
+                                                    itemBuilder:
+                                                        (context, index) {
+                                                      return ProductListCard(
+                                                          Key(
+                                                              'product-card-$index'),
+                                                          p[
+                                                              index],
+                                                          addToCart);
+                                                    },
+                                                    staggeredTileBuilder: (int
+                                                            index) =>
+                                                        StaggeredTile.fit(1),
+                                                  ));
+                  
+        }
+        return toret;
+      }
 }
 
 class CustomRadio extends StatefulWidget {
+  List<String> categories;
+
+  CustomRadio(this.categories);
   @override
   State<StatefulWidget> createState() {
-    return CustomRadioState();
+    return CustomRadioState(this.categories);
   }
 }
 
 class CustomRadioState extends State<CustomRadio> {
+
+  List<String> categories;
   List<RadioModel> sample = List<RadioModel>();
+
+  CustomRadioState(this.categories);
 
   List<Widget> generate_widgets() {
     List<Widget> llista = List<Widget>();
     sample.asMap().forEach((key, value) {
       llista.add(InkWell(
           onTap: () {
+            //TODO your task here gerard you should go to the widget with key the same name as the category, see line 229 
             setState(() {
               sample.forEach((element) => element.isSelected = false);
               sample[key].isSelected = true;
@@ -270,10 +307,9 @@ class CustomRadioState extends State<CustomRadio> {
   @override
   void initState() {
     super.initState();
-    sample.add(RadioModel("primer", true));
-    sample.add(RadioModel("segundo", false));
-    sample.add(RadioModel("tercer", false));
-    sample.add(RadioModel("quart", false));
+    for (var cat in categories){
+      sample.add(RadioModel(cat, false));
+    }
   }
 
   @override
@@ -313,9 +349,10 @@ class Product_class_widget extends StatelessWidget {
 }
 
 class RadioModel {
+
+
   String name;
   bool isSelected;
 
   RadioModel(this.name, this.isSelected);
 }
-
