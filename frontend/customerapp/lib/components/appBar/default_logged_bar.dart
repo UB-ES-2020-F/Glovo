@@ -35,16 +35,29 @@ class DefaultLoggedBar extends StatelessWidget with PreferredSizeWidget {
 class Logo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-        onTap: () {
-          return Navigator.pushNamed(context, '/initial-logged-in');
-        },
-        child: Text(
-          'Komet ',
-          style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).accentColor),
-        ));
+    return IconButton(
+      onPressed: () {
+        return Navigator.pushNamed(context, '/initial-logged-in');
+      },
+      iconSize: 80,
+      icon: Image.asset(
+        'resources/images/name_and_logo.png',
+      ),
+    );
+  }
+}
+
+class LogoGray extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: () {
+        return Navigator.pushNamed(context, '/initial-logged-in');
+      },
+      iconSize: 60,
+      icon: Image.asset(
+        'resources/images/name_and_logo_over_gray_lq.png',
+      ),
+    );
   }
 }

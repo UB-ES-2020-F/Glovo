@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:customerapp/components/appBar/default_logged_bar.dart';
 import 'package:customerapp/components/text_link.dart';
 import 'package:customerapp/styles/footer.dart';
 import 'package:flutter/material.dart';
@@ -36,34 +37,34 @@ class Footer extends StatelessWidget {
                         width: 800,
                         child: Table(
                           defaultVerticalAlignment:
-                              TableCellVerticalAlignment.middle,
+                              TableCellVerticalAlignment.baseline,
                           children: [
                             TableRow(children: [
-                              Padding(
-                                  child: Row(
-                                    children: [
-                                      IconButton(
-                                        onPressed: () {},
-                                        iconSize: 30,
-                                        icon: Image.asset(
-                                          'resources/images/logo_kommet.png',
-                                        ),
-                                      ),
-                                      Text(
-                                        'Komet ',
-                                        style: TextStyle(
-                                            fontSize: 25,
-                                            fontWeight: FontWeight.bold,
-                                            color:
-                                                Theme.of(context).accentColor),
-                                      )
-                                    ],
-                                  ),
-                                  padding: EdgeInsets.only(bottom: 15)),
-                              Text("JOIN US", style: footerTextTitleStyle),
-                              Text("HELP", style: footerTextTitleStyle),
-                              Text("LEGAL", style: footerTextTitleStyle),
-                              Text("FOLLOW US", style: footerTextTitleStyle),
+                              Container(
+                                  child: LogoGray(),
+                                  transform: Matrix4.translationValues(
+                                      -15.0, -20.0, 0.0),
+                                  padding: EdgeInsets.only(left: 0)),
+                              Container(
+                                  transform:
+                                      Matrix4.translationValues(0.0, 30.0, 0.0),
+                                  child: Text("JOIN US",
+                                      style: footerTextTitleStyle)),
+                              Container(
+                                  transform:
+                                      Matrix4.translationValues(0.0, 30.0, 0.0),
+                                  child: Text("HELP",
+                                      style: footerTextTitleStyle)),
+                              Container(
+                                  transform:
+                                      Matrix4.translationValues(0.0, 30.0, 0.0),
+                                  child: Text("LEGAL",
+                                      style: footerTextTitleStyle)),
+                              Container(
+                                  transform:
+                                      Matrix4.translationValues(0.0, 30.0, 0.0),
+                                  child: Text("FOLLOW US",
+                                      style: footerTextTitleStyle)),
                             ]),
                             TableRow(children: [
                               Padding(
