@@ -1,3 +1,4 @@
+import 'package:customerapp/screens/about_us.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:customerapp/components/appBar/overview_logged_mobile.dart';
@@ -50,5 +51,6 @@ class AppModule extends MainModule {
             child: (context, __) => InitialLogged()),
         ModularRouter('/overview-mobile',
             child: (context, __) => TabBarScreen()),
+        ModularRouter('/about-us', child: (context, __) => AboutUs()),
       ];
 }

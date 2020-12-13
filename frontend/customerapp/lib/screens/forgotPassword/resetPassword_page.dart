@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class ResetPasswordPage extends StatelessWidget {
   String email, token;
   ResetPasswordPage({
@@ -25,6 +26,7 @@ class ResetPasswordPage extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class ResetPassword extends StatelessWidget {
   String email, token;
   ResetPassword({
@@ -50,6 +52,7 @@ class ResetPassword extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class ResetPasswordForm extends StatefulWidget {
   String email, token;
   ResetPasswordForm({
@@ -163,6 +166,7 @@ class ResetPasswordFormState extends State<ResetPasswordForm> {
   }
 }
 
+// ignore: must_be_immutable
 class ResetPasswordButton extends StatelessWidget {
   String email, token;
   ResetPasswordButton({
