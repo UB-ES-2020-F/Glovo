@@ -130,7 +130,7 @@ namespace glovo_webapi_test.ControllersTests.Orders
         [Fact]
         public void GetOrdersOfRestaurantTest()
         {
-            OrdersOfRestaurantController ordersController = CreateFakeOrdersOfRestaurantController(null);
+            OrdersOfRestaurantController ordersController = CreateFakeOrdersOfRestaurantController();
             
             //Retrieving all orders of existing restaurant
             var response = ordersController.GetAllOrdersOfRestaurant(_restaurants[0].Id);

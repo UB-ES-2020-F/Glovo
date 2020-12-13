@@ -7,7 +7,6 @@ using glovo_webapi.Entities;
 using glovo_webapi.Models.Product;
 using glovo_webapi.Profiles;
 using glovo_webapi.Services.Products;
-using glovo_webapi.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Xunit;

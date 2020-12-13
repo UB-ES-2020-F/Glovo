@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
@@ -8,11 +7,9 @@ using glovo_webapi.Entities;
 using glovo_webapi.Models.Product;
 using glovo_webapi.Profiles;
 using glovo_webapi.Services.Products;
-using glovo_webapi.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace glovo_webapi_test.ControllersTests.Products
 {
@@ -94,9 +91,13 @@ namespace glovo_webapi_test.ControllersTests.Products
             //Retrieving all products of restaurant of first category
             var response = productsController.GetAllProductsOfRestaurant(_restaurants[0].Id);
             Assert.IsType<OkObjectResult>(response.Result);
+            
+            //Check same number of products with queried category
             var value = (IEnumerable<ProductGroupModel>)((OkObjectResult) response.Result).Value;
-            int menuItems = value.FirstOrDefault(pgm => pgm.Category == "Menu").Products.Count();
-            Assert.Equal(_products.FindAll(p => p.RestaurantId == _restaurants[0].Id && p.Category == "Menu").Count, menuItems);
+            Assert.Equal(
+                _products.FindAll(p => p.RestaurantId == _restaurants[0].Id && p.Category == "Menu").Count, 
+                value.FirstOrDefault(pgm => pgm.Category == "Menu").Products.Count()
+                );
         }
     }
 }

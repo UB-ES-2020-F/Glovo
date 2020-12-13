@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using glovo_webapi.Data;
 using glovo_webapi.Entities;
-using glovo_webapi.Utils;
 
 namespace  glovo_webapi.Services.Products
 {
