@@ -1,9 +1,11 @@
 import 'dart:ui';
 
+import 'package:customerapp/components/text_link.dart';
 import 'package:customerapp/styles/footer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+// ignore: must_be_immutable
 class Footer extends StatelessWidget {
   Color backgroundC;
 
@@ -23,7 +25,7 @@ class Footer extends StatelessWidget {
               child: SampleAnimation(
                   MediaQuery.of(context).size.width, backgroundC)),
           Container(
-              color: FooterBackgroundColor,
+              color: footerBackgroundColor,
               height: 350,
               padding: EdgeInsets.only(left: 20, right: 20),
               child: Row(
@@ -58,56 +60,59 @@ class Footer extends StatelessWidget {
                                     ],
                                   ),
                                   padding: EdgeInsets.only(bottom: 15)),
-                              Text("JOIN US", style: FooterTextTitleStyle),
-                              Text("HELP", style: FooterTextTitleStyle),
-                              Text("LEGAL", style: FooterTextTitleStyle),
-                              Text("FOLLOW US", style: FooterTextTitleStyle),
+                              Text("JOIN US", style: footerTextTitleStyle),
+                              Text("HELP", style: footerTextTitleStyle),
+                              Text("LEGAL", style: footerTextTitleStyle),
+                              Text("FOLLOW US", style: footerTextTitleStyle),
                             ]),
                             TableRow(children: [
                               Padding(
-                                child: Text("About us",
-                                    style: FooterTextNormalStyle),
+                                child: TextLink('About us', (context) {
+                                  Navigator.of(context).pushNamedAndRemoveUntil(
+                                      '/about-us', (route) => false);
+                                }, footerTextNormalStyle, footerTextNormalStyle,
+                                    context),
                                 padding: EdgeInsets.only(bottom: 15),
                               ),
-                              Text("Careers", style: FooterTextNormalStyle),
-                              Text("FAQ", style: FooterTextNormalStyle),
+                              Text("Careers", style: footerTextNormalStyle),
+                              Text("FAQ", style: footerTextNormalStyle),
                               Text("Terms and conditions",
-                                  style: FooterTextNormalStyle),
-                              Text("Facebook", style: FooterTextNormalStyle),
+                                  style: footerTextNormalStyle),
+                              Text("Facebook", style: footerTextNormalStyle),
                             ]),
                             TableRow(children: [
                               Padding(
-                                child: Text("", style: FooterTextNormalStyle),
+                                child: Text("", style: footerTextNormalStyle),
                                 padding: EdgeInsets.only(bottom: 15),
                               ),
                               Text("Store Partners",
-                                  style: FooterTextNormalStyle),
-                              Text("Contact us", style: FooterTextNormalStyle),
+                                  style: footerTextNormalStyle),
+                              Text("Contact us", style: footerTextNormalStyle),
                               Text("Privacy policy",
-                                  style: FooterTextNormalStyle),
-                              Text("Twitter", style: FooterTextNormalStyle),
+                                  style: footerTextNormalStyle),
+                              Text("Twitter", style: footerTextNormalStyle),
                             ]),
                             TableRow(children: [
                               Padding(
-                                child: Text("", style: FooterTextNormalStyle),
+                                child: Text("", style: footerTextNormalStyle),
                                 padding: EdgeInsets.only(bottom: 15),
                               ),
-                              Text("Couriers", style: FooterTextNormalStyle),
-                              Text("", style: FooterTextNormalStyle),
+                              Text("Couriers", style: footerTextNormalStyle),
+                              Text("", style: footerTextNormalStyle),
                               Text("Cookies Policy",
-                                  style: FooterTextNormalStyle),
-                              Text("Instagram", style: FooterTextNormalStyle),
+                                  style: footerTextNormalStyle),
+                              Text("Instagram", style: footerTextNormalStyle),
                             ]),
                             TableRow(children: [
                               Padding(
-                                child: Text("", style: FooterTextNormalStyle),
+                                child: Text("", style: footerTextNormalStyle),
                                 padding: EdgeInsets.only(bottom: 15),
                               ),
                               Text("Glovo business",
-                                  style: FooterTextNormalStyle),
-                              Text("", style: FooterTextNormalStyle),
-                              Text("", style: FooterTextNormalStyle),
-                              Text("", style: FooterTextNormalStyle),
+                                  style: footerTextNormalStyle),
+                              Text("", style: footerTextNormalStyle),
+                              Text("", style: footerTextNormalStyle),
+                              Text("", style: footerTextNormalStyle),
                             ])
                           ],
                         )),
@@ -145,7 +150,7 @@ class Footer extends StatelessWidget {
 class ShapesPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    final p = Path();
+    //final p = Path();
     /*p.relativeQuadraticBezierTo(size.width/2, size.height/1.5, size.width, 0);
     p.moveTo(0, 0);
     p.lineTo(0, size.height);
@@ -160,7 +165,7 @@ class ShapesPainter extends CustomPainter {
     p.lineTo(0.0, 0.0);*/
 
     var paint = Paint();
-    paint.color = FooterBackgroundColor;
+    paint.color = footerBackgroundColor;
     paint.style = PaintingStyle.fill;
 
     var path = Path();
@@ -180,6 +185,7 @@ class ShapesPainter extends CustomPainter {
   }
 }
 
+// ignore: must_be_immutable
 class SampleAnimation extends StatefulWidget {
   double c;
   Color backC;
@@ -201,7 +207,7 @@ class SampleAnimationState extends State<SampleAnimation>
   bool isfinished = false;
   Color backC;
 
-  Image moto_dude_img = Image.asset(
+  Image motoDudeImg = Image.asset(
     'resources/images/moto_dude.png',
   );
 
@@ -236,14 +242,14 @@ class SampleAnimationState extends State<SampleAnimation>
           Positioned(
             top: 0,
             child: CustomPaint(
-              painter: PathPainter(drawPath_complete()),
+              painter: PathPainter(drawPathComplete()),
             ),
           ),
-          moto_dude(
+          motoDude(
               isfinished,
               calculate(_animation.value).dx,
               calculate(_animation.value).dy,
-              calculate_angle(_animation.value).direction),
+              calculateAngle(_animation.value).direction),
         ],
       ),
     );
@@ -265,7 +271,7 @@ class SampleAnimationState extends State<SampleAnimation>
     return path;
   }
 
-  Path drawPath_complete() {
+  Path drawPathComplete() {
     Size size = Size(c.toDouble(), 300);
     Path path = Path();
     path.moveTo(0, size.height / 3);
@@ -284,7 +290,7 @@ class SampleAnimationState extends State<SampleAnimation>
     return pos.position;
   }
 
-  Offset calculate_angle(value) {
+  Offset calculateAngle(value) {
     PathMetrics pathMetrics = _path.computeMetrics();
     PathMetric pathMetric = pathMetrics.elementAt(0);
     value = pathMetric.length * value;
@@ -292,7 +298,7 @@ class SampleAnimationState extends State<SampleAnimation>
     return pos.vector;
   }
 
-  Widget moto_dude(bool finished, double posx, double posy, double angle) {
+  Widget motoDude(bool finished, double posx, double posy, double angle) {
     if (!finished) {
       return Positioned(
           top: posy - 15,
@@ -300,9 +306,7 @@ class SampleAnimationState extends State<SampleAnimation>
           child: Transform.rotate(
             angle: angle,
             child: IconButton(
-                onPressed: () {},
-                iconSize: size.toDouble(),
-                icon: moto_dude_img),
+                onPressed: () {}, iconSize: size.toDouble(), icon: motoDudeImg),
           ));
     } else {
       return Container();
@@ -318,7 +322,7 @@ class PathPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint();
-    paint.color = FooterBackgroundColor;
+    paint.color = footerBackgroundColor;
     paint.style = PaintingStyle.fill;
 
     canvas.drawPath(this.path, paint);

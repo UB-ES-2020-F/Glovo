@@ -7,7 +7,6 @@ using glovo_webapi.Entities;
 using glovo_webapi.Models.Product;
 using glovo_webapi.Profiles;
 using glovo_webapi.Services.Products;
-using glovo_webapi.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
@@ -47,11 +46,11 @@ namespace glovo_webapi_test.ControllersTests.Products
             };
             _products = new List<Product>()
             {
-                new Product("name-p1", "imgPath-p1", "desc-p1", 10, 1, ProductCategory.C1) {Id = 1},
-                new Product("name-p2", "imgPath-p2", "desc-p2", 20, 2, ProductCategory.C1) {Id = 2},
-                new Product("name-p3", "imgPath-p3", "desc-p3", 5, 2, ProductCategory.C1) {Id = 3},
-                new Product("name-p4", "imgPath-p4", "desc-p4", 15, 2, ProductCategory.Uncategorized) {Id = 4},
-                new Product("name-p5", "imgPath-p5", "desc-p5", 12, 2, ProductCategory.Uncategorized) {Id = 5}
+                new Product("name-p1", "imgPath-p1", "desc-p1", 10, 1, "Menu") {Id = 1},
+                new Product("name-p2", "imgPath-p2", "desc-p2", 20, 2, "Menu") {Id = 2},
+                new Product("name-p3", "imgPath-p3", "desc-p3", 5, 2, "Menu") {Id = 3},
+                new Product("name-p4", "imgPath-p4", "desc-p4", 15, 2, "Menu") {Id = 4},
+                new Product("name-p5", "imgPath-p5", "desc-p5", 12, 2, "Menu") {Id = 5}
             };
             
             context.AddRange(_restaurants);
@@ -89,21 +88,16 @@ namespace glovo_webapi_test.ControllersTests.Products
         {
             ProductsOfRestaurantController productsController = CreateFakeProductsOfRestaurantController();
             
-            //Retrieving all products of restaurant, no category
-            var response = productsController.GetAllProductsOfRestaurant(_restaurants[0].Id, null);
-            Assert.IsType<OkObjectResult>(response.Result);
-            Assert.Equal(_products.FindAll(p => p.RestaurantId == _restaurants[0].Id).Count, ((IEnumerable<ProductModel>)((OkObjectResult)response.Result).Value).Count());
-        }
-
-        [Fact]
-        private void GetAllProductsOfRestaurantOfCategoryTest()
-        {
-            ProductsOfRestaurantController productsController = CreateFakeProductsOfRestaurantController();
-            
             //Retrieving all products of restaurant of first category
-            var response = productsController.GetAllProductsOfRestaurant(_restaurants[0].Id, ProductCategory.C1);
+            var response = productsController.GetAllProductsOfRestaurant(_restaurants[0].Id);
             Assert.IsType<OkObjectResult>(response.Result);
-            Assert.Equal(_products.FindAll(p => p.RestaurantId == _restaurants[0].Id && p.Category == ProductCategory.C1).Count, ((IEnumerable<ProductModel>)((OkObjectResult)response.Result).Value).Count());
+            
+            //Check same number of products with queried category
+            var value = (IEnumerable<ProductGroupModel>)((OkObjectResult) response.Result).Value;
+            Assert.Equal(
+                _products.FindAll(p => p.RestaurantId == _restaurants[0].Id && p.Category == "Menu").Count, 
+                value.FirstOrDefault(pgm => pgm.Category == "Menu").Products.Count()
+                );
         }
     }
 }

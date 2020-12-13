@@ -69,8 +69,9 @@ namespace glovo_webapi.Migrations
                         .HasColumnType("integer")
                         .UseIdentityByDefaultColumn();
 
-                    b.Property<int>("Category")
-                        .HasColumnType("integer");
+                    b.Property<string>("Category")
+                        .HasMaxLength(127)
+                        .HasColumnType("character varying(127)");
 
                     b.Property<string>("Description")
                         .HasColumnType("text");

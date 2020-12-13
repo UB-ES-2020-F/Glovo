@@ -61,6 +61,7 @@ namespace glovo_webapi
                                     }  
                                 });
             });
+            
             string connection = Configuration.GetConnectionString("LocalDBConnection");
             string dbUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
             if (Env.IsProduction())
@@ -90,6 +91,7 @@ namespace glovo_webapi
             services.AddScoped<IUsersService, RestApiUsersService>();
 
             services.AddOptions();
+            
             services.Configure<AppConfiguration>(Configuration.GetSection("AppSettings"));
 
             services.AddHttpContextAccessor();
