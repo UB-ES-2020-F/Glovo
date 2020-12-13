@@ -1,6 +1,6 @@
 import 'dart:convert';
-
 import 'package:customerapp/dto/user.dart';
+import 'package:customerapp/dto/user_recovery.dart';
 import 'package:customerapp/endpoints/urls.dart';
 import 'package:customerapp/exceptions/logout-callback-failed.dart';
 import 'package:customerapp/infrastructure/persistence/repository/user_credentials_repository.dart';
@@ -61,5 +61,20 @@ Future<void> sendEmailForgotPassword(UserDTO formUser) async {
   } else {
     throw LogoutCallbackFailed(
         'Failed to send recovery email', response.statusCode, response.body);
+  }
+}
+
+Future<void> resetPassword(UserRecoveryDTO formUser) async {
+  final response =
+      await http.post(await EndpointDefinitions.makeSetRecoveryPasswordURL(),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: jsonEncode(formUser.toJson()));
+  if (response.statusCode == 200) {
+    return;
+  } else {
+    throw LogoutCallbackFailed(
+        'Failed to set recovery password', response.statusCode, response.body);
   }
 }

@@ -1,0 +1,1 @@
+/media/ruben/Almacenamiento HDD/Clase/Ingeniería Informática/software-engineering-assignatura/Glovo/server/glovo_webapi/glovo_webapi_test/.sonarqube/out/0
