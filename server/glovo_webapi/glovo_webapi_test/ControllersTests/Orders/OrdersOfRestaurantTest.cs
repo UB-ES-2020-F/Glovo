@@ -51,11 +51,11 @@ namespace glovo_webapi_test.ControllersTests.Orders
             };
             _products = new List<Product>()
             {
-                new Product("name-p1", "imgPath-p1", "desc-p1", 10, 1, ProductCategory.C1) {Id = 1},
-                new Product("name-p2", "imgPath-p2", "desc-p2", 20, 2, ProductCategory.C1) {Id = 2},
-                new Product("name-p3", "imgPath-p3", "desc-p3", 5, 2, ProductCategory.C1) {Id = 3},
-                new Product("name-p4", "imgPath-p4", "desc-p4", 15, 2, ProductCategory.Uncategorized) {Id = 4},
-                new Product("name-p5", "imgPath-p5", "desc-p5", 12, 2, ProductCategory.Uncategorized) {Id = 5}
+                new Product("name-p1", "imgPath-p1", "desc-p1", 10, 1, "Menu") {Id = 1},
+                new Product("name-p2", "imgPath-p2", "desc-p2", 20, 2, "Menu") {Id = 2},
+                new Product("name-p3", "imgPath-p3", "desc-p3", 5, 2, "Menu") {Id = 3},
+                new Product("name-p4", "imgPath-p4", "desc-p4", 15, 2, "Menu") {Id = 4},
+                new Product("name-p5", "imgPath-p5", "desc-p5", 12, 2, "Menu") {Id = 5}
             };
             _users = new List<User>()
             {
@@ -130,7 +130,7 @@ namespace glovo_webapi_test.ControllersTests.Orders
         [Fact]
         public void GetOrdersOfRestaurantTest()
         {
-            OrdersOfRestaurantController ordersController = CreateFakeOrdersOfRestaurantController(null);
+            OrdersOfRestaurantController ordersController = CreateFakeOrdersOfRestaurantController();
             
             //Retrieving all orders of existing restaurant
             var response = ordersController.GetAllOrdersOfRestaurant(_restaurants[0].Id);

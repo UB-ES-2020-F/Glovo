@@ -25,16 +25,10 @@ namespace glovo_webapi.Controllers.Products
         
         //GET api/products
         [HttpGet]
-        public ActionResult<IEnumerable<ProductModel>> GetAllProducts([FromQuery]ProductCategory? category)
+        public ActionResult<IEnumerable<ProductModel>> GetAllProducts()
         {
             IEnumerable<Product> products;
-            
-            if (category.HasValue) {
-                products = _service.GetProductsByCategory(category.Value);
-            } else {
-                products = _service.GetAllProducts();
-            }
-            
+            products = _service.GetAllProducts();
             return Ok(_mapper.Map<IEnumerable<ProductModel>>(products));
         }
         
