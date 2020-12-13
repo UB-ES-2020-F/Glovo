@@ -57,7 +57,7 @@ namespace  glovo_webapi.Services.Products
                 cp.Category = category;
                 cp.Products = _context
                     .Products
-                    .Where(p => p.Category == category)
+                    .Where(p => p.RestaurantId == idRest && p.Category == category)
                     .ToList();
                 productGroups.Add(cp);
             }

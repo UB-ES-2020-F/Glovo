@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
@@ -11,6 +12,7 @@ using glovo_webapi.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace glovo_webapi_test.ControllersTests.Products
 {
@@ -89,22 +91,12 @@ namespace glovo_webapi_test.ControllersTests.Products
         {
             ProductsOfRestaurantController productsController = CreateFakeProductsOfRestaurantController();
             
-            //Retrieving all products of restaurant, no category
+            //Retrieving all products of restaurant of first category
             var response = productsController.GetAllProductsOfRestaurant(_restaurants[0].Id);
             Assert.IsType<OkObjectResult>(response.Result);
-            Assert.Equal(_products.FindAll(p => p.RestaurantId == _restaurants[0].Id).Count, ((IEnumerable<ProductModel>)((OkObjectResult)response.Result).Value).Count());
-        }
-
-        [Fact]
-        private void GetAllProductsOfRestaurantOfCategoryTest()
-        {
-            /*ProductsOfRestaurantController productsController = CreateFakeProductsOfRestaurantController();
-            
-            //Retrieving all products of restaurant of first category
-            var response = productsController.GetAllProductsOfRestaurant(_restaurants[0].Id, ProductCategory.C1);
-            Assert.IsType<OkObjectResult>(response.Result);
-            Assert.Equal(_products.FindAll(p => p.RestaurantId == _restaurants[0].Id && p.Category == ProductCategory.C1).Count, ((IEnumerable<ProductModel>)((OkObjectResult)response.Result).Value).Count());
-            */
+            var value = (IEnumerable<ProductGroupModel>)((OkObjectResult) response.Result).Value;
+            int menuItems = value.FirstOrDefault(pgm => pgm.Category == "Menu").Products.Count();
+            Assert.Equal(_products.FindAll(p => p.RestaurantId == _restaurants[0].Id && p.Category == "Menu").Count, menuItems);
         }
     }
 }

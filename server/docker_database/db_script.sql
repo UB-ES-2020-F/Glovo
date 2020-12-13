@@ -32,7 +32,7 @@ VALUES
 	('Súper Menú', 'https://res.cloudinary.com/glovoapp/w_680,h_240,c_fit,f_auto,q_auto/Products/1439822010', 'El principal que quieras + 3 complementos + 1 bebida', 9.99, 1, 'Menu'),
 	('Chick&Share 12 Tiras para 2', 'https://res.cloudinary.com/glovoapp/w_680,h_240,c_fit,f_auto,q_auto/Products/1439822055', '12 Tiras de Pechuga + 4 salsas', 13.99, 1, 'Menu para 2'),
 	('Menú Bucket 12 Tiras para 2', 'https://res.cloudinary.com/glovoapp/w_680,h_240,c_fit,f_auto,q_auto/Products/1439822019', '12 Tiras de Pechuga + 4 salsas + 2 complementos + 2 bebidas', 17.99, 1, 'Menu para 2'),
-	('Menú Super Bucket para 2', 'https://res.cloudinary.com/glovoapp/w_680,h_240,c_fit,f_auto,q_auto/Products/1439822064', '2 Twister Wrap + 9 Tiras de Pechuga + 3 salsas + 2 complementos + 2 bebidas', 19.49, 1, 'Menu'),
+	('Menú Super Bucket para 2', 'https://res.cloudinary.com/glovoapp/w_680,h_240,c_fit,f_auto,q_auto/Products/1439822064', '2 Twister Wrap + 9 Tiras de Pechuga + 3 salsas + 2 complementos + 2 bebidas', 19.49, 1, 'Menu para 2'),
 	('Menú Burger Bacon BBQ Cheddar', 'https://res.cloudinary.com/glovoapp/w_680,h_240,c_fit,f_auto,q_auto/Products/1439822030', 'Filete de Pechuga Original, bacon, BBQ, cheddar y mayonesa + 1 complemento + 1 bebida', 7.79, 1, 'Menu'),
 	('3 Alitas Picantes', 'https://res.cloudinary.com/glovoapp/w_680,h_240,c_fit,f_auto,q_auto/Products/1294940110', '3 Alitas Picantes', 2.99, 1, 'Platos'),
 	/*La Tagliatella*/

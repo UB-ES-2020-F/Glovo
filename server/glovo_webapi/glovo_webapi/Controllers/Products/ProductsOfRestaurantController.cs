@@ -24,7 +24,7 @@ namespace glovo_webapi.Controllers.Products
         }
 
         [HttpGet("{idRest}/products")]
-        public ActionResult<ProductModel> GetAllProductsOfRestaurant(int idRest)
+        public ActionResult<IEnumerable<ProductGroupModel>> GetAllProductsOfRestaurant(int idRest)
         {
             Console.Write("GET PRODUCTS");
             IEnumerable<Product> products;

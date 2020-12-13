@@ -95,18 +95,17 @@ namespace glovo_webapi_test.ControllersTests.Products
             Assert.Equal(_products.Count, ((IEnumerable<ProductModel>)((OkObjectResult)response.Result).Value).Count());
         }
 
+        /*
         [Fact]
         private void GetAllProductsOfCategoryTest()
         {
-            /*
             ProductsController productsController = CreateFakeProductsController();
             
             //Retrieving all products of first category
             var response = productsController.GetAllProducts("Menu");
             Assert.IsType<OkObjectResult>(response.Result);
             Assert.Equal(_products.FindAll(p => p.Category == "Menu").Count, ((IEnumerable<ProductModel>)((OkObjectResult)response.Result).Value).Count());
-            */
-        }
+        }*/
 
         [Fact]
         private void GetProductByIdTest()
