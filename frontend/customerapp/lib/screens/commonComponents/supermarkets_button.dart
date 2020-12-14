@@ -12,14 +12,15 @@ class SupermarketsButton extends StatelessWidget {
         height: 160,
         child: SizedBox.expand(
             child: RaisedButton(
-          onPressed: () {},
+          onPressed: null,
+          onLongPress: null,
           color: Colors.white,
           textColor: Colors.white,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Image(
-                image: AssetImage('resources/images/supermarket_logo.png'),
+                image: AssetImage('resources/images/supermarket_logo_gray.png'),
                 height: 55,
                 width: 55,
               ),

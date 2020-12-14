@@ -2,7 +2,10 @@ import 'package:customerapp/actions/check_login.dart';
 import 'package:customerapp/components/footer.dart';
 import 'package:customerapp/responsive/screen_responsive.dart';
 import 'package:customerapp/screens/commonComponents/anything_button.dart';
+import 'package:customerapp/screens/commonComponents/delivery_express_button.dart';
 import 'package:customerapp/screens/commonComponents/food_button.dart';
+import 'package:customerapp/screens/commonComponents/pharmacy_button.dart';
+import 'package:customerapp/screens/commonComponents/shops_gifts_button.dart';
 import 'package:customerapp/screens/commonComponents/single_message_dialog.dart';
 import 'package:customerapp/screens/commonComponents/snacks_button.dart';
 import 'package:customerapp/screens/commonComponents/supermarkets_button.dart';
@@ -61,7 +64,7 @@ class _InitialLogged extends State<InitialLogged> {
                                         ),
                                         Container(
                                             padding: EdgeInsets.fromLTRB(
-                                                50, 50, 50, 0),
+                                                50, 30, 50, 0),
                                             constraints:
                                                 BoxConstraints(maxWidth: 800),
                                             child: FittedBox(
@@ -72,7 +75,7 @@ class _InitialLogged extends State<InitialLogged> {
                                                 ))),
                                         Container(
                                             padding: EdgeInsets.fromLTRB(
-                                                80, 0, 80, 50),
+                                                80, 0, 80, 30),
                                             constraints:
                                                 BoxConstraints(maxWidth: 800),
                                             child: FittedBox(
@@ -104,6 +107,12 @@ class _InitialLogged extends State<InitialLogged> {
                                                       "snacks-bubble-button")),
                                                   AnythingButton(Key(
                                                       "anything-bubble-button")),
+                                                  PharmacyButton(
+                                                      Key("pharmacy-button")),
+                                                  DeliveryExpressButton(Key(
+                                                      "delivery-express-button")),
+                                                  ShopsGiftsButton(Key(
+                                                      "shops-gifts-button")),
                                                 ])))
                                       ],
                                     ),
