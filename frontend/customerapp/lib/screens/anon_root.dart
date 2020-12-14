@@ -45,6 +45,7 @@ class AnonRoute extends StatelessWidget {
                         ),
                         if (MediaQuery.of(context).size.width > 300)
                           AppAdZone(),
+                        WorkWithUs(),
                         Footer(Colors.white)
                       ]),
                 ))))));

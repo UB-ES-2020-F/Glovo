@@ -1,5 +1,6 @@
 import 'package:customerapp/actions/check_login.dart';
 import 'package:customerapp/components/footer.dart';
+import 'package:customerapp/models/landingPageText.dart';
 import 'package:customerapp/responsive/screen_responsive.dart';
 import 'package:customerapp/screens/commonComponents/anything_button.dart';
 import 'package:customerapp/screens/commonComponents/delivery_express_button.dart';
@@ -10,6 +11,7 @@ import 'package:customerapp/screens/commonComponents/single_message_dialog.dart'
 import 'package:customerapp/screens/commonComponents/snacks_button.dart';
 import 'package:customerapp/screens/commonComponents/supermarkets_button.dart';
 import 'package:customerapp/styles/initial_logged.dart';
+import 'package:customerapp/styles/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:customerapp/screens/loggedPage/logged_bar.dart';
@@ -132,6 +134,7 @@ class _InitialLogged extends State<InitialLogged> {
                                                         .width >
                                                     300)
                                                   AppAdZone(),
+                                                WorkWithUs(),
                                               ],
                                             ),
                                             Footer(Colors.white),
@@ -350,5 +353,154 @@ class AppAdZone extends StatelessWidget {
             ),
           ),
         ]));
+  }
+}
+
+class WorkWithUs extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+          Container(
+              alignment: Alignment.center,
+              padding: EdgeInsets.fromLTRB(50, 10, 50, 30),
+              child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    "We're building Komet together!",
+                    textAlign: TextAlign.center,
+                    style: mediumTextStyle,
+                  ))),
+          Container(
+              alignment: Alignment.center,
+              padding: EdgeInsets.fromLTRB(50, 0, 50, 30),
+              child: Wrap(
+                  spacing: 30,
+                  runSpacing: 30,
+                  alignment: WrapAlignment.center,
+                  children: [
+                    WorkWithUsCards(
+                      title: "Couriers",
+                      subTitle: "Only the hours you want",
+                      img: imgCouriers,
+                      text: textCouriers,
+                      buttonName: "Deliver with us",
+                    ),
+                    WorkWithUsCards(
+                      title: "Store partners",
+                      subTitle: "Multiply your sales",
+                      img: imgPartners,
+                      text: textPartners,
+                      buttonName: "Partner with us",
+                    ),
+                    WorkWithUsCards(
+                      title: "Careers",
+                      subTitle: "Challenges to match your talent",
+                      img: imgCareers,
+                      text: textCareers,
+                      buttonName: "Join the team",
+                    )
+                  ]))
+        ]));
+  }
+}
+
+// ignore: must_be_immutable
+class WorkWithUsCards extends StatelessWidget {
+  String title;
+  String subTitle;
+  String img;
+  String text;
+  String buttonName;
+
+  WorkWithUsCards(
+      {this.title, this.subTitle, this.img, this.text, this.buttonName});
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 330,
+      constraints: BoxConstraints(minHeight: 520),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10.0),
+        border: Border.all(color: Colors.black26),
+      ),
+      child: Container(
+          child: Column(
+        children: [
+          Container(
+            alignment: Alignment.bottomCenter,
+            height: 300,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                image: DecorationImage(
+                    image: NetworkImage(img), fit: BoxFit.cover)),
+            padding: EdgeInsets.only(bottom: 10, left: 0, right: 0, top: 0),
+          ),
+          Container(
+            constraints: BoxConstraints(minHeight: 270),
+            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+            alignment: Alignment.topCenter,
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                            child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  title,
+                                  textAlign: TextAlign.center,
+                                  style: mediumTextStyle.copyWith(fontSize: 26),
+                                ))),
+                        Container(
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.fromLTRB(10, 5, 10, 10),
+                            child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  subTitle,
+                                  textAlign: TextAlign.center,
+                                  style: mediumSmallTextStyle,
+                                ))),
+                        Container(
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                            child: Text(
+                              text,
+                              textAlign: TextAlign.justify,
+                              style: smallTextStyle,
+                            )),
+                      ]),
+                  Container(
+                      padding: EdgeInsets.fromLTRB(10, 30, 10, 10),
+                      child: Container(
+                          width: 280,
+                          height: 43,
+                          alignment: Alignment.bottomCenter,
+                          child: SizedBox.expand(
+                            child: ElevatedButton(
+                                onPressed: null,
+                                child: Text(buttonName),
+                                style: registerButtonStyle.copyWith(
+                                    textStyle:
+                                        MaterialStateProperty.resolveWith(
+                                            (states) => TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w700)))),
+                          )))
+                ]),
+          )
+        ],
+      )),
+    );
   }
 }
