@@ -25,18 +25,18 @@ class RestaurantDTO {
   }
 }
 
-class Restaurant_feeDTO {
+class RestaurantFeeDTO {
   int id;
   String name;
   String imgPath;
   double distance;
   double deliveryFee;
 
-  Restaurant_feeDTO(
+  RestaurantFeeDTO(
       {this.id, this.name, this.imgPath, this.distance, this.deliveryFee});
 
-  factory Restaurant_feeDTO.fromJson(Map<String, dynamic> json) {
-    return Restaurant_feeDTO(
+  factory RestaurantFeeDTO.fromJson(Map<String, dynamic> json) {
+    return RestaurantFeeDTO(
       id: (json.containsKey('id')) ? json['id'] : null,
       name: json['name'],
       imgPath: (json.containsKey('imgPath')) ? json['imgPath'] : null,

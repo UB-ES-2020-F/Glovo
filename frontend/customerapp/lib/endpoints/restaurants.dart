@@ -21,7 +21,7 @@ Future<List<RestaurantDTO>> getRestaurants() async {
   }
 }
 
-Future<List<Restaurant_feeDTO>> getRestaurantsLoc(
+Future<List<RestaurantFeeDTO>> getRestaurantsLoc(
     double lat, double long) async {
   String url = await EndpointDefinitions.makeRestaurantsURL() +
       "/closest?latitude=${lat.toString()}&longitude=${long.toString()}";
@@ -30,8 +30,8 @@ Future<List<Restaurant_feeDTO>> getRestaurantsLoc(
     "Content-Type": "application/json",
   });
   if (response.statusCode == 200) {
-    List<Restaurant_feeDTO> restaurants = (json.decode(response.body) as List)
-        .map((i) => Restaurant_feeDTO.fromJson(i))
+    List<RestaurantFeeDTO> restaurants = (json.decode(response.body) as List)
+        .map((i) => RestaurantFeeDTO.fromJson(i))
         .toList();
     return restaurants;
   } else {

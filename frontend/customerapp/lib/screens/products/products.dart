@@ -12,12 +12,10 @@ import 'package:customerapp/screens/commonComponents/single_message_dialog.dart'
 import 'package:customerapp/screens/products/cart_box.dart';
 import 'package:customerapp/styles/Komet.dart';
 import 'package:customerapp/styles/category_prod.dart';
-import 'package:customerapp/styles/main_page.dart';
 import 'package:customerapp/styles/product.dart';
 import 'package:customerapp/responsive/screen_responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:customerapp/endpoints/products.dart';
@@ -125,7 +123,7 @@ class _Products extends State<Products> {
                                             
                                             
 cats = (snapshot2.data as List<
-                                                    Category_productDTO>)
+                                                    CategoryProductDTO>)
                                                     
                                                 .map((e) => e.name)
                                                 .toList();
@@ -233,13 +231,13 @@ cats = (snapshot2.data as List<
       );
 
   //Returns a List<widgets> with each gridview for every category
-  List<Widget> getGrids(List<Category_productDTO> l, ProductsListModel model) {
+  List<Widget> getGrids(List<CategoryProductDTO> l, ProductsListModel model) {
     List<Widget> toret = List();
     int count = -1;
 
     for (var category in l) {
       List<Product> p = List();
-      for (var pp in category.llista_prods) {
+      for (var pp in category.productsList) {
         Product product;
         p.add(Product.fromDTO(pp));
         model.availableProducts.add(product);
@@ -250,7 +248,7 @@ cats = (snapshot2.data as List<
         child: Text(
           category.name,
           key: Key(category.name),
-          style: Category_style,
+          style: categoryStyle,
         ),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15.0),
@@ -355,8 +353,8 @@ class Product_class_widget extends StatelessWidget {
           Container(
               child: Text(name,
                   style: isSelected
-                      ? ProdTextTitleStyle
-                      : ProdTextTitleStyle_basic)),
+                      ? prodTextTitleStyle
+                      : prodTextTitleStyleBasic)),
           Container(
             height: isSelected ? 7 : 0,
             width: name.length.toDouble() * 10,

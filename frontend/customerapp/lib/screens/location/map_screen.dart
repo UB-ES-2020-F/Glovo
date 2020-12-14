@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:customerapp/models/location.dart';
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/map_location.dart';
@@ -14,6 +12,7 @@ class MapScreen extends StatelessWidget {
     final mapLocationModel = context.watch<MapLocationModel>();
     final geocoder = mapsOriginal.Geocoder();
     return Container(
+      key: Key('location-map'),
       width: 350,
       height: 350,
       padding: EdgeInsets.only(left: 30, top: 30, bottom: 30, right: 0),
@@ -60,7 +59,7 @@ void setLocationAddressFromCoordinates(mapsOriginal.Geocoder geocoder,
   });
 }
 
-void getAddress_fromPos(mapsOriginal.Geocoder geocoder, LatLng position,
+void getAddressFromPos(mapsOriginal.Geocoder geocoder, LatLng position,
     MapLocationModel mapLocationModel, LoggedModel loggedModel) {
   geocoder.geocode(
       mapsOriginal.GeocoderRequest()

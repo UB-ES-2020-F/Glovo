@@ -3,7 +3,6 @@ import 'package:customerapp/actions/check_login.dart';
 import 'package:customerapp/components/appBar/default_logged_bar.dart';
 
 import 'package:customerapp/components/footer.dart';
-import 'package:customerapp/dto/restaurant.dart';
 
 import 'package:customerapp/endpoints/restaurants.dart';
 import 'package:customerapp/models/logged.dart';
@@ -24,15 +23,14 @@ class RestaurantsList extends StatefulWidget {
 }
 
 class _RestaurantsList extends State<RestaurantsList> {
-  
-  /*Stream<List<Restaurant_feeDTO>> Function(LoggedModel l) _bids = (LoggedModel l) async* {
+  /*Stream<List<RestaurantFeeDTO>> Function(LoggedModel l) _bids = (LoggedModel l) async* {
   await Future<void>.delayed(Duration(seconds: 1));
   yield await getRestaurantsLoc(
                               l.getUserAndNotify().location.latitude,
                               l.getUserAndNotify().location.longitude);
 };*/
 
-  RestaurantsListModel_fee aux_model;
+  RestaurantsListModelFee auxModel;
 
   @override
   Widget build(BuildContext context) => FutureBuilder(
@@ -40,16 +38,14 @@ class _RestaurantsList extends State<RestaurantsList> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data) {
-
-              
-              var restaurantsModel_fee = context.watch<RestaurantsListModel_fee>();
-              var update = context.watch<Update_model>();
+              var restaurantsModelFee =
+                  context.watch<RestaurantsListModelFee>();
+              var update = context.watch<UpdateModel>();
               Widget bar;
               var loggedmodel = context.watch<LoggedModel>();
               var s = BarResponsive(
                   context, '/overview-mobile', DefaultLoggedBar());
               bar = s.getResponsiveBar();
-
 
               return Scaffold(
                   appBar: bar,
@@ -65,99 +61,109 @@ class _RestaurantsList extends State<RestaurantsList> {
                           style: Theme.of(context).textTheme.headline1,
                         ),
                       ),
-                      
-                      update.update_restaurants ? 
-                      Builder(builder: (builder) {
-                        return FutureBuilder(
-                          future: getRestaurantsLoc(
-                              loggedmodel.getUserAndNotify().location.latitude,
-                              loggedmodel.getUserAndNotify().location.longitude),
-                          builder:
-                              (BuildContext context, AsyncSnapshot snapshot) {
-                            if(snapshot.connectionState == ConnectionState.done){
-                            if (snapshot.hasData) {
-                              restaurantsModel_fee.removeRestaurants();
-                              snapshot.data.forEach((element) {
-                                restaurantsModel_fee.addRestaurant(
-                                    RestaurantLoc.fromDTO(element));
-                              });
-                              aux_model = restaurantsModel_fee;
-                              return StaggeredGridView.countBuilder(
-                                crossAxisSpacing: 10,
-                                mainAxisSpacing: 10,
-                                physics:
-                                    NeverScrollableScrollPhysics(), // to disable GridView's scrolling
-                                shrinkWrap: true,
-                                itemCount: restaurantsModel_fee
-                                    .availableRestaurants.length,
-                                crossAxisCount: max(
-                                    MediaQuery.of(context).size.width ~/ 300.0,
-                                    1),
-                                itemBuilder: (context, index) {
-                                  return RestaurantsListCard_loc(
-                                      Key('restaurant-card-$index'),
-                                      restaurantsModel_fee
-                                          .availableRestaurants[index]);
+                      update.updateRestaurants
+                          ? Builder(builder: (builder) {
+                              return FutureBuilder(
+                                future: getRestaurantsLoc(
+                                    loggedmodel
+                                        .getUserAndNotify()
+                                        .location
+                                        .latitude,
+                                    loggedmodel
+                                        .getUserAndNotify()
+                                        .location
+                                        .longitude),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.done) {
+                                    if (snapshot.hasData) {
+                                      restaurantsModelFee.removeRestaurants();
+                                      snapshot.data.forEach((element) {
+                                        restaurantsModelFee.addRestaurant(
+                                            RestaurantLoc.fromDTO(element));
+                                      });
+                                      auxModel = restaurantsModelFee;
+                                      return StaggeredGridView.countBuilder(
+                                        crossAxisSpacing: 10,
+                                        mainAxisSpacing: 10,
+                                        physics:
+                                            NeverScrollableScrollPhysics(), // to disable GridView's scrolling
+                                        shrinkWrap: true,
+                                        itemCount: restaurantsModelFee
+                                            .availableRestaurants.length,
+                                        crossAxisCount: max(
+                                            MediaQuery.of(context).size.width ~/
+                                                300.0,
+                                            1),
+                                        itemBuilder: (context, index) {
+                                          return RestaurantsListCardLoc(
+                                              Key('restaurant-card-$index'),
+                                              restaurantsModelFee
+                                                  .availableRestaurants[index]);
+                                        },
+                                        staggeredTileBuilder: (int index) =>
+                                            StaggeredTile.fit(1),
+                                      );
+                                    } else {
+                                      return CircularLoaderKomet();
+                                    }
+                                  } else {
+                                    return CircularLoaderKomet();
+                                  }
                                 },
-                                staggeredTileBuilder: (int index) =>
-                                    StaggeredTile.fit(1),
                               );
-                            }
-                            else{
-                              return CircularLoaderKomet();
-                            }}
-                            else{
-                              return CircularLoaderKomet();
-                            }
-                          },
-                        );
-                      }):
-                      Builder(builder: (builder) {
-                        return FutureBuilder(
-                          future: getRestaurantsLoc(
-                              loggedmodel.getUserAndNotify().location.latitude,
-                              loggedmodel.getUserAndNotify().location.longitude),
-                          builder:
-                              (BuildContext context, AsyncSnapshot snapshot) {
-                            
-                            if (snapshot.hasData) {
-                              restaurantsModel_fee.removeRestaurants();
-                              snapshot.data.forEach((element) {
-                                restaurantsModel_fee.addRestaurant(
-                                    RestaurantLoc.fromDTO(element));
-                              });
-                              return StaggeredGridView.countBuilder(
-                                crossAxisSpacing: 10,
-                                mainAxisSpacing: 10,
-                                physics:
-                                    NeverScrollableScrollPhysics(), // to disable GridView's scrolling
-                                shrinkWrap: true,
-                                itemCount: restaurantsModel_fee
-                                    .availableRestaurants.length,
-                                crossAxisCount: max(
-                                    MediaQuery.of(context).size.width ~/ 300.0,
-                                    1),
-                                itemBuilder: (context, index) {
-                                  return RestaurantsListCard_loc(
-                                      Key('restaurant-card-$index'),
-                                      restaurantsModel_fee
-                                          .availableRestaurants[index]);
+                            })
+                          : Builder(builder: (builder) {
+                              return FutureBuilder(
+                                future: getRestaurantsLoc(
+                                    loggedmodel
+                                        .getUserAndNotify()
+                                        .location
+                                        .latitude,
+                                    loggedmodel
+                                        .getUserAndNotify()
+                                        .location
+                                        .longitude),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot snapshot) {
+                                  if (snapshot.hasData) {
+                                    restaurantsModelFee.removeRestaurants();
+                                    snapshot.data.forEach((element) {
+                                      restaurantsModelFee.addRestaurant(
+                                          RestaurantLoc.fromDTO(element));
+                                    });
+                                    return StaggeredGridView.countBuilder(
+                                      crossAxisSpacing: 10,
+                                      mainAxisSpacing: 10,
+                                      physics:
+                                          NeverScrollableScrollPhysics(), // to disable GridView's scrolling
+                                      shrinkWrap: true,
+                                      itemCount: restaurantsModelFee
+                                          .availableRestaurants.length,
+                                      crossAxisCount: max(
+                                          MediaQuery.of(context).size.width ~/
+                                              300.0,
+                                          1),
+                                      itemBuilder: (context, index) {
+                                        return RestaurantsListCardLoc(
+                                            Key('restaurant-card-$index'),
+                                            restaurantsModelFee
+                                                .availableRestaurants[index]);
+                                      },
+                                      staggeredTileBuilder: (int index) =>
+                                          StaggeredTile.fit(1),
+                                    );
+                                  } else {
+                                    return CircularLoaderKomet();
+                                  }
                                 },
-                                staggeredTileBuilder: (int index) =>
-                                    StaggeredTile.fit(1),
                               );
-                            }
-                            else{
-                              return CircularLoaderKomet();
-                            }
-                        
-                          },
-                        );
-                      }),
+                            }),
 
-                      /*StreamBuilder<List<Restaurant_feeDTO>>(
+                      /*StreamBuilder<List<RestaurantFeeDTO>>(
                           stream: _bids(loggedmodel),
-                          builder: (BuildContext context, AsyncSnapshot<List<Restaurant_feeDTO>> snapshot) {
+                          builder: (BuildContext context, AsyncSnapshot<List<RestaurantFeeDTO>> snapshot) {
                                               if (snapshot.hasData) {
                                                 return Container();
                                                 
@@ -169,8 +175,7 @@ class _RestaurantsList extends State<RestaurantsList> {
                                               
                                       
                           })*/
-                          
-    
+
                       Footer(defaultAppBarBackgroundColor),
                     ]),
                   )));

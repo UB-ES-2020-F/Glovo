@@ -1,10 +1,8 @@
 import 'package:customerapp/dto/product.dart';
 
-class Category_productDTO{
+class CategoryProductDTO {
   String name;
-  List<ProductDTO> llista_prods;
+  List<ProductDTO> productsList;
 
-  Category_productDTO(this.name, this.llista_prods);
-
-
+  CategoryProductDTO(this.name, this.productsList);
 }

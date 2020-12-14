@@ -2,7 +2,6 @@ import 'package:customerapp/actions/extract-key-value.dart';
 import 'package:customerapp/endpoints/cart.dart';
 import 'package:customerapp/exceptions/order-callback-failed.dart';
 import 'package:customerapp/models/cart.dart';
-import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/products.dart';
 import 'package:customerapp/models/restaurants.dart';
 import 'package:customerapp/screens/commonComponents/single_message_dialog.dart';

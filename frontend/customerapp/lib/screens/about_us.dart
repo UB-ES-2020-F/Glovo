@@ -5,6 +5,8 @@ import 'package:customerapp/components/appBar/default_logged_bar.dart';
 import 'package:customerapp/components/footer.dart';
 import 'package:customerapp/models/aboutus.dart';
 import 'package:customerapp/models/developer.dart';
+import 'package:customerapp/styles/initial_logged.dart';
+import 'package:customerapp/screens/loggedPage/initial_logged_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -15,10 +17,11 @@ class AboutUs extends StatelessWidget {
     var developers = DeveloperList();
     return Scaffold(
         appBar: AboutUsBar(),
-        backgroundColor: Theme.of(context).primaryColorLight,
+        backgroundColor: Colors.white,
         body: Container(
+            color: Colors.white,
             child: Padding(
-                padding: EdgeInsets.only(top: 20),
+                padding: EdgeInsets.only(top: 0),
                 child: Center(
                     child: SingleChildScrollView(
                         child: ConstrainedBox(
@@ -34,18 +37,15 @@ class AboutUs extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Container(
-                                padding: EdgeInsets.fromLTRB(50, 0, 50, 40),
-                                child: Text(
-                                  'OUR STORY',
-                                  style: TextStyle(
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold,
-                                      color:
-                                          Theme.of(context).primaryColorDark),
-                                ),
+                                height: 220,
+                                transform:
+                                    Matrix4.translationValues(0.0, -70.0, 0.0),
+                                child: WhiteZoneOurStory(),
                               ),
                               Container(
-                                padding: EdgeInsets.fromLTRB(100, 20, 100, 20),
+                                padding: EdgeInsets.fromLTRB(100, 0, 100, 20),
+                                transform:
+                                    Matrix4.translationValues(0.0, -50.0, 0.0),
                                 child: Text(
                                   aboutUsFirstPart,
                                   textAlign: TextAlign.justify,
@@ -57,14 +57,11 @@ class AboutUs extends StatelessWidget {
                                 ),
                               ),
                               Container(
-                                padding: EdgeInsets.fromLTRB(50, 50, 50, 20),
+                                padding: EdgeInsets.fromLTRB(50, 0, 50, 20),
                                 child: Text(
                                   'OUR TEAM',
-                                  style: TextStyle(
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold,
-                                      color:
-                                          Theme.of(context).primaryColorDark),
+                                  textAlign: TextAlign.center,
+                                  style: mediumTextStyle,
                                 ),
                               ),
                               Container(
@@ -87,7 +84,7 @@ class AboutUs extends StatelessWidget {
                                         StaggeredTile.fit(1),
                                   ))
                             ]),
-                        Footer(Theme.of(context).primaryColorLight)
+                        Footer(Colors.white),
                       ]),
                 ))))));
   }
@@ -114,6 +111,9 @@ class RestaurantsListCardState extends State<StatefulWidget> {
   Widget build(BuildContext context) {
     return Container(
         child: Card(
+      shape: RoundedRectangleBorder(
+          side: BorderSide(color: Colors.black26, width: 1),
+          borderRadius: BorderRadius.circular(20)),
       elevation: this.elevation,
       child: Container(
           child: Column(
@@ -221,7 +221,7 @@ class AboutUsBar extends StatelessWidget with PreferredSizeWidget {
   Widget build(BuildContext context) {
     return Stack(children: [
       Container(
-        //color: Theme.of(context).backgroundColor,
+        color: Theme.of(context).backgroundColor,
         alignment: Alignment.center,
         child: Text(
           'About us',
@@ -230,22 +230,62 @@ class AboutUsBar extends StatelessWidget with PreferredSizeWidget {
               fontWeight: FontWeight.bold,
               color: Theme.of(context).accentColor),
         ),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-              colors: [
-                Theme.of(context).backgroundColor,
-                Theme.of(context).primaryColorLight
-              ],
-              begin: const FractionalOffset(0.0, 0.8),
-              end: const FractionalOffset(0.0, 1.0),
-              stops: [0.0, 1.0],
-              tileMode: TileMode.clamp),
-        ),
       ),
       Container(
           alignment: Alignment.topLeft,
           padding: EdgeInsets.fromLTRB(40, 25, 40, 0),
+          transform: Matrix4.translationValues(0.0, -55.0, 0.0),
           child: Logo()),
     ]);
+  }
+}
+
+class WhiteZoneOurStory extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
+      //backgroundColor: Colors.greenAccent,
+      body: Stack(
+        children: [
+          Positioned(
+            top: 0,
+            child: CustomPaint(
+              painter: PathPainterInitial(
+                  drawPathComplete(MediaQuery.of(context).size.width)),
+            ),
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.fromLTRB(50, 0, 50, 50),
+                    child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          "OUR STORY",
+                          textAlign: TextAlign.center,
+                          style: mediumTextStyle,
+                        ))),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Path drawPathComplete(double width) {
+    Size size = Size(width.toDouble(), 300);
+    Path path = Path();
+    path.moveTo(0, 2 * size.height / 3);
+    path.quadraticBezierTo(
+        size.width * 0.5, 0.0, size.width * 1.0, 2 * size.height / 3);
+    path.lineTo(size.width, size.height);
+    path.lineTo(0, size.height);
+    return path;
   }
 }

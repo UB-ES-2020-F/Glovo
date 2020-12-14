@@ -4,7 +4,6 @@ import 'package:customerapp/dto/location.dart';
 import 'package:customerapp/endpoints/urls.dart';
 import 'package:customerapp/exceptions/logout-callback-failed.dart';
 import 'package:customerapp/infrastructure/persistence/repository/user_credentials_repository.dart';
-import 'package:customerapp/models/location.dart';
 import 'package:http/http.dart' as http;
 
 Future<LocationDTO> savelocation(LocationDTO location) async {

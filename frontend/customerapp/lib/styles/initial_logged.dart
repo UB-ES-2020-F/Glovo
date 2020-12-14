@@ -75,3 +75,15 @@ Color locationInitialColorIsHovered(bool isHovered) {
 }
 
 final buttonMainColor = Colors.white;
+
+final bigTextStyle =
+    TextStyle(fontSize: 60, color: Colors.white, fontWeight: FontWeight.w700);
+
+final mediumTextStyle =
+    TextStyle(fontSize: 36, color: Colors.black, fontWeight: FontWeight.w700);
+
+final mediumSmallTextStyle = TextStyle(
+    fontSize: 18, color: Color(0xFF9B9B9B), fontWeight: FontWeight.w300);
+
+final smallTextStyle = TextStyle(
+    fontSize: 14, color: Color(0xFF2A2A2A), fontWeight: FontWeight.w300);

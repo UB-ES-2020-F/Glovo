@@ -103,7 +103,7 @@ class RestaurantLoc {
     return _image;
   }
 
-  factory RestaurantLoc.fromDTO(Restaurant_feeDTO restaurantDTO) {
+  factory RestaurantLoc.fromDTO(RestaurantFeeDTO restaurantDTO) {
     return RestaurantLoc(
         restaurantDTO.id,
         restaurantDTO.name,
@@ -113,13 +113,12 @@ class RestaurantLoc {
   }
 }
 
-
 //duplicated class to refactor
-class RestaurantsListModel_fee extends ChangeNotifier {
+class RestaurantsListModelFee extends ChangeNotifier {
   List<RestaurantLoc> availableRestaurants;
 
   @override
-  RestaurantsListModel_fee() {
+  RestaurantsListModelFee() {
     availableRestaurants = List();
   }
 
