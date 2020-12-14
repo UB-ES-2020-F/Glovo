@@ -1,5 +1,6 @@
 import 'package:customerapp/components/text_link.dart';
 import 'package:customerapp/dto/user.dart';
+import 'package:customerapp/models/location.dart';
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/signin.dart';
 import 'package:customerapp/screens/anon_bar.dart';
@@ -180,13 +181,18 @@ void trySendSignInForm(BuildContext context, SignInModel signInModel) {
       formUser.email = signInModel.email;
       formUser.password = signInModel.password;
       loginUser(formUser).then((loggedUser) async {
-        UserCredentialsRepository().update(new UserCredentials(
-            loggedUser.email, loggedUser.token, loggedUser.id));
-        LoggedModel.user.id = loggedUser.id;
-        LoggedModel.user.name = loggedUser.name;
-        LoggedModel.user.email = loggedUser.email;
-        Navigator.of(context)
-            .pushNamedAndRemoveUntil('/initial-logged-in', (route) => false);
+        UserCredentialsRepository()
+            .update(new UserCredentials(
+                loggedUser.email, loggedUser.token, loggedUser.id))
+            .then((value) {
+          LoggedModel.user.id = loggedUser.id;
+          LoggedModel.user.name = loggedUser.name;
+          LoggedModel.user.email = loggedUser.email;
+          LoggedModel.user.location = new Location(41.396356, 2.171934);
+          LoggedModel.user.direction = 'Unknown direction';
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil('/initial-logged-in', (route) => false);
+        });
       }).catchError((error) {
         print(error);
         Navigator.pop(context);

@@ -2,8 +2,8 @@ import 'package:customerapp/styles/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class AnythingButton extends StatelessWidget {
-  AnythingButton(Key key) : super(key: key);
+class PharmacyButton extends StatelessWidget {
+  PharmacyButton(Key key) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,7 +25,7 @@ class AnythingButton extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image(
-                image: AssetImage('resources/images/anything_logo_gray.png'),
+                image: AssetImage('resources/images/pharmacy_logo_gray.png'),
                 height: 55,
                 width: 55,
               ),
@@ -34,7 +34,7 @@ class AnythingButton extends StatelessWidget {
                   child: FittedBox(
                       fit: BoxFit.scaleDown,
                       child: Text(
-                        "Anything",
+                        'Pharmacy',
                         style: categoryButtonLabel,
                         textAlign: TextAlign.center,
                       ))),
