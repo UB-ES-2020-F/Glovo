@@ -54,22 +54,22 @@ class _RestaurantsList extends State<RestaurantsList> {
                       child: Center(
                     child: ListView(children: [
                       Container(
-                        padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
+                        padding: EdgeInsets.fromLTRB(30, 40, 30, 15),
                         alignment: Alignment.centerLeft,
                         child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.baseline,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                'Food',
+                                'Food ',
                                 style: restaurantSectionTextStyle,
                               ),
                               Icon(
                                 Icons.arrow_forward_ios_rounded,
                                 color: Color(0xFF606266),
-                                size: 30,
+                                size: 15,
                               ),
                               Text(
-                                'Restaurants',
+                                ' Restaurants',
                                 style: restaurantSectionTextStyle.copyWith(
                                     color: Color(0xFFFFC244),
                                     fontWeight: FontWeight.w900),
@@ -77,7 +77,7 @@ class _RestaurantsList extends State<RestaurantsList> {
                             ]),
                       ),
                       Container(
-                        padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
+                        padding: EdgeInsets.fromLTRB(30, 0, 30, 20),
                         alignment: Alignment.centerLeft,
                         child: Text(
                           'Restaurants',
