@@ -160,18 +160,18 @@ class _Products extends State<Products> {
                                                             child: Column(
                                                                 children: [
                                                                   Padding(
-                                                                      padding: EdgeInsets.only(
-                                                                          top:
-                                                                              10),
-                                                                      child:
-                                                                          Text(
-                                                                        restaurant ==
-                                                                                null
-                                                                            ? 'Products'
-                                                                            : restaurant.name,
-                                                                        style:
-                                                                            restaurantTitleStyle,
-                                                                      )),
+                                                                      padding: EdgeInsets
+                                                                          .only(
+                                                                              top: 10),
+                                                                      child: FittedBox(
+                                                                          fit: BoxFit.scaleDown,
+                                                                          child: Text(
+                                                                            restaurant == null
+                                                                                ? 'Products'
+                                                                                : restaurant.name,
+                                                                            style:
+                                                                                restaurantTitleStyle,
+                                                                          ))),
                                                                   Divider(),
                                                                   //we construct the radiobutton with the cats
                                                                   CustomRadio(
