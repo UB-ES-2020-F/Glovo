@@ -15,22 +15,29 @@ class SnacksButton extends StatelessWidget {
           onPressed: null,
           onLongPress: null,
           color: Colors.white,
+          disabledColor: Colors.white,
           textColor: Colors.white,
+          elevation: 4,
+          disabledElevation: 4,
           child: Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image(
                 image: AssetImage('resources/images/snacks_logo_gray.png'),
                 height: 55,
                 width: 55,
               ),
-              Padding(
-                padding: EdgeInsets.only(top: 0),
-                child: Text(
-                  'Snacks',
-                  style: categoryButtonLabel,
-                ),
-              )
+              Container(
+                  padding: EdgeInsets.only(top: 5),
+                  child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        'Snacks',
+                        style: categoryButtonLabel,
+                        textAlign: TextAlign.center,
+                      ))),
             ],
           ),
           padding: EdgeInsets.all(30),
