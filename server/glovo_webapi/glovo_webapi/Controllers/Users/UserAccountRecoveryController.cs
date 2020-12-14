@@ -50,10 +50,8 @@ namespace glovo_webapi.Controllers.Users
 
             MailSender.SendRecoveryMail(user, tokenCreationParams.TokenStr);
 
-            return Ok(new PasswordEmailModel
-            {
-                Email = user.Email,
-            });
+
+            return Ok(new PasswordEmailModel(user.Email));
         }
         
         //POST api/users/reset-password

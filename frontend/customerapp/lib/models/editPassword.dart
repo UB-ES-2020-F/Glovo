@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
 class EditPasswordModel extends ChangeNotifier {
-  String _oldPassword;
-  String _newPassword1;
-  String _newPassword2;
+  String oldPassword;
+  String newPassword1;
+  String newPassword2;
 
   bool _formValid = false;
 
@@ -20,15 +20,7 @@ class EditPasswordModel extends ChangeNotifier {
 
   GlobalKey<FormState> get formKey => _formKey;
 
-  String get oldPassword => _oldPassword;
-  String get newPassword1 => _newPassword1;
-  String get newPassword2 => _newPassword2;
-
   bool get formValid => _formValid;
-
-  set oldPassword(String value) => _oldPassword = value;
-  set newPassword1(String value) => _newPassword1 = value;
-  set newPassword2(String value) => _newPassword2 = value;
 
   set formValid(bool value) {
     _formValid = value;

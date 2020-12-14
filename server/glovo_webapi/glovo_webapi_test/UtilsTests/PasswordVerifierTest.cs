@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using glovo_webapi.Helpers;
 using glovo_webapi.Utils;
 using Xunit;
 

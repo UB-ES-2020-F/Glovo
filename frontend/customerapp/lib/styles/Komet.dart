@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 final appTheme = ThemeData(
   primarySwatch: Colors.orange,
   backgroundColor: Color(0xFFFFC244),
+  primaryColorLight: Color(0xFFFFDA8E),
   accentColor: Color(0xFF00A082),
+  primaryColorDark: Color(0xFF00876D),
   textTheme: TextTheme(
       headline1: TextStyle(
           color: Colors.black,

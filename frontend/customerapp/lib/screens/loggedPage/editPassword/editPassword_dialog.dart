@@ -1,5 +1,4 @@
 import 'package:customerapp/models/editPassword.dart';
-import 'package:customerapp/screens/loggedPage/editNameEmail/editNameEmail_form.dart';
 import 'package:customerapp/screens/loggedPage/editPassword/editPassword_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';

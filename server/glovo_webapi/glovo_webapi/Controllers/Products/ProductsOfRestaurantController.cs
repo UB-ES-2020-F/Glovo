@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
 using glovo_webapi.Entities;
 using glovo_webapi.Models.Product;
@@ -23,19 +24,27 @@ namespace glovo_webapi.Controllers.Products
         }
 
         [HttpGet("{idRest}/products")]
-        public ActionResult<ProductModel> GetAllProductsOfRestaurant(int idRest, [FromQuery]ProductCategory? category)
+        public ActionResult<IEnumerable<ProductGroupModel>> GetAllProductsOfRestaurant(int idRest)
         {
+            Console.Write("GET PRODUCTS");
             IEnumerable<Product> products;
+            List<ProductGroup> productGroups;
             try {
-                if (category.HasValue)
-                    products = _service.GetAllProductsOfRestaurantByCategory(idRest, category.Value);
-                else
-                    products = _service.GetAllProductsOfRestaurant(idRest);
+                //products = _service.GetAllProductsOfRestaurant(idRest);
+                productGroups = _service.GetProductsGroupOfRestaurant(idRest);
             } catch (RequestException) {
                 return NotFound(new {message = "Restaurant id not found"});
             }
-            
-            return Ok(_mapper.Map<IEnumerable<ProductModel>>(products));
+
+            List<ProductGroupModel> result = new List<ProductGroupModel>();
+            foreach (var pg in productGroups)
+            {
+                ProductGroupModel pgm = new ProductGroupModel();
+                pgm.Category = pg.Category;
+                pgm.Products = _mapper.Map<IEnumerable<ProductModel>>(pg.Products);
+                result.Add(pgm);
+            }
+            return Ok(result);
         }
     }
 }

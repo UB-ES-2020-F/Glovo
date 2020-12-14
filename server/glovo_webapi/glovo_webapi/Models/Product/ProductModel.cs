@@ -12,12 +12,9 @@ namespace glovo_webapi.Models.Product
         public string Description { get; set; }
         public float Price { get; set; }
         public int RestaurantId { get; set; }
-        public ProductCategory Category { get; set; }
-        public string CategoryString
-        {
-            get { return Category.ToString(); }
-        }
-
+        public string Category { get; set; }
+        public ProductModel() {}
+        
         public ProductModel(int id, string name, string imgPath, string description, float price, int restaurantId)
         {
             Id = id;

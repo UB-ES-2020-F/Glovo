@@ -19,6 +19,8 @@ install:
 - dotnet tool install --global dotnet-sonarscanner
 - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.5.0.2216-linux.zip
 - unzip sonar-scanner-cli-4.5.0.2216-linux.zip -d $TRAVIS_BUILD_DIR/sonar_dir
+- dotnet tool install --global coverlet.console # Installing coverlet console, used for unit testing and coverage
+- dotnet tool install --global dotnet-sonarscanner # Installing dotnet sonnarscanner
 
 stages:
   - tests
@@ -66,12 +68,14 @@ jobs:
     - stage: code_analysis
       name: "backend_ana"
       script:
-      - export PATH="$TRAVIS_BUILD_DIR/flutter/bin/cache/dart-sdk/bin:$PATH"
-      - cd $TRAVIS_BUILD_DIR/server/glovo_webapi
-      - dotnet sonarscanner begin /k:"komet_backend" /d:sonar.login=$SONARTOK /d:sonar.projectDescription=$TRAVIS_BRANCH /d:sonar.host.url=http://167.71.130.118:9000
-        /d:sonar.verbose=true
-      - dotnet build glovo_webapi.sln
-      - dotnet sonarscanner end /d:sonar.login=$SONARTOK
+      - cd $TRAVIS_BUILD_DIR/server/glovo_webapi/glovo_webapi_test
+      - dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+      - dotnet build-server shutdown #Maybe we don't need this
+      - dotnet sonarscanner begin /k:komet_backend /d:sonar.host.url=http://167.71.130.118:9000 /d:sonar.login=d48a60c50f73a7f5d0d8e90ec5a451494454e132 /d:sonar.cs.opencover.reportsPaths="./coverage.opencover.xml" /d:sonar.coverage.exclusion="**Test*.cs" # To find SonarQube instance
+      - dotnet build  #Why we need that?
+      - dotnet sonarscanner end /d:sonar.login=d48a60c50f73a7f5d0d8e90ec5a451494454e132
+      
+
     - name: "frontend_ana"
       script:
       - export PATH="$TRAVIS_BUILD_DIR/flutter/bin/cache/dart-sdk/bin:$PATH"

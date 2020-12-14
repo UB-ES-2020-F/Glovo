@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using glovo_webapi.Data;
 using glovo_webapi.Entities;
-using glovo_webapi.Utils;
 
 namespace  glovo_webapi.Services.Products
 {
@@ -18,15 +17,6 @@ namespace  glovo_webapi.Services.Products
         public IEnumerable<Product> GetAllProducts()
         {
             return _context.Products.ToList();
-        }
-
-        public IEnumerable<Product> GetProductsByCategory(ProductCategory c)
-        {
-            if (c == ProductCategory.Uncategorized)
-            {
-                return _context.Products.ToList();
-            }
-            return _context.Products.Where(p => p.Category == c);
         }
 
         public Product GetProductById(int id)
@@ -48,14 +38,30 @@ namespace  glovo_webapi.Services.Products
             return _context.Products.Where(p => p.RestaurantId == idRest);
         }
 
-        public IEnumerable<Product> GetAllProductsOfRestaurantByCategory(int idRest, ProductCategory c)
+        public List<ProductGroup> GetProductsGroupOfRestaurant(int idRest)
         {
             Restaurant r = _context.Restaurants.SingleOrDefault(p => p.Id == idRest);
             if (r == null)
                 throw new RequestException(ProductExceptionCodes.RestaurantNotFound);
-            if (c == ProductCategory.Uncategorized)
-                return _context.Products.Where(p => p.RestaurantId == idRest);
-            return _context.Products.Where(p => p.RestaurantId == idRest && p.Category == c);
+            
+            var productGroups = new List<ProductGroup>();
+            List<string> categories = _context
+                .Products
+                .Where(p => p.RestaurantId == idRest)
+                .Select(p => p.Category)
+                .Distinct().ToList();
+            foreach (var category in categories)
+            {
+                ProductGroup cp = new ProductGroup();
+                cp.Category = category;
+                cp.Products = _context
+                    .Products
+                    .Where(p => p.RestaurantId == idRest && p.Category == category)
+                    .ToList();
+                productGroups.Add(cp);
+            }
+
+            return productGroups;
         }
     }
 }

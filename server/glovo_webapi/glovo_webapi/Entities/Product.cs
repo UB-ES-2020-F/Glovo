@@ -22,15 +22,15 @@ namespace glovo_webapi.Entities
         
         [Required, ForeignKey("Restaurant")]
         public int RestaurantId { get; set; }
-        
-        public ProductCategory Category { get; set; }
+        [MaxLength(127)]
+        public string Category { get; set; }
         
         public Restaurant Restaurant { get; set; }
         public IEnumerable<OrderProduct> OrdersProducts { get; set; }
 
         public Product() {}
         
-        public Product(string name, string imgPath, string description, float price, int restaurantId, ProductCategory category)
+        public Product(string name, string imgPath, string description, float price, int restaurantId, string category)
         {
             Name = name;
             ImgPath = imgPath;
