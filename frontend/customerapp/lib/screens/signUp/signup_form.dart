@@ -229,13 +229,16 @@ void trySendRegisterForm(BuildContext context, SignUpModel signUpModel) {
       formUser.name = signUpModel.firstName;
       registerUser(formUser).then((value) {
         loginUser(formUser).then((loggedUser) async {
-          UserCredentialsRepository().update(new UserCredentials(
-              loggedUser.email, loggedUser.token, loggedUser.id));
-          LoggedModel.user.id = loggedUser.id;
-          LoggedModel.user.name = loggedUser.name;
-          LoggedModel.user.email = loggedUser.email;
-          Navigator.of(context)
-              .pushNamedAndRemoveUntil('/initial-logged-in', (route) => false);
+          UserCredentialsRepository()
+              .update(new UserCredentials(
+                  loggedUser.email, loggedUser.token, loggedUser.id))
+              .then((value) {
+            LoggedModel.user.id = loggedUser.id;
+            LoggedModel.user.name = loggedUser.name;
+            LoggedModel.user.email = loggedUser.email;
+            Navigator.of(context).pushNamedAndRemoveUntil(
+                '/initial-logged-in', (route) => false);
+          });
         }).catchError((error) {
           print(error);
           Navigator.pop(context);

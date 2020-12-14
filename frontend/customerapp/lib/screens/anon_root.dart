@@ -43,7 +43,7 @@ class AnonRoute extends StatelessWidget {
                           height: 220,
                           child: WhiteZone(),
                         ),
-                        Footer(Theme.of(context).backgroundColor)
+                        Footer(Colors.white)
                       ]),
                 ))))));
   }
