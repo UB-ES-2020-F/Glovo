@@ -113,10 +113,14 @@ class _InitialLogged extends State<InitialLogged> {
                                                       "delivery-express-button")),
                                                   ShopsGiftsButton(Key(
                                                       "shops-gifts-button")),
-                                                ])))
+                                                ]))),
+                                        Container(
+                                          height: 220,
+                                          child: WhiteZone(),
+                                        )
                                       ],
                                     ),
-                                    Footer(Theme.of(context).backgroundColor),
+                                    Footer(Colors.white),
                                   ]))),
                     )))));
           } else {
@@ -130,4 +134,71 @@ class _InitialLogged extends State<InitialLogged> {
           return CircularLoaderKomet();
         }
       });
+}
+
+class WhiteZone extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
+      //backgroundColor: Colors.greenAccent,
+      body: Stack(
+        children: [
+          Positioned(
+            top: 0,
+            child: CustomPaint(
+              painter: PathPainterInitial(
+                  drawPathComplete(MediaQuery.of(context).size.width)),
+            ),
+          ),
+          Positioned(
+            bottom: 0,
+            child: Column(
+              children: [
+                Container(
+                    padding: EdgeInsets.fromLTRB(50, 30, 50, 0),
+                    //constraints: BoxConstraints(maxWidth: 800),
+                    child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          "Trending highlights in your town",
+                          style: mediumTextStyle,
+                        ))),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Path drawPathComplete(double width) {
+    Size size = Size(width.toDouble(), 300);
+    Path path = Path();
+    path.moveTo(0, 2 * size.height / 3);
+    path.quadraticBezierTo(
+        size.width * 0.5, 0.0, size.width * 1.0, 2 * size.height / 3);
+    path.lineTo(size.width, size.height);
+    path.lineTo(0, size.height);
+    return path;
+  }
+}
+
+class PathPainterInitial extends CustomPainter {
+  Path path;
+
+  PathPainterInitial(this.path);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    var paint = Paint();
+    paint.color = Colors.white;
+    //paint.color = Colors.blueAccent;
+    paint.style = PaintingStyle.fill;
+
+    canvas.drawPath(this.path, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => true;
 }

@@ -78,3 +78,6 @@ final buttonMainColor = Colors.white;
 
 final bigTextStyle =
     TextStyle(fontSize: 60, color: Colors.white, fontWeight: FontWeight.w700);
+
+final mediumTextStyle =
+    TextStyle(fontSize: 36, color: Colors.black, fontWeight: FontWeight.w700);
