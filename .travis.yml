@@ -16,7 +16,6 @@ install:
 - git clone https://github.com/flutter/flutter.git --branch 1.23.0-18.1.pre --single-branch
 - export PATH="$TRAVIS_BUILD_DIR/flutter/bin:$PATH"
 - flutter config --enable-web
-- dotnet tool install --global dotnet-sonarscanner
 - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.5.0.2216-linux.zip
 - unzip sonar-scanner-cli-4.5.0.2216-linux.zip -d $TRAVIS_BUILD_DIR/sonar_dir
 - dotnet tool install --global coverlet.console # Installing coverlet console, used for unit testing and coverage
