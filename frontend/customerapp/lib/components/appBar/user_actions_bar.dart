@@ -61,7 +61,7 @@ class DirectionBoxState extends State<DirectionsBox> {
     return InkWell(
         key: Key('location-button'),
         onTap: () {
-          if (MediaQuery.of(context).size.width > 600) {
+          if (MediaQuery.of(context).size.width > 900) {
             showDialog(context: context, builder: (_) => LocationDialog());
           } else {
             Navigator.pushNamed(context, '/location');
