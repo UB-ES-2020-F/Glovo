@@ -24,3 +24,38 @@ class RestaurantDTO {
     return toReturn;
   }
 }
+
+class Restaurant_feeDTO {
+  int id;
+  String name;
+  String imgPath;
+  double distance;
+  double deliveryFee;
+
+  Restaurant_feeDTO(
+      {this.id, this.name, this.imgPath, this.distance, this.deliveryFee});
+
+  factory Restaurant_feeDTO.fromJson(Map<String, dynamic> json) {
+    return Restaurant_feeDTO(
+      id: (json.containsKey('id')) ? json['id'] : null,
+      name: json['name'],
+      imgPath: (json.containsKey('imgPath')) ? json['imgPath'] : null,
+      //Dummy location
+      distance: (json.containsKey('distance')) ? json['distance'] : null,
+      deliveryFee:
+          (json.containsKey('deliveryFee')) ? json['deliveryFee'] : null,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> toReturn = {'id': id, 'name': name};
+    if (imgPath != null) toReturn['imgPath'] = imgPath;
+    //Add location when it's implemented
+    return toReturn;
+  }
+
+  @override
+  String toString() {
+    return id.toString() + name + distance.toString() + deliveryFee.toString();
+  }
+}

@@ -9,6 +9,8 @@ import 'package:customerapp/models/products.dart';
 import 'package:customerapp/models/restaurants.dart';
 import 'package:customerapp/screens/commonComponents/single_message_dialog.dart';
 import 'package:customerapp/screens/products/cart_box.dart';
+import 'package:customerapp/styles/Komet.dart';
+import 'package:customerapp/styles/category_prod.dart';
 import 'package:customerapp/styles/product.dart';
 import 'package:customerapp/responsive/screen_responsive.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +46,7 @@ class _Products extends State<Products> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data) {
-              final Restaurant restaurant =
+              final RestaurantLoc restaurant =
                   ModalRoute.of(context).settings.arguments;
               var productsModel = context.watch<ProductsListModel>();
 
@@ -228,3 +230,83 @@ class _Products extends State<Products> {
         },
       );
 }
+
+class CustomRadio extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return CustomRadioState();
+  }
+}
+
+class CustomRadioState extends State<CustomRadio> {
+  List<RadioModel> sample = List<RadioModel>();
+
+  List<Widget> generate_widgets() {
+    List<Widget> llista = List<Widget>();
+    sample.asMap().forEach((key, value) {
+      llista.add(InkWell(
+          onTap: () {
+            setState(() {
+              sample.forEach((element) => element.isSelected = false);
+              sample[key].isSelected = true;
+            });
+          },
+          child:
+              Product_class_widget(sample[key].name, sample[key].isSelected)));
+    });
+
+    return llista;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    sample.add(RadioModel("primer", true));
+    sample.add(RadioModel("segundo", false));
+    sample.add(RadioModel("tercer", false));
+    sample.add(RadioModel("quart", false));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: generate_widgets(),
+    );
+  }
+}
+
+class Product_class_widget extends StatelessWidget {
+  String name;
+  bool isSelected;
+
+  Product_class_widget(this.name, this.isSelected);
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+        padding: EdgeInsets.only(left: 10),
+        child: Container(
+            child: Column(mainAxisSize: MainAxisSize.min, children: [
+          Container(
+              child: Text(name,
+                  style: isSelected
+                      ? ProdTextTitleStyle
+                      : ProdTextTitleStyle_basic)),
+          Container(
+            height: isSelected ? 7 : 0,
+            width: name.length.toDouble() * 10,
+            decoration: BoxDecoration(
+                color: kommetDistinctiveYellow,
+                borderRadius: BorderRadius.all(Radius.circular(40))),
+          )
+        ])));
+  }
+}
+
+class RadioModel {
+  String name;
+  bool isSelected;
+
+  RadioModel(this.name, this.isSelected);
+}
+

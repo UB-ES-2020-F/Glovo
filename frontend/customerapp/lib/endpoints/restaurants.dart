@@ -20,3 +20,22 @@ Future<List<RestaurantDTO>> getRestaurants() async {
         'Failed to login', response.statusCode, response.body);
   }
 }
+
+Future<List<Restaurant_feeDTO>> getRestaurantsLoc(
+    double lat, double long) async {
+  String url = await EndpointDefinitions.makeRestaurantsURL() +
+      "/closest?latitude=${lat.toString()}&longitude=${long.toString()}";
+
+  final response = await http.get(url, headers: {
+    "Content-Type": "application/json",
+  });
+  if (response.statusCode == 200) {
+    List<Restaurant_feeDTO> restaurants = (json.decode(response.body) as List)
+        .map((i) => Restaurant_feeDTO.fromJson(i))
+        .toList();
+    return restaurants;
+  } else {
+    throw OrderCallbackFailed(
+        'Failed to login', response.statusCode, response.body);
+  }
+}

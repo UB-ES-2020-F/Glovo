@@ -16,6 +16,7 @@ class LocationDialog extends StatelessWidget {
                 padding: EdgeInsets.all(10),
                 alignment: Alignment(1, 1),
                 child: IconButton(
+                  key: Key('location-close-button'),
                   color: Color(0xFF6E6E6E),
                   icon: Icon(Icons.clear),
                   iconSize: 40,

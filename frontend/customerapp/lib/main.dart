@@ -7,6 +7,7 @@ import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/cart.dart';
 import 'package:customerapp/models/resetPassword.dart';
 import 'package:customerapp/models/signup.dart';
+import 'package:customerapp/models/update_model.dart';
 import 'package:customerapp/models/user_credentials/user_credentials.dart';
 import 'package:customerapp/styles/Komet.dart';
 import 'package:flutter/material.dart';
@@ -41,11 +42,12 @@ class KometApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => SignInModel()),
         ChangeNotifierProvider(create: (context) => EditNameEmailModel()),
         ChangeNotifierProvider(create: (context) => EditPasswordModel()),
-        ChangeNotifierProvider(create: (context) => RestaurantsListModel()),
+        ChangeNotifierProvider(create: (context) => RestaurantsListModel_fee()),
         ChangeNotifierProvider(create: (context) => ForgotPasswordModel()),
         ChangeNotifierProvider(create: (context) => ResetPasswordModel()),
         ChangeNotifierProvider(create: (context) => ProductsListModel()),
         ChangeNotifierProvider(create: (context) => Cart()),
+        ChangeNotifierProvider(create: (context) => Update_model()),
         ChangeNotifierProvider(create: (context) => MapLocationModel()),
       ],
       child: MaterialApp(

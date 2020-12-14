@@ -1,3 +1,7 @@
+import 'dart:math';
+
+import 'package:customerapp/models/location.dart';
+import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/map_location.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -10,6 +14,7 @@ class MapScreen extends StatelessWidget {
     final mapLocationModel = context.watch<MapLocationModel>();
     final geocoder = mapsOriginal.Geocoder();
     return Container(
+      key: Key('location-map'),
       width: 350,
       height: 350,
       padding: EdgeInsets.only(left: 30, top: 30, bottom: 30, right: 0),
@@ -52,6 +57,27 @@ void setLocationAddressFromCoordinates(mapsOriginal.Geocoder geocoder,
       }
     } else {
       throw Exception("No valid call for maps");
+    }
+  });
+}
+
+void getAddress_fromPos(mapsOriginal.Geocoder geocoder, LatLng position,
+    MapLocationModel mapLocationModel, LoggedModel loggedModel) {
+  geocoder.geocode(
+      mapsOriginal.GeocoderRequest()
+        ..location = mapsOriginal.LatLng(position.latitude, position.longitude),
+      (results, status) {
+    if (status == mapsOriginal.GeocoderStatus.OK) {
+      if (results[3] != null) {
+        loggedModel.getUser().location =
+            Location(position.latitude, position.longitude);
+        loggedModel.getUserAndNotify().direction = results[3].formattedAddress;
+        return;
+      } else {
+        throw Exception("No valid place for this place");
+      }
+    } else {
+      return;
     }
   });
 }
