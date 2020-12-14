@@ -12,12 +12,10 @@ import 'package:customerapp/screens/commonComponents/single_message_dialog.dart'
 import 'package:customerapp/screens/products/cart_box.dart';
 import 'package:customerapp/styles/Komet.dart';
 import 'package:customerapp/styles/category_prod.dart';
-import 'package:customerapp/styles/main_page.dart';
 import 'package:customerapp/styles/product.dart';
 import 'package:customerapp/responsive/screen_responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:customerapp/endpoints/products.dart';
@@ -101,30 +99,35 @@ class _Products extends State<Products> {
                                         : MediaQuery.of(context).size.width -
                                             cartWidth -
                                             75,
-                                    child: 
-                                          Builder(builder: (builder) {
-                                            return FutureBuilder(
-                                              future: getProductsFromRestaurant(
-                                                  restaurant.id),
-                                              builder: (BuildContext context,
-                                                  AsyncSnapshot snapshot2) {
-                                                if (snapshot2.hasData) {
-                                                  //the categories
-                                                  cats = (snapshot2.data as List<Category_productDTO>).map((e) => e.name).toList();
-                                                  List<Widget> content = [Container(child: Padding(
-                                            padding: EdgeInsets.fromLTRB(
-                                                0, 0, 0, 10),
-                                            child: Container(
-                                              height: 140,
-                                              padding: EdgeInsets.fromLTRB(
-                                                  40, 0, 40, 0),
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          15.0),
-                                                  color: Color(0xAAFFFFFF)),
-                                              alignment: Alignment.centerLeft,
-                                              child: Column(children: [
+                                    child: Builder(builder: (builder) {
+                                      return FutureBuilder(
+                                        future: getProductsFromRestaurant(
+                                            restaurant.id),
+                                        builder: (BuildContext context,
+                                            AsyncSnapshot snapshot2) {
+                                          if (snapshot2.hasData) {
+                                            //the categories
+                                            cats = (snapshot2.data
+                                                    as List<CategoryProductDTO>)
+                                                .map((e) => e.name)
+                                                .toList();
+                                            List<Widget> content = [
+                                              Container(
+                                                  child: Padding(
+                                                padding: EdgeInsets.fromLTRB(
+                                                    0, 0, 0, 10),
+                                                child: Container(
+                                                  height: 140,
+                                                  padding: EdgeInsets.fromLTRB(
+                                                      40, 0, 40, 0),
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15.0),
+                                                      color: Color(0xAAFFFFFF)),
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  child: Column(children: [
                                                     Padding(
                                                         padding:
                                                             EdgeInsets.only(
@@ -139,41 +142,35 @@ class _Products extends State<Products> {
                                                     Divider(),
                                                     //we construct the radiobutton with the cats
                                                     CustomRadio(cats),
-                                                    
-                                                    
-                                              
                                                   ]),
-                                            ),
-                                          )),
-                                          ...getGrids(snapshot2.data, productsModel)] as List <Widget>; 
-                                          return ListView(
-                                        physics:
-                                            NeverScrollableScrollPhysics(), // to disable GridView's scrolling
-                                        shrinkWrap: true,
-                                        children: content);
-                                        } else {
-                                                  return Padding(
-                                                      padding:
-                                                          EdgeInsets.fromLTRB(
-                                                              0, 0, 0, 10),
-                                                      child: Container(
-                                                        decoration: BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        15.0),
-                                                            color: Color(
-                                                                0xAAFFFFFF)),
-                                                        alignment: Alignment
-                                                            .centerLeft,
-                                                        child:
-                                                            CircularLoaderKomet(),
-                                                      ));
-                                                }
-                                              },
-                                            );
-                                          }),
-      
+                                                ),
+                                              )),
+                                              ...getGrids(
+                                                  snapshot2.data, productsModel)
+                                            ];
+                                            return ListView(
+                                                physics:
+                                                    NeverScrollableScrollPhysics(), // to disable GridView's scrolling
+                                                shrinkWrap: true,
+                                                children: content);
+                                          } else {
+                                            return Padding(
+                                                padding: EdgeInsets.fromLTRB(
+                                                    0, 0, 0, 10),
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15.0),
+                                                      color: Color(0xAAFFFFFF)),
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  child: CircularLoaderKomet(),
+                                                ));
+                                          }
+                                        },
+                                      );
+                                    }),
                                   ),
                                   if (MediaQuery.of(context).size.width > 900)
                                     Column(
@@ -214,63 +211,52 @@ class _Products extends State<Products> {
         },
       );
 
+  //Returns a List<widgets> with each gridview for every category
+  List<Widget> getGrids(List<CategoryProductDTO> l, ProductsListModel model) {
+    List<Widget> toret = List();
 
-      //Returns a List<widgets> with each gridview for every category
-      List<Widget> getGrids(List<Category_productDTO> l, ProductsListModel model){
-        List<Widget> toret = List();
-
-        for(var category in l){
-          List<Product> p = List();
-            for(var pp in category.llista_prods){
-              Product product;
-            p.add(Product.fromDTO(pp));
-            model.availableProducts.add(product);
-          }
-
-          toret.add(Container (child: Text(category.name, key: Key(category.name), style: Category_style,),
-          decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          15.0),
-                                                  color: Color(0xAAFFFFFF)),alignment: Alignment.center, padding: EdgeInsets.all(10),margin: EdgeInsets.only(bottom: 5),));
-          toret.add(StaggeredGridView
-                                                      .countBuilder(
-                                                    crossAxisSpacing: 10,
-                                                    mainAxisSpacing: 10,
-                                                    physics:
-                                                        NeverScrollableScrollPhysics(), // to disable GridView's scrolling
-                                                    shrinkWrap: true,
-                                                    itemCount: p
-                                                        
-                                                        .length,
-                                                    crossAxisCount:
-                                                        MediaQuery.of(context)
-                                                                    .size
-                                                                    .width >
-                                                                600
-                                                            ? 2
-                                                            : 1,
-                                                    itemBuilder:
-                                                        (context, index) {
-                                                      return ProductListCard(
-                                                          Key(
-                                                              'product-card-$index'),
-                                                          p[
-                                                              index],
-                                                          addToCart);
-                                                    },
-                                                    staggeredTileBuilder: (int
-                                                            index) =>
-                                                        StaggeredTile.fit(1),
-                                                  ));
-                  
-        }
-        return toret;
+    for (var category in l) {
+      List<Product> p = List();
+      for (var pp in category.productsList) {
+        Product product;
+        p.add(Product.fromDTO(pp));
+        model.availableProducts.add(product);
       }
+
+      toret.add(Container(
+        child: Text(
+          category.name,
+          key: Key(category.name),
+          style: categoryStyle,
+        ),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15.0),
+            color: Color(0xAAFFFFFF)),
+        alignment: Alignment.center,
+        padding: EdgeInsets.all(10),
+        margin: EdgeInsets.only(bottom: 5),
+      ));
+      toret.add(StaggeredGridView.countBuilder(
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+        physics:
+            NeverScrollableScrollPhysics(), // to disable GridView's scrolling
+        shrinkWrap: true,
+        itemCount: p.length,
+        crossAxisCount: MediaQuery.of(context).size.width > 600 ? 2 : 1,
+        itemBuilder: (context, index) {
+          return ProductListCard(
+              Key('product-card-$index'), p[index], addToCart);
+        },
+        staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
+      ));
+    }
+    return toret;
+  }
 }
 
 class CustomRadio extends StatefulWidget {
-  List<String> categories;
+  final List<String> categories;
 
   CustomRadio(this.categories);
   @override
@@ -280,25 +266,23 @@ class CustomRadio extends StatefulWidget {
 }
 
 class CustomRadioState extends State<CustomRadio> {
-
   List<String> categories;
   List<RadioModel> sample = List<RadioModel>();
 
   CustomRadioState(this.categories);
 
-  List<Widget> generate_widgets() {
+  List<Widget> generateWidgets() {
     List<Widget> llista = List<Widget>();
     sample.asMap().forEach((key, value) {
       llista.add(InkWell(
           onTap: () {
-            //TODO your task here gerard you should go to the widget with key the same name as the category, see line 229 
+            //TODO your task here gerard you should go to the widget with key the same name as the category, see line 229
             setState(() {
               sample.forEach((element) => element.isSelected = false);
               sample[key].isSelected = true;
             });
           },
-          child:
-              Product_class_widget(sample[key].name, sample[key].isSelected)));
+          child: ProductClassWidget(sample[key].name, sample[key].isSelected)));
     });
 
     return llista;
@@ -307,7 +291,7 @@ class CustomRadioState extends State<CustomRadio> {
   @override
   void initState() {
     super.initState();
-    for (var cat in categories){
+    for (var cat in categories) {
       sample.add(RadioModel(cat, false));
     }
   }
@@ -316,16 +300,16 @@ class CustomRadioState extends State<CustomRadio> {
   Widget build(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
-      children: generate_widgets(),
+      children: generateWidgets(),
     );
   }
 }
 
-class Product_class_widget extends StatelessWidget {
-  String name;
-  bool isSelected;
+class ProductClassWidget extends StatelessWidget {
+  final String name;
+  final bool isSelected;
 
-  Product_class_widget(this.name, this.isSelected);
+  ProductClassWidget(this.name, this.isSelected);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -335,8 +319,8 @@ class Product_class_widget extends StatelessWidget {
           Container(
               child: Text(name,
                   style: isSelected
-                      ? ProdTextTitleStyle
-                      : ProdTextTitleStyle_basic)),
+                      ? prodTextTitleStyle
+                      : prodTextTitleStyleBasic)),
           Container(
             height: isSelected ? 7 : 0,
             width: name.length.toDouble() * 10,
@@ -349,8 +333,6 @@ class Product_class_widget extends StatelessWidget {
 }
 
 class RadioModel {
-
-
   String name;
   bool isSelected;
 

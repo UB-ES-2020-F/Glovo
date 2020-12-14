@@ -41,7 +41,7 @@ class DeveloperList {
         name: "Mario Moliner",
         githubUsername: "mariomoliner",
         githubLink: "https://github.com/mariomoliner",
-        image: "https://avatars1.githubusercontent.com/u/7798562?s=460&v=4",
+        image: "resources/images/mario.jpg",
         roles: "Frontend Developer / Quality Assurance"));
     developers.add(Developer(
         name: "Martí Pedemonte",

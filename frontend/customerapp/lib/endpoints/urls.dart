@@ -34,7 +34,6 @@ class EndpointDefinitions {
     return '${config.apiUrl}' + '/users/logout';
   }
 
-
   static Future<String> makeLocationPost() async {
     final config = await AppConfig.getConfig();
     return '${config.apiUrl}' + '/users/logged/location';
@@ -49,7 +48,7 @@ class EndpointDefinitions {
     final config = await AppConfig.getConfig();
     return '${config.apiUrl}' + '/users/update-password';
   }
-  
+
   static Future<String> makeSendEmailForgotPasswordURL() async {
     final config = await AppConfig.getConfig();
     return '${config.apiUrl}' + '/users/password-email';
@@ -58,6 +57,5 @@ class EndpointDefinitions {
   static Future<String> makeSetRecoveryPasswordURL() async {
     final config = await AppConfig.getConfig();
     return '${config.apiUrl}' + '/users/reset-password';
-
   }
 }
