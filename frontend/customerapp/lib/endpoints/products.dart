@@ -20,8 +20,6 @@ Future<List<CategoryProductDTO>> getProductsFromRestaurant(
     List<ProductDTO> products = <ProductDTO>[];
 
     for (var category in decoded) {
-      print(category['category']);
-
       for (var prod in category['products']) {
         products.add(ProductDTO.fromJson(prod));
       }

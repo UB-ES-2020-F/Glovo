@@ -349,20 +349,21 @@ class Product_class_widget extends StatelessWidget {
     return Padding(
         padding: EdgeInsets.only(left: 10),
         child: Container(
+            key: Key('category-${name.toLowerCase()}'),
             child: Column(mainAxisSize: MainAxisSize.min, children: [
-          Container(
-              child: Text(name,
-                  style: isSelected
-                      ? prodTextTitleStyle
-                      : prodTextTitleStyleBasic)),
-          Container(
-            height: isSelected ? 7 : 0,
-            width: name.length.toDouble() * 10,
-            decoration: BoxDecoration(
-                color: kommetDistinctiveYellow,
-                borderRadius: BorderRadius.all(Radius.circular(40))),
-          )
-        ])));
+              Container(
+                  child: Text(name,
+                      style: isSelected
+                          ? prodTextTitleStyle
+                          : prodTextTitleStyleBasic)),
+              Container(
+                height: isSelected ? 7 : 0,
+                width: name.length.toDouble() * 10,
+                decoration: BoxDecoration(
+                    color: kommetDistinctiveYellow,
+                    borderRadius: BorderRadius.all(Radius.circular(40))),
+              )
+            ])));
   }
 }
 
