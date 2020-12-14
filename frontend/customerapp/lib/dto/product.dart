@@ -36,4 +36,9 @@ class ProductDTO {
     if (restaurantId != null) toReturn['restaurantId'] = restaurantId;
     return toReturn;
   }
+
+  @override
+  String toString() {
+    return "product name: " + name;
+  }
 }

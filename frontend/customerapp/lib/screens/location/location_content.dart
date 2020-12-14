@@ -135,7 +135,7 @@ class SetLocationButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final mapLocationModel = context.watch<MapLocationModel>();
     final loggedModel = context.watch<LoggedModel>();
-    final update = context.watch<Update_model>();
+    final update = context.watch<UpdateModel>();
     return Container(
       padding: EdgeInsets.symmetric(vertical: 30),
       child: Wrap(
@@ -168,7 +168,7 @@ class SetLocationButton extends StatelessWidget {
                         print(e.responseBody);
                       });
 
-                      update.update_restaurants = true;
+                      update.updateRestaurants = true;
                       update.update();
                     }
                     Navigator.pop(context);

@@ -1,7 +1,6 @@
 import 'package:customerapp/actions/check_login.dart';
 import 'package:customerapp/components/footer.dart';
 import 'package:customerapp/models/landingPageText.dart';
-import 'package:customerapp/dto/location.dart';
 import 'package:customerapp/endpoints/location.dart';
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/map_location.dart';
@@ -47,10 +46,9 @@ class _InitialLogged extends State<InitialLogged> {
             var loggedModel = context.watch<LoggedModel>();
 
             getlocation().then((value) {
-              getAddress_fromPos(
+              getAddressFromPos(
                   mapsOriginal.Geocoder(),
-                  LatLng((value as LocationDTO).latitude,
-                      (value as LocationDTO).longitude),
+                  LatLng((value).latitude, (value).longitude),
                   locationModel,
                   loggedModel);
             }).catchError((onError) {});
@@ -186,8 +184,8 @@ class _InitialLogged extends State<InitialLogged> {
                             )))));
           } else {
             Future.delayed(Duration.zero, () {
-              var update = context.watch<Update_model>();
-              update.update_restaurants = false;
+              var update = context.watch<UpdateModel>();
+              update.updateRestaurants = false;
               Navigator.pushNamed(context, '/');
             });
             return CircularLoaderKomet();

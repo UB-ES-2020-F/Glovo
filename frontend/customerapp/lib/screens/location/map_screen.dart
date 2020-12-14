@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:customerapp/models/location.dart';
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/map_location.dart';
@@ -61,7 +59,7 @@ void setLocationAddressFromCoordinates(mapsOriginal.Geocoder geocoder,
   });
 }
 
-void getAddress_fromPos(mapsOriginal.Geocoder geocoder, LatLng position,
+void getAddressFromPos(mapsOriginal.Geocoder geocoder, LatLng position,
     MapLocationModel mapLocationModel, LoggedModel loggedModel) {
   geocoder.geocode(
       mapsOriginal.GeocoderRequest()

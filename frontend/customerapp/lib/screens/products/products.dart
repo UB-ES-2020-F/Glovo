@@ -4,6 +4,7 @@ import 'dart:html';
 import 'package:customerapp/actions/check_login.dart';
 import 'package:customerapp/components/appBar/default_logged_bar.dart';
 import 'package:customerapp/components/footer.dart';
+import 'package:customerapp/dto/category_product.dart';
 import 'package:customerapp/models/cart.dart';
 import 'package:customerapp/models/products.dart';
 import 'package:customerapp/models/restaurants.dart';
@@ -31,6 +32,8 @@ class _Products extends State<Products> {
   List prods = List();
   Cart cart;
   bool firstInstance;
+
+  List<String> cats;
 
   _Products() {
     firstInstance = true;
@@ -72,7 +75,8 @@ class _Products extends State<Products> {
                           image: DecorationImage(
                               image: NetworkImage(
                                   restaurant == null ? '' : restaurant.image),
-                              fit: BoxFit.fitWidth)),
+                              fit: BoxFit.fitWidth,
+                              alignment: Alignment.topCenter)),
 
                       child: SingleChildScrollView(
                           child: Column(children: [
@@ -95,101 +99,78 @@ class _Products extends State<Products> {
                                         : MediaQuery.of(context).size.width -
                                             cartWidth -
                                             75,
-                                    child: ListView(
-                                        physics:
-                                            NeverScrollableScrollPhysics(), // to disable GridView's scrolling
-                                        shrinkWrap: true,
-                                        children: [
-                                          Padding(
-                                            padding: EdgeInsets.fromLTRB(
-                                                0, 0, 0, 10),
-                                            child: Container(
-                                              height: 140,
-                                              padding: EdgeInsets.fromLTRB(
-                                                  40, 0, 40, 0),
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          15.0),
-                                                  color: Color(0xAAFFFFFF)),
-                                              alignment: Alignment.centerLeft,
-                                              child: Text(
-                                                restaurant == null
-                                                    ? 'Products'
-                                                    : restaurant.name,
-                                                style: restaurantTitleStyle,
-                                              ),
-                                            ),
-                                          ),
-                                          Builder(builder: (builder) {
-                                            return FutureBuilder(
-                                              future: getProductsFromRestaurant(
-                                                  restaurant.id),
-                                              builder: (BuildContext context,
-                                                  AsyncSnapshot snapshot2) {
-                                                if (snapshot2.hasData) {
-                                                  productsModel
-                                                      .removeProducts();
-                                                  snapshot2.data
-                                                      .forEach((element) {
-                                                    productsModel.addProduct(
-                                                        Product.fromDTO(
-                                                            element));
-                                                  });
-                                                  return StaggeredGridView
-                                                      .countBuilder(
-                                                    crossAxisSpacing: 10,
-                                                    mainAxisSpacing: 10,
-                                                    physics:
-                                                        NeverScrollableScrollPhysics(), // to disable GridView's scrolling
-                                                    shrinkWrap: true,
-                                                    itemCount: productsModel
-                                                        .availableProducts
-                                                        .length,
-                                                    crossAxisCount:
-                                                        MediaQuery.of(context)
-                                                                    .size
-                                                                    .width >
-                                                                600
-                                                            ? 2
-                                                            : 1,
-                                                    itemBuilder:
-                                                        (context, index) {
-                                                      return ProductListCard(
-                                                          Key(
-                                                              'product-card-$index'),
-                                                          productsModel
-                                                                  .availableProducts[
-                                                              index],
-                                                          addToCart);
-                                                    },
-                                                    staggeredTileBuilder: (int
-                                                            index) =>
-                                                        StaggeredTile.fit(1),
-                                                  );
-                                                } else {
-                                                  return Padding(
-                                                      padding:
-                                                          EdgeInsets.fromLTRB(
-                                                              0, 0, 0, 10),
-                                                      child: Container(
-                                                        decoration: BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        15.0),
-                                                            color: Color(
-                                                                0xAAFFFFFF)),
-                                                        alignment: Alignment
-                                                            .centerLeft,
-                                                        child:
-                                                            CircularLoaderKomet(),
-                                                      ));
-                                                }
-                                              },
-                                            );
-                                          }),
-                                        ]),
+                                    child: Builder(builder: (builder) {
+                                      return FutureBuilder(
+                                        future: getProductsFromRestaurant(
+                                            restaurant.id),
+                                        builder: (BuildContext context,
+                                            AsyncSnapshot snapshot2) {
+                                          if (snapshot2.hasData) {
+                                            //the categories
+                                            cats = (snapshot2.data
+                                                    as List<CategoryProductDTO>)
+                                                .map((e) => e.name)
+                                                .toList();
+                                            List<Widget> content = [
+                                              Container(
+                                                  child: Padding(
+                                                padding: EdgeInsets.fromLTRB(
+                                                    0, 0, 0, 10),
+                                                child: Container(
+                                                  height: 140,
+                                                  padding: EdgeInsets.fromLTRB(
+                                                      40, 0, 40, 0),
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15.0),
+                                                      color: Color(0xAAFFFFFF)),
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  child: Column(children: [
+                                                    Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                top: 10),
+                                                        child: Text(
+                                                          restaurant == null
+                                                              ? 'Products'
+                                                              : restaurant.name,
+                                                          style:
+                                                              restaurantTitleStyle,
+                                                        )),
+                                                    Divider(),
+                                                    //we construct the radiobutton with the cats
+                                                    CustomRadio(cats),
+                                                  ]),
+                                                ),
+                                              )),
+                                              ...getGrids(
+                                                  snapshot2.data, productsModel)
+                                            ];
+                                            return ListView(
+                                                physics:
+                                                    NeverScrollableScrollPhysics(), // to disable GridView's scrolling
+                                                shrinkWrap: true,
+                                                children: content);
+                                          } else {
+                                            return Padding(
+                                                padding: EdgeInsets.fromLTRB(
+                                                    0, 0, 0, 10),
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15.0),
+                                                      color: Color(0xAAFFFFFF)),
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  child: CircularLoaderKomet(),
+                                                ));
+                                          }
+                                        },
+                                      );
+                                    }),
                                   ),
                                   if (MediaQuery.of(context).size.width > 900)
                                     Column(
@@ -229,30 +210,79 @@ class _Products extends State<Products> {
           }
         },
       );
+
+  //Returns a List<widgets> with each gridview for every category
+  List<Widget> getGrids(List<CategoryProductDTO> l, ProductsListModel model) {
+    List<Widget> toret = List();
+
+    for (var category in l) {
+      List<Product> p = List();
+      for (var pp in category.productsList) {
+        Product product;
+        p.add(Product.fromDTO(pp));
+        model.availableProducts.add(product);
+      }
+
+      toret.add(Container(
+        child: Text(
+          category.name,
+          key: Key(category.name),
+          style: categoryStyle,
+        ),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15.0),
+            color: Color(0xAAFFFFFF)),
+        alignment: Alignment.center,
+        padding: EdgeInsets.all(10),
+        margin: EdgeInsets.only(bottom: 5),
+      ));
+      toret.add(StaggeredGridView.countBuilder(
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+        physics:
+            NeverScrollableScrollPhysics(), // to disable GridView's scrolling
+        shrinkWrap: true,
+        itemCount: p.length,
+        crossAxisCount: MediaQuery.of(context).size.width > 600 ? 2 : 1,
+        itemBuilder: (context, index) {
+          return ProductListCard(
+              Key('product-card-$index'), p[index], addToCart);
+        },
+        staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
+      ));
+    }
+    return toret;
+  }
 }
 
 class CustomRadio extends StatefulWidget {
+  final List<String> categories;
+
+  CustomRadio(this.categories);
   @override
   State<StatefulWidget> createState() {
-    return CustomRadioState();
+    return CustomRadioState(this.categories);
   }
 }
 
 class CustomRadioState extends State<CustomRadio> {
+  List<String> categories;
   List<RadioModel> sample = List<RadioModel>();
 
-  List<Widget> generate_widgets() {
+  CustomRadioState(this.categories);
+
+  List<Widget> generateWidgets() {
     List<Widget> llista = List<Widget>();
     sample.asMap().forEach((key, value) {
       llista.add(InkWell(
           onTap: () {
+            //TODO your task here gerard you should go to the widget with key the same name as the category, see line 229
             setState(() {
               sample.forEach((element) => element.isSelected = false);
               sample[key].isSelected = true;
             });
           },
-          child:
-              Product_class_widget(sample[key].name, sample[key].isSelected)));
+          child: ProductClassWidget(sample[key].name, sample[key].isSelected)));
     });
 
     return llista;
@@ -261,26 +291,25 @@ class CustomRadioState extends State<CustomRadio> {
   @override
   void initState() {
     super.initState();
-    sample.add(RadioModel("primer", true));
-    sample.add(RadioModel("segundo", false));
-    sample.add(RadioModel("tercer", false));
-    sample.add(RadioModel("quart", false));
+    for (var cat in categories) {
+      sample.add(RadioModel(cat, false));
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
-      children: generate_widgets(),
+      children: generateWidgets(),
     );
   }
 }
 
-class Product_class_widget extends StatelessWidget {
-  String name;
-  bool isSelected;
+class ProductClassWidget extends StatelessWidget {
+  final String name;
+  final bool isSelected;
 
-  Product_class_widget(this.name, this.isSelected);
+  ProductClassWidget(this.name, this.isSelected);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -290,8 +319,8 @@ class Product_class_widget extends StatelessWidget {
           Container(
               child: Text(name,
                   style: isSelected
-                      ? ProdTextTitleStyle
-                      : ProdTextTitleStyle_basic)),
+                      ? prodTextTitleStyle
+                      : prodTextTitleStyleBasic)),
           Container(
             height: isSelected ? 7 : 0,
             width: name.length.toDouble() * 10,
@@ -309,4 +338,3 @@ class RadioModel {
 
   RadioModel(this.name, this.isSelected);
 }
-

@@ -1,5 +1,4 @@
 import 'package:customerapp/dto/order.dart';
-import 'package:customerapp/infrastructure/persistence/repository/user_credentials_repository.dart';
 import 'package:customerapp/models/products.dart';
 import 'package:flutter/widgets.dart';
 
@@ -48,8 +47,7 @@ class Cart extends ChangeNotifier {
 
   Future<OrderDTO> generateOrderDTO() async {
     return OrderDTO(
-        restaurantId: _getRestaurantId(),
-        products: _getProductsDTOs());
+        restaurantId: _getRestaurantId(), products: _getProductsDTOs());
   }
 
   List<ProductDTO> _getProductsDTOs() {

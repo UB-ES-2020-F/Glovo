@@ -8,7 +8,7 @@ class FoodButton extends StatelessWidget {
   FoodButton(Key key) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    var update = context.watch<Update_model>();
+    var update = context.watch<UpdateModel>();
 
     return Container(
         padding: EdgeInsets.all(20),
@@ -17,7 +17,7 @@ class FoodButton extends StatelessWidget {
         child: SizedBox.expand(
             child: RaisedButton(
           onPressed: () {
-            update.update_restaurants = false;
+            update.updateRestaurants = false;
             Navigator.pushNamed(context, '/restaurant-list');
           },
           onLongPress: null,

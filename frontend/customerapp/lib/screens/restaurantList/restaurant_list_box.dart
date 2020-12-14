@@ -123,30 +123,29 @@ class RestaurantsListCardState extends State<StatefulWidget> {
   }
 }
 
-class RestaurantsListCard_loc extends StatefulWidget {
+class RestaurantsListCardLoc extends StatefulWidget {
   final RestaurantLoc restaurant;
 
-  RestaurantsListCard_loc(Key key, this.restaurant) : super(key: key);
+  RestaurantsListCardLoc(Key key, this.restaurant) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return RestaurantsListCardState_loc(key, restaurant);
+    return RestaurantsListCardStateLoc(key, restaurant);
   }
 }
 
-class RestaurantsListCardState_loc extends State<StatefulWidget> {
+class RestaurantsListCardStateLoc extends State<StatefulWidget> {
   RestaurantLoc restaurant;
   double elevation = 2;
   String key;
 
-  RestaurantsListCardState_loc(Key key, this.restaurant) {
+  RestaurantsListCardStateLoc(Key key, this.restaurant) {
     String rawKey = key.toString();
     this.key = rawKey.substring(3, rawKey.length - 3);
   }
 
   @override
   Widget build(BuildContext context) {
-    User user = LoggedModel.user;
     double distance = restaurant.distance;
     double deliveryFee = restaurant.deliveryFee;
     TimeInterval timeInterval = new TimeInterval.distance(distance);

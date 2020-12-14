@@ -1,13 +1,15 @@
-import 'package:customerapp/styles/Komet.dart';
 import 'package:flutter/material.dart';
 
-final ProdTextTitleStyle = TextStyle(
+final prodTextTitleStyle = TextStyle(
   color: Colors.black,
   fontSize: 15,
   fontWeight: FontWeight.bold,
 );
 
-final ProdTextTitleStyle_basic = TextStyle(
+final prodTextTitleStyleBasic = TextStyle(
   color: Color(0xff000000),
   fontSize: 15,
 );
+
+final categoryStyle =
+    TextStyle(fontWeight: FontWeight.w600, color: Colors.black, fontSize: 25);
