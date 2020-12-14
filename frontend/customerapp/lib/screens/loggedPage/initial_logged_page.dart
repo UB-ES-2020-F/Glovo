@@ -296,12 +296,10 @@ class AppAdZone extends StatelessWidget {
             color: Colors.white,
             height: 400 * factor,
             width: MediaQuery.of(context).size.width,
-            child: Positioned.fill(
-              child: Image.asset(
-                'resources/images/food_pattern.jpg',
-                scale: 2.3,
-                repeat: ImageRepeat.repeat,
-              ),
+            child: Image.asset(
+              'resources/images/food_pattern.jpg',
+              scale: 2.3,
+              repeat: ImageRepeat.repeat,
             ),
           ),
           Container(
@@ -479,8 +477,8 @@ class WorkWithUsCards extends StatelessWidget {
             height: 300,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
-                image: DecorationImage(
-                    image: NetworkImage(img), fit: BoxFit.cover)),
+                image:
+                    DecorationImage(image: AssetImage(img), fit: BoxFit.cover)),
             padding: EdgeInsets.only(bottom: 10, left: 0, right: 0, top: 0),
           ),
           Container(

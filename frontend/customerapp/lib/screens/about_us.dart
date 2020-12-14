@@ -136,7 +136,9 @@ class DeveloperListCardState extends State<StatefulWidget> {
                 height: 200,
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: NetworkImage(developer.image),
+                        image: AssetImage(
+                          developer.image,
+                        ),
                         fit: BoxFit.cover)),
                 padding: EdgeInsets.only(bottom: 10, left: 0, right: 0, top: 0),
               )),

@@ -35,7 +35,7 @@ class DeveloperList {
         name: "Eudald Elias",
         githubUsername: "Eudaldz",
         githubLink: "https://github.com/Eudaldz",
-        image: "https://avatars1.githubusercontent.com/u/17552638?s=460&v=4",
+        image: "resources/images/eudald.png",
         roles: "Backend Developer / DevOps"));
     developers.add(Developer(
         name: "Mario Moliner",
