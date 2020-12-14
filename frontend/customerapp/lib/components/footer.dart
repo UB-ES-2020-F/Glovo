@@ -9,137 +9,153 @@ import 'package:flutter/widgets.dart';
 // ignore: must_be_immutable
 class Footer extends StatelessWidget {
   Color backgroundC;
+  final scrollController = ScrollController();
 
   Footer(this.backgroundC);
   @override
   Widget build(BuildContext context) {
-    if (MediaQuery.of(context).size.width > 1000) {
+    if (MediaQuery.of(context).size.width > 100) {
       return Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          /*CustomPaint(
-            painter: ShapesPainter(),
-            child: Container(height: 100),
-          ),*/
           Container(
               height: 220,
               child: SampleAnimation(
                   MediaQuery.of(context).size.width, backgroundC)),
           Container(
               color: footerBackgroundColor,
-              height: 350,
+              alignment: Alignment.center,
+              height: 300,
+              width: MediaQuery.of(context).size.width,
               padding: EdgeInsets.only(left: 20, right: 20),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                        width: 800,
-                        child: Table(
-                          defaultVerticalAlignment:
-                              TableCellVerticalAlignment.baseline,
+              child: Scrollbar(
+                  isAlwaysShown: true,
+                  controller: scrollController,
+                  child: SingleChildScrollView(
+                      controller: scrollController,
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            TableRow(children: [
-                              Container(
-                                  child: LogoGray(),
-                                  transform: Matrix4.translationValues(
-                                      -15.0, -20.0, 0.0),
-                                  padding: EdgeInsets.only(left: 0)),
-                              Container(
-                                  transform:
-                                      Matrix4.translationValues(0.0, 30.0, 0.0),
-                                  child: Text("JOIN US",
-                                      style: footerTextTitleStyle)),
-                              Container(
-                                  transform:
-                                      Matrix4.translationValues(0.0, 30.0, 0.0),
-                                  child: Text("HELP",
-                                      style: footerTextTitleStyle)),
-                              Container(
-                                  transform:
-                                      Matrix4.translationValues(0.0, 30.0, 0.0),
-                                  child: Text("LEGAL",
-                                      style: footerTextTitleStyle)),
-                              Container(
-                                  transform:
-                                      Matrix4.translationValues(0.0, 30.0, 0.0),
-                                  child: Text("FOLLOW US",
-                                      style: footerTextTitleStyle)),
-                            ]),
-                            TableRow(children: [
-                              Padding(
-                                child: TextLink('About us', (context) {
-                                  Navigator.of(context).pushNamedAndRemoveUntil(
-                                      '/about-us', (route) => false);
-                                }, footerTextNormalStyle, footerTextNormalStyle,
-                                    context),
-                                padding: EdgeInsets.only(bottom: 15),
-                              ),
-                              Text("Careers", style: footerTextNormalStyle),
-                              Text("FAQ", style: footerTextNormalStyle),
-                              Text("Terms and conditions",
-                                  style: footerTextNormalStyle),
-                              Text("Facebook", style: footerTextNormalStyle),
-                            ]),
-                            TableRow(children: [
-                              Padding(
-                                child: Text("", style: footerTextNormalStyle),
-                                padding: EdgeInsets.only(bottom: 15),
-                              ),
-                              Text("Store Partners",
-                                  style: footerTextNormalStyle),
-                              Text("Contact us", style: footerTextNormalStyle),
-                              Text("Privacy policy",
-                                  style: footerTextNormalStyle),
-                              Text("Twitter", style: footerTextNormalStyle),
-                            ]),
-                            TableRow(children: [
-                              Padding(
-                                child: Text("", style: footerTextNormalStyle),
-                                padding: EdgeInsets.only(bottom: 15),
-                              ),
-                              Text("Couriers", style: footerTextNormalStyle),
-                              Text("", style: footerTextNormalStyle),
-                              Text("Cookies Policy",
-                                  style: footerTextNormalStyle),
-                              Text("Instagram", style: footerTextNormalStyle),
-                            ]),
-                            TableRow(children: [
-                              Padding(
-                                child: Text("", style: footerTextNormalStyle),
-                                padding: EdgeInsets.only(bottom: 15),
-                              ),
-                              Text("Glovo business",
-                                  style: footerTextNormalStyle),
-                              Text("", style: footerTextNormalStyle),
-                              Text("", style: footerTextNormalStyle),
-                              Text("", style: footerTextNormalStyle),
-                            ])
-                          ],
-                        )),
-                    Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                              padding: EdgeInsets.only(top: 2),
-                              height: 70,
-                              child: IconButton(
-                                  onPressed: () {},
-                                  iconSize: 120,
-                                  icon: Image.asset(
-                                    'resources/images/download-button.png',
-                                  ))),
-                          Container(
-                              height: 70,
-                              child: IconButton(
-                                onPressed: () {},
-                                iconSize: 120,
-                                icon: Image.asset(
-                                  'resources/images/download-button_android.png',
-                                ),
-                              ))
-                        ])
-                  ]))
+                            Container(
+                                width: 800,
+                                child: Table(
+                                  defaultVerticalAlignment:
+                                      TableCellVerticalAlignment.baseline,
+                                  children: [
+                                    TableRow(children: [
+                                      Container(
+                                          child: LogoGray(),
+                                          transform: Matrix4.translationValues(
+                                              -15.0, -20.0, 0.0),
+                                          padding: EdgeInsets.only(left: 0)),
+                                      Container(
+                                          transform: Matrix4.translationValues(
+                                              0.0, 30.0, 0.0),
+                                          child: Text("JOIN US",
+                                              style: footerTextTitleStyle)),
+                                      Container(
+                                          transform: Matrix4.translationValues(
+                                              0.0, 30.0, 0.0),
+                                          child: Text("HELP",
+                                              style: footerTextTitleStyle)),
+                                      Container(
+                                          transform: Matrix4.translationValues(
+                                              0.0, 30.0, 0.0),
+                                          child: Text("LEGAL",
+                                              style: footerTextTitleStyle)),
+                                      Container(
+                                          transform: Matrix4.translationValues(
+                                              0.0, 30.0, 0.0),
+                                          child: Text("FOLLOW US",
+                                              style: footerTextTitleStyle)),
+                                    ]),
+                                    TableRow(children: [
+                                      Padding(
+                                        child: TextLink('About us', (context) {
+                                          Navigator.of(context)
+                                              .pushNamedAndRemoveUntil(
+                                                  '/about-us',
+                                                  (route) => false);
+                                        }, footerTextNormalStyle,
+                                            footerTextNormalStyle, context),
+                                        padding: EdgeInsets.only(bottom: 15),
+                                      ),
+                                      Text("Careers",
+                                          style: footerTextNormalStyle),
+                                      Text("FAQ", style: footerTextNormalStyle),
+                                      Text("Terms and conditions",
+                                          style: footerTextNormalStyle),
+                                      Text("Facebook",
+                                          style: footerTextNormalStyle),
+                                    ]),
+                                    TableRow(children: [
+                                      Padding(
+                                        child: Text("",
+                                            style: footerTextNormalStyle),
+                                        padding: EdgeInsets.only(bottom: 15),
+                                      ),
+                                      Text("Store Partners",
+                                          style: footerTextNormalStyle),
+                                      Text("Contact us",
+                                          style: footerTextNormalStyle),
+                                      Text("Privacy policy",
+                                          style: footerTextNormalStyle),
+                                      Text("Twitter",
+                                          style: footerTextNormalStyle),
+                                    ]),
+                                    TableRow(children: [
+                                      Padding(
+                                        child: Text("",
+                                            style: footerTextNormalStyle),
+                                        padding: EdgeInsets.only(bottom: 15),
+                                      ),
+                                      Text("Couriers",
+                                          style: footerTextNormalStyle),
+                                      Text("", style: footerTextNormalStyle),
+                                      Text("Cookies Policy",
+                                          style: footerTextNormalStyle),
+                                      Text("Instagram",
+                                          style: footerTextNormalStyle),
+                                    ]),
+                                    TableRow(children: [
+                                      Padding(
+                                        child: Text("",
+                                            style: footerTextNormalStyle),
+                                        padding: EdgeInsets.only(bottom: 15),
+                                      ),
+                                      Text("Glovo business",
+                                          style: footerTextNormalStyle),
+                                      Text("", style: footerTextNormalStyle),
+                                      Text("", style: footerTextNormalStyle),
+                                      Text("", style: footerTextNormalStyle),
+                                    ])
+                                  ],
+                                )),
+                            Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                      padding: EdgeInsets.only(top: 2),
+                                      height: 70,
+                                      child: IconButton(
+                                          onPressed: () {},
+                                          iconSize: 120,
+                                          icon: Image.asset(
+                                            'resources/images/download-button.png',
+                                          ))),
+                                  Container(
+                                      height: 70,
+                                      child: IconButton(
+                                        onPressed: () {},
+                                        iconSize: 120,
+                                        icon: Image.asset(
+                                          'resources/images/download-button_android.png',
+                                        ),
+                                      ))
+                                ])
+                          ]))))
         ],
       );
     } else {
