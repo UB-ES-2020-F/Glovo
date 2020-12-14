@@ -47,10 +47,7 @@ class Cart extends ChangeNotifier {
   }
 
   Future<OrderDTO> generateOrderDTO() async {
-    final userCredentials = await UserCredentialsRepository().getCredentials();
     return OrderDTO(
-        userId: userCredentials.userId,
-        buyDateTime: DateTime.now(),
         restaurantId: _getRestaurantId(),
         products: _getProductsDTOs());
   }

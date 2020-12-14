@@ -1,6 +1,7 @@
 import 'package:customerapp/components/text_link.dart';
 import 'package:customerapp/dto/user.dart';
 import 'package:customerapp/infrastructure/persistence/repository/user_credentials_repository.dart';
+import 'package:customerapp/models/location.dart';
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/signup.dart';
 import 'package:customerapp/models/user_credentials/user_credentials.dart';
@@ -234,6 +235,8 @@ void trySendRegisterForm(BuildContext context, SignUpModel signUpModel) {
           LoggedModel.user.id = loggedUser.id;
           LoggedModel.user.name = loggedUser.name;
           LoggedModel.user.email = loggedUser.email;
+          LoggedModel.user.location = new Location(40, 2);
+          LoggedModel.user.direction = 'Unknown direction';          
           Navigator.of(context)
               .pushNamedAndRemoveUntil('/initial-logged-in', (route) => false);
         }).catchError((error) {

@@ -59,6 +59,7 @@ class DirectionBoxState extends State<DirectionsBox> {
   Widget build(BuildContext context) {
     var loggedModel = context.watch<LoggedModel>();
     return InkWell(
+        key: Key('location-button'),
         onTap: () {
           if (MediaQuery.of(context).size.width > 600) {
             showDialog(context: context, builder: (_) => LocationDialog());

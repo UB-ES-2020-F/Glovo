@@ -6,11 +6,16 @@ class LoggedUserPage extends DriverPage {
   LoggedUserPage(FlutterDriver driver) : super(driver);
   Future<void> clickFoodBubbleButton() async {
     final foodButton = find.byValueKey(foodBubbleButton);
-    driver.tap(foodButton);
+    await driver.tap(foodButton);
   }
 
   Future<void> clickProfileButton() async {
     final profButton = find.byValueKey(profileButton);
-    driver.tap(profButton);
+    await driver.tap(profButton);
+  }
+
+  Future<void> clickLocationButton() async {
+    final locButton = find.byValueKey(locationButton);
+    await driver.tap(locButton);
   }
 }

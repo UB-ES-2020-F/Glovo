@@ -34,6 +34,10 @@ class EndpointDefinitions {
     return '${config.apiUrl}' + '/users/logout';
   }
 
+  static Future<String> makeLocationPost() async {
+    final config = await AppConfig.getConfig();
+    return '${config.apiUrl}' + '/users/logged/location';
+  }
   static Future<String> changeUserAndEmailURL() async {
     final config = await AppConfig.getConfig();
     return '${config.apiUrl}' + '/users/update';

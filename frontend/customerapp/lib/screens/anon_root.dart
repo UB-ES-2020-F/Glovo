@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:customerapp/screens/anon_bar.dart';
 
+import 'package:google_maps/google_maps.dart' as mapsOriginal;
+
 class AnonRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

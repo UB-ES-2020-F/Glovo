@@ -1,14 +1,28 @@
 import 'package:customerapp/actions/check_login.dart';
 import 'package:customerapp/components/footer.dart';
+import 'package:customerapp/dto/location.dart';
+import 'package:customerapp/dto/restaurant.dart';
+import 'package:customerapp/endpoints/location.dart';
+import 'package:customerapp/endpoints/restaurants.dart';
+import 'package:customerapp/exceptions/logout-callback-failed.dart';
+import 'package:customerapp/exceptions/order-callback-failed.dart';
+import 'package:customerapp/models/location.dart';
+import 'package:customerapp/models/logged.dart';
+import 'package:customerapp/models/map_location.dart';
+import 'package:customerapp/models/update_model.dart';
 import 'package:customerapp/responsive/screen_responsive.dart';
 import 'package:customerapp/screens/commonComponents/anything_button.dart';
 import 'package:customerapp/screens/commonComponents/food_button.dart';
 import 'package:customerapp/screens/commonComponents/single_message_dialog.dart';
 import 'package:customerapp/screens/commonComponents/snacks_button.dart';
 import 'package:customerapp/screens/commonComponents/supermarkets_button.dart';
+import 'package:customerapp/screens/location/map_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:customerapp/screens/loggedPage/logged_bar.dart';
+import 'package:google_maps/google_maps.dart' as mapsOriginal;
 
 class InitialLogged extends StatefulWidget {
   @override
@@ -17,12 +31,29 @@ class InitialLogged extends StatefulWidget {
 
 class _InitialLogged extends State<InitialLogged> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) => FutureBuilder(
       future: userIsLogged(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data) {
             Widget bar;
+            var locationModel = context.watch<MapLocationModel>();
+            var loggedModel = context.watch<LoggedModel>();
+
+
+            getlocation().then((value) {
+              getAddress_fromPos(
+                  mapsOriginal.Geocoder(),
+                  LatLng((value as LocationDTO).latitude,
+                      (value as LocationDTO).longitude),
+                  locationModel,
+                  loggedModel);
+            }).catchError((onError) {});
 
             var s = BarResponsive(
                 context, '/overview-mobile', InitialLoggedBar(),
@@ -87,11 +118,14 @@ class _InitialLogged extends State<InitialLogged> {
                                                 ])))
                                       ],
                                     ),
+                                    
                                     Footer(Theme.of(context).backgroundColor),
                                   ]))),
                     )))));
           } else {
             Future.delayed(Duration.zero, () {
+              var update = context.watch<Update_model>();
+              update.update_restaurants =false;
               Navigator.pushNamed(context, '/');
             });
             return CircularLoaderKomet();
