@@ -1,6 +1,5 @@
 // ignore: avoid_web_libraries_in_flutter
 import 'dart:html';
-
 import 'package:customerapp/actions/check_login.dart';
 import 'package:customerapp/components/appBar/default_logged_bar.dart';
 import 'package:customerapp/dto/category_product.dart';
@@ -78,6 +77,8 @@ class _Products extends State<Products> {
                   appBar: bar,
                   body: Stack(children: [
                     Container(
+                        alignment: Alignment.topLeft,
+                        width: MediaQuery.of(context).size.width,
                         //padding: EdgeInsets.only(left: 20, right: 20),
                         decoration: BoxDecoration(
                             color: Color(0xFFE0E0E0),
@@ -216,16 +217,6 @@ class _Products extends State<Products> {
                                             );
                                           }),
                                         ),
-                                        if (MediaQuery.of(context).size.width >
-                                            900)
-                                          Column(
-                                            children: [
-                                              CartBox(restaurant, cartWidth,
-                                                  cart, prods)
-                                            ],
-                                          )
-                                        else
-                                          Container()
                                       ])))),
                           //Bug for next Sprint
                           //Footer(Color(0x00000000))
@@ -242,6 +233,16 @@ class _Products extends State<Products> {
                                   ' items (' +
                                   cart.getTotalPrice().toStringAsFixed(2) +
                                   ' €)')),
+                    if (MediaQuery.of(context).size.width > 900)
+                      Align(
+                          alignment: Alignment.topRight,
+                          child: Column(
+                            children: [
+                              CartBox(restaurant, cartWidth, cart, prods)
+                            ],
+                          ))
+                    else
+                      Container()
                   ]));
             } else {
               Future.delayed(Duration.zero, () {
