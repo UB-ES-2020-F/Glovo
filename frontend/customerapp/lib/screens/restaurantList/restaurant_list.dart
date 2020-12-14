@@ -13,6 +13,7 @@ import 'package:customerapp/screens/commonComponents/single_message_dialog.dart'
 
 import 'package:customerapp/screens/restaurantList/restaurant_list_box.dart';
 import 'package:customerapp/styles/default_app_bar.dart';
+import 'package:customerapp/styles/restaurant_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -52,10 +53,32 @@ class _RestaurantsList extends State<RestaurantsList> {
                   body: Container(
                       child: Center(
                     child: ListView(children: [
-                      Container(height: MediaQuery.of(context).size.width / 50),
                       Container(
+                        padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
                         alignment: Alignment.centerLeft,
-                        padding: EdgeInsets.only(bottom: 20),
+                        child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.baseline,
+                            children: [
+                              Text(
+                                'Food',
+                                style: restaurantSectionTextStyle,
+                              ),
+                              Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                color: Color(0xFF606266),
+                                size: 30,
+                              ),
+                              Text(
+                                'Restaurants',
+                                style: restaurantSectionTextStyle.copyWith(
+                                    color: Color(0xFFFFC244),
+                                    fontWeight: FontWeight.w900),
+                              )
+                            ]),
+                      ),
+                      Container(
+                        padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
+                        alignment: Alignment.centerLeft,
                         child: Text(
                           'Restaurants',
                           style: Theme.of(context).textTheme.headline1,
@@ -84,27 +107,33 @@ class _RestaurantsList extends State<RestaurantsList> {
                                             RestaurantLoc.fromDTO(element));
                                       });
                                       auxModel = restaurantsModelFee;
-                                      return StaggeredGridView.countBuilder(
-                                        crossAxisSpacing: 10,
-                                        mainAxisSpacing: 10,
-                                        physics:
-                                            NeverScrollableScrollPhysics(), // to disable GridView's scrolling
-                                        shrinkWrap: true,
-                                        itemCount: restaurantsModelFee
-                                            .availableRestaurants.length,
-                                        crossAxisCount: max(
-                                            MediaQuery.of(context).size.width ~/
-                                                300.0,
-                                            1),
-                                        itemBuilder: (context, index) {
-                                          return RestaurantsListCardLoc(
-                                              Key('restaurant-card-$index'),
-                                              restaurantsModelFee
-                                                  .availableRestaurants[index]);
-                                        },
-                                        staggeredTileBuilder: (int index) =>
-                                            StaggeredTile.fit(1),
-                                      );
+                                      return Container(
+                                          padding:
+                                              EdgeInsets.fromLTRB(30, 0, 30, 0),
+                                          child: StaggeredGridView.countBuilder(
+                                            crossAxisSpacing: 10,
+                                            mainAxisSpacing: 10,
+                                            physics:
+                                                NeverScrollableScrollPhysics(), // to disable GridView's scrolling
+                                            shrinkWrap: true,
+                                            itemCount: restaurantsModelFee
+                                                .availableRestaurants.length,
+                                            crossAxisCount: max(
+                                                MediaQuery.of(context)
+                                                        .size
+                                                        .width ~/
+                                                    300.0,
+                                                1),
+                                            itemBuilder: (context, index) {
+                                              return RestaurantsListCardLoc(
+                                                  Key('restaurant-card-$index'),
+                                                  restaurantsModelFee
+                                                          .availableRestaurants[
+                                                      index]);
+                                            },
+                                            staggeredTileBuilder: (int index) =>
+                                                StaggeredTile.fit(1),
+                                          ));
                                     } else {
                                       return CircularLoaderKomet();
                                     }
@@ -133,27 +162,33 @@ class _RestaurantsList extends State<RestaurantsList> {
                                       restaurantsModelFee.addRestaurant(
                                           RestaurantLoc.fromDTO(element));
                                     });
-                                    return StaggeredGridView.countBuilder(
-                                      crossAxisSpacing: 10,
-                                      mainAxisSpacing: 10,
-                                      physics:
-                                          NeverScrollableScrollPhysics(), // to disable GridView's scrolling
-                                      shrinkWrap: true,
-                                      itemCount: restaurantsModelFee
-                                          .availableRestaurants.length,
-                                      crossAxisCount: max(
-                                          MediaQuery.of(context).size.width ~/
-                                              300.0,
-                                          1),
-                                      itemBuilder: (context, index) {
-                                        return RestaurantsListCardLoc(
-                                            Key('restaurant-card-$index'),
-                                            restaurantsModelFee
-                                                .availableRestaurants[index]);
-                                      },
-                                      staggeredTileBuilder: (int index) =>
-                                          StaggeredTile.fit(1),
-                                    );
+                                    return Container(
+                                        padding:
+                                            EdgeInsets.fromLTRB(30, 0, 30, 0),
+                                        child: StaggeredGridView.countBuilder(
+                                          crossAxisSpacing: 10,
+                                          mainAxisSpacing: 10,
+                                          physics:
+                                              NeverScrollableScrollPhysics(), // to disable GridView's scrolling
+                                          shrinkWrap: true,
+                                          itemCount: restaurantsModelFee
+                                              .availableRestaurants.length,
+                                          crossAxisCount: max(
+                                              MediaQuery.of(context)
+                                                      .size
+                                                      .width ~/
+                                                  300.0,
+                                              1),
+                                          itemBuilder: (context, index) {
+                                            return RestaurantsListCardLoc(
+                                                Key('restaurant-card-$index'),
+                                                restaurantsModelFee
+                                                        .availableRestaurants[
+                                                    index]);
+                                          },
+                                          staggeredTileBuilder: (int index) =>
+                                              StaggeredTile.fit(1),
+                                        ));
                                   } else {
                                     return CircularLoaderKomet();
                                   }

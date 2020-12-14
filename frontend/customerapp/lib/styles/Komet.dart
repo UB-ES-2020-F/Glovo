@@ -9,8 +9,8 @@ final appTheme = ThemeData(
   textTheme: TextTheme(
       headline1: TextStyle(
           color: Colors.black,
-          fontSize: 35,
-          fontWeight: FontWeight.normal,
+          fontSize: 36,
+          fontWeight: FontWeight.w300,
           letterSpacing: 1.0)),
 );
 

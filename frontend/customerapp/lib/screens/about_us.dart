@@ -97,15 +97,15 @@ class DeveloperListCard extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return RestaurantsListCardState(developer);
+    return DeveloperListCardState(developer);
   }
 }
 
-class RestaurantsListCardState extends State<StatefulWidget> {
+class DeveloperListCardState extends State<StatefulWidget> {
   Developer developer;
   double elevation = 2;
 
-  RestaurantsListCardState(this.developer);
+  DeveloperListCardState(this.developer);
 
   @override
   Widget build(BuildContext context) {

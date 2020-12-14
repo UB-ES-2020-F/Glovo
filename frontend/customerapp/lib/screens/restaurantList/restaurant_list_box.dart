@@ -30,6 +30,9 @@ class RestaurantsListCardState extends State<StatefulWidget> {
     TimeInterval timeInterval = new TimeInterval.distance(distance);
     return Container(
         child: Card(
+      shape: RoundedRectangleBorder(
+          side: BorderSide(color: Colors.black26, width: 1),
+          borderRadius: BorderRadius.circular(10)),
       elevation: this.elevation,
       child: Container(
           child: Column(
@@ -151,6 +154,9 @@ class RestaurantsListCardStateLoc extends State<StatefulWidget> {
     TimeInterval timeInterval = new TimeInterval.distance(distance);
     return Container(
         child: Card(
+      shape: RoundedRectangleBorder(
+          //side: BorderSide(color: Colors.black26, width: 1),
+          borderRadius: BorderRadius.circular(10)),
       elevation: this.elevation,
       child: Container(
           child: Column(
