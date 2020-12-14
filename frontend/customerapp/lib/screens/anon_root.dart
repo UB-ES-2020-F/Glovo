@@ -36,14 +36,15 @@ class AnonRoute extends StatelessWidget {
                           alignment: Alignment.center,
                           child: Image.asset(
                             'resources/images/name_and_logo.png',
-                            width: 250,
+                            width: 300,
                           ),
                         ),
                         Container(
                           height: 220,
                           child: WhiteZone(),
                         ),
-                        AppAdZone(),
+                        if (MediaQuery.of(context).size.width > 300)
+                          AppAdZone(),
                         Footer(Colors.white)
                       ]),
                 ))))));

@@ -61,7 +61,7 @@ class _InitialLogged extends State<InitialLogged> {
                                               children: [
                                                 Image.asset(
                                                   'resources/images/name_and_logo.png',
-                                                  width: 250,
+                                                  width: 300,
                                                   key: Key(
                                                       'initial-logged-in-komet-title-text'),
                                                 ),
@@ -127,7 +127,11 @@ class _InitialLogged extends State<InitialLogged> {
                                                   height: 220,
                                                   child: WhiteZone(),
                                                 ),
-                                                AppAdZone(),
+                                                if (MediaQuery.of(context)
+                                                        .size
+                                                        .width >
+                                                    300)
+                                                  AppAdZone(),
                                               ],
                                             ),
                                             Footer(Colors.white),
@@ -225,6 +229,7 @@ class PathPainterInitial extends CustomPainter {
   bool shouldRepaint(CustomPainter oldDelegate) => true;
 }
 
+// ignore: must_be_immutable
 class AppAdZone extends StatelessWidget {
   double factor = 1;
   double factorFont = 1;
@@ -276,10 +281,11 @@ class AppAdZone extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.asset(
-                  'resources/images/app_image.png',
-                  height: 500 * factor,
-                ),
+                if (MediaQuery.of(context).size.width > 570)
+                  Image.asset(
+                    'resources/images/app_image.png',
+                    height: 500 * factor,
+                  ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -313,7 +319,7 @@ class AppAdZone extends StatelessWidget {
                         textAlign: TextAlign.center,
                         style: mediumSmallTextStyle.copyWith(
                             color: Color(0xFF4A4A4A),
-                            fontSize: 18 * factorFont),
+                            fontSize: 13 * factorFont + 5),
                       ),
                     ),
                     Row(
