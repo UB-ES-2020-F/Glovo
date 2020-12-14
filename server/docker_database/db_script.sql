@@ -16,13 +16,13 @@ VALUES
 
 INSERT INTO "Restaurants" ("Name", "ImgPath", "Location_Latitude", "Location_Longitude")
 VALUES
-	('KFC', 'https://res.cloudinary.com/glovoapp/w_1200,f_auto,q_auto/Stores/kgwyyskpc20x3zoquelm', 20, 10),
-	('La Tagliatella', 'https://res.cloudinary.com/glovoapp/w_700,h_360,f_auto,q_auto/Stores/ut78sjpa3zs5sl2gf4wl', 20, 40),
-	('UDON', 'https://res.cloudinary.com/glovoapp/w_700,h_360,f_auto,q_auto/Stores/oazhwswiwyaebj7fhw0p', 20, 70),
-	('Crep Nova', 'https://res.cloudinary.com/glovoapp/w_700,h_360,f_auto,q_auto/Stores/dnhg7ldzheyqper7s0g4', 40, 10),
-	('Subway', 'https://res.cloudinary.com/glovoapp/w_700,h_360,f_auto,q_auto/Stores/ipxtregy0mx3y2fqhclp', 40, 40),
-	('Burger King', 'https://res.cloudinary.com/glovoapp/w_700,h_360,f_auto,q_auto/Stores/jor4u1grqkmamnybgjs8', 40, 70),
-	('Telepizza', 'https://res.cloudinary.com/glovoapp/w_700,h_360,f_auto,q_auto/Stores/s1ftlo8w1vn9ngbgfvep', 70, 40);
+	('KFC', 'https://res.cloudinary.com/glovoapp/w_1200,f_auto,q_auto/Stores/kgwyyskpc20x3zoquelm', 41.417089, 2.117074),
+	('La Tagliatella', 'https://res.cloudinary.com/glovoapp/w_700,h_360,f_auto,q_auto/Stores/ut78sjpa3zs5sl2gf4wl', 41.4339869, 2.149056609),
+	('UDON', 'https://res.cloudinary.com/glovoapp/w_700,h_360,f_auto,q_auto/Stores/oazhwswiwyaebj7fhw0p', 41.41008234, 2.15464194),
+	('Crep Nova', 'https://res.cloudinary.com/glovoapp/w_700,h_360,f_auto,q_auto/Stores/dnhg7ldzheyqper7s0g4', 41.3728444, 2.162879291),
+	('Subway', 'https://res.cloudinary.com/glovoapp/w_700,h_360,f_auto,q_auto/Stores/ipxtregy0mx3y2fqhclp', 41.4341789, 2.125501148),
+	('Burger King', 'https://res.cloudinary.com/glovoapp/w_700,h_360,f_auto,q_auto/Stores/jor4u1grqkmamnybgjs8', 41.37041102, 2.19403605),
+	('Telepizza', 'https://res.cloudinary.com/glovoapp/w_700,h_360,f_auto,q_auto/Stores/s1ftlo8w1vn9ngbgfvep', 41.40547484, 2.172700424);
 
 
 INSERT INTO "Products" ("Name", "ImgPath", "Description", "Price", "RestaurantId", "Category")
@@ -53,7 +53,7 @@ VALUES
 	('Pizza Nova2', 'https://res.cloudinary.com/glovoapp/w_600,h_500,c_fit,f_auto,q_auto/Products/ce72zxaahjjgxppzj5jr', 'Con tomate, mozzarella, orégano y jamón dulce', 10.25, 4, 'Especiales'),
 	('Crep de Nutella', 'https://res.cloudinary.com/glovoapp/w_600,h_500,c_fit,f_auto,q_auto/Products/xwjabn90zrxbwdrfzaj4', 'Crep de Nutella', 5.25, 4, 'Creps'),
 	('Patatas Bravas', 'https://res.cloudinary.com/glovoapp/w_600,h_500,c_fit,f_auto,q_auto/Products/qrximoye4cjlcevrp7d5', 'Patatas Bravas', 5.25, 4, 'Aperitivos'),
-	('Personalise Alitas de pollo', 'https://res.cloudinary.com/glovoapp/w_600,h_500,c_fit,f_auto,q_auto/Products/hcelgfb9kbgpn2k4wakm', 'Salsa bbq incluida', 3.95, 4, 'Extras'),
+	('Alitas de pollo', 'https://res.cloudinary.com/glovoapp/w_600,h_500,c_fit,f_auto,q_auto/Products/hcelgfb9kbgpn2k4wakm', 'Salsa bbq incluida', 3.95, 4, 'Extras'),
 	('Crep de jamón ibérico y brie', 'https://res.cloudinary.com/glovoapp/w_600,h_500,c_fit,f_auto,q_auto/Products/t1dluaxh1uwuevxqe0wo', 'Crep de jamón ibérico y brie', 6.45, 4, 'Creps'),
 	('Crep de jamón dulce y emmental', 'https://res.cloudinary.com/glovoapp/w_600,h_500,c_fit,f_auto,q_auto/Products/rrao06rpwi3zfbajk6bg', 'Crep de jamón dulce y emmental', 5.45, 4, 'Creps'),
 	/*Subway*/
