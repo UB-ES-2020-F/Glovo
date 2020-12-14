@@ -1,12 +1,15 @@
-import 'package:customerapp/endpoints/restaurants.dart';
+import 'package:customerapp/models/update_model.dart';
 import 'package:customerapp/styles/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 
 class FoodButton extends StatelessWidget {
   FoodButton(Key key) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    var update = context.watch<UpdateModel>();
+
     return Container(
         padding: EdgeInsets.all(20),
         width: 160,
@@ -14,25 +17,35 @@ class FoodButton extends StatelessWidget {
         child: SizedBox.expand(
             child: RaisedButton(
           onPressed: () {
+            update.updateRestaurants = false;
             Navigator.pushNamed(context, '/restaurant-list');
           },
+          onLongPress: null,
           color: Colors.white,
+          disabledColor: Colors.white,
           textColor: Colors.white,
+          elevation: 4,
+          disabledElevation: 4,
+          hoverElevation: 8,
           child: Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image(
                 image: AssetImage('resources/images/food_logo.png'),
                 height: 55,
                 width: 55,
               ),
-              Padding(
-                padding: EdgeInsets.only(top: 0),
-                child: Text(
-                  'Food',
-                  style: categoryButtonLabel,
-                ),
-              )
+              Container(
+                  padding: EdgeInsets.only(top: 5),
+                  child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        'Food',
+                        style: categoryButtonLabel,
+                        textAlign: TextAlign.center,
+                      ))),
             ],
           ),
           padding: EdgeInsets.all(30),

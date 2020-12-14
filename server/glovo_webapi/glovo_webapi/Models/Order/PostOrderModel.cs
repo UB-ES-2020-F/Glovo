@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using ExpressiveAnnotations.Attributes;
 using glovo_webapi.Models.OrderProduct;
 
 namespace glovo_webapi.Models.Order
@@ -12,7 +11,14 @@ namespace glovo_webapi.Models.Order
         [Required]
         public int? RestaurantId { get; set; }
         [Required]
-        //[AssertThat("Products.Count() != 0", ErrorMessage = "Longitude must be between -90 and 90")]
         public IEnumerable<OrderProductModel> Products { get; set; }
+
+        public PostOrderModel() {}
+        
+        public PostOrderModel(int restaurantId, IEnumerable<OrderProductModel> products)
+        {
+            RestaurantId = restaurantId;
+            Products = products;
+        }
     }
 }

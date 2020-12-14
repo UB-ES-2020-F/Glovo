@@ -24,6 +24,8 @@ class RestaurantsListModel extends ChangeNotifier {
   }
 }
 
+//Mario: A Refactor should be done around this, I just duplicated code to have both ways of loading restaurants still posible
+
 class Restaurant {
   int id;
   String _name;
@@ -81,5 +83,53 @@ class TimeInterval {
       this.min = (time ~/ 5) * 5 - uncertainty;
       this.max = (time ~/ 5) * 5 + uncertainty;
     }
+  }
+}
+
+class RestaurantLoc {
+  int id;
+  String _name;
+  String _image;
+  double deliveryFee;
+  double distance;
+  RestaurantLoc(
+      this.id, this._name, this._image, this.distance, this.deliveryFee);
+
+  String get name {
+    return _name;
+  }
+
+  String get image {
+    return _image;
+  }
+
+  factory RestaurantLoc.fromDTO(RestaurantFeeDTO restaurantDTO) {
+    return RestaurantLoc(
+        restaurantDTO.id,
+        restaurantDTO.name,
+        restaurantDTO.imgPath,
+        restaurantDTO.distance,
+        restaurantDTO.deliveryFee);
+  }
+}
+
+//duplicated class to refactor
+class RestaurantsListModelFee extends ChangeNotifier {
+  List<RestaurantLoc> availableRestaurants;
+
+  @override
+  RestaurantsListModelFee() {
+    availableRestaurants = List();
+  }
+
+  /*
+   * Not recommended approach, the best approach would be to use the constructor
+   */
+  void addRestaurant(RestaurantLoc restaurant) {
+    availableRestaurants.add(restaurant);
+  }
+
+  void removeRestaurants() {
+    availableRestaurants.clear();
   }
 }

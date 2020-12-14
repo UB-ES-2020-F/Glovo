@@ -13,5 +13,7 @@ namespace glovo_webapi.Models.Order
         public int UserId { get; set; }
         public int RestaurantId { get; set; }
         public IEnumerable<OrderProductModel> Products { get; set; }
+        
+        public GetOrderModel() {}
     }
 }

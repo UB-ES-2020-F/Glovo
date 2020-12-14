@@ -18,11 +18,13 @@ namespace glovo_webapi.Entities
         
         public ICollection<Product> Products { get; set; }
 
-        public Restaurant(int Id, string Name, string ImgPath)
+        public Restaurant() {}
+        
+        public Restaurant(string name, string imgPath, Location location)
         {
-            this.Id = Id;
-            this.Name = Name;
-            this.ImgPath = ImgPath;
+            Name = name;
+            ImgPath = imgPath;
+            Location = location;
         }
     }
 }

@@ -13,6 +13,14 @@ namespace glovo_webapi.Entities
         [Required, Range(-180, 180)]
         public double Longitude { get; set; }
 
+        public Location() {}
+        
+        public Location(double latitude, double longitude)
+        {
+            Latitude = latitude;
+            Longitude = longitude;
+        }
+        
         private const double R = 6371;
         public double DistanceTo(Location location)
         {

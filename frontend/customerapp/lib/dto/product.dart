@@ -1,5 +1,3 @@
-import 'package:customerapp/models/location.dart';
-
 class ProductDTO {
   int id;
   String name;
@@ -37,5 +35,10 @@ class ProductDTO {
     if (price != null) toReturn['price'] = price;
     if (restaurantId != null) toReturn['restaurantId'] = restaurantId;
     return toReturn;
+  }
+
+  @override
+  String toString() {
+    return "product name: " + name;
   }
 }

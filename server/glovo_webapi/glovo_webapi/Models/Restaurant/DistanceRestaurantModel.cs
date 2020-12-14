@@ -7,5 +7,7 @@ namespace glovo_webapi.Models.Restaurant
                 public string ImgPath { get; set; }
                 public double? Distance { get; set; }
                 public double? DeliveryFee { get; set; }
+                
+                public DistanceRestaurantModel() {}
         }
 }

@@ -22,7 +22,6 @@ class OrderDTO {
   }
   Map<String, dynamic> toJson() {
     var toReturn = {
-      'buyDateTime': formatDateTimeToJsonString(buyDateTime),
       'restaurantId': restaurantId,
       'products': products
           .map((productDTO) => {

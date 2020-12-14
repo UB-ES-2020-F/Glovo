@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:customerapp/dto/order.dart';
 import 'package:customerapp/endpoints/urls.dart';
@@ -9,12 +8,16 @@ import 'package:http/http.dart' as http;
 
 Future<OrderDTO> makeOrder(OrderDTO order) async {
   try {
+    print("report:");
+    print(order.toJson());
     final userCredentials = await UserCredentialsRepository().getCredentials();
+
     final response = await http.post(await EndpointDefinitions.makeOrdersURL(),
         headers: {
           'content-type': 'application/json',
           'Authorization': 'Bearer ${userCredentials.token}'
         },
+        
         body: json.encode(order.toJson()));
     if (response.statusCode == 200) {
       return OrderDTO.fromJson(jsonDecode(response.body));

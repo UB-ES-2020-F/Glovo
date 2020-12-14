@@ -3,9 +3,9 @@ import 'package:customerapp/dto/user.dart';
 import 'package:customerapp/models/location.dart';
 import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/signin.dart';
-import 'package:customerapp/screens/anon_root.dart';
+import 'package:customerapp/screens/anon_bar.dart';
 import 'package:customerapp/screens/commonComponents/single_message_dialog.dart';
-import 'package:customerapp/styles/Komet.dart';
+import 'package:customerapp/screens/forgotPassword/forgotPassword_dialog.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -35,7 +35,7 @@ class SignInFormPage extends StatelessWidget {
                   margin: EdgeInsets.all(20.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
                     children: [
                       Text(
                         "New to Komet? ",
@@ -128,8 +128,10 @@ class SignInForm extends StatelessWidget {
             child: Container(
                 margin: EdgeInsets.all(20.0),
                 alignment: Alignment.centerRight,
-                child: TextLink('Forgot your password?', (context) {},
-                    signUpTextLinks, signUpTextLinksHover, context)),
+                child: TextLink('Forgot your password?', (context) {
+                  Navigator.pop(context);
+                  showForgotPassword(context);
+                }, signUpTextLinks, signUpTextLinksHover, context)),
             alignment: Alignment.bottomCenter,
           ),
           SignInButton(),
@@ -178,14 +180,19 @@ void trySendSignInForm(BuildContext context, SignInModel signInModel) {
       UserDTO formUser = new UserDTO();
       formUser.email = signInModel.email;
       formUser.password = signInModel.password;
-      loginUser(formUser).then((loggedUser) {
-        UserCredentialsRepository().update(new UserCredentials(
-            loggedUser.email, loggedUser.token, loggedUser.id));
-        LoggedModel.user.id = loggedUser.id;
-        LoggedModel.user.name = loggedUser.name;
-        LoggedModel.user.email = loggedUser.email;
-        Navigator.of(context)
-            .pushNamedAndRemoveUntil('/initial-logged-in', (route) => false);
+      loginUser(formUser).then((loggedUser) async {
+        UserCredentialsRepository()
+            .update(new UserCredentials(
+                loggedUser.email, loggedUser.token, loggedUser.id))
+            .then((value) {
+          LoggedModel.user.id = loggedUser.id;
+          LoggedModel.user.name = loggedUser.name;
+          LoggedModel.user.email = loggedUser.email;
+          LoggedModel.user.location = new Location(41.396356, 2.171934);
+          LoggedModel.user.direction = 'Unknown direction';
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil('/initial-logged-in', (route) => false);
+        });
       }).catchError((error) {
         print(error);
         Navigator.pop(context);
@@ -199,4 +206,12 @@ showLogInFailedDialog(BuildContext context) {
   showDialog(
       context: context,
       builder: (context) => SingleMessageDialog("Log in failed"));
+}
+
+void showForgotPassword(BuildContext context) {
+  if (MediaQuery.of(context).size.width > 600) {
+    showDialog(context: context, builder: (_) => ForgotPasswordDialog());
+  } else {
+    Navigator.pushNamed(context, '/forgot-password');
+  }
 }

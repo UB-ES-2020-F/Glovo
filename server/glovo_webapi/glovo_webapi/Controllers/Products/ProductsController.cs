@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using AutoMapper;
 using glovo_webapi.Entities;
 using glovo_webapi.Models.Product;
-using glovo_webapi.Models.Restaurant;
 using glovo_webapi.Services;
 using glovo_webapi.Services.Products;
 using glovo_webapi.Utils;
@@ -26,18 +25,10 @@ namespace glovo_webapi.Controllers.Products
         
         //GET api/products
         [HttpGet]
-        public ActionResult<IEnumerable<ProductModel>> GetAllProducts([FromQuery]ProductCategory? category)
+        public ActionResult<IEnumerable<ProductModel>> GetAllProducts()
         {
             IEnumerable<Product> products;
-            
-            if (category.HasValue) {
-                Console.Write("Category: "+category.Value+"\n");
-                products = _service.GetProductsByCategory(category.Value);
-            } else {
-                Console.Write("Category: null\n");
-                products = _service.GetAllProducts();
-            }
-            
+            products = _service.GetAllProducts();
             return Ok(_mapper.Map<IEnumerable<ProductModel>>(products));
         }
         

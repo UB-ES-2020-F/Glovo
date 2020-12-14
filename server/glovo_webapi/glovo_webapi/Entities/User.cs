@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using glovo_webapi.Utils;
 
@@ -26,5 +27,24 @@ namespace glovo_webapi.Entities
         
         [Required]
         public UserRole Role { get; set; }
+
+        public User() {}
+
+        public User(string name, string email, string password, Location location, UserRole role)
+        {
+            Name = name;
+            Email = email;
+            if (password == null)
+                throw new ArgumentNullException("password");
+            if (string.IsNullOrWhiteSpace(password))
+                throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
+            var hmac = new System.Security.Cryptography.HMACSHA512();
+            PasswordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+            PasswordSalt = hmac.Key;
+            AuthSalt = null;
+            RecoverySalt = null;
+            Location = location;
+            Role = role;
+        }
     }
 }

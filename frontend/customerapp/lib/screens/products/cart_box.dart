@@ -1,22 +1,20 @@
 import 'package:customerapp/actions/extract-key-value.dart';
-import 'package:customerapp/actions/toast_actions.dart';
 import 'package:customerapp/endpoints/cart.dart';
+import 'package:customerapp/exceptions/order-callback-failed.dart';
 import 'package:customerapp/models/cart.dart';
-import 'package:customerapp/models/logged.dart';
 import 'package:customerapp/models/products.dart';
 import 'package:customerapp/models/restaurants.dart';
 import 'package:customerapp/screens/commonComponents/single_message_dialog.dart';
-import 'package:customerapp/styles/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:customerapp/styles/product.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
+// ignore: must_be_immutable
 class CartBox extends StatelessWidget {
-  double cartWidth;
-  Restaurant restaurant;
-  Cart cart;
-  List prods;
+  final double cartWidth;
+  final RestaurantLoc restaurant;
+  final Cart cart;
+  final List prods;
   double distance;
   double deliveryFee;
   TimeInterval timeInterval;
@@ -25,11 +23,8 @@ class CartBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //var signInModel = context.watch<Cart>();
-    distance = restaurant == null
-        ? null
-        : restaurant.location.getDistanceKm(LoggedModel.user.location);
-    deliveryFee = getDeliveryFee(distance);
+    distance = restaurant.distance;
+    deliveryFee = restaurant.deliveryFee;
     timeInterval = new TimeInterval.distance(distance);
     items = new List<Widget>();
     var idx = 0;
@@ -58,7 +53,7 @@ class CartBox extends StatelessWidget {
                 padding: EdgeInsets.all(10),
                 child: Text(
                   "Your Komet",
-                  style: CartTitleStyle,
+                  style: cartTitleStyle,
                 )),
             Padding(
                 padding: EdgeInsets.fromLTRB(0, 5, 0, 15),
@@ -76,7 +71,7 @@ class CartBox extends StatelessWidget {
                     ),
                     Text(
                       '${timeInterval.min} - ${timeInterval.max} min',
-                      style: CartTimeFeeStyle,
+                      style: cartTimeFeeStyle,
                     ),
                     Padding(
                       padding: EdgeInsets.fromLTRB(22, 0, 5, 0),
@@ -88,7 +83,7 @@ class CartBox extends StatelessWidget {
                     ),
                     Text(
                       deliveryFee.toStringAsFixed(2) + ' €',
-                      style: CartTimeFeeStyle,
+                      style: cartTimeFeeStyle,
                     ),
                   ],
                 )),
@@ -112,12 +107,12 @@ class CartBox extends StatelessWidget {
                     children: [
                       Text(
                         'Products TOTAL',
-                        style: CartTimeFeeStyle.copyWith(
+                        style: cartTimeFeeStyle.copyWith(
                             fontWeight: FontWeight.w500),
                       ),
                       Text(
                         cart.getTotalPrice().toStringAsFixed(2) + ' €',
-                        style: TotalPriceCartStyle,
+                        style: totalPriceCartStyle,
                       ),
                     ],
                   ),
@@ -128,7 +123,21 @@ class CartBox extends StatelessWidget {
             else
               Container(
                 key: Key('cart-items'),
-                height: 0,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Image.asset(
+                      'resources/images/empty_cart.png',
+                      height: 191,
+                    ),
+                    Container(
+                        padding: EdgeInsets.all(10),
+                        child: Text(
+                          "EMPTY",
+                          style: emptyCartLabel,
+                        ))
+                  ],
+                ),
               )
           ],
         ),
@@ -138,9 +147,9 @@ class CartBox extends StatelessWidget {
 }
 
 class ItemOnCart extends StatelessWidget {
-  Cart cart;
-  Product prod;
-  int quantity;
+  final Cart cart;
+  final Product prod;
+  final int quantity;
   ItemOnCart(Key key, this.prod, this.quantity, this.cart) : super(key: key);
 
   @override
@@ -161,14 +170,14 @@ class ItemOnCart extends StatelessWidget {
                       alignment: Alignment.centerRight,
                       child: Text(
                         quantity.toString() + 'x',
-                        style: NumberItemsCartStyle,
+                        style: numberItemsCartStyle,
                       )),
                   Container(
                       width: 189,
                       alignment: Alignment.centerLeft,
                       child: Text(
                         prod.name,
-                        style: NumberItemsCartStyle,
+                        style: numberItemsCartStyle,
                       )),
                   Container(
                       padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
@@ -176,7 +185,7 @@ class ItemOnCart extends StatelessWidget {
                       alignment: Alignment.centerRight,
                       child: Text(
                         (quantity * prod.price).toStringAsFixed(2) + ' €',
-                        style: NumberItemsCartStyle,
+                        style: numberItemsCartStyle,
                       )),
                 ],
               ),
@@ -213,8 +222,8 @@ class ItemOnCart extends StatelessWidget {
 }
 
 class MakeOrderButton extends StatelessWidget {
-  Cart cart;
-  String text;
+  final Cart cart;
+  final String text;
 
   MakeOrderButton(Key key, this.cart, this.text) : super(key: key);
 
@@ -235,6 +244,7 @@ class MakeOrderButton extends StatelessWidget {
                     cart.empty();
                   }).catchError((error, stackTrace) {
                     cart.empty();
+                    print((error as OrderCallbackFailed).errorCode);
                     Navigator.pop(context);
                     showOrderFailedDialog(context);
                   });

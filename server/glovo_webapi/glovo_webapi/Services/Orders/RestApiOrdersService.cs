@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using glovo_webapi.Data;
 using glovo_webapi.Entities;
-using glovo_webapi.Services.UserService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
@@ -44,15 +43,19 @@ namespace glovo_webapi.Services.Orders
         public Order AddOrder(Order order)
         {
             //Check restaurant 
-            Restaurant orderRestaurant = (Restaurant) _context.Restaurants.FirstOrDefault(r => r.Id == order.RestaurantId);
+            Restaurant orderRestaurant = _context.Restaurants.FirstOrDefault(r => r.Id == order.RestaurantId);
             if (orderRestaurant == null) 
                 throw new RequestException(OrderExceptionCodes.RestaurantNotFound);
             
             //Check all products exist
             foreach (OrderProduct orderProduct in order.OrdersProducts) {
-                if(orderProduct == null) {throw new RequestException(OrderExceptionCodes.BadOrderProduct);}
+                if(orderProduct == null) 
+                    throw new RequestException(OrderExceptionCodes.BadOrderProduct);
                 Product product = _context.Products.FirstOrDefault(p => p.Id == orderProduct.ProductId);
-                if (product == null) {throw new RequestException(OrderExceptionCodes.ProductNotFound);}
+                if (product == null) 
+                    throw new RequestException(OrderExceptionCodes.ProductNotFound);
+                if (product.RestaurantId != order.RestaurantId)
+                    throw new RequestException(OrderExceptionCodes.ProductNotBelongingToRestaurant);
             }
             
             //Add logged user Id to order
@@ -69,7 +72,7 @@ namespace glovo_webapi.Services.Orders
         
         public IEnumerable<Order> GetAllOrdersOfUser(int userId)
         {
-            User u = _context.Users.SingleOrDefault(u => u.Id == userId);
+            User u = _context.Users.SingleOrDefault(user => user.Id == userId);
             if (u == null)
                 throw new RequestException(OrderExceptionCodes.UserNotFound);
             

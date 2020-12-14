@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace glovo_webapi.Models.Users
 {
     
@@ -9,5 +7,14 @@ namespace glovo_webapi.Models.Users
         public string Email { get; set; }
         public string RecoveryToken { get; set; }
         public string NewPassword { get; set; }
+        
+        public PasswordResetModel() {}
+
+        public PasswordResetModel(string email, string recoveryToken, string newPassword)
+        {
+            Email = email;
+            RecoveryToken = recoveryToken;
+            NewPassword = newPassword;
+        }
     }
 }

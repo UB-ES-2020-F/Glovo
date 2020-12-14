@@ -1,14 +1,12 @@
 import 'package:customerapp/components/appBar/searchBox.dart';
 import 'package:customerapp/components/appBar/user_actions_bar.dart';
-import 'package:customerapp/components/text_link.dart';
-import 'package:customerapp/styles/initial_logged.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class InitialLoggedBar extends StatelessWidget with PreferredSizeWidget {
   final double appBarHeight = 115.0;
 
-  InitialLoggedBar() {}
+  InitialLoggedBar();
 
   @override
   get preferredSize => Size.fromHeight(appBarHeight);
@@ -40,7 +38,7 @@ class InitialLoggedBar extends StatelessWidget with PreferredSizeWidget {
   }
 }
 
-class InitialLoggedBar_short extends StatelessWidget with PreferredSizeWidget {
+class InitialLoggedBarShort extends StatelessWidget with PreferredSizeWidget {
   final double appBarHeight = 115.0;
 
   @override
@@ -61,7 +59,7 @@ class InitialLoggedBar_short extends StatelessWidget with PreferredSizeWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SearchBox(),
-                      UserActionsBar_aux(
+                      UserActionsBarAux(
                         BarType.initial,
                       )
                     ],

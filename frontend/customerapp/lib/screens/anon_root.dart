@@ -1,6 +1,11 @@
+import 'dart:ui';
+
+import 'package:customerapp/components/footer.dart';
 import 'package:customerapp/responsive/screen_responsive.dart';
 import 'package:customerapp/screens/signUp/signup_dialog.dart';
 import 'package:customerapp/screens/signIn/signin_dialog.dart';
+import 'package:flutter/foundation.dart';
+import 'package:customerapp/screens/loggedPage/initial_logged_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:customerapp/styles/signup.dart';
@@ -11,30 +16,44 @@ class AnonRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget bar;
 
-    var s = Bar_responsive(context, '/sign-up', AnonBar());
-    bar = s.get_responsive_bar();
+    var s = BarResponsive(context, '/sign-up', AnonBar());
+    bar = s.getResponsiveBar();
 
     return Scaffold(
-        backgroundColor: Theme.of(context).backgroundColor,
+        backgroundColor: Colors.white,
         appBar: bar,
-        body: Padding(
-          padding: EdgeInsets.only(top: 20),
-          child: Center(
-              child: Container(
-                  child: Center(
-                      child: Column(
-            children: [
-              Text(
-                'Komet ',
-                style: TextStyle(
-                    fontSize: 50,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).accentColor),
-              ),
-              //FoodButton() <-- TODO Add when prepared to handle session
-            ],
-          )))),
-        ));
+        body: Container(
+            child: Padding(
+                padding: EdgeInsets.only(top: 0),
+                child: Center(
+                    child: SingleChildScrollView(
+                        child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: MediaQuery.of(context).size.height,
+                  ),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.only(top: 20),
+                          color: Theme.of(context).backgroundColor,
+                          alignment: Alignment.center,
+                          child: Image.asset(
+                            'resources/images/name_and_logo.png',
+                            width: 300,
+                          ),
+                        ),
+                        Container(
+                          height: 220,
+                          child: WhiteZone(),
+                        ),
+                        if (MediaQuery.of(context).size.width > 300)
+                          AppAdZone(),
+                        WorkWithUs(),
+                        Footer(Colors.white)
+                      ]),
+                ))))));
   }
 }
 

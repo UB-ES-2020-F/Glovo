@@ -8,4 +8,8 @@ class RestaurantPage extends DriverPage {
   Future<RestaurantProductCard> getFirstProduct() async {
     return RestaurantProductCard(driver, productCard(0));
   }
+
+  Future<RestaurantProductCard> getIndexProduct(int i) async {
+    return RestaurantProductCard(driver, productCard(i));
+  }
 }

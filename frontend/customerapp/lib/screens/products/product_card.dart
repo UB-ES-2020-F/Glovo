@@ -5,8 +5,8 @@ import 'package:customerapp/styles/product.dart';
 import 'package:flutter/material.dart';
 
 class ProductListCard extends StatefulWidget {
-  Product _product;
-  Function add;
+  final Product _product;
+  final Function add;
 
   ProductListCard(Key key, this._product, this.add) : super(key: key);
 
@@ -47,7 +47,7 @@ class ProductListCardState extends State<StatefulWidget> {
                 });
               }
             },
-            onTap: () => change_product(add),
+            onTap: () => changeProduct(add),
             child: Center(
                 child: Material(
                     elevation: this.elevation,
@@ -69,12 +69,18 @@ class ProductListCardState extends State<StatefulWidget> {
                             ),
                           ),
                           ListTile(
-                              title: Text(
-                                _product.name,
-                                style: TitleStyleProduct,
-                              ),
+                              title: FittedBox(
+                                  alignment: Alignment.centerLeft,
+                                  fit: BoxFit.scaleDown,
+                                  child: Text(
+                                    _product.name,
+                                    style: titleStyleProduct,
+                                  )),
                               subtitle: Padding(
-                                child: Text(_product.description),
+                                child: Text(
+                                  _product.description,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                                 padding: EdgeInsets.only(top: 7),
                               )),
                           Padding(
@@ -102,12 +108,12 @@ class ProductListCardState extends State<StatefulWidget> {
                     )))));
   }
 
-  void change_product(Function add) {
+  void changeProduct(Function add) {
     if (MediaQuery.of(context).size.width > 600) {
       showDialog(
           context: context, builder: (context) => ProductDialog(_product, add));
     } else {
-      Navigator.pushNamed(context, '/concrete_product',
+      Navigator.pushNamed(context, '/concrete-product',
           arguments: ConcreteProductArguments(_product, add));
     }
   }

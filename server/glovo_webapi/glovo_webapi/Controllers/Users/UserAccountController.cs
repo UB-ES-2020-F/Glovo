@@ -1,3 +1,5 @@
+using System;
+using System.Text;
 using AutoMapper;
 using glovo_webapi.Entities;
 using glovo_webapi.Helpers;
@@ -5,6 +7,7 @@ using glovo_webapi.Models.Users;
 using glovo_webapi.Services;
 using glovo_webapi.Services.UserService;
 using glovo_webapi.Utils;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
@@ -26,39 +29,33 @@ namespace glovo_webapi.Controllers.Users
         {
             _userService = userService;
             _mapper = mapper;
-            _tokenCreatorValidator = new TokenCreatorValidator(_userService, configuration);
+            _tokenCreatorValidator = new TokenCreatorValidator(configuration.Value.Secret);
         }
         
         //POST api/users/login
         [HttpPost("login")]
-        public IActionResult Authenticate([FromBody]LoginUserModel userModel)
+        public ActionResult<SendLoginUserModel> Authenticate([FromBody]ReceiveLoginUserModel userModel)
         {
-            User user = null;
+            User user;
             try {
                 user = _userService.Authenticate(userModel.Email, userModel.Password);
             } catch (RequestException) {
                 return BadRequest(new {message = "Email or password is incorrect" });
             }
             
-            TokenCreationParams tokenCreationParams = _tokenCreatorValidator.CreateToken(user, 60 * 24 * 7);
-
+            TokenCreationParams tokenCreationParams = _tokenCreatorValidator.CreateToken(user.Id, 60 * 24 * 7);
             user.AuthSalt = tokenCreationParams.SaltBytes;
-            //TODO CATCH EXCEPTIONS
-            _userService.Update(user);
             
-            //TODO TURN THIS INTO A MODEL CLASS
-            return Ok(new
-            {
-                Id = user.Id,
-                Name = user.Name,
-                Email = user.Email,
-                Token = tokenCreationParams.TokenStr
-            });
+            _userService.Update(user);
+
+            SendLoginUserModel sendLoginUserModel = _mapper.Map<SendLoginUserModel>(user);
+            sendLoginUserModel.Token = tokenCreationParams.TokenStr;
+            return Ok(sendLoginUserModel);
         }
 
         //POST api/users/register
         [HttpPost("register")]
-        public IActionResult Register([FromBody]RegisterUserModel userModel)
+        public ActionResult Register([FromBody]RegisterUserModel userModel)
         {
             // map userModel to entity
             var user = _mapper.Map<User>(userModel);
@@ -78,12 +75,14 @@ namespace glovo_webapi.Controllers.Users
         
         [Authorize(Roles="Regular, Administrator")]
         [HttpPost("logout")]
-        public IActionResult Logout()
+        public ActionResult Logout()
         {
-            User user = (User)HttpContext.Items["User"];
-            user.AuthSalt = null;
-            //TODO CATCH EXCEPTIONS
-            _userService.Update(user);
+            User loggedUser = (User)HttpContext.Items["User"];
+            if(loggedUser == null)
+                return NotFound(new {message = "No user is logged"});
+            
+            loggedUser.AuthSalt = null;
+            _userService.Update(loggedUser);
             return Ok();
         }
     }
