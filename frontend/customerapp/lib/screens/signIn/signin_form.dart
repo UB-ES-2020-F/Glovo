@@ -188,7 +188,7 @@ void trySendSignInForm(BuildContext context, SignInModel signInModel) {
           LoggedModel.user.id = loggedUser.id;
           LoggedModel.user.name = loggedUser.name;
           LoggedModel.user.email = loggedUser.email;
-          LoggedModel.user.location = new Location(40, 2);
+          LoggedModel.user.location = new Location(41.396356, 2.171934);
           LoggedModel.user.direction = 'Unknown direction';
           Navigator.of(context)
               .pushNamedAndRemoveUntil('/initial-logged-in', (route) => false);
