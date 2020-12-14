@@ -81,7 +81,7 @@ class _Products extends State<Products> {
                         width: MediaQuery.of(context).size.width,
                         //padding: EdgeInsets.only(left: 20, right: 20),
                         decoration: BoxDecoration(
-                            color: Color(0xFFE0E0E0),
+                            color: Colors.white,
                             image: DecorationImage(
                                 image: NetworkImage(
                                     restaurant == null ? '' : restaurant.image),

@@ -33,3 +33,6 @@ final makeOrderButtonStyle = ButtonStyle(
         side: BorderSide(color: Color(0xFF2ABB9B)))),
     backgroundColor:
         MaterialStateColor.resolveWith((states) => Color(0xFF2ABB9B)));
+
+final emptyCartLabel = TextStyle(
+    fontWeight: FontWeight.w300, color: Color(0xFF4A4A4A), fontSize: 20);

@@ -124,6 +124,18 @@ class CartBox extends StatelessWidget {
               Container(
                 key: Key('cart-items'),
                 height: 0,
+                child: Column(
+                  children: [
+                    Image.asset(
+                      'resources/images/empty_cart.png',
+                      height: 100,
+                    ),
+                    Text(
+                      "EMPTY",
+                      style: emptyCartLabel,
+                    )
+                  ],
+                ),
               )
           ],
         ),

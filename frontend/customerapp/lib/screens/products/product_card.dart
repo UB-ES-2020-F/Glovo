@@ -69,12 +69,18 @@ class ProductListCardState extends State<StatefulWidget> {
                             ),
                           ),
                           ListTile(
-                              title: Text(
-                                _product.name,
-                                style: titleStyleProduct,
-                              ),
+                              title: FittedBox(
+                                  alignment: Alignment.centerLeft,
+                                  fit: BoxFit.scaleDown,
+                                  child: Text(
+                                    _product.name,
+                                    style: titleStyleProduct,
+                                  )),
                               subtitle: Padding(
-                                child: Text(_product.description),
+                                child: Text(
+                                  _product.description,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                                 padding: EdgeInsets.only(top: 7),
                               )),
                           Padding(
