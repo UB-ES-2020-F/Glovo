@@ -151,18 +151,30 @@ class WhiteZone extends StatelessWidget {
                   drawPathComplete(MediaQuery.of(context).size.width)),
             ),
           ),
-          Positioned(
-            bottom: 0,
+          Align(
+            alignment: Alignment.bottomCenter,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
-                    padding: EdgeInsets.fromLTRB(50, 30, 50, 0),
-                    //constraints: BoxConstraints(maxWidth: 800),
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.fromLTRB(50, 0, 50, 0),
                     child: FittedBox(
                         fit: BoxFit.scaleDown,
                         child: Text(
                           "Trending highlights in your town",
+                          textAlign: TextAlign.center,
                           style: mediumTextStyle,
+                        ))),
+                Container(
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.fromLTRB(50, 15, 50, 0),
+                    child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          "Discover the stores in demand and have us deliver what you want on demand",
+                          textAlign: TextAlign.center,
+                          style: mediumSmallTextStyle,
                         ))),
               ],
             ),

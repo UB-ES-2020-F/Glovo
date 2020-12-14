@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:customerapp/components/footer.dart';
 import 'package:customerapp/responsive/screen_responsive.dart';
+import 'package:customerapp/screens/loggedPage/initial_logged_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:customerapp/screens/anon_bar.dart';
@@ -38,6 +39,10 @@ class AnonRoute extends StatelessWidget {
                                 width: 250,
                               ),
                             ]),
+                        Container(
+                          height: 220,
+                          child: WhiteZone(),
+                        ),
                         Footer(Theme.of(context).backgroundColor)
                       ]),
                 ))))));

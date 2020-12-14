@@ -81,3 +81,6 @@ final bigTextStyle =
 
 final mediumTextStyle =
     TextStyle(fontSize: 36, color: Colors.black, fontWeight: FontWeight.w700);
+
+final mediumSmallTextStyle = TextStyle(
+    fontSize: 18, color: Color(0xFF9B9B9B), fontWeight: FontWeight.w200);
