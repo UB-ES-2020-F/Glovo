@@ -3,7 +3,6 @@ import 'dart:html';
 
 import 'package:customerapp/actions/check_login.dart';
 import 'package:customerapp/components/appBar/default_logged_bar.dart';
-import 'package:customerapp/components/footer.dart';
 import 'package:customerapp/dto/category_product.dart';
 import 'package:customerapp/models/cart.dart';
 import 'package:customerapp/models/products.dart';
@@ -20,12 +19,8 @@ import 'package:provider/provider.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:customerapp/endpoints/products.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
-
 import 'cart_box.dart';
 import 'product_card.dart';
-
-import 'package:flutter/material.dart';
-import 'package:scroll_to_index/scroll_to_index.dart';
 
 class Products extends StatefulWidget {
   @override
@@ -83,127 +78,158 @@ class _Products extends State<Products> {
                   appBar: bar,
                   body: Stack(children: [
                     Container(
-                      //padding: EdgeInsets.only(left: 20, right: 20),
-                      decoration: BoxDecoration(
-                          color: Color(0xFFE0E0E0),
-                          image: DecorationImage(
-                              image: NetworkImage(
-                                  restaurant == null ? '' : restaurant.image),
-                              fit: BoxFit.fitWidth,
-                              alignment: Alignment.topCenter)),
+                        //padding: EdgeInsets.only(left: 20, right: 20),
+                        decoration: BoxDecoration(
+                            color: Color(0xFFE0E0E0),
+                            image: DecorationImage(
+                                image: NetworkImage(
+                                    restaurant == null ? '' : restaurant.image),
+                                fit: BoxFit.fitWidth,
+                                alignment: Alignment.topCenter)),
+                        child: Column(children: [
+                          Expanded(
+                              child: Padding(
+                                  padding: EdgeInsets.only(left: 20, right: 20),
+                                  child: Expanded(
+                                      child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisSize: MainAxisSize.min,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                        Container(
+                                          padding: MediaQuery.of(context)
+                                                      .size
+                                                      .width <
+                                                  600
+                                              ? EdgeInsets.fromLTRB(
+                                                  10, 30, 10, 0)
+                                              : EdgeInsets.fromLTRB(
+                                                  30, 30, 30, 0),
+                                          width: MediaQuery.of(context)
+                                                      .size
+                                                      .width <=
+                                                  900
+                                              ? MediaQuery.of(context)
+                                                      .size
+                                                      .width -
+                                                  40
+                                              : MediaQuery.of(context)
+                                                      .size
+                                                      .width -
+                                                  cartWidth -
+                                                  75,
+                                          child: Builder(builder: (builder) {
+                                            return FutureBuilder(
+                                              future: getProductsFromRestaurant(
+                                                  restaurant.id),
+                                              builder: (BuildContext context,
+                                                  AsyncSnapshot snapshot2) {
+                                                if (snapshot2.hasData) {
+                                                  cats = (snapshot2.data as List<
+                                                          CategoryProductDTO>)
+                                                      .map((e) => e.name)
+                                                      .toList();
+                                                  List<Widget> grids = getGrids(
+                                                      snapshot2.data,
+                                                      productsModel);
 
-                      
-                          child: Column(children: [
-                        Expanded(child: Padding(
-                            padding: EdgeInsets.only(left: 20, right: 20),
-                            child: Expanded(child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    padding: MediaQuery.of(context).size.width <
-                                            600
-                                        ? EdgeInsets.fromLTRB(10, 30, 10, 0)
-                                        : EdgeInsets.fromLTRB(30, 30, 30, 0),
-                                    width: MediaQuery.of(context).size.width <=
-                                            900
-                                        ? MediaQuery.of(context).size.width - 40
-                                        : MediaQuery.of(context).size.width -
-                                            cartWidth -
-                                            75,
-                                    child: Builder(builder: (builder) {
-                                      return FutureBuilder(
-                                        future: getProductsFromRestaurant(
-                                            restaurant.id),
-                                        builder: (BuildContext context,
-                                            AsyncSnapshot snapshot2) {
-                                          if (snapshot2.hasData) {
-                                            
-                                            
-cats = (snapshot2.data as List<
-                                                    CategoryProductDTO>)
-                                                    
-                                                .map((e) => e.name)
-                                                .toList();
-                                                List<Widget> grids =                                               getGrids(
-                                                  snapshot2.data, productsModel);
-                                            
-                                            return Column(children: [Container(
-                                                  height: 120,
-                                                  child: Padding(
-                                                padding: EdgeInsets.fromLTRB(
-                                                    0, 0, 0, 10),
-                                                child: Container(
-                                                  height: 140,
-                                                  padding: EdgeInsets.fromLTRB(
-                                                      40, 0, 40, 0),
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              15.0),
-                                                      color: Color(0xAAFFFFFF)),
-                                                  alignment:
-                                                      Alignment.centerLeft,
-                                                  child: Column(children: [
-                                                    Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                top: 10),
-                                                        child: Text(
-                                                          restaurant == null
-                                                              ? 'Products'
-                                                              : restaurant.name,
-                                                          style:
-                                                              restaurantTitleStyle,
+                                                  return Column(children: [
+                                                    Container(
+                                                        height: 120,
+                                                        child: Padding(
+                                                          padding: EdgeInsets
+                                                              .fromLTRB(
+                                                                  0, 0, 0, 10),
+                                                          child: Container(
+                                                            height: 140,
+                                                            padding: EdgeInsets
+                                                                .fromLTRB(40, 0,
+                                                                    40, 0),
+                                                            decoration: BoxDecoration(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            15.0),
+                                                                color: Color(
+                                                                    0xAAFFFFFF)),
+                                                            alignment: Alignment
+                                                                .centerLeft,
+                                                            child: Column(
+                                                                children: [
+                                                                  Padding(
+                                                                      padding: EdgeInsets.only(
+                                                                          top:
+                                                                              10),
+                                                                      child:
+                                                                          Text(
+                                                                        restaurant ==
+                                                                                null
+                                                                            ? 'Products'
+                                                                            : restaurant.name,
+                                                                        style:
+                                                                            restaurantTitleStyle,
+                                                                      )),
+                                                                  Divider(),
+                                                                  //we construct the radiobutton with the cats
+                                                                  CustomRadio(
+                                                                      cats,
+                                                                      itemScrollController),
+                                                                ]),
+                                                          ),
                                                         )),
-                                                    Divider(),
-                                                    //we construct the radiobutton with the cats
-                                                    CustomRadio(cats, itemScrollController),
-                                                  ]),
-                                                ),
-                                              )),
-                                              Expanded(child: 
-                                                ScrollablePositionedList.builder(
-  itemCount: grids.length,
-  itemBuilder: (context, index) => grids[index],
-  itemScrollController: itemScrollController,
-  itemPositionsListener: itemPositionsListener,
-))]);
-
-                                          } else {
-                                            return Padding(
-                                                padding: EdgeInsets.fromLTRB(
-                                                    0, 0, 0, 10),
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              15.0),
-                                                      color: Color(0xAAFFFFFF)),
-                                                  alignment:
-                                                      Alignment.centerLeft,
-                                                  child: CircularLoaderKomet(),
-                                                ));
-                                          }
-                                        },
-                                      );
-                                    }),
-                                  ),
-                                  if (MediaQuery.of(context).size.width > 900)
-                                    Column(
-                                      children: [
-                                        CartBox(
-                                            restaurant, cartWidth, cart, prods)
-                                      ],
-                                    )
-                                  else
-                                    Container()
-                                ])))),
-                        //Bug for next Sprint
-                        //Footer(Color(0x00000000))
-                      ])),
+                                                    Expanded(
+                                                        child:
+                                                            ScrollablePositionedList
+                                                                .builder(
+                                                      itemCount: grids.length,
+                                                      itemBuilder:
+                                                          (context, index) =>
+                                                              grids[index],
+                                                      itemScrollController:
+                                                          itemScrollController,
+                                                      itemPositionsListener:
+                                                          itemPositionsListener,
+                                                    ))
+                                                  ]);
+                                                } else {
+                                                  return Padding(
+                                                      padding:
+                                                          EdgeInsets.fromLTRB(
+                                                              0, 0, 0, 10),
+                                                      child: Container(
+                                                        decoration: BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        15.0),
+                                                            color: Color(
+                                                                0xAAFFFFFF)),
+                                                        alignment: Alignment
+                                                            .centerLeft,
+                                                        child:
+                                                            CircularLoaderKomet(),
+                                                      ));
+                                                }
+                                              },
+                                            );
+                                          }),
+                                        ),
+                                        if (MediaQuery.of(context).size.width >
+                                            900)
+                                          Column(
+                                            children: [
+                                              CartBox(restaurant, cartWidth,
+                                                  cart, prods)
+                                            ],
+                                          )
+                                        else
+                                          Container()
+                                      ])))),
+                          //Bug for next Sprint
+                          //Footer(Color(0x00000000))
+                        ])),
                     if (MediaQuery.of(context).size.width <= 900 &&
                         cart.order.isNotEmpty)
                       Align(
@@ -242,9 +268,9 @@ cats = (snapshot2.data as List<
         p.add(Product.fromDTO(pp));
         model.availableProducts.add(product);
       }
-      count = count +1;
+      count = count + 1;
       toret.add(Container(
-        height:50,
+        height: 50,
         child: Text(
           category.name,
           key: Key(category.name),
@@ -257,7 +283,7 @@ cats = (snapshot2.data as List<
         padding: EdgeInsets.all(10),
         margin: EdgeInsets.only(bottom: 5),
       ));
-      count = count+1;
+      count = count + 1;
       toret.add(StaggeredGridView.countBuilder(
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
@@ -272,14 +298,12 @@ cats = (snapshot2.data as List<
         },
         staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
       ));
-      
     }
     return toret;
   }
-
-  
 }
 
+// ignore: must_be_immutable
 class CustomRadio extends StatefulWidget {
   CustomRadio(this.categories, this.controller);
 
@@ -307,8 +331,8 @@ class CustomRadioState extends State<CustomRadio> {
     }
   }
 
-  List<Widget> generate_widgets() {
-    int count=0;
+  List<Widget> generateWidgets() {
+    int count = 0;
     List<Widget> llista = List<Widget>();
     sample.asMap().forEach((key, value) {
       int v = count;
@@ -317,13 +341,12 @@ class CustomRadioState extends State<CustomRadio> {
             setState(() {
               sample.forEach((element) => element.isSelected = false);
               sample[key].isSelected = true;
-
             });
-            controller.scrollTo(index: 2*v, duration: Duration(milliseconds: 500));
+            controller.scrollTo(
+                index: 2 * v, duration: Duration(milliseconds: 500));
           },
-          child:
-              Product_class_widget(sample[key].name, sample[key].isSelected)));
-          count++;
+          child: ProductClassWidget(sample[key].name, sample[key].isSelected)));
+      count++;
     });
 
     return llista;
@@ -333,13 +356,14 @@ class CustomRadioState extends State<CustomRadio> {
   Widget build(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
-      children: generate_widgets(),
+      children: generateWidgets(),
     );
   }
 }
 
-class Product_class_widget extends StatelessWidget {
-  Product_class_widget(this.name, this.isSelected);
+// ignore: must_be_immutable
+class ProductClassWidget extends StatelessWidget {
+  ProductClassWidget(this.name, this.isSelected);
 
   bool isSelected;
   String name;
