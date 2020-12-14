@@ -16,7 +16,7 @@ import '../pageComponents/login_page.dart';
 import '../pageComponents/restaurants_page.dart';
 
 void main() {
-  group('Profile settings tests', () {
+  group('Restaurants tests', () {
     FlutterDriver driver;
 
     // Connect to the Flutter driver before running any tests.
