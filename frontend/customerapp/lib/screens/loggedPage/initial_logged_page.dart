@@ -67,8 +67,7 @@ class _InitialLogged extends State<InitialLogged> {
                     padding: EdgeInsets.only(top: 0),
                     child: Center(
                         child: Container(
-                            padding: EdgeInsets.only(top: 10),
-                            color: Theme.of(context).backgroundColor,
+                            color: Colors.white,
                             child: Center(
                               child: SingleChildScrollView(
                                   child: ConstrainedBox(
@@ -86,70 +85,90 @@ class _InitialLogged extends State<InitialLogged> {
                                               mainAxisAlignment:
                                                   MainAxisAlignment.start,
                                               children: [
-                                                Image.asset(
-                                                  'resources/images/name_and_logo.png',
-                                                  width: 300,
-                                                  key: Key(
-                                                      'initial-logged-in-komet-title-text'),
-                                                ),
                                                 Container(
-                                                    padding:
-                                                        EdgeInsets.fromLTRB(
-                                                            50, 30, 50, 0),
-                                                    constraints: BoxConstraints(
-                                                        maxWidth: 800),
-                                                    child: FittedBox(
-                                                        fit: BoxFit.scaleDown,
-                                                        child: Text(
-                                                          "Anything you want",
-                                                          style: bigTextStyle,
-                                                        ))),
-                                                Container(
-                                                    padding:
-                                                        EdgeInsets.fromLTRB(
-                                                            80, 0, 80, 30),
-                                                    constraints: BoxConstraints(
-                                                        maxWidth: 800),
-                                                    child: FittedBox(
-                                                        fit: BoxFit.scaleDown,
-                                                        child: Text(
-                                                          "Delivered in minutes",
-                                                          style: bigTextStyle
-                                                              .copyWith(
-                                                                  fontSize: 48),
-                                                        ))),
-                                                Container(
-                                                    constraints: BoxConstraints(
-                                                        maxHeight:
-                                                            MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .height -
-                                                                184),
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                            .size
+                                                            .width,
                                                     padding: EdgeInsets.only(
-                                                        left: 25, right: 25),
-                                                    child:
-                                                        SingleChildScrollView(
-                                                            child: Wrap(
-                                                                alignment:
-                                                                    WrapAlignment
-                                                                        .center,
-                                                                children: [
-                                                          FoodButton(Key(
-                                                              "food-bubble-button")),
-                                                          SupermarketsButton(Key(
-                                                              "supermarket-bubble-button")),
-                                                          SnacksButton(Key(
-                                                              "snacks-bubble-button")),
-                                                          AnythingButton(Key(
-                                                              "anything-bubble-button")),
-                                                          PharmacyButton(Key(
-                                                              "pharmacy-button")),
-                                                          DeliveryExpressButton(
-                                                              Key("delivery-express-button")),
-                                                          ShopsGiftsButton(Key(
-                                                              "shops-gifts-button")),
-                                                        ]))),
+                                                        top: 10),
+                                                    color: Theme.of(context)
+                                                        .backgroundColor,
+                                                    child: Column(children: [
+                                                      Image.asset(
+                                                        'resources/images/name_and_logo.png',
+                                                        width: 300,
+                                                        key: Key(
+                                                            'initial-logged-in-komet-title-text'),
+                                                      ),
+                                                      Container(
+                                                          padding: EdgeInsets
+                                                              .fromLTRB(50, 30,
+                                                                  50, 0),
+                                                          constraints:
+                                                              BoxConstraints(
+                                                                  maxWidth:
+                                                                      800),
+                                                          child: FittedBox(
+                                                              fit: BoxFit
+                                                                  .scaleDown,
+                                                              child: Text(
+                                                                "Anything you want",
+                                                                style:
+                                                                    bigTextStyle,
+                                                              ))),
+                                                      Container(
+                                                          padding: EdgeInsets
+                                                              .fromLTRB(80, 0,
+                                                                  80, 30),
+                                                          constraints:
+                                                              BoxConstraints(
+                                                                  maxWidth:
+                                                                      800),
+                                                          child: FittedBox(
+                                                              fit: BoxFit
+                                                                  .scaleDown,
+                                                              child: Text(
+                                                                "Delivered in minutes",
+                                                                style: bigTextStyle
+                                                                    .copyWith(
+                                                                        fontSize:
+                                                                            48),
+                                                              ))),
+                                                      Container(
+                                                          constraints: BoxConstraints(
+                                                              maxHeight: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .height -
+                                                                  184),
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  left: 25,
+                                                                  right: 25),
+                                                          child:
+                                                              SingleChildScrollView(
+                                                                  child: Wrap(
+                                                                      alignment:
+                                                                          WrapAlignment
+                                                                              .center,
+                                                                      children: [
+                                                                FoodButton(Key(
+                                                                    "food-bubble-button")),
+                                                                SupermarketsButton(
+                                                                    Key("supermarket-bubble-button")),
+                                                                SnacksButton(Key(
+                                                                    "snacks-bubble-button")),
+                                                                AnythingButton(Key(
+                                                                    "anything-bubble-button")),
+                                                                PharmacyButton(Key(
+                                                                    "pharmacy-button")),
+                                                                DeliveryExpressButton(
+                                                                    Key("delivery-express-button")),
+                                                                ShopsGiftsButton(
+                                                                    Key("shops-gifts-button")),
+                                                              ]))),
+                                                    ])),
                                                 Container(
                                                   height: 220,
                                                   child: WhiteZone(),
