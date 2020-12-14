@@ -123,17 +123,19 @@ class CartBox extends StatelessWidget {
             else
               Container(
                 key: Key('cart-items'),
-                height: 0,
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Image.asset(
                       'resources/images/empty_cart.png',
-                      height: 100,
+                      height: 191,
                     ),
-                    Text(
-                      "EMPTY",
-                      style: emptyCartLabel,
-                    )
+                    Container(
+                        padding: EdgeInsets.all(10),
+                        child: Text(
+                          "EMPTY",
+                          style: emptyCartLabel,
+                        ))
                   ],
                 ),
               )

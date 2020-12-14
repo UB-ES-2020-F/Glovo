@@ -35,4 +35,4 @@ final makeOrderButtonStyle = ButtonStyle(
         MaterialStateColor.resolveWith((states) => Color(0xFF2ABB9B)));
 
 final emptyCartLabel = TextStyle(
-    fontWeight: FontWeight.w300, color: Color(0xFF4A4A4A), fontSize: 20);
+    fontWeight: FontWeight.w300, color: Color(0xFFCACACA), fontSize: 20);

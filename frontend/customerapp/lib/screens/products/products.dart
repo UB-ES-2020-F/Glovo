@@ -85,7 +85,7 @@ class _Products extends State<Products> {
                             image: DecorationImage(
                                 image: NetworkImage(
                                     restaurant == null ? '' : restaurant.image),
-                                fit: BoxFit.fitWidth,
+                                fit: BoxFit.cover,
                                 alignment: Alignment.topCenter)),
                         child: Column(children: [
                           Expanded(
