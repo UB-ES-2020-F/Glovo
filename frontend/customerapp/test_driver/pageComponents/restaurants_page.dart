@@ -7,7 +7,7 @@ class RestaurantsPage extends DriverPage {
   RestaurantsPage(FlutterDriver driver) : super(driver);
   Future<void> clickOnFirstRestaurant() async {
     final firstRestaurant = find.byValueKey(restaurantCard(0));
-    driver.tap(firstRestaurant);
+    await driver.tap(firstRestaurant);
   }
 
   Future<RestaurantCard> getRestaurantWithIndex(int index) async {
