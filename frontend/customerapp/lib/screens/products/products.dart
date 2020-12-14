@@ -21,6 +21,7 @@ import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:customerapp/endpoints/products.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import 'cart_box.dart';
 import 'product_card.dart';
@@ -38,10 +39,20 @@ class _Products extends State<Products> {
   Cart cart;
   bool firstInstance;
 
+  ItemScrollController itemScrollController;
+  ItemPositionsListener itemPositionsListener;
+
   List<String> cats;
 
   _Products() {
     firstInstance = true;
+  }
+
+  @override
+  void initState() {
+    itemScrollController = ItemScrollController();
+    itemPositionsListener = ItemPositionsListener.create();
+    super.initState();
   }
 
   void addToCart(Product prod) {
@@ -83,11 +94,11 @@ class _Products extends State<Products> {
                               fit: BoxFit.fitWidth,
                               alignment: Alignment.topCenter)),
 
-                      child: SingleChildScrollView(
+                      
                           child: Column(children: [
-                        Padding(
+                        Expanded(child: Padding(
                             padding: EdgeInsets.only(left: 20, right: 20),
-                            child: Row(
+                            child: Expanded(child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisSize: MainAxisSize.min,
                                 mainAxisAlignment:
@@ -111,13 +122,18 @@ class _Products extends State<Products> {
                                         builder: (BuildContext context,
                                             AsyncSnapshot snapshot2) {
                                           if (snapshot2.hasData) {
-                                            //the categories
-                                            cats = (snapshot2.data as List<
+                                            
+                                            
+cats = (snapshot2.data as List<
                                                     Category_productDTO>)
+                                                    
                                                 .map((e) => e.name)
                                                 .toList();
-                                            List<Widget> content = [
-                                              Container(
+                                                List<Widget> grids =                                               getGrids(
+                                                  snapshot2.data, productsModel);
+                                            
+                                            return Column(children: [Container(
+                                                  height: 120,
                                                   child: Padding(
                                                 padding: EdgeInsets.fromLTRB(
                                                     0, 0, 0, 10),
@@ -146,18 +162,18 @@ class _Products extends State<Products> {
                                                         )),
                                                     Divider(),
                                                     //we construct the radiobutton with the cats
-                                                    CustomRadio(cats),
+                                                    CustomRadio(cats, itemScrollController),
                                                   ]),
                                                 ),
                                               )),
-                                              ...getGrids(
-                                                  snapshot2.data, productsModel)
-                                            ] as List<Widget>;
-                                            return ListView(
-                                                physics:
-                                                    NeverScrollableScrollPhysics(), // to disable GridView's scrolling
-                                                shrinkWrap: true,
-                                                children: content);
+                                              Expanded(child: 
+                                                ScrollablePositionedList.builder(
+  itemCount: grids.length,
+  itemBuilder: (context, index) => grids[index],
+  itemScrollController: itemScrollController,
+  itemPositionsListener: itemPositionsListener,
+))]);
+
                                           } else {
                                             return Padding(
                                                 padding: EdgeInsets.fromLTRB(
@@ -186,10 +202,10 @@ class _Products extends State<Products> {
                                     )
                                   else
                                     Container()
-                                ])),
-                        Footer(Color(0x00000000))
+                                ])))),
+                        //Bug for next Sprint
+                        //Footer(Color(0x00000000))
                       ])),
-                    ),
                     if (MediaQuery.of(context).size.width <= 900 &&
                         cart.order.isNotEmpty)
                       Align(
@@ -219,6 +235,7 @@ class _Products extends State<Products> {
   //Returns a List<widgets> with each gridview for every category
   List<Widget> getGrids(List<Category_productDTO> l, ProductsListModel model) {
     List<Widget> toret = List();
+    int count = -1;
 
     for (var category in l) {
       List<Product> p = List();
@@ -227,8 +244,9 @@ class _Products extends State<Products> {
         p.add(Product.fromDTO(pp));
         model.availableProducts.add(product);
       }
-
+      count = count +1;
       toret.add(Container(
+        height:50,
         child: Text(
           category.name,
           key: Key(category.name),
@@ -241,6 +259,7 @@ class _Products extends State<Products> {
         padding: EdgeInsets.all(10),
         margin: EdgeInsets.only(bottom: 5),
       ));
+      count = count+1;
       toret.add(StaggeredGridView.countBuilder(
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
@@ -255,44 +274,32 @@ class _Products extends State<Products> {
         },
         staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
       ));
+      
     }
     return toret;
   }
+
+  
 }
 
 class CustomRadio extends StatefulWidget {
-  List<String> categories;
+  CustomRadio(this.categories, this.controller);
 
-  CustomRadio(this.categories);
+  List<String> categories;
+  ItemScrollController controller;
+
   @override
   State<StatefulWidget> createState() {
-    return CustomRadioState(this.categories);
+    return CustomRadioState(this.categories, this.controller);
   }
 }
 
 class CustomRadioState extends State<CustomRadio> {
+  CustomRadioState(this.categories, this.controller);
+
   List<String> categories;
+  ItemScrollController controller;
   List<RadioModel> sample = List<RadioModel>();
-
-  CustomRadioState(this.categories);
-
-  List<Widget> generate_widgets() {
-    List<Widget> llista = List<Widget>();
-    sample.asMap().forEach((key, value) {
-      llista.add(InkWell(
-          onTap: () {
-            //TODO your task here gerard you should go to the widget with key the same name as the category, see line 229
-            setState(() {
-              sample.forEach((element) => element.isSelected = false);
-              sample[key].isSelected = true;
-            });
-          },
-          child:
-              Product_class_widget(sample[key].name, sample[key].isSelected)));
-    });
-
-    return llista;
-  }
 
   @override
   void initState() {
@@ -300,6 +307,28 @@ class CustomRadioState extends State<CustomRadio> {
     for (var cat in categories) {
       sample.add(RadioModel(cat, false));
     }
+  }
+
+  List<Widget> generate_widgets() {
+    int count=0;
+    List<Widget> llista = List<Widget>();
+    sample.asMap().forEach((key, value) {
+      int v = count;
+      llista.add(InkWell(
+          onTap: () {
+            setState(() {
+              sample.forEach((element) => element.isSelected = false);
+              sample[key].isSelected = true;
+
+            });
+            controller.scrollTo(index: 2*v, duration: Duration(milliseconds: 500));
+          },
+          child:
+              Product_class_widget(sample[key].name, sample[key].isSelected)));
+          count++;
+    });
+
+    return llista;
   }
 
   @override
@@ -312,10 +341,11 @@ class CustomRadioState extends State<CustomRadio> {
 }
 
 class Product_class_widget extends StatelessWidget {
-  String name;
-  bool isSelected;
-
   Product_class_widget(this.name, this.isSelected);
+
+  bool isSelected;
+  String name;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -339,8 +369,8 @@ class Product_class_widget extends StatelessWidget {
 }
 
 class RadioModel {
-  String name;
-  bool isSelected;
-
   RadioModel(this.name, this.isSelected);
+
+  bool isSelected;
+  String name;
 }

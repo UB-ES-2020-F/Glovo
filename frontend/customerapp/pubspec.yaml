@@ -40,8 +40,11 @@ dependencies:
   latlong: ^0.6.1
   google_maps_flutter: ^0.5.28
   google_maps_flutter_web: ^0.1.0
-  scroll_to_index: ^1.0.6
+
   flutter_modular: any
+  scroll_to_index: any  
+  scrollable_positioned_list: ^0.1.8
+  
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
