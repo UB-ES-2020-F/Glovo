@@ -15,11 +15,11 @@ class AnonRoute extends StatelessWidget {
     bar = s.getResponsiveBar();
 
     return Scaffold(
-        backgroundColor: Theme.of(context).backgroundColor,
+        backgroundColor: Colors.white,
         appBar: bar,
         body: Container(
             child: Padding(
-                padding: EdgeInsets.only(top: 20),
+                padding: EdgeInsets.only(top: 0),
                 child: Center(
                     child: SingleChildScrollView(
                         child: ConstrainedBox(
@@ -27,22 +27,23 @@ class AnonRoute extends StatelessWidget {
                     minHeight: MediaQuery.of(context).size.height,
                   ),
                   child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                'resources/images/name_and_logo.png',
-                                width: 250,
-                              ),
-                            ]),
+                        Container(
+                          padding: EdgeInsets.only(top: 20),
+                          color: Theme.of(context).backgroundColor,
+                          alignment: Alignment.center,
+                          child: Image.asset(
+                            'resources/images/name_and_logo.png',
+                            width: 250,
+                          ),
+                        ),
                         Container(
                           height: 220,
                           child: WhiteZone(),
                         ),
+                        AppAdZone(),
                         Footer(Colors.white)
                       ]),
                 ))))));

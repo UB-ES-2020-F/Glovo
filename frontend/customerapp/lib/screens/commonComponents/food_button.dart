@@ -21,6 +21,7 @@ class FoodButton extends StatelessWidget {
           textColor: Colors.white,
           elevation: 4,
           disabledElevation: 4,
+          hoverElevation: 8,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,

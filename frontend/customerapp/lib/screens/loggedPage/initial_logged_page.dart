@@ -34,95 +34,105 @@ class _InitialLogged extends State<InitialLogged> {
             bar = s.getResponsiveBar();
 
             return Scaffold(
-                backgroundColor: Theme.of(context).backgroundColor,
+                backgroundColor: Colors.white,
                 appBar: bar,
                 body: Padding(
-                    padding: EdgeInsets.only(top: 10),
+                    padding: EdgeInsets.only(top: 0),
                     child: Center(
                         child: Container(
+                            padding: EdgeInsets.only(top: 10),
+                            color: Theme.of(context).backgroundColor,
                             child: Center(
-                      child: SingleChildScrollView(
-                          child: ConstrainedBox(
-                              constraints: BoxConstraints(
-                                minHeight: MediaQuery.of(context).size.height,
-                              ),
-                              child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Image.asset(
-                                          'resources/images/name_and_logo.png',
-                                          width: 250,
-                                          key: Key(
-                                              'initial-logged-in-komet-title-text'),
-                                        ),
-                                        Container(
-                                            padding: EdgeInsets.fromLTRB(
-                                                50, 30, 50, 0),
-                                            constraints:
-                                                BoxConstraints(maxWidth: 800),
-                                            child: FittedBox(
-                                                fit: BoxFit.scaleDown,
-                                                child: Text(
-                                                  "Anything you want",
-                                                  style: bigTextStyle,
-                                                ))),
-                                        Container(
-                                            padding: EdgeInsets.fromLTRB(
-                                                80, 0, 80, 30),
-                                            constraints:
-                                                BoxConstraints(maxWidth: 800),
-                                            child: FittedBox(
-                                                fit: BoxFit.scaleDown,
-                                                child: Text(
-                                                  "Delivered in minutes",
-                                                  style: bigTextStyle.copyWith(
-                                                      fontSize: 48),
-                                                ))),
-                                        Container(
-                                            constraints: BoxConstraints(
-                                                maxHeight:
-                                                    MediaQuery.of(context)
-                                                            .size
-                                                            .height -
-                                                        184),
-                                            padding: EdgeInsets.only(
-                                                left: 25, right: 25),
-                                            child: SingleChildScrollView(
-                                                child: Wrap(
-                                                    alignment:
-                                                        WrapAlignment.center,
-                                                    children: [
-                                                  FoodButton(Key(
-                                                      "food-bubble-button")),
-                                                  SupermarketsButton(Key(
-                                                      "supermarket-bubble-button")),
-                                                  SnacksButton(Key(
-                                                      "snacks-bubble-button")),
-                                                  AnythingButton(Key(
-                                                      "anything-bubble-button")),
-                                                  PharmacyButton(
-                                                      Key("pharmacy-button")),
-                                                  DeliveryExpressButton(Key(
-                                                      "delivery-express-button")),
-                                                  ShopsGiftsButton(Key(
-                                                      "shops-gifts-button")),
-                                                ]))),
-                                        Container(
-                                          height: 220,
-                                          child: WhiteZone(),
-                                        )
-                                      ],
-                                    ),
-                                    Footer(Colors.white),
-                                  ]))),
-                    )))));
+                              child: SingleChildScrollView(
+                                  child: ConstrainedBox(
+                                      constraints: BoxConstraints(
+                                        minHeight:
+                                            MediaQuery.of(context).size.height,
+                                      ),
+                                      child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Image.asset(
+                                                  'resources/images/name_and_logo.png',
+                                                  width: 250,
+                                                  key: Key(
+                                                      'initial-logged-in-komet-title-text'),
+                                                ),
+                                                Container(
+                                                    padding:
+                                                        EdgeInsets.fromLTRB(
+                                                            50, 30, 50, 0),
+                                                    constraints: BoxConstraints(
+                                                        maxWidth: 800),
+                                                    child: FittedBox(
+                                                        fit: BoxFit.scaleDown,
+                                                        child: Text(
+                                                          "Anything you want",
+                                                          style: bigTextStyle,
+                                                        ))),
+                                                Container(
+                                                    padding:
+                                                        EdgeInsets.fromLTRB(
+                                                            80, 0, 80, 30),
+                                                    constraints: BoxConstraints(
+                                                        maxWidth: 800),
+                                                    child: FittedBox(
+                                                        fit: BoxFit.scaleDown,
+                                                        child: Text(
+                                                          "Delivered in minutes",
+                                                          style: bigTextStyle
+                                                              .copyWith(
+                                                                  fontSize: 48),
+                                                        ))),
+                                                Container(
+                                                    constraints: BoxConstraints(
+                                                        maxHeight:
+                                                            MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .height -
+                                                                184),
+                                                    padding: EdgeInsets.only(
+                                                        left: 25, right: 25),
+                                                    child:
+                                                        SingleChildScrollView(
+                                                            child: Wrap(
+                                                                alignment:
+                                                                    WrapAlignment
+                                                                        .center,
+                                                                children: [
+                                                          FoodButton(Key(
+                                                              "food-bubble-button")),
+                                                          SupermarketsButton(Key(
+                                                              "supermarket-bubble-button")),
+                                                          SnacksButton(Key(
+                                                              "snacks-bubble-button")),
+                                                          AnythingButton(Key(
+                                                              "anything-bubble-button")),
+                                                          PharmacyButton(Key(
+                                                              "pharmacy-button")),
+                                                          DeliveryExpressButton(
+                                                              Key("delivery-express-button")),
+                                                          ShopsGiftsButton(Key(
+                                                              "shops-gifts-button")),
+                                                        ]))),
+                                                Container(
+                                                  height: 220,
+                                                  child: WhiteZone(),
+                                                ),
+                                                AppAdZone(),
+                                              ],
+                                            ),
+                                            Footer(Colors.white),
+                                          ]))),
+                            )))));
           } else {
             Future.delayed(Duration.zero, () {
               Navigator.pushNamed(context, '/');
@@ -213,4 +223,126 @@ class PathPainterInitial extends CustomPainter {
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) => true;
+}
+
+class AppAdZone extends StatelessWidget {
+  double factor = 1;
+  double factorFont = 1;
+  @override
+  Widget build(BuildContext context) {
+    if (MediaQuery.of(context).size.width > 1000) {
+      factor = 1.0;
+      factorFont = 1.0;
+    } else {
+      factor = 0.5;
+      factorFont = 0.65;
+    }
+    return Container(
+        color: Colors.white,
+        child: Stack(alignment: AlignmentDirectional.center, children: [
+          Container(
+            color: Colors.white,
+            height: 400 * factor,
+            width: MediaQuery.of(context).size.width,
+            child: Positioned.fill(
+              child: Image.asset(
+                'resources/images/food_pattern.jpg',
+                scale: 2.3,
+                repeat: ImageRepeat.repeat,
+              ),
+            ),
+          ),
+          Container(
+            height: 400 * factor,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                gradient: LinearGradient(
+                    begin: const FractionalOffset(0.0, 0.0),
+                    end: const FractionalOffset(0.8, 0.0),
+                    colors: [
+                      Color(0x66FFFFFF),
+                      Theme.of(context).backgroundColor,
+                    ],
+                    stops: [
+                      0.0,
+                      1.0
+                    ])),
+          ),
+          Container(
+            //color: Colors.white,
+            height: 500 * factor,
+            width: MediaQuery.of(context).size.width,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'resources/images/app_image.png',
+                  height: 500 * factor,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Follow your deliveries",
+                      style:
+                          mediumTextStyle.copyWith(fontSize: 40 * factorFont),
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                      children: [
+                        Text(
+                          "with the ",
+                          style: mediumTextStyle.copyWith(
+                              fontSize: 40 * factorFont),
+                        ),
+                        Text(
+                          "Komet App",
+                          style: mediumTextStyle.copyWith(
+                              fontSize: 40 * factorFont,
+                              color: Color(0xFF2ABB9B)),
+                        )
+                      ],
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(20 * factor),
+                      constraints: BoxConstraints(maxWidth: 400 * factorFont),
+                      child: Text(
+                        "Watch the progress of your deliveries in real-time and order from anywhere",
+                        textAlign: TextAlign.center,
+                        style: mediumSmallTextStyle.copyWith(
+                            color: Color(0xFF4A4A4A),
+                            fontSize: 18 * factorFont),
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                            padding: EdgeInsets.only(top: 2),
+                            height: 70,
+                            child: IconButton(
+                                onPressed: null,
+                                iconSize: 200 * factorFont,
+                                icon: Image.asset(
+                                  'resources/images/download-button.png',
+                                ))),
+                        Container(
+                            height: 70,
+                            child: IconButton(
+                              onPressed: null,
+                              iconSize: 200 * factorFont,
+                              icon: Image.asset(
+                                'resources/images/download-button_android.png',
+                              ),
+                            ))
+                      ],
+                    )
+                  ],
+                )
+              ],
+            ),
+          ),
+        ]));
+  }
 }
