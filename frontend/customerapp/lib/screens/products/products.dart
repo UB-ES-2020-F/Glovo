@@ -314,10 +314,12 @@ class CustomRadioState extends State<CustomRadio> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: generateWidgets(),
-    );
+    return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: generateWidgets(),
+        ));
   }
 }
 

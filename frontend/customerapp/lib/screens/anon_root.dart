@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:customerapp/components/footer.dart';
@@ -45,7 +46,10 @@ class AnonRoute extends StatelessWidget {
                           ),
                         ),
                         Container(
-                          height: 220,
+                          height: min(
+                              MediaQuery.of(context).size.width.toDouble() /
+                                  4.0,
+                              200),
                           child: WhiteZone(),
                         ),
                         if (MediaQuery.of(context).size.width > 300)
