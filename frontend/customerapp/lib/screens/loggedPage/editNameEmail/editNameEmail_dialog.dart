@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class EditNameEmailDialog extends StatelessWidget {
-  EditNameEmailDialog();
+  final Function update;
+  EditNameEmailDialog(this.update);
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -25,7 +26,7 @@ class EditNameEmailDialog extends StatelessWidget {
                 )),
             Container(
                 padding: EdgeInsets.symmetric(horizontal: 70),
-                child: EditNameEmail())
+                child: EditNameEmail(update: update))
           ]),
         )
       ]),

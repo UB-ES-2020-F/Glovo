@@ -47,8 +47,13 @@ class _Products extends State<Products> {
     super.initState();
   }
 
+  void updatePage() {
+    setState(() {});
+  }
+
   void addToCart(Product prod) {
     cart.addItem(prod);
+    setState(() {});
   }
 
   @override
@@ -184,17 +189,19 @@ class _Products extends State<Products> {
                                   cart.countItems().toString() +
                                   ' items (' +
                                   cart.getTotalPrice().toStringAsFixed(2) +
-                                  ' €)')),
+                                  ' €)',
+                              updatePage)),
                     if (MediaQuery.of(context).size.width > 900)
                       Align(
                           alignment: Alignment.topRight,
                           child: Column(
                             children: [
-                              CartBox(restaurant, cartWidth, cart, prods)
+                              CartBox(restaurant, cartWidth, cart, prods,
+                                  updatePage)
                             ],
                           ))
                     else
-                      Container()
+                      Container(),
                   ]));
             } else {
               Future.delayed(Duration.zero, () {
