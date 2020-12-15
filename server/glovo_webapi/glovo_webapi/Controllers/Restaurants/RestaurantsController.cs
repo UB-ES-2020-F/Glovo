@@ -57,7 +57,7 @@ namespace glovo_webapi.Controllers.Restaurants
                     opts =>
                     {
                         opts.Items["userLocation"] = _mapper.Map<Location>(userLocation);
-                        opts.Items["deliveryFeeCalculator"] = new Func<double, double>(d => { return 2.5 + 0.8 * d;});
+                        opts.Items["deliveryFeeCalculator"] = new Func<double, double>(d => { return ((double)((int)(25 + 8 * d)))/10.0;});
                     });
 
             viewRestaurantModels =
