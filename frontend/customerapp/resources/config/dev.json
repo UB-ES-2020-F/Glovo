@@ -1,3 +1,3 @@
 {
-    "apiUrl": "http://localhost:5000/api"
+    "apiUrl": "http://ub-es2020-glovo-webapi.herokuapp.com/api"
 }

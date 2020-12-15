@@ -7,6 +7,7 @@ import 'package:customerapp/models/aboutus.dart';
 import 'package:customerapp/models/developer.dart';
 import 'package:customerapp/styles/initial_logged.dart';
 import 'package:customerapp/screens/loggedPage/initial_logged_page.dart';
+import 'package:customerapp/styles/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -43,7 +44,7 @@ class AboutUs extends StatelessWidget {
                                 child: WhiteZoneOurStory(),
                               ),
                               Container(
-                                padding: EdgeInsets.fromLTRB(100, 0, 100, 20),
+                                padding: EdgeInsets.fromLTRB(100, 0, 100, 0),
                                 transform:
                                     Matrix4.translationValues(0.0, -50.0, 0.0),
                                 child: Text(
@@ -55,6 +56,71 @@ class AboutUs extends StatelessWidget {
                                       color:
                                           Theme.of(context).primaryColorDark),
                                 ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.fromLTRB(50, 0, 50, 80),
+                                child: Wrap(
+                                    spacing: 20,
+                                    runSpacing: 20,
+                                    alignment: WrapAlignment.center,
+                                    children: [
+                                      Container(
+                                          padding:
+                                              EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                          child: Container(
+                                              width: 200,
+                                              height: 43,
+                                              alignment: Alignment.bottomCenter,
+                                              child: SizedBox.expand(
+                                                child: ElevatedButton(
+                                                    onPressed: () {
+                                                      js.context
+                                                          .callMethod('open', [
+                                                        'https://docs.google.com/presentation/d/1fegH7hYsDV5UIJDCQ63WvQtCj_IhJdzHEYxv9inB-QM/edit?usp=sharing'
+                                                      ]);
+                                                    },
+                                                    child: Text('Presentation'),
+                                                    style: registerButtonStyle.copyWith(
+                                                        textStyle: MaterialStateProperty
+                                                            .resolveWith((states) =>
+                                                                TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                        18,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w700)))),
+                                              ))),
+                                      Container(
+                                          padding:
+                                              EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                          child: Container(
+                                              width: 200,
+                                              height: 43,
+                                              alignment: Alignment.bottomCenter,
+                                              child: SizedBox.expand(
+                                                child: ElevatedButton(
+                                                    onPressed: () {
+                                                      js.context.callMethod(
+                                                          'open', [
+                                                        'https://wiki-ub-es2020-glovo.herokuapp.com/'
+                                                      ]);
+                                                    },
+                                                    child: Text('Wiki'),
+                                                    style: registerButtonStyle.copyWith(
+                                                        textStyle: MaterialStateProperty
+                                                            .resolveWith((states) =>
+                                                                TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                        18,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w700)))),
+                                              ))),
+                                    ]),
                               ),
                               Container(
                                 padding: EdgeInsets.fromLTRB(50, 0, 50, 20),
