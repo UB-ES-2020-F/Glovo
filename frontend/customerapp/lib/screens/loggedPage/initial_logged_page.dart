@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:customerapp/actions/check_login.dart';
 import 'package:customerapp/components/footer.dart';
 import 'package:customerapp/models/landingPageText.dart';
@@ -134,41 +136,43 @@ class _InitialLogged extends State<InitialLogged> {
                                                                             48),
                                                               ))),
                                                       Container(
-                                                          constraints: BoxConstraints(
-                                                              maxHeight: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .height -
-                                                                  184),
                                                           padding:
                                                               EdgeInsets.only(
                                                                   left: 25,
                                                                   right: 25),
                                                           child:
                                                               SingleChildScrollView(
+                                                                  physics:
+                                                                      NeverScrollableScrollPhysics(),
                                                                   child: Wrap(
                                                                       alignment:
                                                                           WrapAlignment
                                                                               .center,
                                                                       children: [
-                                                                FoodButton(Key(
-                                                                    "food-bubble-button")),
-                                                                SupermarketsButton(
-                                                                    Key("supermarket-bubble-button")),
-                                                                SnacksButton(Key(
-                                                                    "snacks-bubble-button")),
-                                                                AnythingButton(Key(
-                                                                    "anything-bubble-button")),
-                                                                PharmacyButton(Key(
-                                                                    "pharmacy-button")),
-                                                                DeliveryExpressButton(
-                                                                    Key("delivery-express-button")),
-                                                                ShopsGiftsButton(
-                                                                    Key("shops-gifts-button")),
-                                                              ]))),
+                                                                        FoodButton(
+                                                                            Key("food-bubble-button")),
+                                                                        SupermarketsButton(
+                                                                            Key("supermarket-bubble-button")),
+                                                                        SnacksButton(
+                                                                            Key("snacks-bubble-button")),
+                                                                        AnythingButton(
+                                                                            Key("anything-bubble-button")),
+                                                                        PharmacyButton(
+                                                                            Key("pharmacy-button")),
+                                                                        DeliveryExpressButton(
+                                                                            Key("delivery-express-button")),
+                                                                        ShopsGiftsButton(
+                                                                            Key("shops-gifts-button")),
+                                                                      ]))),
                                                     ])),
                                                 Container(
-                                                  height: 220,
+                                                  height: min(
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .width
+                                                              .toDouble() /
+                                                          4.0,
+                                                      200),
                                                   child: WhiteZone(),
                                                 ),
                                                 if (MediaQuery.of(context)
@@ -246,7 +250,7 @@ class WhiteZone extends StatelessWidget {
   }
 
   Path drawPathComplete(double width) {
-    Size size = Size(width.toDouble(), 300);
+    Size size = Size(width.toDouble(), min(width.toDouble() / 4.0, 300));
     Path path = Path();
     path.moveTo(0, 2 * size.height / 3);
     path.quadraticBezierTo(
