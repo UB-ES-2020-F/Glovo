@@ -77,112 +77,102 @@ class _Products extends State<Products> {
                   appBar: bar,
                   body: Stack(children: [
                     Container(
-                        alignment: Alignment.topLeft,
-                        width: MediaQuery.of(context).size.width,
-                        //padding: EdgeInsets.only(left: 20, right: 20),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            image: DecorationImage(
-                                image: NetworkImage(
-                                    restaurant == null ? '' : restaurant.image),
-                                fit: BoxFit.cover,
-                                alignment: Alignment.topCenter)),
-                        child: Column(children: [
-                          Container(
-                            padding: EdgeInsets.only(left: 20, right: 20),
-                            child: Container(
-                              padding: MediaQuery.of(context).size.width < 600
-                                  ? EdgeInsets.fromLTRB(10, 30, 10, 0)
-                                  : EdgeInsets.fromLTRB(30, 30, 30, 0),
-                              width: MediaQuery.of(context).size.width <= 900
-                                  ? MediaQuery.of(context).size.width - 40
-                                  : MediaQuery.of(context).size.width -
-                                      cartWidth -
-                                      75,
-                              child: Builder(builder: (builder) {
-                                return FutureBuilder(
-                                  future:
-                                      getProductsFromRestaurant(restaurant.id),
-                                  builder: (BuildContext context,
-                                      AsyncSnapshot snapshot2) {
-                                    if (snapshot2.hasData) {
-                                      cats = (snapshot2.data
-                                              as List<CategoryProductDTO>)
-                                          .map((e) => e.name)
-                                          .toList();
-                                      List<Widget> grids = getGrids(
-                                          snapshot2.data, productsModel);
-
-                                      return Column(children: [
-                                        Container(
-                                            height: 120,
-                                            child: Padding(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  0, 0, 0, 10),
-                                              child: Container(
-                                                height: 140,
-                                                padding: EdgeInsets.fromLTRB(
-                                                    40, 0, 40, 0),
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            15.0),
-                                                    color: Color(0xAAFFFFFF)),
-                                                alignment: Alignment.centerLeft,
-                                                child: Column(children: [
-                                                  Padding(
-                                                      padding: EdgeInsets.only(
-                                                          top: 10),
-                                                      child: FittedBox(
-                                                          fit: BoxFit.scaleDown,
-                                                          child: Text(
-                                                            restaurant == null
-                                                                ? 'Products'
-                                                                : restaurant
-                                                                    .name,
-                                                            style:
-                                                                restaurantTitleStyle,
-                                                          ))),
-                                                  Divider(),
-                                                  //we construct the radiobutton with the cats
-                                                  CustomRadio(cats,
-                                                      itemScrollController),
-                                                ]),
-                                              ),
-                                            )),
-                                        Container(
-                                            child: ScrollablePositionedList
-                                                .builder(
-                                          itemCount: grids.length,
-                                          itemBuilder: (context, index) =>
-                                              grids[index],
-                                          itemScrollController:
-                                              itemScrollController,
-                                          itemPositionsListener:
-                                              itemPositionsListener,
-                                        ))
-                                      ]);
-                                    } else {
-                                      return Padding(
+                      alignment: Alignment.topLeft,
+                      width: MediaQuery.of(context).size.width,
+                      //padding: EdgeInsets.only(left: 20, right: 20),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          image: DecorationImage(
+                              image: NetworkImage(
+                                  restaurant == null ? '' : restaurant.image),
+                              fit: BoxFit.cover,
+                              alignment: Alignment.topCenter)),
+                      child: Container(
+                        padding: EdgeInsets.only(left: 20, right: 20),
+                        child: Container(
+                          padding: MediaQuery.of(context).size.width < 600
+                              ? EdgeInsets.fromLTRB(10, 30, 10, 0)
+                              : EdgeInsets.fromLTRB(30, 30, 30, 0),
+                          width: MediaQuery.of(context).size.width <= 900
+                              ? MediaQuery.of(context).size.width - 40
+                              : MediaQuery.of(context).size.width -
+                                  cartWidth -
+                                  75,
+                          child: Builder(builder: (builder) {
+                            return FutureBuilder(
+                              future: getProductsFromRestaurant(restaurant.id),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot snapshot2) {
+                                if (snapshot2.hasData) {
+                                  cats = (snapshot2.data
+                                          as List<CategoryProductDTO>)
+                                      .map((e) => e.name)
+                                      .toList();
+                                  List<Widget> grids =
+                                      getGrids(snapshot2.data, productsModel);
+                                  return Column(children: [
+                                    Container(
+                                        padding:
+                                            EdgeInsets.fromLTRB(0, 0, 0, 10),
+                                        child: Container(
+                                          height: 130,
                                           padding:
-                                              EdgeInsets.fromLTRB(0, 0, 0, 10),
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(15.0),
-                                                color: Color(0xAAFFFFFF)),
-                                            alignment: Alignment.centerLeft,
-                                            child: CircularLoaderKomet(),
-                                          ));
-                                    }
-                                  },
-                                );
-                              }),
-                            ),
-                          ),
-                          //Bug for next Sprint
-                          //Footer(Color(0x00000000))
-                        ])),
+                                              EdgeInsets.fromLTRB(40, 0, 40, 0),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(15.0),
+                                              color: Color(0xAAFFFFFF)),
+                                          alignment: Alignment.centerLeft,
+                                          child: Column(children: [
+                                            Padding(
+                                                padding:
+                                                    EdgeInsets.only(top: 10),
+                                                child: FittedBox(
+                                                    fit: BoxFit.scaleDown,
+                                                    child: Text(
+                                                      restaurant == null
+                                                          ? 'Products'
+                                                          : restaurant.name,
+                                                      style:
+                                                          restaurantTitleStyle,
+                                                    ))),
+                                            Divider(),
+                                            //we construct the radiobutton with the cats
+                                            CustomRadio(
+                                                cats, itemScrollController),
+                                          ]),
+                                        )),
+                                    Expanded(
+                                        child: ScrollablePositionedList.builder(
+                                      itemCount: grids.length,
+                                      itemBuilder: (context, index) =>
+                                          grids[index],
+                                      itemScrollController:
+                                          itemScrollController,
+                                      itemPositionsListener:
+                                          itemPositionsListener,
+                                    ))
+                                  ]);
+                                } else {
+                                  return Padding(
+                                      padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(15.0),
+                                            color: Color(0xAAFFFFFF)),
+                                        alignment: Alignment.centerLeft,
+                                        child: CircularLoaderKomet(),
+                                      ));
+                                }
+                              },
+                            );
+                          }),
+                        ),
+                      ),
+                      //Bug for next Sprint
+                      //Footer(Color(0x00000000))
+                    ),
                     if (MediaQuery.of(context).size.width <= 900 &&
                         cart.order.isNotEmpty)
                       Align(
