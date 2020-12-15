@@ -11,37 +11,43 @@ class EditNameEmailPage extends StatefulWidget {
 
 class _EditNameEmailPage extends State<EditNameEmailPage> {
   @override
-  Widget build(BuildContext context) => FutureBuilder(
-        future: userIsLogged(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            if (snapshot.data) {
-              return Scaffold(
-                body: ListView(children: [
-                  Container(
-                      padding: EdgeInsets.all(10),
-                      alignment: Alignment(1, 1),
-                      child: IconButton(
-                        color: Color(0xFF6E6E6E),
-                        icon: Icon(Icons.clear),
-                        iconSize: 40,
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      )),
-                  Container(padding: EdgeInsets.all(30), child: EditNameEmail())
-                ]),
-              );
-            } else {
-              Future.delayed(Duration.zero, () {
-                Navigator.pushNamed(context, '/');
-              });
-              return CircularLoaderKomet();
-              //
-            }
+  Widget build(BuildContext context) {
+    final Function update = ModalRoute.of(context).settings.arguments;
+
+    return FutureBuilder(
+      future: userIsLogged(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          if (snapshot.data) {
+            return Scaffold(
+              body: ListView(children: [
+                Container(
+                    padding: EdgeInsets.all(10),
+                    alignment: Alignment(1, 1),
+                    child: IconButton(
+                      color: Color(0xFF6E6E6E),
+                      icon: Icon(Icons.clear),
+                      iconSize: 40,
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    )),
+                Container(
+                    padding: EdgeInsets.all(30),
+                    child: EditNameEmail(update: update))
+              ]),
+            );
           } else {
+            Future.delayed(Duration.zero, () {
+              Navigator.pushNamed(context, '/');
+            });
             return CircularLoaderKomet();
+            //
           }
-        },
-      );
+        } else {
+          return CircularLoaderKomet();
+        }
+      },
+    );
+  }
 }

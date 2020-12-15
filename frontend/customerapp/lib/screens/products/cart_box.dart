@@ -15,11 +15,12 @@ class CartBox extends StatelessWidget {
   final RestaurantLoc restaurant;
   final Cart cart;
   final List prods;
+  final Function update;
   double distance;
   double deliveryFee;
   TimeInterval timeInterval;
   List<Widget> items;
-  CartBox(this.restaurant, this.cartWidth, this.cart, this.prods);
+  CartBox(this.restaurant, this.cartWidth, this.cart, this.prods, this.update);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,8 @@ class CartBox extends StatelessWidget {
     items = new List<Widget>();
     var idx = 0;
     cart.order.forEach((key, value) {
-      items.add(new ItemOnCart(Key('item-on-cart-$idx'), key, value, cart));
+      items.add(
+          new ItemOnCart(Key('item-on-cart-$idx'), key, value, cart, update));
       idx++;
     });
     return Padding(
@@ -118,7 +120,7 @@ class CartBox extends StatelessWidget {
                   ),
                 ),
                 MakeOrderButton(
-                    Key('cart-make-order-button'), cart, 'Make order')
+                    Key('cart-make-order-button'), cart, 'Make order', update)
               ])
             else
               Container(
@@ -150,7 +152,9 @@ class ItemOnCart extends StatelessWidget {
   final Cart cart;
   final Product prod;
   final int quantity;
-  ItemOnCart(Key key, this.prod, this.quantity, this.cart) : super(key: key);
+  final Function update;
+  ItemOnCart(Key key, this.prod, this.quantity, this.cart, this.update)
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -200,6 +204,7 @@ class ItemOnCart extends StatelessWidget {
                     ),
                     onPressed: () {
                       cart.substractItem(prod);
+                      update();
                     },
                   ),
                   IconButton(
@@ -209,6 +214,7 @@ class ItemOnCart extends StatelessWidget {
                     ),
                     onPressed: () {
                       cart.addItem(prod);
+                      update();
                     },
                   ),
                 ],
@@ -224,8 +230,9 @@ class ItemOnCart extends StatelessWidget {
 class MakeOrderButton extends StatelessWidget {
   final Cart cart;
   final String text;
+  final Function update;
 
-  MakeOrderButton(Key key, this.cart, this.text) : super(key: key);
+  MakeOrderButton(Key key, this.cart, this.text, this.update) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -242,11 +249,13 @@ class MakeOrderButton extends StatelessWidget {
                     Navigator.pop(context);
                     showOrderDoneDialog(context);
                     cart.empty();
+                    update();
                   }).catchError((error, stackTrace) {
                     cart.empty();
                     print((error as OrderCallbackFailed).errorCode);
                     Navigator.pop(context);
                     showOrderFailedDialog(context);
+                    update();
                   });
                 });
               },

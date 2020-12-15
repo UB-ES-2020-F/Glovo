@@ -10,6 +10,8 @@ import 'package:provider/provider.dart';
 import 'package:customerapp/endpoints/user.dart';
 
 class EditNameEmail extends StatelessWidget {
+  final Function update;
+  EditNameEmail({this.update});
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -24,12 +26,14 @@ class EditNameEmail extends StatelessWidget {
                   style: registerToKometTextStyle,
                 ),
               )),
-              EditNameEmailForm(),
+              EditNameEmailForm(update: update),
             ])));
   }
 }
 
 class EditNameEmailForm extends StatelessWidget {
+  final Function update;
+  EditNameEmailForm({this.update});
   @override
   Widget build(BuildContext context) {
     var editNameEmailModel = context.watch<EditNameEmailModel>();
@@ -63,7 +67,7 @@ class EditNameEmailForm extends StatelessWidget {
                 ),
                 onFieldSubmitted: (value) {
                   tryEditNameEmailForm(
-                      context, editNameEmailModel, loggedModel);
+                      context, editNameEmailModel, loggedModel, update);
                 },
                 autofocus: true,
               )),
@@ -90,10 +94,10 @@ class EditNameEmailForm extends StatelessWidget {
                 ),
                 onFieldSubmitted: (value) {
                   tryEditNameEmailForm(
-                      context, editNameEmailModel, loggedModel);
+                      context, editNameEmailModel, loggedModel, update);
                 },
               )),
-          SaveInformationNameEmailButton(),
+          SaveInformationNameEmailButton(update: update),
         ],
       ),
     );
@@ -104,6 +108,8 @@ class EditNameEmailForm extends StatelessWidget {
   It may be better to pass only formKey as parameter (or the model)
 */
 class SaveInformationNameEmailButton extends StatelessWidget {
+  final Function update;
+  SaveInformationNameEmailButton({this.update});
   @override
   Widget build(BuildContext context) {
     var editNameEmailModel = context.watch<EditNameEmailModel>();
@@ -117,7 +123,7 @@ class SaveInformationNameEmailButton extends StatelessWidget {
             onPressed: editNameEmailModel.formValid
                 ? () {
                     tryEditNameEmailForm(
-                        context, editNameEmailModel, loggedModel);
+                        context, editNameEmailModel, loggedModel, update);
                   }
                 : null,
             child: Text('Save'),
@@ -131,20 +137,22 @@ class SaveInformationNameEmailButton extends StatelessWidget {
   }
 }
 
-void tryEditNameEmailForm(BuildContext context,
-    EditNameEmailModel editNameEmailModel, LoggedModel loggedModel) {
+void tryEditNameEmailForm(
+    BuildContext context,
+    EditNameEmailModel editNameEmailModel,
+    LoggedModel loggedModel,
+    Function update) {
   if (editNameEmailModel.formValid) {
     if (editNameEmailModel.formKey.currentState.validate()) {
       showLoaderDialog(context);
       editNameEmailModel.formKey.currentState.save();
-
       UserDTO formUser = new UserDTO();
       formUser.name = editNameEmailModel.firstName;
       formUser.email = editNameEmailModel.email;
-
       updateUserAndEmail(formUser).then((newLoggedUser) async {
         loggedModel.getUserAndNotify().email = editNameEmailModel.email;
         loggedModel.getUserAndNotify().name = editNameEmailModel.firstName;
+        update();
         Navigator.pop(context); //exit loader
         Navigator.pop(context); //exit changeInfo dialog
       }).catchError((error) {

@@ -57,8 +57,20 @@ class ProfileSettings extends StatelessWidget {
   }
 }
 
-class UserInformation extends StatelessWidget {
+class UserInformation extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return UserInformationState();
+  }
+}
+
+class UserInformationState extends State<UserInformation> {
   final double verticalPadding = 6;
+
+  void updateInfo() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     context.watch<LoggedModel>();
@@ -79,7 +91,7 @@ class UserInformation extends StatelessWidget {
                   style: labelsProfileText,
                 ),
                 TextLink('Edit', (context) {
-                  showChangeNameEmail(context);
+                  showChangeNameEmail(context, updateInfo);
                 }, editTextLinksBold, editTextLinksHoverBold, context)
               ],
             ),
@@ -276,11 +288,11 @@ class UserInformation extends StatelessWidget {
   }
 }
 
-void showChangeNameEmail(BuildContext context) {
+void showChangeNameEmail(BuildContext context, Function update) {
   if (MediaQuery.of(context).size.width > 600) {
-    showDialog(context: context, builder: (_) => EditNameEmailDialog());
+    showDialog(context: context, builder: (_) => EditNameEmailDialog(update));
   } else {
-    Navigator.pushNamed(context, '/edit-name-email');
+    Navigator.pushNamed(context, '/edit-name-email', arguments: update);
   }
 }
 
